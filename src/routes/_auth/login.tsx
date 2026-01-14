@@ -8,6 +8,7 @@ import { useState } from "react";
 import { FormField } from "@/components/forms/form-field";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useTranslation } from "@/lib/i18n";
 
 const fallback = "/dashboard" as const;
 
@@ -30,6 +31,7 @@ function LoginComponent() {
   const navigate = Route.useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
+  const { t } = useTranslation();
 
   const search = Route.useSearch();
 
@@ -56,15 +58,15 @@ function LoginComponent() {
 
   return (
     <AuthCard
-      title="Login"
-      description="Enter your email below to login to your account"
+      title={t("common.login")}
+      description={t("common.enterEmailToLogin")}
     >
       <div className="grid gap-4">
         <FormField
           id="email"
-          label="Email"
+          label={t("common.email")}
           type="email"
-          placeholder="m@example.com"
+          placeholder={t("common.emailPlaceholder")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -75,7 +77,7 @@ function LoginComponent() {
           onClick={onFormSubmit}
           isLoading={isSubmitting}
         >
-          Sign in
+          {t("common.signIn")}
         </Button>
       </div>
     </AuthCard>

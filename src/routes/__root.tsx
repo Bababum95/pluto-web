@@ -1,6 +1,7 @@
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 
 import { Devtools } from "@/components/Devtools";
+import { useTheme } from "@/lib/hooks/useTheme";
 import type { AuthContextType } from "@/features/auth";
 
 const showDevtools =
@@ -10,11 +11,17 @@ type RouterContext = {
   auth: AuthContextType;
 };
 
-export const Route = createRootRouteWithContext<RouterContext>()({
-  component: () => (
+function RootComponent() {
+  useTheme();
+
+  return (
     <>
       <Outlet />
       {showDevtools && <Devtools />}
     </>
-  ),
+  );
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
+  component: RootComponent,
 });

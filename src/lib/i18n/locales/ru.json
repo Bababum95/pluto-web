@@ -1,0 +1,40 @@
+{
+  "common": {
+    "toggleMenu": "Переключить меню",
+    "home": "Главная",
+    "about": "О нас",
+    "signIn": "Войти",
+    "login": "Вход",
+    "email": "Электронная почта",
+    "emailPlaceholder": "m@example.com",
+    "enterEmailToLogin": "Введите вашу электронную почту ниже, чтобы войти в аккаунт"
+  },
+  "timeRanges": {
+    "day": "День",
+    "week": "Неделя",
+    "month": "Месяц",
+    "year": "Год",
+    "period": "Период"
+  },
+  "language": {
+    "en": "English",
+    "ru": "Русский"
+  },
+  "settings": {
+    "title": "Настройки",
+    "description": "Управление настройками приложения",
+    "language": {
+      "title": "Язык",
+      "description": "Выберите предпочитаемый язык",
+      "changeLanguage": "Изменить язык"
+    },
+    "theme": {
+      "title": "Тема",
+      "description": "Выберите предпочитаемую тему",
+      "light": "Светлая",
+      "dark": "Тёмная",
+      "system": "Системная",
+      "changeTheme": "Изменить тему"
+    }
+  }
+}

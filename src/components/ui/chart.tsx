@@ -4,7 +4,7 @@ import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/lib/utils";
-import { THEMES } from "@/lib/constants";
+import { THEME_CLASSNAMES } from "@/lib/constants";
 
 export type ChartConfig = {
   [k in string]: {
@@ -12,7 +12,7 @@ export type ChartConfig = {
     icon?: React.ComponentType;
   } & (
     | { color?: string; theme?: never }
-    | { color?: never; theme: Record<keyof typeof THEMES, string> }
+    | { color?: never; theme: Record<keyof typeof THEME_CLASSNAMES, string> }
   );
 };
 
@@ -79,7 +79,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   return (
     <style
       dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
+        __html: Object.entries(THEME_CLASSNAMES)
           .map(
             ([theme, prefix]) => `
 ${prefix} [data-chart=${id}] {
@@ -88,11 +88,9 @@ ${colorConfig
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
       itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
+    return color ? ` --color-${key}: ${color};` : null;
   })
-  .join("\n")}
-}
-`
+  .join("\n")}}`
           )
           .join("\n"),
       }}
@@ -116,7 +114,10 @@ type TooltipContentProps = {
   active?: boolean;
   payload?: Array<TooltipPayloadItem>;
   label?: React.ReactNode;
-  labelFormatter?: (label: React.ReactNode, payload: TooltipContentProps["payload"]) => React.ReactNode;
+  labelFormatter?: (
+    label: React.ReactNode,
+    payload: TooltipContentProps["payload"]
+  ) => React.ReactNode;
   formatter?: (
     value: number | string,
     name: string,
@@ -219,7 +220,13 @@ function ChartTooltipContent({
                 )}
               >
                 {formatter && item?.value !== undefined && item.name ? (
-                  formatter(item.value, item.name, item, index, item.payload ?? {})
+                  formatter(
+                    item.value,
+                    item.name,
+                    item,
+                    index,
+                    item.payload ?? {}
+                  )
                 ) : (
                   <>
                     {itemConfig?.icon ? (

@@ -1,0 +1,41 @@
+{
+  "common": {
+    "toggleMenu": "Toggle menu",
+    "home": "Home",
+    "about": "About",
+    "settings": "Settings",
+    "signIn": "Sign in",
+    "login": "Login",
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "enterEmailToLogin": "Enter your email below to login to your account"
+  },
+  "timeRanges": {
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "period": "Period"
+  },
+  "language": {
+    "en": "English",
+    "ru": "Русский"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your application preferences",
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language",
+      "changeLanguage": "Change language"
+    },
+    "theme": {
+      "title": "Theme",
+      "description": "Choose your preferred theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "changeTheme": "Change theme"
+    }
+  }
+}

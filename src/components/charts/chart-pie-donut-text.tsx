@@ -53,7 +53,7 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
   return (
     <ChartContainer
       config={chartConfig}
-      className="mx-auto aspect-square max-h-[290px]"
+      className="mx-auto aspect-square max-h-[250px] scale-125"
     >
       <PieChart>
         <ChartTooltip
@@ -64,7 +64,7 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
           data={chartData}
           dataKey="visitors"
           nameKey="browser"
-          innerRadius={74}
+          innerRadius={64}
           strokeWidth={5}
         >
           <Label
@@ -80,14 +80,14 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
                     <tspan
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + (label ? 0 : 4)}
-                      className="fill-foreground text-3xl font-bold"
+                      className="fill-foreground text-2xl font-bold"
                     >
                       {total}
                     </tspan>
                     {label && (
                       <tspan
                         x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 24}
+                        y={(viewBox.cy || 0) + 22}
                         className="fill-muted-foreground"
                       >
                         {label}

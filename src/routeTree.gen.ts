@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -38,14 +39,21 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
+  '/settings': typeof AppSettingsRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
+  '/settings': typeof AppSettingsRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
 }
@@ -54,15 +62,23 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/about': typeof AboutRoute
+  '/_app/settings': typeof AppSettingsRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/about' | '/login' | '/'
+  fullPaths: '/about' | '/settings' | '/login' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/login' | '/'
-  id: '__root__' | '/_app' | '/_auth' | '/about' | '/_auth/login' | '/_app/'
+  to: '/about' | '/settings' | '/login' | '/'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_auth'
+    | '/about'
+    | '/_app/settings'
+    | '/_auth/login'
+    | '/_app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -108,14 +124,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppSettingsRoute: typeof AppSettingsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppSettingsRoute: AppSettingsRoute,
   AppIndexRoute: AppIndexRoute,
 }
 

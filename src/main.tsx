@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { AuthProvider, useAuth } from "@/features/auth";
+import "@/lib/i18n/config";
 import "./index.css";
 
 // Import the generated route tree

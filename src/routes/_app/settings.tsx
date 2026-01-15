@@ -1,8 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { LanguageSwitcher } from "@/features/languages";
+import { ThemeSwitcher } from "@/features/theme";
 import { useTranslation } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_app/settings")({
@@ -23,7 +29,9 @@ function SettingsPage() {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-1">
-                <h3 className="text-sm font-medium">{t("settings.language.title")}</h3>
+                <h3 className="text-sm font-medium">
+                  {t("settings.language.title")}
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   {t("settings.language.description")}
                 </p>
@@ -35,7 +43,9 @@ function SettingsPage() {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-1">
-                <h3 className="text-sm font-medium">{t("settings.theme.title")}</h3>
+                <h3 className="text-sm font-medium">
+                  {t("settings.theme.title")}
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   {t("settings.theme.description")}
                 </p>

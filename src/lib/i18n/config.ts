@@ -5,6 +5,9 @@ import { initReactI18next } from "react-i18next";
 import en from "./locales/en.json";
 import ru from "./locales/ru.json";
 
+export const DEFAULT_LANGUAGE = "en";
+export const SUPPORTED_LANGUAGES = ["en", "ru"] as const;
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -13,8 +16,8 @@ i18n
       en: { translation: en },
       ru: { translation: ru },
     },
-    fallbackLng: "en",
-    supportedLngs: ["en", "ru"],
+    fallbackLng: DEFAULT_LANGUAGE,
+    supportedLngs: SUPPORTED_LANGUAGES,
     interpolation: {
       escapeValue: false,
     },

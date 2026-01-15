@@ -4,7 +4,7 @@ import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/lib/utils";
-import { THEME_CLASSNAMES } from "@/lib/constants";
+import { THEME_CLASSNAMES } from "@/features/theme/constants";
 
 export type ChartConfig = {
   [k in string]: {

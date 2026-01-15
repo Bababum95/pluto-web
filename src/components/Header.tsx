@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { LanguageSwitcher } from "@/features/languages";
 import { useTranslation } from "@/lib/i18n";
 
 import Logo from "@/assets/logo.svg?react";

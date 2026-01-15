@@ -13,24 +13,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/lib/hooks/useTheme";
+import { useTheme } from "@/features/theme";
 import { useTranslation } from "@/lib/i18n";
 
+import type { Theme } from "../types";
+
 type ThemeOption = {
-  value: "light" | "dark" | "system";
-  label: string;
+  value: Theme;
   icon: typeof Sun02Icon;
 };
+
+const themes: ThemeOption[] = [
+  { value: "light", icon: Sun02Icon },
+  { value: "dark", icon: Moon02Icon },
+  { value: "system", icon: ComputerIcon },
+];
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
   const { t } = useTranslation();
-
-  const themes: ThemeOption[] = [
-    { value: "light", label: t("settings.theme.light"), icon: Sun02Icon },
-    { value: "dark", label: t("settings.theme.dark"), icon: Moon02Icon },
-    { value: "system", label: t("settings.theme.system"), icon: ComputerIcon },
-  ];
 
   const currentTheme = themes.find((t) => t.value === theme) || themes[2];
   const CurrentIcon = currentTheme.icon;
@@ -43,12 +44,10 @@ export function ThemeSwitcher() {
           <span className="sr-only">{t("settings.theme.changeTheme")}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="w-42">
         <DropdownMenuRadioGroup
           value={theme}
-          onValueChange={(value) =>
-            setTheme(value as "light" | "dark" | "system")
-          }
+          onValueChange={(value) => setTheme(value as Theme)}
         >
           {themes.map((themeOption) => (
             <DropdownMenuRadioItem
@@ -57,7 +56,7 @@ export function ThemeSwitcher() {
             >
               <div className="flex items-center gap-2">
                 <HugeiconsIcon icon={themeOption.icon} className="size-4" />
-                <span>{themeOption.label}</span>
+                <span>{t(`settings.theme.${themeOption.value}`)}</span>
               </div>
             </DropdownMenuRadioItem>
           ))}

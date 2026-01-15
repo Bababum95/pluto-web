@@ -2,12 +2,10 @@
   "common": {
     "toggleMenu": "Toggle menu",
     "home": "Home",
-    "about": "About",
     "settings": "Settings",
     "signIn": "Sign in",
     "login": "Login",
     "email": "Email",
-    "emailPlaceholder": "m@example.com",
     "enterEmailToLogin": "Enter your email below to login to your account"
   },
   "timeRanges": {

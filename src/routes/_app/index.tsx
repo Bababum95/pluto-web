@@ -17,7 +17,7 @@ function HomePage() {
     <div className="flex flex-col gap-4 p-4">
       <Card className="flex flex-col" size="sm">
         <CardHeader className="items-center pb-0">
-          <Tabs>
+          <Tabs defaultValue={TIME_RANGES[0]} className="items-center">
             <TabsList>
               {TIME_RANGES.map((range) => (
                 <TabsTrigger key={range} value={range}>

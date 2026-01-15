@@ -3,6 +3,8 @@ import { StrictMode } from "react";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { AuthProvider, useAuth } from "@/features/auth";
+import { LanguageProvider } from "@/features/languages";
+import { ThemeProvider } from "@/features/theme";
 import "@/lib/i18n/config";
 import "./index.css";
 
@@ -15,7 +17,7 @@ const router = createRouter({
   defaultPreload: "intent",
   scrollRestoration: true,
   context: {
-    auth: undefined!, // This will be set after we wrap the app in an AuthProvider
+    auth: undefined!,
   },
 });
 
@@ -28,6 +30,7 @@ declare module "@tanstack/react-router" {
 
 function App() {
   const auth = useAuth();
+
   return <RouterProvider router={router} context={{ auth }} />;
 }
 
@@ -38,7 +41,11 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <AuthProvider>
-        <App />
+        <LanguageProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </LanguageProvider>
       </AuthProvider>
     </StrictMode>
   );

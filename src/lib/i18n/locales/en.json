@@ -2,6 +2,7 @@
   "common": {
     "toggleMenu": "Toggle menu",
     "home": "Home",
+    "accounts": "Accounts",
     "settings": "Settings",
     "signIn": "Sign in",
     "login": "Login",

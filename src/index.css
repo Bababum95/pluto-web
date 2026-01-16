@@ -126,3 +126,30 @@
     @apply font-sans;
   }
 }
+
+/* View Transitions - slide from right */
+::view-transition-old(root) {
+  animation: slide-out-left 0.3s ease-in-out;
+}
+
+::view-transition-new(root) {
+  animation: slide-in-right 0.3s ease-in-out;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

@@ -81,7 +81,7 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
                     <tspan
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + (label ? 0 : 4)}
-                      className="fill-foreground text-2xl font-bold"
+                      className="fill-foreground text-2xl font-semibold"
                     >
                       {total}
                     </tspan>

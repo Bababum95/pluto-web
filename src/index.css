@@ -129,7 +129,7 @@
 
 /* View Transitions - slide from right */
 ::view-transition-old(root) {
-  animation: slide-out-left 300ms ease-in-out 300ms;
+  animation: hide-left 300ms ease-in-out;
 }
 
 ::view-transition-new(root) {
@@ -145,11 +145,13 @@
   }
 }
 
-@keyframes slide-out-left {
+@keyframes hide-left {
   from {
     transform: translateX(0);
+    opacity: 1;
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-20%);
+    opacity: 0;
   }
 }

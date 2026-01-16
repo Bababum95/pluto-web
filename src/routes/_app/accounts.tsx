@@ -13,6 +13,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Card } from "@/components/ui/card";
+import { AppLayout } from "@/components/AppLayout";
 
 export const Route = createFileRoute("/_app/accounts")({
   component: AccountsPage,
@@ -107,7 +108,7 @@ function AccountsPage() {
   const total = "$6,944";
 
   return (
-    <div className="flex-1 p-4">
+    <AppLayout title="Accounts" actions={<>Add Account</>}>
       <div className="mb-6">
         <div className="text-sm mb-2">Total:</div>
         <div className="text-4xl font-bold">{total}</div>
@@ -139,6 +140,6 @@ function AccountsPage() {
           ))}
         </ItemGroup>
       </Card>
-    </div>
+    </AppLayout>
   );
 }

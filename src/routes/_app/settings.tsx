@@ -1,14 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeSwitcher } from "@/features/theme";
+import { AppLayout } from "@/components/AppLayout";
 import { useTranslation } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_app/settings")({
@@ -19,12 +14,8 @@ function SettingsPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <AppLayout title={t("settings.title")}>
       <Card>
-        <CardHeader>
-          <CardTitle>{t("settings.title")}</CardTitle>
-          <CardDescription>{t("settings.description")}</CardDescription>
-        </CardHeader>
         <CardContent className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -55,6 +46,6 @@ function SettingsPage() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </AppLayout>
   );
 }

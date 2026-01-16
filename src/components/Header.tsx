@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu01Icon } from "@hugeicons/core-free-icons";
+import type { FC } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,20 +11,23 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useTranslation } from "@/lib/i18n";
 
 import Logo from "@/assets/logo.svg?react";
 import { MENU_ITEMS } from "@/lib/constants";
 
-export function Header() {
-  const [open, setOpen] = useState(false);
+type Props = {
+  title?: React.ReactNode;
+  actions?: React.ReactNode;
+};
+
+export const Header: FC<Props> = ({ title, actions }) => {
   const { t } = useTranslation();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center px-4 gap-2">
-        <Sheet open={open} onOpenChange={setOpen}>
+      <div className="container flex h-16 items-center px-4 gap-2 relative">
+        <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="[&_svg]:size-6">
               <HugeiconsIcon icon={Menu01Icon} />
@@ -43,7 +46,6 @@ export function Header() {
                   to={to}
                   key={to}
                   className="text-sm font-medium transition-colors hover:text-primary"
-                  onClick={() => setOpen(false)}
                 >
                   {t(label)}
                 </Link>
@@ -51,13 +53,9 @@ export function Header() {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="flex items-center gap-2 flex-1">
-          <Link to="/" className="flex items-center gap-2">
-            <Logo className="h-6 w-auto" />
-          </Link>
-        </div>
-        <LanguageSwitcher />
+        <div className="absolute left-1/2 -translate-x-1/2">{title}</div>
+        <div className="ml-auto">{actions}</div>
       </div>
     </header>
   );
-}
+};

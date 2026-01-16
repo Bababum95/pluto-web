@@ -9,6 +9,7 @@ import {
 import { useState, type FC } from "react";
 
 import dayjs from "@/lib/dayjs";
+import { AppLayout } from "@/components/AppLayout";
 import { ChartPieDonutText } from "@/components/charts/chart-pie-donut-text";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -88,7 +89,7 @@ function HomePage() {
   const [timeRangeIndex, setTimeRangeIndex] = useState<number>(0);
 
   return (
-    <div className="flex flex-col gap-2 p-4">
+    <AppLayout>
       <Card className="flex flex-col relative" size="sm">
         <CardHeader className="items-center pb-0">
           <Tabs
@@ -172,6 +173,6 @@ function HomePage() {
           </ItemActions>
         </Item>
       </div>
-    </div>
+    </AppLayout>
   );
 }

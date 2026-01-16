@@ -129,11 +129,11 @@
 
 /* View Transitions - slide from right */
 ::view-transition-old(root) {
-  animation: slide-out-left 0.3s ease-in-out;
+  animation: slide-out-left 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 ::view-transition-new(root) {
-  animation: slide-in-right 0.3s ease-in-out;
+  animation: slide-in-right 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes slide-in-right {

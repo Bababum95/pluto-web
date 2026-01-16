@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 
 const AppLayout = () => {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-dvh">
       <Header />
       <main className="flex-1">
         <Outlet />

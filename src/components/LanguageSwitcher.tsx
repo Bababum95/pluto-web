@@ -11,12 +11,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { LANGUAGES } from "../constants";
-import { useLanguage } from "../hooks/useLanguage";
+import { SUPPORTED_LANGUAGES } from "@/lib/i18n/config";
 
 export function LanguageSwitcher() {
-  const { t } = useTranslation();
-  const { language, setLanguage } = useLanguage();
+  const { t, i18n } = useTranslation();
 
   return (
     <DropdownMenu>
@@ -29,8 +27,11 @@ export function LanguageSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuRadioGroup value={language} onValueChange={setLanguage}>
-          {LANGUAGES.map((lang) => (
+        <DropdownMenuRadioGroup
+          value={i18n.language}
+          onValueChange={i18n.changeLanguage}
+        >
+          {SUPPORTED_LANGUAGES.map((lang) => (
             <DropdownMenuRadioItem key={lang} value={lang}>
               {t(`language.${lang}`)}
             </DropdownMenuRadioItem>

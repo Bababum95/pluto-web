@@ -3,7 +3,6 @@ import { StrictMode } from "react";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { AuthProvider, useAuth } from "@/features/auth";
-import { LanguageProvider } from "@/features/languages";
 import { ThemeProvider } from "@/features/theme";
 import "@/lib/i18n/config";
 import "./index.css";
@@ -41,11 +40,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <AuthProvider>
-        <LanguageProvider>
-          <ThemeProvider>
-            <App />
-          </ThemeProvider>
-        </LanguageProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </AuthProvider>
     </StrictMode>
   );

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LanguageSwitcher } from "@/features/languages";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeSwitcher } from "@/features/theme";
 import { useTranslation } from "@/lib/i18n";
 

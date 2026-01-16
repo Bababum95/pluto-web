@@ -66,6 +66,7 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
           nameKey="browser"
           innerRadius={64}
           strokeWidth={5}
+          paddingAngle={1}
         >
           <Label
             content={({ viewBox }) => {

@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowRight01Icon, ArrowLeft01Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowRight01Icon,
+  ArrowLeft01Icon,
+  Dollar01Icon,
+  PlusSignIcon,
+} from "@hugeicons/core-free-icons";
 import { useState, type FC } from "react";
 
 import dayjs from "@/lib/dayjs";
@@ -10,6 +15,13 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TIME_RANGES } from "@/lib/constants";
 import { useTranslation } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item";
 
 export const Route = createFileRoute("/_app/")({
   component: HomePage,
@@ -77,7 +89,7 @@ function HomePage() {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <Card className="flex flex-col" size="sm">
+      <Card className="flex flex-col relative" size="sm">
         <CardHeader className="items-center pb-0">
           <Tabs
             value={timeRange}
@@ -129,7 +141,37 @@ function HomePage() {
         <CardContent className="flex-1 pb-0">
           <ChartPieDonutText total="104,25 $" />
         </CardContent>
+        <Button
+          size="icon"
+          className="[&_svg]:size-6 absolute bottom-4 right-4 z-10 w-11 h-11 rounded-full"
+        >
+          <HugeiconsIcon icon={PlusSignIcon} strokeWidth={2} />
+        </Button>
       </Card>
+      <div className="flex flex-col gap-1">
+        <Item variant="outline" size="xs">
+          <ItemMedia variant="icon" style={{ backgroundColor: "#00a0df" }}>
+            <HugeiconsIcon icon={Dollar01Icon} />
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>Развлечения</ItemTitle>
+          </ItemContent>
+          <ItemActions>
+            <span className="font-medium">104,25 $</span>
+          </ItemActions>
+        </Item>
+        <Item variant="outline" size="xs">
+          <ItemMedia variant="icon">
+            <HugeiconsIcon icon={Dollar01Icon} />
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>Развлечения</ItemTitle>
+          </ItemContent>
+          <ItemActions>
+            <span className="font-medium">104,25 $</span>
+          </ItemActions>
+        </Item>
+      </div>
     </div>
   );
 }

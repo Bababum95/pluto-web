@@ -94,11 +94,11 @@ function HomePage() {
           <Tabs
             value={timeRange}
             onValueChange={(value) => setTimeRange(value as TimeRange)}
-            className="items-center"
+            className="items-center w-full"
           >
-            <TabsList>
+            <TabsList className="w-full">
               {TIME_RANGES.map((range) => (
-                <TabsTrigger key={range} value={range}>
+                <TabsTrigger key={range} value={range} className="flex-1">
                   {t(`timeRanges.${range}`)}
                 </TabsTrigger>
               ))}

@@ -1,1 +1,1 @@
-export const AUTH_KEY = "tanstack.auth.user";
+export const AUTH_KEY = 'tanstack.auth.user'

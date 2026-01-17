@@ -20,6 +20,12 @@
     "en": "English",
     "ru": "Русский"
   },
+  "home": {
+    "tabs": {
+      "expenses": "Expenses",
+      "income": "Income"
+    }
+  },
   "settings": {
     "title": "Settings",
     "description": "Manage your application preferences",

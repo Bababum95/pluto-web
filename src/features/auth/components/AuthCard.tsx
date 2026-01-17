@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC } from 'react'
 
 import {
   Card,
@@ -6,13 +6,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card'
 
 type Props = {
-  title: string;
-  description: string;
-  children: React.ReactNode;
-};
+  title: string
+  description: string
+  children: React.ReactNode
+}
 
 export const AuthCard: FC<Props> = ({ title, description, children }) => (
   <Card className="mx-auto w-full max-w-md">
@@ -22,4 +22,4 @@ export const AuthCard: FC<Props> = ({ title, description, children }) => (
     </CardHeader>
     <CardContent>{children}</CardContent>
   </Card>
-);
+)

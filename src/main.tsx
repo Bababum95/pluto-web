@@ -1,43 +1,43 @@
-import ReactDOM from "react-dom/client";
-import { StrictMode } from "react";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import ReactDOM from 'react-dom/client'
+import { StrictMode } from 'react'
+import { RouterProvider, createRouter } from '@tanstack/react-router'
 
-import { AuthProvider, useAuth } from "@/features/auth";
-import { ThemeProvider } from "@/features/theme";
-import "@/lib/i18n/config";
-import "./index.css";
+import { AuthProvider, useAuth } from '@/features/auth'
+import { ThemeProvider } from '@/features/theme'
+import '@/lib/i18n/config'
+import './index.css'
 
 // Import the generated route tree
-import { routeTree } from "./routeTree.gen";
+import { routeTree } from './routeTree.gen'
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  defaultPreload: "intent",
+  defaultPreload: 'intent',
   scrollRestoration: true,
   defaultViewTransition: true,
   context: {
     auth: undefined!,
   },
-});
+})
 
 // Register the router instance for type safety
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface Register {
-    router: typeof router;
+    router: typeof router
   }
 }
 
 function App() {
-  const auth = useAuth();
+  const auth = useAuth()
 
-  return <RouterProvider router={router} context={{ auth }} />;
+  return <RouterProvider router={router} context={{ auth }} />
 }
 
 // Render the app
-const rootElement = document.getElementById("root")!;
+const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
+  const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
       <AuthProvider>
@@ -46,5 +46,5 @@ if (!rootElement.innerHTML) {
         </ThemeProvider>
       </AuthProvider>
     </StrictMode>
-  );
+  )
 }

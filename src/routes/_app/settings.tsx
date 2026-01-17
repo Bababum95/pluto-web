@@ -1,30 +1,30 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-import { Card, CardContent } from "@/components/ui/card";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { ThemeSwitcher } from "@/features/theme";
-import { AppLayout } from "@/components/AppLayout";
-import { useTranslation } from "@/lib/i18n";
+import { Card, CardContent } from '@/components/ui/card'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { ThemeSwitcher } from '@/features/theme'
+import { AppLayout } from '@/components/AppLayout'
+import { useTranslation } from '@/lib/i18n'
 
-export const Route = createFileRoute("/_app/settings")({
+export const Route = createFileRoute('/_app/settings')({
   component: SettingsPage,
-});
+})
 
 function SettingsPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
-    <AppLayout title={t("settings.title")}>
+    <AppLayout title={t('settings.title')}>
       <Card>
         <CardContent className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-1">
                 <h3 className="text-sm font-medium">
-                  {t("settings.language.title")}
+                  {t('settings.language.title')}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {t("settings.language.description")}
+                  {t('settings.language.description')}
                 </p>
               </div>
               <LanguageSwitcher />
@@ -35,10 +35,10 @@ function SettingsPage() {
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-1">
                 <h3 className="text-sm font-medium">
-                  {t("settings.theme.title")}
+                  {t('settings.theme.title')}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {t("settings.theme.description")}
+                  {t('settings.theme.description')}
                 </p>
               </div>
               <ThemeSwitcher />
@@ -47,5 +47,5 @@ function SettingsPage() {
         </CardContent>
       </Card>
     </AppLayout>
-  );
+  )
 }

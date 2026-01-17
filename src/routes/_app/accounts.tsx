@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { PlusSignIcon } from "@hugeicons/core-free-icons";
-import { Fragment } from "react";
+import { createFileRoute } from '@tanstack/react-router'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { PlusSignIcon } from '@hugeicons/core-free-icons'
+import { Fragment } from 'react'
 
 import {
   Item,
@@ -11,101 +11,101 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from "@/components/ui/item";
-import { Card } from "@/components/ui/card";
-import { AppLayout } from "@/components/AppLayout";
+} from '@/components/ui/item'
+import { Card } from '@/components/ui/card'
+import { AppLayout } from '@/components/AppLayout'
 
-export const Route = createFileRoute("/_app/accounts")({
+export const Route = createFileRoute('/_app/accounts')({
   component: AccountsPage,
-});
+})
 
 // Mock data for accounts
 type Account = {
-  id: string;
-  name: string;
-  balance: string;
-  currency: string;
-  iconColor: string;
-  icon: typeof PlusSignIcon;
-};
+  id: string
+  name: string
+  balance: string
+  currency: string
+  iconColor: string
+  icon: typeof PlusSignIcon
+}
 
 const accounts: Account[] = [
   {
-    id: "1",
-    name: "Донги",
-    balance: "3.23M",
-    currency: "₫",
-    iconColor: "#00a0df",
+    id: '1',
+    name: 'Донги',
+    balance: '3.23M',
+    currency: '₫',
+    iconColor: '#00a0df',
     icon: PlusSignIcon,
   },
   {
-    id: "2",
-    name: "Binance",
-    balance: "702",
-    currency: "¥",
-    iconColor: "#f3ba2f",
+    id: '2',
+    name: 'Binance',
+    balance: '702',
+    currency: '¥',
+    iconColor: '#f3ba2f',
     icon: PlusSignIcon,
   },
   {
-    id: "3",
-    name: "BYBIT",
-    balance: "1,522",
-    currency: "¥",
-    iconColor: "#f3ba2f",
+    id: '3',
+    name: 'BYBIT',
+    balance: '1,522',
+    currency: '¥',
+    iconColor: '#f3ba2f',
     icon: PlusSignIcon,
   },
   {
-    id: "4",
-    name: "BingX",
-    balance: "826",
-    currency: "¥",
-    iconColor: "#0066ff",
+    id: '4',
+    name: 'BingX',
+    balance: '826',
+    currency: '¥',
+    iconColor: '#0066ff',
     icon: PlusSignIcon,
   },
   {
-    id: "5",
-    name: "Bitget",
-    balance: "947",
-    currency: "¥",
-    iconColor: "#00a0df",
+    id: '5',
+    name: 'Bitget',
+    balance: '947',
+    currency: '¥',
+    iconColor: '#00a0df',
     icon: PlusSignIcon,
   },
   {
-    id: "6",
-    name: "TG Wallet",
-    balance: "212",
-    currency: "¥",
-    iconColor: "#00a0df",
+    id: '6',
+    name: 'TG Wallet',
+    balance: '212',
+    currency: '¥',
+    iconColor: '#00a0df',
     icon: PlusSignIcon,
   },
   {
-    id: "7",
-    name: "Тинькофф",
-    balance: "0",
-    currency: "₽",
-    iconColor: "#ffdd2d",
+    id: '7',
+    name: 'Тинькофф',
+    balance: '0',
+    currency: '₽',
+    iconColor: '#ffdd2d',
     icon: PlusSignIcon,
   },
   {
-    id: "8",
-    name: "Инвесткопилка",
-    balance: "84,070",
-    currency: "₽",
-    iconColor: "#9c27b0",
+    id: '8',
+    name: 'Инвесткопилка',
+    balance: '84,070',
+    currency: '₽',
+    iconColor: '#9c27b0',
     icon: PlusSignIcon,
   },
   {
-    id: "9",
-    name: "BTC",
-    balance: "0.000",
-    currency: "₽",
-    iconColor: "#f7931a",
+    id: '9',
+    name: 'BTC',
+    balance: '0.000',
+    currency: '₽',
+    iconColor: '#f7931a',
     icon: PlusSignIcon,
   },
-];
+]
 
 function AccountsPage() {
-  const total = "$6,944";
+  const total = '$6,944'
 
   return (
     <AppLayout title="Accounts" actions={<>Add Account</>}>
@@ -141,5 +141,5 @@ function AccountsPage() {
         </ItemGroup>
       </Card>
     </AppLayout>
-  );
+  )
 }

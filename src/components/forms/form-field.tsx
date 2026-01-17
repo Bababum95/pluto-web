@@ -1,13 +1,13 @@
-import type { FC } from "react";
+import type { FC } from 'react'
 
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { Field, FieldLabel, FieldError } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
-type Props = React.ComponentProps<"input"> & {
-  label?: string;
-  error?: string;
-};
+type Props = React.ComponentProps<'input'> & {
+  label?: string
+  error?: string
+}
 
 export const FormField: FC<Props> = ({
   id,
@@ -21,10 +21,10 @@ export const FormField: FC<Props> = ({
       {label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
       <Input
         id={id}
-        className={cn(error ? "border-destructive" : "", className)}
+        className={cn(error ? 'border-destructive' : '', className)}
         {...props}
       />
       {error && <FieldError>{error}</FieldError>}
     </Field>
-  );
-};
+  )
+}

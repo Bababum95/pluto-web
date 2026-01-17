@@ -1,28 +1,28 @@
-import { Link } from "@tanstack/react-router";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Menu01Icon } from "@hugeicons/core-free-icons";
-import type { FC } from "react";
+import { Link } from '@tanstack/react-router'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { Menu01Icon } from '@hugeicons/core-free-icons'
+import type { FC } from 'react'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { useTranslation } from "@/lib/i18n";
+} from '@/components/ui/sheet'
+import { useTranslation } from '@/lib/i18n'
 
-import Logo from "@/assets/logo.svg?react";
-import { MENU_ITEMS } from "@/lib/constants";
+import Logo from '@/assets/logo.svg?react'
+import { MENU_ITEMS } from '@/lib/constants'
 
 type Props = {
-  title?: React.ReactNode;
-  actions?: React.ReactNode;
-};
+  title?: React.ReactNode
+  actions?: React.ReactNode
+}
 
 export const Header: FC<Props> = ({ title, actions }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
@@ -31,7 +31,7 @@ export const Header: FC<Props> = ({ title, actions }) => {
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="[&_svg]:size-6">
               <HugeiconsIcon icon={Menu01Icon} />
-              <span className="sr-only">{t("common.toggleMenu")}</span>
+              <span className="sr-only">{t('common.toggleMenu')}</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" onOpenAutoFocus={(e) => e.preventDefault()}>
@@ -57,5 +57,5 @@ export const Header: FC<Props> = ({ title, actions }) => {
         <div className="ml-auto">{actions}</div>
       </div>
     </header>
-  );
-};
+  )
+}

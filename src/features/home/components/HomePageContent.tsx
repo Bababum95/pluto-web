@@ -16,7 +16,7 @@ import { TimeRangeSwitcher } from '@/features/time-range'
 
 export const HomePageContent: FC = () => {
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <Card className="flex flex-col relative" size="sm">
         <CardHeader className="items-center pb-0">
           <TimeRangeSwitcher />
@@ -55,6 +55,6 @@ export const HomePageContent: FC = () => {
           </ItemActions>
         </Item>
       </div>
-    </>
+    </div>
   )
 }

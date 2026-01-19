@@ -20,11 +20,10 @@
     "en": "English",
     "ru": "Русский"
   },
-  "home": {
-    "tabs": {
-      "expenses": "Expenses",
-      "income": "Income"
-    }
+  "home": {},
+  "transactionType": {
+    "expenses": "Expenses",
+    "income": "Income"
   },
   "transaction": {
     "title": "Add transaction"

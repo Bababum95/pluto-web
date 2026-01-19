@@ -34,5 +34,9 @@
       "system": "Системная",
       "changeTheme": "Изменить тему"
     }
+  },
+  "transactionType": {
+    "expenses": "Расходы",
+    "income": "Доходы"
   }
 }

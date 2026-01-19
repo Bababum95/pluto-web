@@ -1,9 +1,11 @@
 import ReactDOM from 'react-dom/client'
 import { StrictMode } from 'react'
+import { Provider } from 'react-redux'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 
 import { AuthProvider, useAuth } from '@/features/auth'
 import { ThemeProvider } from '@/features/theme'
+import { store } from '@/store'
 import '@/lib/i18n/config'
 import './index.css'
 
@@ -40,11 +42,13 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <AuthProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </AuthProvider>
+      </Provider>
     </StrictMode>
   )
 }

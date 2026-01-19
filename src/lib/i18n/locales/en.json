@@ -26,6 +26,16 @@
       "income": "Income"
     }
   },
+  "transaction": {
+    "title": "Add transaction"
+  },
+  "accounts": {
+    "actions": {
+      "add": "Add account",
+      "newTransfer": "New transfer",
+      "transferHistory": "Transfer history"
+    }
+  },
   "settings": {
     "title": "Settings",
     "description": "Manage your application preferences",

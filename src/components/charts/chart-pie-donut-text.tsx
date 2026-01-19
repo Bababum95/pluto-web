@@ -67,6 +67,7 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
           innerRadius={64}
           strokeWidth={5}
           paddingAngle={1}
+          isAnimationActive={false}
         >
           <Label
             content={({ viewBox }) => {
@@ -80,7 +81,9 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
                   >
                     <tspan
                       x={viewBox.cx}
-                      y={(viewBox.cy || 0) + (label ? 0 : 4)}
+                      y={
+                        (viewBox.cy || 0) + (label && label.length > 0 ? 0 : 4)
+                      }
                       className="fill-foreground text-2xl font-semibold"
                     >
                       {total}

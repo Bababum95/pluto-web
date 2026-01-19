@@ -1,6 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { PlusSignIcon } from '@hugeicons/core-free-icons'
+import {
+  PlusSignIcon,
+  MoreVerticalIcon,
+  Clock04Icon,
+  ArrowDataTransferHorizontalIcon,
+} from '@hugeicons/core-free-icons'
 import { Fragment } from 'react'
 
 import {
@@ -14,6 +19,14 @@ import {
 } from '@/components/ui/item'
 import { Card } from '@/components/ui/card'
 import { AppLayout } from '@/components/AppLayout'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/_app/accounts')({
   component: AccountsPage,
@@ -104,11 +117,37 @@ const accounts: Account[] = [
   },
 ]
 
+const actions = [
+  { value: 'add', icon: PlusSignIcon },
+  { value: 'newTransfer', icon: ArrowDataTransferHorizontalIcon },
+  { value: 'transferHistory', icon: Clock04Icon },
+]
+
 function AccountsPage() {
+  const { t } = useTranslation()
   const total = '$6,944'
 
   return (
-    <AppLayout title="Accounts" actions={<>Add Account</>}>
+    <AppLayout
+      title="Accounts"
+      actions={
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon" className="[&_svg]:size-6">
+              <HugeiconsIcon icon={MoreVerticalIcon} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-42">
+            {actions.map((action) => (
+              <DropdownMenuItem key={action.value}>
+                <HugeiconsIcon icon={action.icon} />
+                <span>{t(`accounts.actions.${action.value}`)}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      }
+    >
       <div className="mb-6">
         <div className="text-sm mb-2">Total:</div>
         <div className="text-4xl font-bold">{total}</div>

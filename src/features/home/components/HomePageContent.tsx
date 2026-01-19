@@ -1,5 +1,6 @@
 import { HugeiconsIcon } from '@hugeicons/react'
 import { PlusSignIcon, Dollar01Icon } from '@hugeicons/core-free-icons'
+import { Link } from '@tanstack/react-router'
 import type { FC } from 'react'
 
 import { ChartPieDonutText } from '@/components/charts/chart-pie-donut-text'
@@ -24,12 +25,11 @@ export const HomePageContent: FC = () => {
         <CardContent className="flex-1 pb-0">
           <ChartPieDonutText total="104,25 $" />
         </CardContent>
-        <Button
-          size="icon"
-          className="[&_svg]:size-6 absolute bottom-4 right-4 z-10 w-11 h-11 rounded-full"
-        >
-          <HugeiconsIcon icon={PlusSignIcon} strokeWidth={2} />
-        </Button>
+        <Link to="/transaction" className="absolute bottom-4 right-4 z-10">
+          <Button size="icon" className="[&_svg]:size-6 w-11 h-11 rounded-full">
+            <HugeiconsIcon icon={PlusSignIcon} strokeWidth={2} />
+          </Button>
+        </Link>
       </Card>
       <div className="flex flex-col gap-1">
         <Item variant="outline" size="xs">

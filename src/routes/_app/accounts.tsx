@@ -1,22 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
-  PlusSignIcon,
   MoreVerticalIcon,
   Clock04Icon,
   ArrowDataTransferHorizontalIcon,
+  PlusSignIcon,
 } from '@hugeicons/core-free-icons'
 import { Fragment } from 'react'
 
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemGroup,
-  ItemMedia,
-  ItemSeparator,
-  ItemTitle,
-} from '@/components/ui/item'
+import { ItemGroup, ItemSeparator } from '@/components/ui/item'
 import { Card } from '@/components/ui/card'
 import { AppLayout } from '@/components/AppLayout'
 import {
@@ -27,95 +19,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
+import { AccountItem, mockAccounts } from '@/features/account'
 
 export const Route = createFileRoute('/_app/accounts')({
   component: AccountsPage,
 })
-
-// Mock data for accounts
-type Account = {
-  id: string
-  name: string
-  balance: string
-  currency: string
-  iconColor: string
-  icon: typeof PlusSignIcon
-}
-
-const accounts: Account[] = [
-  {
-    id: '1',
-    name: 'Донги',
-    balance: '3.23M',
-    currency: '₫',
-    iconColor: '#00a0df',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '2',
-    name: 'Binance',
-    balance: '702',
-    currency: '¥',
-    iconColor: '#f3ba2f',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '3',
-    name: 'BYBIT',
-    balance: '1,522',
-    currency: '¥',
-    iconColor: '#f3ba2f',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '4',
-    name: 'BingX',
-    balance: '826',
-    currency: '¥',
-    iconColor: '#0066ff',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '5',
-    name: 'Bitget',
-    balance: '947',
-    currency: '¥',
-    iconColor: '#00a0df',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '6',
-    name: 'TG Wallet',
-    balance: '212',
-    currency: '¥',
-    iconColor: '#00a0df',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '7',
-    name: 'Тинькофф',
-    balance: '0',
-    currency: '₽',
-    iconColor: '#ffdd2d',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '8',
-    name: 'Инвесткопилка',
-    balance: '84,070',
-    currency: '₽',
-    iconColor: '#9c27b0',
-    icon: PlusSignIcon,
-  },
-  {
-    id: '9',
-    name: 'BTC',
-    balance: '0.000',
-    currency: '₽',
-    iconColor: '#f7931a',
-    icon: PlusSignIcon,
-  },
-]
 
 const actions = [
   { value: 'add', icon: PlusSignIcon },
@@ -149,32 +57,23 @@ function AccountsPage() {
       }
     >
       <div className="mb-6">
-        <div className="text-sm mb-2">Total:</div>
+        <div className="text-sm mb-2">{t('common.total')}:</div>
         <div className="text-4xl font-bold">{total}</div>
       </div>
 
       <Card size="sm" className="py-1!">
         <ItemGroup>
-          {accounts.map((account, index) => (
+          {mockAccounts.map((account, index) => (
             <Fragment key={account.id}>
-              <Item size="sm">
-                <ItemMedia
-                  variant="icon"
-                  style={{ backgroundColor: account.iconColor }}
-                >
-                  <HugeiconsIcon icon={account.icon} className="size-5" />
-                </ItemMedia>
-                <ItemContent>
-                  <ItemTitle>{account.name}</ItemTitle>
-                </ItemContent>
-                <ItemActions>
-                  <span className="font-medium">
-                    {account.currency}
-                    {account.balance}
-                  </span>
-                </ItemActions>
-              </Item>
-              {index !== accounts.length - 1 && <ItemSeparator />}
+              <AccountItem
+                name={account.name}
+                currency={account.currency}
+                balance={account.balance}
+                iconColor={account.iconColor}
+                icon={account.icon}
+                id={account.id}
+              />
+              {index !== mockAccounts.length - 1 && <ItemSeparator />}
             </Fragment>
           ))}
         </ItemGroup>

@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_app/')({
 
 function HomePage() {
   return (
-    <AppLayout >
+    <AppLayout>
       <TransactionTypeTabs>
         <HomePageContent />
       </TransactionTypeTabs>

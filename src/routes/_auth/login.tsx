@@ -57,16 +57,13 @@ function LoginComponent() {
   if (isLoading) return <Spinner className="size-12" />
 
   return (
-    <AuthCard
-      title={t('common.login')}
-      description={t('common.enterEmailToLogin')}
-    >
+    <AuthCard title={t('auth.login')} description={t('auth.description')}>
       <div className="grid gap-4">
         <FormField
           id="email"
-          label={t('common.email')}
+          label="Email"
           type="email"
-          placeholder={t('common.emailPlaceholder')}
+          placeholder="my@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -77,7 +74,7 @@ function LoginComponent() {
           onClick={onFormSubmit}
           isLoading={isSubmitting}
         >
-          {t('common.signIn')}
+          {t('auth.signIn')}
         </Button>
       </div>
     </AuthCard>

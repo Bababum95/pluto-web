@@ -4,10 +4,12 @@
     "home": "Home",
     "accounts": "Accounts",
     "settings": "Settings",
+    "total": "Total"
+  },
+  "auth": {
     "signIn": "Sign in",
     "login": "Login",
-    "email": "Email",
-    "enterEmailToLogin": "Enter your email below to login to your account"
+    "description": "Enter your email below to login to your account"
   },
   "timeRanges": {
     "day": "Day",
@@ -26,7 +28,8 @@
     "income": "Income"
   },
   "transaction": {
-    "title": "Add transaction"
+    "title": "Add transaction",
+    "account": "Account"
   },
   "accounts": {
     "actions": {

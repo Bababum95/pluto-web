@@ -1,0 +1,77 @@
+import { PlusSignIcon } from '@hugeicons/core-free-icons'
+import type { Account } from './type'
+
+export const mockAccounts: Account[] = [
+  {
+    id: '1',
+    name: 'Донги',
+    balance: '3.23M',
+    currency: '₫',
+    iconColor: '#00a0df',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '2',
+    name: 'Binance',
+    balance: '702',
+    currency: '¥',
+    iconColor: '#f3ba2f',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '3',
+    name: 'BYBIT',
+    balance: '1,522',
+    currency: '¥',
+    iconColor: '#f3ba2f',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '4',
+    name: 'BingX',
+    balance: '826',
+    currency: '¥',
+    iconColor: '#0066ff',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '5',
+    name: 'Bitget',
+    balance: '947',
+    currency: '¥',
+    iconColor: '#00a0df',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '6',
+    name: 'TG Wallet',
+    balance: '212',
+    currency: '¥',
+    iconColor: '#00a0df',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '7',
+    name: 'Тинькофф',
+    balance: '0',
+    currency: '₽',
+    iconColor: '#ffdd2d',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '8',
+    name: 'Инвесткопилка',
+    balance: '84,070',
+    currency: '₽',
+    iconColor: '#9c27b0',
+    icon: PlusSignIcon,
+  },
+  {
+    id: '9',
+    name: 'BTC',
+    balance: '0.000',
+    currency: '₽',
+    iconColor: '#f7931a',
+    icon: PlusSignIcon,
+  },
+]

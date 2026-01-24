@@ -10,7 +10,14 @@ import { AccountCard, mockAccounts } from '@/features/account'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+} from '@/components/ui/drawer'
 import {
   Field,
   FieldContent,
@@ -36,7 +43,7 @@ function TransactionPage() {
   }
 
   return (
-    <AppLayout title={t('transaction.title')}>
+    <AppLayout title={t('transaction.title')} showBackButton>
       <TransactionTypeTabs>
         <div className="flex flex-col gap-4 py-4">
           <ButtonGroup className="w-full">
@@ -47,7 +54,11 @@ function TransactionPage() {
           </ButtonGroup>
           <div className="flex flex-col gap-2">
             <span>{t('transaction.account')}</span>
-            <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} modal={true}>
+            <Drawer
+              open={isDrawerOpen}
+              onOpenChange={setIsDrawerOpen}
+              modal={true}
+            >
               <DrawerTrigger asChild>
                 {account ? (
                   <AccountCard
@@ -69,7 +80,9 @@ function TransactionPage() {
               <DrawerContent>
                 <DrawerHeader>
                   <DrawerTitle>Select Account</DrawerTitle>
-                  <DrawerDescription>Choose an account for the transaction</DrawerDescription>
+                  <DrawerDescription>
+                    Choose an account for the transaction
+                  </DrawerDescription>
                 </DrawerHeader>
                 <RadioGroup
                   className="px-4 gap-1 overflow-y-auto pb-4"

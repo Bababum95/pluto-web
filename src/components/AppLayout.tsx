@@ -8,6 +8,7 @@ type Props = {
   title?: React.ReactNode
   actions?: React.ReactNode
   className?: string
+  showBackButton?: boolean
 }
 
 export const AppLayout: FC<Props> = ({
@@ -15,10 +16,11 @@ export const AppLayout: FC<Props> = ({
   className,
   title,
   actions,
+  showBackButton,
 }) => {
   return (
     <>
-      <Header title={title} actions={actions} />
+      <Header title={title} actions={actions} showBackButton={showBackButton} />
       <main className={cn('flex flex-col gap-2 p-4', className)}>
         {children}
       </main>

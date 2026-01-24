@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Input, type InputProps } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
@@ -114,10 +114,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
   )
 }
 
-function InputGroupInput({
-  className,
-  ...props
-}: React.ComponentProps<'input'>) {
+function InputGroupInput({ className, ...props }: InputProps) {
   return (
     <Input
       data-slot="input-group-control"

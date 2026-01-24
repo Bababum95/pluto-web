@@ -1,10 +1,10 @@
 import type { FC } from 'react'
 
 import { Field, FieldLabel, FieldError } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { Input, type InputProps } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
-type Props = React.ComponentProps<'input'> & {
+type Props = InputProps & {
   label?: string
   error?: string
 }

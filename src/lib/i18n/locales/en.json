@@ -5,12 +5,17 @@
     "home": "Home",
     "accounts": "Accounts",
     "settings": "Settings",
+    "categories": "Categories",
     "total": "Total"
   },
   "auth": {
     "signIn": "Sign in",
     "login": "Login",
     "description": "Enter your email below to login to your account"
+  },
+  "categories": {
+    "create": "Create category",
+    "name": "Category name"
   },
   "timeRanges": {
     "day": "Day",

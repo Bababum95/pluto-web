@@ -1,6 +1,8 @@
 import { Slot } from 'radix-ui'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { forwardRef } from 'react'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { PlusSignIcon } from '@hugeicons/core-free-icons'
 
 import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/lib/utils'
@@ -72,4 +74,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = 'Button'
 
-export { Button, buttonVariants }
+const PlusButton = () => {
+  return (
+    <Button size="icon" className="[&_svg]:size-6 w-11 h-11 rounded-full">
+      <HugeiconsIcon icon={PlusSignIcon} strokeWidth={2} />
+    </Button>
+  )
+}
+
+export { Button, buttonVariants, PlusButton }

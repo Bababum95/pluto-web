@@ -16,6 +16,8 @@ import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AppTransactionRouteImport } from './routes/_app/transaction'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppAccountsRouteImport } from './routes/_app/accounts'
+import { Route as AppCategoriesIndexRouteImport } from './routes/_app/categories/index'
+import { Route as AppCategoriesCreateRouteImport } from './routes/_app/categories/create'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -50,6 +52,16 @@ const AppAccountsRoute = AppAccountsRouteImport.update({
   path: '/accounts',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesCreateRoute = AppCategoriesCreateRouteImport.update({
+  id: '/categories/create',
+  path: '/categories/create',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/accounts': typeof AppAccountsRoute
@@ -57,6 +69,8 @@ export interface FileRoutesByFullPath {
   '/transaction': typeof AppTransactionRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
+  '/categories/create': typeof AppCategoriesCreateRoute
+  '/categories': typeof AppCategoriesIndexRoute
 }
 export interface FileRoutesByTo {
   '/accounts': typeof AppAccountsRoute
@@ -64,6 +78,8 @@ export interface FileRoutesByTo {
   '/transaction': typeof AppTransactionRoute
   '/login': typeof AuthLoginRoute
   '/': typeof AppIndexRoute
+  '/categories/create': typeof AppCategoriesCreateRoute
+  '/categories': typeof AppCategoriesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -74,12 +90,28 @@ export interface FileRoutesById {
   '/_app/transaction': typeof AppTransactionRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_app/': typeof AppIndexRoute
+  '/_app/categories/create': typeof AppCategoriesCreateRoute
+  '/_app/categories/': typeof AppCategoriesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/accounts' | '/settings' | '/transaction' | '/login' | '/'
+  fullPaths:
+    | '/accounts'
+    | '/settings'
+    | '/transaction'
+    | '/login'
+    | '/'
+    | '/categories/create'
+    | '/categories'
   fileRoutesByTo: FileRoutesByTo
-  to: '/accounts' | '/settings' | '/transaction' | '/login' | '/'
+  to:
+    | '/accounts'
+    | '/settings'
+    | '/transaction'
+    | '/login'
+    | '/'
+    | '/categories/create'
+    | '/categories'
   id:
     | '__root__'
     | '/_app'
@@ -89,6 +121,8 @@ export interface FileRouteTypes {
     | '/_app/transaction'
     | '/_auth/login'
     | '/_app/'
+    | '/_app/categories/create'
+    | '/_app/categories/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -147,6 +181,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAccountsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/categories/': {
+      id: '/_app/categories/'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof AppCategoriesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/categories/create': {
+      id: '/_app/categories/create'
+      path: '/categories/create'
+      fullPath: '/categories/create'
+      preLoaderRoute: typeof AppCategoriesCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -155,6 +203,8 @@ interface AppRouteChildren {
   AppSettingsRoute: typeof AppSettingsRoute
   AppTransactionRoute: typeof AppTransactionRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppCategoriesCreateRoute: typeof AppCategoriesCreateRoute
+  AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -162,6 +212,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppSettingsRoute: AppSettingsRoute,
   AppTransactionRoute: AppTransactionRoute,
   AppIndexRoute: AppIndexRoute,
+  AppCategoriesCreateRoute: AppCategoriesCreateRoute,
+  AppCategoriesIndexRoute: AppCategoriesIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

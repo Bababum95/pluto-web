@@ -37,11 +37,11 @@ function AccountsPage() {
 
   return (
     <AppLayout
-      title="Accounts"
+      title={t('common.accounts')}
       actions={
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="[&_svg]:size-6">
+            <Button variant="ghost" size="icon" className="[&_svg]:size-6">
               <HugeiconsIcon icon={MoreVerticalIcon} />
             </Button>
           </DropdownMenuTrigger>

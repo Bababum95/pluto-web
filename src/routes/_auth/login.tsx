@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { AuthCard, useAuth } from '@/features/auth'
 import { sleep } from '@/lib/utils'
 import { useState } from 'react'
-import { FormField } from '@/components/forms/form-field'
+// import { FormField } from '@/components/forms/form-field'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { useTranslation } from '@/lib/i18n'
@@ -30,7 +30,7 @@ function LoginComponent() {
   const isLoading = useRouterState({ select: (s) => s.isLoading })
   const navigate = Route.useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [email, setEmail] = useState('')
+  const [email, _setEmail] = useState('')
   const { t } = useTranslation()
 
   const search = Route.useSearch()
@@ -59,7 +59,7 @@ function LoginComponent() {
   return (
     <AuthCard title={t('auth.login')} description={t('auth.description')}>
       <div className="grid gap-4">
-        <FormField
+        {/* <FormField
           id="email"
           label="Email"
           type="email"
@@ -67,7 +67,7 @@ function LoginComponent() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-        />
+        /> */}
         <Button
           type="submit"
           className="w-full"

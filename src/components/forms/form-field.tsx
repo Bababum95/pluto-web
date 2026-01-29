@@ -1,30 +1,32 @@
-import type { FC } from 'react'
+import type { AnyFieldApi } from '@tanstack/react-form'
 
 import { Field, FieldLabel, FieldError } from '@/components/ui/field'
 import { Input, type InputProps } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
 
-type Props = InputProps & {
+type Props = {
+  field: AnyFieldApi
   label?: string
-  error?: string
+  className?: string
+  inputProps?: InputProps
 }
 
-export const FormField: FC<Props> = ({
-  id,
-  label,
-  error,
-  className,
-  ...props
-}) => {
+export const FormField = ({ field, label, className, inputProps }: Props) => {
+  const { state, name, handleChange, handleBlur } = field
+  const isError = state.meta.isTouched && !state.meta.isValid
+
   return (
-    <Field>
-      {label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
+    <Field className={className}>
+      {label && <FieldLabel htmlFor={name}>{label}</FieldLabel>}
       <Input
-        id={id}
-        className={cn(error ? 'border-destructive' : '', className)}
-        {...props}
+        id={name}
+        name={name}
+        value={state.value ?? ''}
+        onChange={(e) => handleChange(e.target.value)}
+        onBlur={handleBlur}
+        className={isError ? 'border-destructive' : ''}
+        {...inputProps}
       />
-      {error && <FieldError>{error}</FieldError>}
+      {isError && <FieldError>{state.meta.errors.join(',')}</FieldError>}
     </Field>
   )
 }

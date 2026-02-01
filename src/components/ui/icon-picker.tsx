@@ -102,7 +102,11 @@ const IconPickerRoot: FC<IconPickerProps> = ({
           />
         ))}
 
-        <IconDrawer />
+        <IconDrawer
+          value={value}
+          onChange={handleSelect}
+          iconColor={iconColor}
+        />
       </div>
     </Field>
   )
@@ -150,9 +154,25 @@ const Icon: FC<IconProps> = ({
   )
 }
 
-const IconDrawer = () => {
+type IconDrawerProps = {
+  onChange: (value: string) => void
+  value?: string
+  iconColor?: string
+}
+
+const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleSelect = useCallback(
+    (name: string) => {
+      onChange(name)
+      setIsOpen(false)
+    },
+    [onChange]
+  )
+
   return (
-    <Drawer>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <Button
           variant="outline"
@@ -170,6 +190,19 @@ const IconDrawer = () => {
             Choose an account for the transaction
           </DrawerDescription>
         </DrawerHeader>
+        <div className="grid grid-cols-5 gap-2 px-4 overflow-y-auto pb-4 pt-2">
+          {ICON_NAMES.map((icon) => (
+            <Icon
+              key={icon}
+              name={icon}
+              className={cn({
+                ['outline-2 outline-offset-2 outline-primary']: icon === value,
+              })}
+              color={icon === value ? iconColor : undefined}
+              onClick={() => handleSelect(icon)}
+            />
+          ))}
+        </div>
       </DrawerContent>
     </Drawer>
   )

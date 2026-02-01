@@ -59,14 +59,19 @@ const CreateCategoryPage = () => {
                 />
               )}
             />
-            <form.Field
-              name="icon"
-              children={(field) => (
-                <IconPicker
-                  value={field.state.value as string}
-                  onChange={(value) => field.handleChange(value)}
-                  label={t('categories.icon')}
-                  iconColor={form.state.values.color as string}
+            <form.Subscribe
+              selector={(state) => state.values.color}
+              children={(color) => (
+                <form.Field
+                  name="icon"
+                  children={(field) => (
+                    <IconPicker
+                      value={field.state.value as string}
+                      onChange={(value) => field.handleChange(value)}
+                      label={t('categories.icon')}
+                      iconColor={color}
+                    />
+                  )}
                 />
               )}
             />

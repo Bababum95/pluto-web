@@ -40,5 +40,16 @@
   "transactionType": {
     "expenses": "Расходы",
     "income": "Доходы"
+  },
+  "categories": {
+    "create": "Создать категорию",
+    "name": "Название категории",
+    "icon": "Иконка",
+    "color": "Цвет",
+    "submit": "Создать",
+    "errors": {
+      "name": { "required": "Введите название категории" },
+      "color": { "required": "Выберите цвет" }
+    }
   }
 }

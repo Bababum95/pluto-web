@@ -2,6 +2,7 @@ import type { AnyFieldApi } from '@tanstack/react-form'
 
 import { Field, FieldLabel, FieldError } from '@/components/ui/field'
 import { Input, type InputProps } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 type Props = {
   field: AnyFieldApi
@@ -23,10 +24,20 @@ export const FormField = ({ field, label, className, inputProps }: Props) => {
         value={state.value ?? ''}
         onChange={(e) => handleChange(e.target.value)}
         onBlur={handleBlur}
-        className={isError ? 'border-destructive' : ''}
+        className={cn(
+          isError ? 'border-destructive' : '',
+          inputProps?.className
+        )}
         {...inputProps}
       />
-      {isError && <FieldError>{state.meta.errors.join(',')}</FieldError>}
+      {isError && (
+        <FieldError>
+          {state.meta.errors
+            .map((error) => error.message)
+            .filter(Boolean)
+            .join('\n')}
+        </FieldError>
+      )}
     </Field>
   )
 }

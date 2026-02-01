@@ -21,7 +21,7 @@ export const AppLayout: FC<Props> = ({
   return (
     <>
       <Header title={title} actions={actions} showBackButton={showBackButton} />
-      <main className={cn('flex flex-col gap-2 p-4', className)}>
+      <main className={cn('flex flex-1 flex-col gap-2 p-4', className)}>
         {children}
       </main>
     </>

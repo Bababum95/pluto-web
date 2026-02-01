@@ -25,8 +25,16 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
   }
 
   return (
-    <Tabs value={transactionType} onValueChange={handleTabChange}>
-      <motion.div layout layoutDependency={transactionType} className="pb-12">
+    <Tabs
+      value={transactionType}
+      onValueChange={handleTabChange}
+      className="flex-1"
+    >
+      <motion.div
+        layout
+        layoutDependency={transactionType}
+        className="pb-12 flex flex-col flex-1"
+      >
         <AnimatePresence mode="wait" initial={false}>
           {TABS.map((tab) => {
             if (transactionType !== tab) return null
@@ -34,6 +42,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
             return (
               <TabsContent key={tab} value={tab} asChild forceMount>
                 <motion.div
+                  className="flex-1 flex flex-col"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}

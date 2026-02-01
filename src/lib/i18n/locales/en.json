@@ -15,7 +15,18 @@
   },
   "categories": {
     "create": "Create category",
-    "name": "Category name"
+    "name": "Category name",
+    "icon": "Icon",
+    "color": "Color",
+    "submit": "Create",
+    "errors": {
+      "name": {
+        "required": "Category name is required"
+      },
+      "color": {
+        "required": "Color is required"
+      }
+    }
   },
   "timeRanges": {
     "day": "Day",

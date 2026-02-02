@@ -6,10 +6,11 @@ import { MoreHorizontalCircle01Icon } from '@hugeicons/core-free-icons'
 
 import { cn } from '@/lib/utils'
 import {
-  ICON_NAMES,
+  POPULAR_ICONS,
   DEFAULT_ICON,
   getIconByName,
   isIconName,
+  ICON_CATEGORIES,
 } from '@/lib/icons'
 import { Field, FieldLabel } from '@/components/ui/field'
 import { Button } from '@/components/ui/button'
@@ -54,7 +55,7 @@ const IconPickerRoot: FC<IconPickerProps> = ({
   iconColor,
   className,
 }) => {
-  const [icons, setIcons] = useState<string[]>(ICON_NAMES.slice(0, 11))
+  const [icons, setIcons] = useState<string[]>(POPULAR_ICONS)
   const [internalValue, setInternalValue] = useState<string | undefined>(
     defaultValue
   )
@@ -134,7 +135,7 @@ export type IconProps = React.ComponentProps<'div'> & {
 const Icon: FC<IconProps> = ({
   name,
   className,
-  size = 24,
+  size = 28,
   color,
   ...props
 }) => {
@@ -190,17 +191,25 @@ const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
             Choose an account for the transaction
           </DrawerDescription>
         </DrawerHeader>
-        <div className="grid grid-cols-5 gap-2 px-4 overflow-y-auto pb-4 pt-2">
-          {ICON_NAMES.map((icon) => (
-            <Icon
-              key={icon}
-              name={icon}
-              className={cn({
-                ['outline-2 outline-offset-2 outline-primary']: icon === value,
-              })}
-              color={icon === value ? iconColor : undefined}
-              onClick={() => handleSelect(icon)}
-            />
+        <div className="px-4 overflow-y-auto py-2">
+          {ICON_CATEGORIES.map((category) => (
+            <div key={category.name}>
+              <h3 className="text-sm font-medium mb-2 text-muted-foreground">{category.name}</h3>
+              <div className="grid grid-cols-5 gap-2 mb-4">
+                {category.icons.map((icon) => (
+                  <Icon
+                    key={icon}
+                    name={icon}
+                    className={cn({
+                      ['outline-2 outline-offset-2 outline-primary']:
+                        icon === value,
+                    })}
+                    color={icon === value ? iconColor : undefined}
+                    onClick={() => handleSelect(icon)}
+                  />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </DrawerContent>

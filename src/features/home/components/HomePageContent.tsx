@@ -25,7 +25,11 @@ export const HomePageContent: FC = () => {
         <CardContent className="flex-1 pb-0">
           <ChartPieDonutText total="104,25 $" />
         </CardContent>
-        <Link to="/transaction" className="absolute bottom-4 right-4 z-10">
+        <Link
+          to="/transaction"
+          className="absolute bottom-4 right-4 z-10"
+          viewTransition={{ types: ['slide-left'] }}
+        >
           <PlusButton />
         </Link>
       </Card>

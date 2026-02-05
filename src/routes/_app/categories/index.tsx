@@ -12,7 +12,10 @@ const CategoriesPage = () => {
     <AppLayout title={t('common.categories')}>
       <TransactionTypeTabs>
         <div>
-          <Link to="/categories/create">
+          <Link
+            to="/categories/create"
+            viewTransition={{ types: ['slide-left'] }}
+          >
             <PlusButton />
           </Link>
         </div>

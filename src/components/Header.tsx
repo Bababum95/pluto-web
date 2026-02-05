@@ -33,7 +33,12 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => router.history.back()}
+            onClick={() =>
+              router.navigate({
+                to: '..',
+                viewTransition: { types: ['slide-right'] },
+              })
+            }
             className="[&_svg]:size-6"
           >
             <HugeiconsIcon icon={ArrowLeft02Icon} />
@@ -62,6 +67,7 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
                     to={to}
                     key={to}
                     className="text-sm font-medium transition-colors hover:text-primary"
+                    viewTransition={{ types: ['slide-left'] }}
                   >
                     {t(label)}
                   </Link>

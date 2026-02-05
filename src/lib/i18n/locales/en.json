@@ -11,8 +11,15 @@
   },
   "auth": {
     "signIn": "Sign in",
+    "signUp": "Sign up",
     "login": "Login",
-    "description": "Enter your email below to login to your account"
+    "password": "Password",
+    "register": "Register",
+    "description": "Enter your email below to login to your account",
+    "registerDescription": "Create a new account by entering your information below",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "confirmPassword": "Confirm password"
   },
   "categories": {
     "create": "Create category",

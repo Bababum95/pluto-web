@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/lib/i18n'
 import { sleep } from '@/lib/utils'
 
-export const Route = createFileRoute('/_auth/login')({
+export const Route = createFileRoute('/_auth/register')({
   validateSearch: z.object({
     redirect: z.string().optional().catch(''),
   }),
@@ -19,29 +19,36 @@ export const Route = createFileRoute('/_auth/login')({
       throw redirect({ to: search.redirect || FALLBACK_URL })
     }
   },
-  component: LoginComponent,
+  component: RegisterComponent,
 })
 
-function LoginComponent() {
-  const { t } = useTranslation()
+function RegisterComponent() {
   const auth = useAuth()
+  const { t } = useTranslation()
   const router = useRouter()
   const search = Route.useSearch()
   const navigate = Route.useNavigate()
   const form = useForm({
     validators: {
-      onSubmit: z.object({
-        email: z.email(),
-        password: z.string().min(8),
-      }),
+      onSubmit: z
+        .object({
+          email: z.email(),
+          password: z.string().min(8),
+          confirmPassword: z.string().min(8),
+        })
+        .refine((data) => data.password === data.confirmPassword, {
+          message: 'Passwords do not match',
+          path: ['confirmPassword'],
+        }),
     },
     defaultValues: {
       email: '',
       password: '',
+      confirmPassword: '',
     },
     onSubmit: async ({ value }) => {
       try {
-        await auth.login(value)
+        await auth.register(value)
 
         await router.invalidate()
 
@@ -54,13 +61,16 @@ function LoginComponent() {
           viewTransition: { types: ['slide-left'] },
         })
       } catch (error) {
-        console.error('Error logging in: ', error)
+        console.error('Error registering: ', error)
       }
     },
   })
 
   return (
-    <AuthCard title={t('auth.login')} description={t('auth.description')}>
+    <AuthCard
+      title={t('auth.register')}
+      description={t('auth.registerDescription')}
+    >
       <form
         className="grid gap-4"
         onSubmit={(e) => {
@@ -88,6 +98,15 @@ function LoginComponent() {
             <PasswordFormField field={field} label={t('auth.password')} />
           )}
         />
+        <form.Field
+          name="confirmPassword"
+          children={(field) => (
+            <PasswordFormField
+              field={field}
+              label={t('auth.confirmPassword')}
+            />
+          )}
+        />
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
@@ -97,19 +116,19 @@ function LoginComponent() {
               disabled={!canSubmit}
               isLoading={isSubmitting}
             >
-              {t('auth.signIn')}
+              {t('auth.signUp')}
             </Button>
           )}
         />
       </form>
       <div className="mt-4 text-center text-sm">
-        <span className="text-muted-foreground">{t('auth.noAccount')} </span>
+        <span className="text-muted-foreground">{t('auth.haveAccount')} </span>
         <Link
-          to="/register"
+          to="/login"
           className="text-primary underline-offset-4 hover:underline font-medium"
-          viewTransition={{ types: ['slide-left'] }}
+          viewTransition={{ types: ['slide-right'] }}
         >
-          {t('auth.signUp')}
+          {t('auth.signIn')}
         </Link>
       </div>
     </AuthCard>

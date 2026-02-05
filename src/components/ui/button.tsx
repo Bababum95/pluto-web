@@ -78,7 +78,7 @@ const PlusButton = () => {
   return (
     <Button
       size="icon"
-      className="[&_svg:not([class*='size-'])]:size-6 w-11 h-11 rounded-full"
+      className="[&_svg:not([class*='size-'])]:size-6 w-12 h-12 rounded-full"
     >
       <HugeiconsIcon icon={PlusSignIcon} strokeWidth={2} />
     </Button>

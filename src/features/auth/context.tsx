@@ -3,7 +3,7 @@ import { createContext, useState, useCallback } from 'react'
 import { sleep } from '@/lib/utils'
 
 import { getStoredUser, setStoredUser } from './utils'
-import type { AuthContext as AuthContextType, LoginParams } from './types'
+import type { AuthContext as AuthContextType, LoginParams, RegisterParams } from './types'
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 
@@ -29,8 +29,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser(email)
   }, [])
 
+  const register = useCallback(async ({ email }: RegisterParams) => {
+    await sleep(500)
+
+    setStoredUser(email)
+    setUser(email)
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   )

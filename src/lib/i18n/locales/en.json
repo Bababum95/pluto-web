@@ -6,7 +6,8 @@
     "accounts": "Accounts",
     "settings": "Settings",
     "categories": "Categories",
-    "total": "Total"
+    "total": "Total",
+    "profile": "Profile"
   },
   "auth": {
     "signIn": "Sign in",

@@ -1,4 +1,5 @@
 import type { AnyFieldApi } from '@tanstack/react-form'
+import type { FC } from 'react'
 
 import { Field, FieldLabel, FieldError } from '@/components/ui/field'
 import { Input, type InputProps } from '@/components/ui/input'
@@ -11,7 +12,12 @@ type Props = {
   inputProps?: InputProps
 }
 
-export const FormField = ({ field, label, className, inputProps }: Props) => {
+export const FormField: FC<Props> = ({
+  field,
+  label,
+  className,
+  inputProps,
+}) => {
   const { state, name, handleChange, handleBlur } = field
   const isError = state.meta.isTouched && !state.meta.isValid
 

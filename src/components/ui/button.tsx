@@ -24,7 +24,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-9 px-4 py-2',
+        default: 'h-10 px-4 py-2',
         sm: 'h-8 rounded-md px-3 text-xs',
         lg: 'h-10 rounded-md px-8',
         icon: 'h-9 w-9',
@@ -76,7 +76,10 @@ Button.displayName = 'Button'
 
 const PlusButton = () => {
   return (
-    <Button size="icon" className="[&_svg:not([class*='size-'])]:size-6 w-11 h-11 rounded-full">
+    <Button
+      size="icon"
+      className="[&_svg:not([class*='size-'])]:size-6 w-11 h-11 rounded-full"
+    >
       <HugeiconsIcon icon={PlusSignIcon} strokeWidth={2} />
     </Button>
   )

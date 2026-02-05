@@ -34,7 +34,7 @@ export const HomePageContent: FC = () => {
         </Link>
       </Card>
       <div className="flex flex-col gap-1">
-        <Item variant="outline" size="xs">
+        <Item variant="outline" size="xs" className="bg-card">
           <ItemMedia variant="icon" style={{ backgroundColor: '#00a0df' }}>
             <HugeiconsIcon icon={Dollar01Icon} />
           </ItemMedia>
@@ -45,7 +45,7 @@ export const HomePageContent: FC = () => {
             <span className="font-medium">104,25 $</span>
           </ItemActions>
         </Item>
-        <Item variant="outline" size="xs">
+        <Item variant="outline" size="xs" className="bg-card">
           <ItemMedia variant="icon">
             <HugeiconsIcon icon={Dollar01Icon} />
           </ItemMedia>

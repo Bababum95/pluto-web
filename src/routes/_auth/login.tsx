@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 import { AuthCard, useAuth, FALLBACK_URL } from '@/features/auth'
 import { FormField } from '@/components/forms/form-field'
+import { PasswordFormField } from '@/components/forms/password-form-field'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { useTranslation } from '@/lib/i18n'
@@ -32,14 +33,16 @@ function LoginComponent() {
     validators: {
       onSubmit: z.object({
         email: z.email(),
+        password: z.string().min(8),
       }),
     },
     defaultValues: {
       email: '',
+      password: '',
     },
     onSubmit: async ({ value }) => {
       try {
-        await auth.login(value.email)
+        await auth.login(value)
 
         await router.invalidate()
 
@@ -83,12 +86,18 @@ function LoginComponent() {
             />
           )}
         />
+        <form.Field
+          name="password"
+          children={(field) => (
+            <PasswordFormField field={field} label="Password" />
+          )}
+        />
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
             <Button
               type="submit"
-              className="mt-auto w-full"
+              className="mt-6 w-full"
               disabled={!canSubmit}
               isLoading={isSubmitting}
             >

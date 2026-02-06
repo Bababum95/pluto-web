@@ -32,6 +32,7 @@ function RegisterComponent() {
     validators: {
       onSubmit: z
         .object({
+          name: z.string().min(1),
           email: z.email(),
           password: z.string().min(8),
           confirmPassword: z.string().min(8),
@@ -42,6 +43,7 @@ function RegisterComponent() {
         }),
     },
     defaultValues: {
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -79,6 +81,12 @@ function RegisterComponent() {
           form.handleSubmit()
         }}
       >
+        <form.Field
+          name="name"
+          children={(field) => (
+            <FormField field={field} label={t('auth.name')} />
+          )}
+        />
         <form.Field
           name="email"
           children={(field) => (

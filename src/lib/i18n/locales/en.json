@@ -19,7 +19,8 @@
     "registerDescription": "Create a new account by entering your information below",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
-    "confirmPassword": "Confirm password"
+    "confirmPassword": "Confirm password",
+    "name": "Name"
   },
   "categories": {
     "create": "Create category",

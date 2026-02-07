@@ -1,28 +1,23 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { useRouter } from '@tanstack/react-router'
 
 import { AppLayout } from '@/components/AppLayout'
 import { useAuth } from '@/features/auth'
 import { Button } from '@/components/ui/button'
+import { selectUser } from '@/store/slices/user'
+import { useAppSelector } from '@/store'
 
 const ProfilePage = () => {
   const { t } = useTranslation()
-  const { user, logout } = useAuth()
-  const navigate = Route.useNavigate()
-  const router = useRouter()
-
-  const handleLogout = async () => {
-    await logout()
-    await router.invalidate()
-
-    await navigate({ to: '/login', viewTransition: { types: ['slide-left'] } })
-  }
+  const { logout } = useAuth()
+  const user = useAppSelector(selectUser)
 
   return (
     <AppLayout title={t('common.profile')}>
-      <p>{user}</p>
-      <Button onClick={handleLogout}>Logout</Button>
+      <p>{user?.name}</p>
+      <p>{user?.email}</p>
+      <p>{user?.id}</p>
+      <Button onClick={logout}>Logout</Button>
     </AppLayout>
   )
 }

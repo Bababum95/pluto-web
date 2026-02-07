@@ -1,5 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { redirect, useRouter } from '@tanstack/react-router'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 
@@ -8,34 +7,25 @@ import { FormField } from '@/components/forms/form-field'
 import { PasswordFormField } from '@/components/forms/password-form-field'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/lib/i18n'
-import { sleep } from '@/lib/utils'
 
 export const Route = createFileRoute('/_auth/register')({
-  validateSearch: z.object({
-    redirect: z.string().optional().catch(''),
-  }),
-  beforeLoad: ({ context, search }) => {
-    if (context.auth.isAuthenticated) {
-      throw redirect({ to: search.redirect || FALLBACK_URL })
-    }
-  },
   component: RegisterComponent,
 })
 
 function RegisterComponent() {
-  const auth = useAuth()
+  const { register, loading } = useAuth()
   const { t } = useTranslation()
   const router = useRouter()
   const search = Route.useSearch()
-  const navigate = Route.useNavigate()
+
   const form = useForm({
     validators: {
       onSubmit: z
         .object({
           name: z.string().min(1),
           email: z.email(),
-          password: z.string().min(8),
-          confirmPassword: z.string().min(8),
+          password: z.string().min(6),
+          confirmPassword: z.string().min(6),
         })
         .refine((data) => data.password === data.confirmPassword, {
           message: 'Passwords do not match',
@@ -49,22 +39,12 @@ function RegisterComponent() {
       confirmPassword: '',
     },
     onSubmit: async ({ value }) => {
-      try {
-        await auth.register(value)
-
-        await router.invalidate()
-
-        // This is just a hack being used to wait for the auth state to update
-        // in a real app, you'd want to use a more robust solution
-        await sleep(1)
-
-        await navigate({
-          to: search.redirect || FALLBACK_URL,
-          viewTransition: { types: ['slide-left'] },
-        })
-      } catch (error) {
-        console.error('Error registering: ', error)
-      }
+      register(value)
+      await router.invalidate()
+      router.navigate({
+        to: search.redirect || FALLBACK_URL,
+        viewTransition: { types: ['slide-right'] },
+      })
     },
   })
 
@@ -121,8 +101,8 @@ function RegisterComponent() {
             <Button
               type="submit"
               className="mt-6 w-full"
-              disabled={!canSubmit}
-              isLoading={isSubmitting}
+              disabled={!canSubmit || loading}
+              isLoading={isSubmitting || loading}
             >
               {t('auth.signUp')}
             </Button>

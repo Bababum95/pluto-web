@@ -1,18 +1,14 @@
-export type LoginParams = {
-  email: string
-  password: string
-}
+import type { components } from '@/lib/api/types'
 
-export type RegisterParams = {
-  email: string
-  password: string
-  confirmPassword: string
-}
+export type LoginParams = components['schemas']['LoginDto']
+export type RegisterParams = components['schemas']['RegisterDto']
 
 export type AuthContext = {
-  isAuthenticated: boolean
+  isAuth: boolean
+  /** True while GET /auth/me is in progress; use to delay routing until session is known */
+  sessionLoading: boolean
   login: (params: LoginParams) => Promise<void>
   register: (params: RegisterParams) => Promise<void>
   logout: () => Promise<void>
-  user: string | null
+  loading: boolean
 }

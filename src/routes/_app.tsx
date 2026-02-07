@@ -11,7 +11,7 @@ const AppLayout = () => {
 export const Route = createFileRoute('/_app')({
   component: AppLayout,
   beforeLoad: ({ context, location }) => {
-    if (!context.auth.isAuthenticated) {
+    if (!context.isAuth) {
       throw redirect({
         to: '/login',
         search: { redirect: location.href },

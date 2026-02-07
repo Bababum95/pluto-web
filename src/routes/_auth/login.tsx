@@ -1,24 +1,19 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { redirect, useRouter } from '@tanstack/react-router'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 
-import { AuthCard, useAuth, FALLBACK_URL } from '@/features/auth'
+import {
+  AuthCard,
+  useAuth,
+  FALLBACK_URL,
+  PASSWORD_MIN_LENGTH,
+} from '@/features/auth'
 import { FormField } from '@/components/forms/form-field'
 import { PasswordFormField } from '@/components/forms/password-form-field'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/lib/i18n'
-import { sleep } from '@/lib/utils'
 
 export const Route = createFileRoute('/_auth/login')({
-  validateSearch: z.object({
-    redirect: z.string().optional().catch(''),
-  }),
-  beforeLoad: ({ context, search }) => {
-    if (context.auth.isAuthenticated) {
-      throw redirect({ to: search.redirect || FALLBACK_URL })
-    }
-  },
   component: LoginComponent,
 })
 
@@ -27,12 +22,11 @@ function LoginComponent() {
   const auth = useAuth()
   const router = useRouter()
   const search = Route.useSearch()
-  const navigate = Route.useNavigate()
   const form = useForm({
     validators: {
       onSubmit: z.object({
         email: z.email(),
-        password: z.string().min(8),
+        password: z.string().min(PASSWORD_MIN_LENGTH),
       }),
     },
     defaultValues: {
@@ -40,22 +34,12 @@ function LoginComponent() {
       password: '',
     },
     onSubmit: async ({ value }) => {
-      try {
-        await auth.login(value)
-
-        await router.invalidate()
-
-        // This is just a hack being used to wait for the auth state to update
-        // in a real app, you'd want to use a more robust solution
-        await sleep(1)
-
-        await navigate({
-          to: search.redirect || FALLBACK_URL,
-          viewTransition: { types: ['slide-left'] },
-        })
-      } catch (error) {
-        console.error('Error logging in: ', error)
-      }
+      await auth.login(value)
+      await router.invalidate()
+      router.navigate({
+        to: search.redirect || FALLBACK_URL,
+        viewTransition: { types: ['slide-right'] },
+      })
     },
   })
 

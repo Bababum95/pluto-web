@@ -1,13 +1,12 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 
 import { Devtools } from '@/components/Devtools'
-import type { AuthContextType } from '@/features/auth'
 
 const showDevtools =
   import.meta.env.DEV && import.meta.env.VITE_SHOW_DEVTOOLS != 'false'
 
 type RouterContext = {
-  auth: AuthContextType
+  isAuth: boolean
 }
 
 function RootComponent() {

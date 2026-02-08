@@ -4,922 +4,922 @@
  */
 
 export interface paths {
-  '/v1': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['AppController_getHello']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/currencies': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get all currencies */
-    get: operations['CurrencyController_findAll']
-    put?: never
-    /** Create a new currency */
-    post: operations['CurrencyController_create']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/currencies/{id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get a currency by ID */
-    get: operations['CurrencyController_findOne']
-    put?: never
-    post?: never
-    /** Delete a currency by ID */
-    delete: operations['CurrencyController_remove']
-    options?: never
-    head?: never
-    /** Update a currency by ID */
-    patch: operations['CurrencyController_update']
-    trace?: never
-  }
-  '/v1/currencies/sync': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Sync currencies from external API */
-    post: operations['CurrencyController_sync']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/rates': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get all rates */
-    get: operations['RateController_findAll']
-    put?: never
-    /** Create a new rate */
-    post: operations['RateController_create']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/rates/code/{code}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get a rate by currency code */
-    get: operations['RateController_findByCode']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/rates/{id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get a rate by ID */
-    get: operations['RateController_findOne']
-    put?: never
-    post?: never
-    /** Delete a rate by ID */
-    delete: operations['RateController_remove']
-    options?: never
-    head?: never
-    /** Update a rate by ID */
-    patch: operations['RateController_update']
-    trace?: never
-  }
-  '/v1/users': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get all users */
-    get: operations['UsersController_findAll']
-    put?: never
-    /** Create a new user */
-    post: operations['UsersController_create']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/users/email/{email}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get a user by email */
-    get: operations['UsersController_findByEmail']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/users/{id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get a user by ID */
-    get: operations['UsersController_findOne']
-    put?: never
-    post?: never
-    /** Delete a user by ID */
-    delete: operations['UsersController_remove']
-    options?: never
-    head?: never
-    /** Update a user by ID */
-    patch: operations['UsersController_update']
-    trace?: never
-  }
-  '/v1/auth/register': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Register a new user; returns user and Bearer token (store token, send in Authorization header). */
-    post: operations['AuthController_register']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/auth/login': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Login with email and password; returns user and Bearer token (store token, send in Authorization header). */
-    post: operations['AuthController_login']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/auth/logout': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Logout user (client should clear stored token). */
-    post: operations['AuthController_logout']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/v1/auth/me': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get current user profile */
-    get: operations['AuthController_getProfile']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
+    "/v1": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AppController_getHello"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/currencies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all currencies */
+        get: operations["CurrencyController_findAll"];
+        put?: never;
+        /** Create a new currency */
+        post: operations["CurrencyController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/currencies/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a currency by ID */
+        get: operations["CurrencyController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a currency by ID */
+        delete: operations["CurrencyController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a currency by ID */
+        patch: operations["CurrencyController_update"];
+        trace?: never;
+    };
+    "/v1/currencies/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sync currencies from external API */
+        post: operations["CurrencyController_sync"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/rates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all rates */
+        get: operations["RateController_findAll"];
+        put?: never;
+        /** Create a new rate */
+        post: operations["RateController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/rates/code/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a rate by currency code */
+        get: operations["RateController_findByCode"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/rates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a rate by ID */
+        get: operations["RateController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a rate by ID */
+        delete: operations["RateController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a rate by ID */
+        patch: operations["RateController_update"];
+        trace?: never;
+    };
+    "/v1/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all users */
+        get: operations["UsersController_findAll"];
+        put?: never;
+        /** Create a new user */
+        post: operations["UsersController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/users/email/{email}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a user by email */
+        get: operations["UsersController_findByEmail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/users/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a user by ID */
+        get: operations["UsersController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a user by ID */
+        delete: operations["UsersController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a user by ID */
+        patch: operations["UsersController_update"];
+        trace?: never;
+    };
+    "/v1/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register a new user; returns user and Bearer token (store token, send in Authorization header). */
+        post: operations["AuthController_register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Login with email and password; returns user and Bearer token (store token, send in Authorization header). */
+        post: operations["AuthController_login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Logout user (client should clear stored token). */
+        post: operations["AuthController_logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get current user profile */
+        get: operations["AuthController_getProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
-export type webhooks = Record<string, never>
+export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    CreateCurrencyDto: Record<string, never>
-    UpdateCurrencyDto: Record<string, never>
-    CreateRateDto: Record<string, never>
-    UpdateRateDto: Record<string, never>
-    CreateUserDto: {
-      /** @example John Doe */
-      name: string
-      /** @example user@example.com */
-      email: string
-      /** @example secret123 */
-      password: string
-    }
-    UserDto: {
-      id: string
-      /** @example John Doe */
-      name: string
-      /** @example user@example.com */
-      email: string
-      /** @example 2021-01-01T10:00:00.000Z */
-      createdAt: string
-      /** @example 2021-01-01T10:00:00.000Z */
-      updatedAt: string
-    }
-    UpdateUserDto: Record<string, never>
-    RegisterDto: {
-      /** @example John Doe */
-      name: string
-      /** @example user@example.com */
-      email: string
-      /** @example secret123 */
-      password: string
-    }
-    AuthResponseDto: {
-      /** @description User profile */
-      user: components['schemas']['UserDto']
-      /** @description JWT access token; send as Authorization: Bearer <token> */
-      accessToken: string
-    }
-    LoginDto: {
-      /** @example user@example.com */
-      email: string
-      /** @example secret123 */
-      password: string
-    }
-  }
-  responses: never
-  parameters: never
-  requestBodies: never
-  headers: never
-  pathItems: never
+    schemas: {
+        CreateCurrencyDto: Record<string, never>;
+        UpdateCurrencyDto: Record<string, never>;
+        CreateRateDto: Record<string, never>;
+        UpdateRateDto: Record<string, never>;
+        CreateUserDto: {
+            /** @example John Doe */
+            name: string;
+            /** @example user@example.com */
+            email: string;
+            /** @example secret123 */
+            password: string;
+        };
+        UserDto: {
+            id: string;
+            /** @example John Doe */
+            name: string;
+            /** @example user@example.com */
+            email: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
+        UpdateUserDto: Record<string, never>;
+        RegisterDto: {
+            /** @example John Doe */
+            name: string;
+            /** @example user@example.com */
+            email: string;
+            /** @example secret123 */
+            password: string;
+        };
+        AuthResponseDto: {
+            /** @description User profile */
+            user: components["schemas"]["UserDto"];
+            /** @description JWT access token; send as Authorization: Bearer <token> */
+            accessToken: string;
+        };
+        LoginDto: {
+            /** @example user@example.com */
+            email: string;
+            /** @example secret123 */
+            password: string;
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
-export type $defs = Record<string, never>
+export type $defs = Record<string, never>;
 export interface operations {
-  AppController_getHello: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  CurrencyController_findAll: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description List of all currencies. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  CurrencyController_create: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CreateCurrencyDto']
-      }
-    }
-    responses: {
-      /** @description The currency has been successfully created. */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  CurrencyController_findOne: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description The currency. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Currency not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  CurrencyController_remove: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description The currency has been successfully deleted. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Currency not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  CurrencyController_update: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UpdateCurrencyDto']
-      }
-    }
-    responses: {
-      /** @description The currency has been successfully updated. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Currency not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  CurrencyController_sync: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Currencies have been successfully synced. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Failed to sync currencies. */
-      500: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  RateController_findAll: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description List of all rates. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  RateController_create: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CreateRateDto']
-      }
-    }
-    responses: {
-      /** @description The rate has been successfully created. */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  RateController_findByCode: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        code: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description The rate. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Rate not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  RateController_findOne: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description The rate. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Rate not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  RateController_remove: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description The rate has been successfully deleted. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Rate not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  RateController_update: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UpdateRateDto']
-      }
-    }
-    responses: {
-      /** @description The rate has been successfully updated. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Rate not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  UsersController_findAll: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserDto'][]
-        }
-      }
-    }
-  }
-  UsersController_create: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CreateUserDto']
-      }
-    }
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserDto']
-        }
-      }
-      /** @description The user has been successfully created. */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description User with this email already exists. */
-      409: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  UsersController_findByEmail: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        email: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserDto']
-        }
-      }
-      /** @description User not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  UsersController_findOne: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserDto']
-        }
-      }
-      /** @description User not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  UsersController_remove: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description The user has been successfully deleted. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description User not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  UsersController_update: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        id: string
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UpdateUserDto']
-      }
-    }
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserDto']
-        }
-      }
-      /** @description User not found. */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description User with this email already exists. */
-      409: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  AuthController_register: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['RegisterDto']
-      }
-    }
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['AuthResponseDto']
-        }
-      }
-      /** @description User registered and logged in. Response includes accessToken. */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description User with this email already exists. */
-      409: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  AuthController_login: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['LoginDto']
-      }
-    }
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['AuthResponseDto']
-        }
-      }
-      /** @description Invalid credentials. */
-      401: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  AuthController_logout: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Logout successful. */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      /** @description Unauthorized. */
-      401: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  AuthController_getProfile: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['UserDto']
-        }
-      }
-      /** @description Unauthorized. */
-      401: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
+    AppController_getHello: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CurrencyController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all currencies. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CurrencyController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCurrencyDto"];
+            };
+        };
+        responses: {
+            /** @description The currency has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CurrencyController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The currency. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Currency not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CurrencyController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The currency has been successfully deleted. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Currency not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CurrencyController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCurrencyDto"];
+            };
+        };
+        responses: {
+            /** @description The currency has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Currency not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CurrencyController_sync: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Currencies have been successfully synced. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Failed to sync currencies. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RateController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all rates. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RateController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRateDto"];
+            };
+        };
+        responses: {
+            /** @description The rate has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RateController_findByCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rate. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RateController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rate. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RateController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The rate has been successfully deleted. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RateController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateRateDto"];
+            };
+        };
+        responses: {
+            /** @description The rate has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Rate not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserDto"][];
+                };
+            };
+        };
+    };
+    UsersController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUserDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
+            };
+            /** @description The user has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User with this email already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_findByEmail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                email: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
+            };
+            /** @description User not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
+            };
+            /** @description User not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The user has been successfully deleted. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
+            };
+            /** @description User not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User with this email already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_register: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponseDto"];
+                };
+            };
+            /** @description User registered and logged in. Response includes accessToken. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User with this email already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponseDto"];
+                };
+            };
+            /** @description Invalid credentials. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Logout successful. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_getProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
+            };
+            /** @description Unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
 }

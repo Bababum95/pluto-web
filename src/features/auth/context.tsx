@@ -28,6 +28,10 @@ type MutationPayload =
       path: 'login'
       payload: LoginParams
     }
+  | {
+      path: 'logout'
+      payload?: object
+    }
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [sessionLoading, setSessionLoading] = useState(true)
@@ -43,7 +47,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!sessionLoading) return
     let cancelled = false
     sleep(1000).then(() => {
       apiFetch<User>('/auth/me')
@@ -60,8 +63,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [dispatch, sessionLoading])
 
   const logout = useCallback(async () => {
+    mutation.reset()
+    await mutation.mutateAsync({ path: 'logout' })
     dispatch(clearUser())
-  }, [dispatch])
+  }, [mutation, dispatch])
 
   const login = useCallback(
     async (payload: LoginParams) => {

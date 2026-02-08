@@ -1,6 +1,8 @@
 import { QueryClient, QueryCache, MutationCache } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
+import { getAccessToken } from '@/lib/auth-token'
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 const API_VERSION = import.meta.env.VITE_API_VERSION
 const API_ROOT = `${API_BASE_URL}/${API_VERSION}/`
@@ -41,13 +43,19 @@ export async function apiFetch<T>(
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v))
   }
 
+  const token = getAccessToken()
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    ...init.headers,
+  }
+  if (token) {
+    (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`
+  }
+
   const res = await fetch(url.toString(), {
     ...init,
     credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...init.headers,
-    },
+    headers,
   })
 
   let body: ApiErrorBody | T | null = null

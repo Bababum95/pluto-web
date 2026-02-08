@@ -4,10 +4,12 @@ import { useMutation } from '@tanstack/react-query'
 import { clearUser, selectUser, setUser } from '@/store/slices/user'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { apiFetch } from '@/lib/api'
+import { setAccessToken, removeAccessToken } from '@/lib/auth-token'
 import type { User } from '@/features/user/types'
 
 import type {
   AuthContext as AuthContextType,
+  AuthResponse,
   LoginParams,
   RegisterParams,
 } from './types'
@@ -15,7 +17,7 @@ import { sleep } from '@/lib/utils'
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 
-type AuthProviderProps = {
+type Props = {
   children: React.ReactNode
 }
 
@@ -33,13 +35,13 @@ type MutationPayload =
       payload?: object
     }
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: Props) {
   const [sessionLoading, setSessionLoading] = useState(true)
   const mutation = useMutation({
-    mutationFn: ({ path, payload }: MutationPayload): Promise<User> => {
+    mutationFn: ({ path, payload }: MutationPayload): Promise<AuthResponse> => {
       return apiFetch(`/auth/${path}`, {
         method: 'POST',
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payload ?? {}),
       })
     },
   })
@@ -64,15 +66,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = useCallback(async () => {
     mutation.reset()
-    await mutation.mutateAsync({ path: 'logout' })
-    dispatch(clearUser())
+    try {
+      await mutation.mutateAsync({ path: 'logout' })
+    } finally {
+      removeAccessToken()
+      dispatch(clearUser())
+    }
   }, [mutation, dispatch])
 
   const login = useCallback(
     async (payload: LoginParams) => {
       mutation.reset()
-      const data = await mutation.mutateAsync({ path: 'login', payload })
-      dispatch(setUser(data))
+      const data = (await mutation.mutateAsync({
+        path: 'login',
+        payload,
+      })) as AuthResponse
+      setAccessToken(data.accessToken)
+      dispatch(setUser(data.user))
     },
     [mutation, dispatch]
   )
@@ -80,8 +90,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const register = useCallback(
     async (payload: RegisterParams) => {
       mutation.reset()
-      const data = await mutation.mutateAsync({ path: 'register', payload })
-      dispatch(setUser(data))
+      const data = (await mutation.mutateAsync({
+        path: 'register',
+        payload,
+      })) as AuthResponse
+      setAccessToken(data.accessToken)
+      dispatch(setUser(data.user))
     },
     [mutation, dispatch]
   )

@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 import { useCallback, useMemo, useRef, useState } from 'react'
+import { ColorPickerIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 
 import { cn, parseColor, hsbToHex, type HSB } from '@/lib/utils'
 import {
@@ -50,6 +52,8 @@ export type ColorPickerProps = {
   className?: string
 }
 
+const PRESET_COLORS = ['#3b82f6', '#22c55e', '#eab308', '#ef4444', '#8b5cf6']
+
 function ColorPickerRoot({
   value: valueProp,
   defaultValue = '#00a4e8',
@@ -63,6 +67,7 @@ function ColorPickerRoot({
   )
   const isControlled = valueProp !== undefined
   const value = isControlled ? parseColor(valueProp) : internalValue
+  const hexValue = useMemo(() => hsbToHex(value), [value])
 
   const setValue = useCallback(
     (next: HSB) => {
@@ -70,6 +75,13 @@ function ColorPickerRoot({
       onChange?.(hsbToHex(next))
     },
     [isControlled, onChange]
+  )
+
+  const handlePresetSelect = useCallback(
+    (hex: string) => {
+      setValue(parseColor(hex))
+    },
+    [setValue]
   )
 
   const contextValue = useMemo<ColorPickerContextValue>(
@@ -82,11 +94,44 @@ function ColorPickerRoot({
       <Field>
         {label != null && <FieldLabel>{label}</FieldLabel>}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <span className={cn('w-full flex', className)}>
-              <ColorSwatch />
-            </span>
-          </DropdownMenuTrigger>
+          <div className={cn('grid grid-cols-6 gap-2', className)}>
+            {PRESET_COLORS.map((hex) => (
+              <button
+                key={hex}
+                type="button"
+                className={cn('rounded-md aspect-square', {
+                  ['outline-2 outline-offset-2 outline-primary']:
+                    hex === hexValue,
+                })}
+                style={{ backgroundColor: hex }}
+                onClick={() => handlePresetSelect(hex)}
+                aria-label={`Select preset color ${hex}`}
+              />
+            ))}
+
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                style={{
+                  backgroundColor:
+                    value !== undefined && !PRESET_COLORS.includes(hexValue)
+                      ? hexValue
+                      : undefined,
+                }}
+                className={cn(
+                  'rounded-md aspect-square flex items-center justify-center text-xs font-medium border border-border',
+                  {
+                    ['outline-2 outline-offset-2 outline-primary']:
+                      value !== undefined && !PRESET_COLORS.includes(hexValue),
+                  }
+                )}
+                aria-label="Open color picker"
+              >
+                <HugeiconsIcon icon={ColorPickerIcon} size={24} />
+                <span className="sr-only">Open color picker</span>
+              </button>
+            </DropdownMenuTrigger>
+          </div>
           <DropdownMenuContent
             align="start"
             sideOffset={6}
@@ -111,7 +156,7 @@ function ColorPickerRoot({
 /* ColorSwatch                                                                */
 /* -------------------------------------------------------------------------- */
 
-function ColorSwatch({
+const ColorSwatch = React.memo(function ColorSwatch({
   className,
 }: {
   className?: string
@@ -127,7 +172,7 @@ function ColorSwatch({
       style={{ backgroundColor: hex }}
     />
   )
-}
+})
 
 /* -------------------------------------------------------------------------- */
 /* ColorArea (2D saturation / brightness)                                     */

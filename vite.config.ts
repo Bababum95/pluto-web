@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 import { defineConfig, type PluginOption } from 'vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
     react(),
     svgr(),
     tailwindcss(),
+    ViteImageOptimizer(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'favicon/*.png', 'apple-touch-icon.png'],

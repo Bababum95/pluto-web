@@ -8,8 +8,8 @@ import { AuthProvider, useAuth } from '@/features/auth'
 import { ThemeProvider } from '@/features/theme'
 import { store } from '@/store'
 import { queryClient } from '@/lib/api'
-import { Toaster } from './components/ui/sonner'
-import { Spinner } from './components/ui/spinner'
+import { Toaster } from '@/components/ui/sonner'
+import { FullScreenLoader } from '@/components/FullScreenLoader'
 import '@/lib/i18n/config'
 
 // Import the generated route tree
@@ -35,22 +35,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
-function SessionLoader() {
-  return (
-    <div className="flex min-h-dvh items-center justify-center bg-background">
-      <Spinner className="size-8 text-muted-foreground" />
-    </div>
-  )
-}
-
 function App() {
   const { isAuth, sessionLoading } = useAuth()
 
-  if (sessionLoading) {
-    return <SessionLoader />
-  }
-
-  return <RouterProvider router={router} context={{ isAuth }} />
+  return (
+    <>
+      <FullScreenLoader isVisible={sessionLoading} />
+      {!sessionLoading && (
+        <RouterProvider router={router} context={{ isAuth }} />
+      )}
+    </>
+  )
 }
 
 // Render the app

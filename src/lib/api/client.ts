@@ -1,7 +1,7 @@
 import { QueryClient, QueryCache, MutationCache } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { getAccessToken } from '@/lib/auth-token'
+import { getAccessToken } from '@/features/auth/utils/auth-token'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 const API_VERSION = import.meta.env.VITE_API_VERSION

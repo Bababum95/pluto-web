@@ -4,7 +4,6 @@ import { useMutation } from '@tanstack/react-query'
 import { clearUser, selectUser, setUser } from '@/store/slices/user'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { apiFetch } from '@/lib/api'
-import { setAccessToken, removeAccessToken } from '@/lib/auth-token'
 import type { User } from '@/features/user/types'
 
 import type {
@@ -13,7 +12,7 @@ import type {
   LoginParams,
   RegisterParams,
 } from './types'
-import { sleep } from '@/lib/utils'
+import { setAccessToken, removeAccessToken } from './utils/auth-token'
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 
@@ -30,10 +29,6 @@ type MutationPayload =
       path: 'login'
       payload: LoginParams
     }
-  | {
-      path: 'logout'
-      payload?: object
-    }
 
 export function AuthProvider({ children }: Props) {
   const [sessionLoading, setSessionLoading] = useState(true)
@@ -41,7 +36,7 @@ export function AuthProvider({ children }: Props) {
     mutationFn: ({ path, payload }: MutationPayload): Promise<AuthResponse> => {
       return apiFetch(`/auth/${path}`, {
         method: 'POST',
-        body: JSON.stringify(payload ?? {}),
+        body: JSON.stringify(payload),
       })
     },
   })
@@ -50,29 +45,24 @@ export function AuthProvider({ children }: Props) {
 
   useEffect(() => {
     let cancelled = false
-    sleep(1000).then(() => {
-      apiFetch<User>('/auth/me')
-        .then((data) => {
-          if (!cancelled) dispatch(setUser(data))
-        })
-        .finally(() => {
-          if (!cancelled) setSessionLoading(false)
-        })
-    })
+
+    apiFetch<User>('/auth/me')
+      .then((data) => {
+        if (!cancelled) dispatch(setUser(data))
+      })
+      .finally(() => {
+        if (!cancelled) setSessionLoading(false)
+      })
+
     return () => {
       cancelled = true
     }
   }, [dispatch, sessionLoading])
 
   const logout = useCallback(async () => {
-    mutation.reset()
-    try {
-      await mutation.mutateAsync({ path: 'logout' })
-    } finally {
-      removeAccessToken()
-      dispatch(clearUser())
-    }
-  }, [mutation, dispatch])
+    removeAccessToken()
+    dispatch(clearUser())
+  }, [dispatch])
 
   const login = useCallback(
     async (payload: LoginParams) => {

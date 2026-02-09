@@ -3,9 +3,7 @@
  * Same options (path, maxAge, sameSite, secure) for set and delete so the cookie is cleared correctly.
  */
 
-const TOKEN_COOKIE_NAME = 'access_token'
-const MAX_AGE_DAYS = 7
-const MAX_AGE_SEC = MAX_AGE_DAYS * 24 * 60 * 60
+import { TOKEN_COOKIE_NAME, MAX_AGE_SEC } from '../constants'
 
 export function setAccessToken(token: string): void {
   document.cookie = `${TOKEN_COOKIE_NAME}=${encodeURIComponent(token)}; path=/; max-age=${MAX_AGE_SEC}; samesite=strict; secure=true`

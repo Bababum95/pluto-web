@@ -18,13 +18,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { PlusButton } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
 import { AccountItem } from '@/features/account'
-import {
-  selectAccounts,
-  selectAccountsStatus,
-} from '@/store/slices/account'
+import { selectAccounts, selectAccountsStatus } from '@/store/slices/account'
 import { useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
 
@@ -33,9 +29,13 @@ export const Route = createFileRoute('/_app/accounts/')({
 })
 
 const actions = [
-  { value: 'add', icon: PlusSignIcon },
-  { value: 'newTransfer', icon: ArrowDataTransferHorizontalIcon },
-  { value: 'transferHistory', icon: Clock04Icon },
+  { value: 'add', icon: PlusSignIcon, to: '/accounts/create' },
+  {
+    value: 'newTransfer',
+    icon: ArrowDataTransferHorizontalIcon,
+    to: '/accounts/create',
+  },
+  { value: 'transferHistory', icon: Clock04Icon, to: '/accounts/create' },
 ]
 
 function AccountsPage() {
@@ -56,9 +56,15 @@ function AccountsPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-42">
             {actions.map((action) => (
-              <DropdownMenuItem key={action.value}>
-                <HugeiconsIcon icon={action.icon} />
-                <span>{t(`accounts.actions.${action.value}`)}</span>
+              <DropdownMenuItem key={action.value} asChild>
+                <Link
+                  to={action.to}
+                  key={action.value}
+                  viewTransition={{ types: ['slide-left'] }}
+                >
+                  <HugeiconsIcon icon={action.icon} />
+                  <span>{t(`accounts.actions.${action.value}`)}</span>
+                </Link>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
@@ -92,13 +98,6 @@ function AccountsPage() {
           </ItemGroup>
         </Card>
       )}
-      <Link
-        to="/accounts/create"
-        viewTransition={{ types: ['slide-left'] }}
-        className="fixed bottom-16 right-4 z-10"
-      >
-        <PlusButton />
-      </Link>
     </AppLayout>
   )
 }

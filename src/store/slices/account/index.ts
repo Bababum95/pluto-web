@@ -1,0 +1,67 @@
+import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
+
+import { accountApi } from '@/features/account'
+import type { Account } from '@/features/account/types'
+import type { RootState } from '@/store'
+
+type AccountState = {
+  accounts: Account[]
+  status: 'idle' | 'pending' | 'success' | 'failed'
+}
+
+const initialState: AccountState = {
+  accounts: [],
+  status: 'idle',
+}
+
+export const fetchAccounts = createAsyncThunk(
+  'account/fetchAccounts',
+  () => accountApi.list()
+)
+
+export const accountSlice = createSlice({
+  name: 'account',
+  initialState,
+  reducers: {
+    setAccounts: (state, action: PayloadAction<Account[]>) => {
+      state.accounts = action.payload
+    },
+    addAccount: (state, action: PayloadAction<Account>) => {
+      state.accounts.push(action.payload)
+    },
+    updateAccount: (state, action: PayloadAction<Account>) => {
+      const idx = state.accounts.findIndex((a) => a.id === action.payload.id)
+      if (idx !== -1) {
+        state.accounts[idx] = action.payload
+      }
+    },
+    removeAccount: (state, action: PayloadAction<string>) => {
+      state.accounts = state.accounts.filter((a) => a.id !== action.payload)
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAccounts.pending, (state) => {
+        state.status = 'pending'
+      })
+      .addCase(fetchAccounts.fulfilled, (state, action) => {
+        state.status = 'success'
+        state.accounts = action.payload
+      })
+      .addCase(fetchAccounts.rejected, (state) => {
+        state.status = 'failed'
+      })
+  },
+})
+
+export const {
+  setAccounts,
+  addAccount,
+  updateAccount,
+  removeAccount,
+} = accountSlice.actions
+
+export const selectAccounts = (state: RootState) => state.account.accounts
+export const selectAccountsStatus = (state: RootState) => state.account.status
+
+export default accountSlice.reducer

@@ -1,4 +1,7 @@
 export { AccountCard } from './components/AccountCard'
 export { AccountItem } from './components/AccountItem'
+export { AccountForm } from './components/AccountForm'
+export { accountApi } from './api'
 export { mockAccounts } from './mocks'
-export type { Account } from './type'
+export type { Account, CreateAccountDto, UpdateAccountDto } from './types'
+export type { Account as AccountUI, AccountItemProps } from './type'

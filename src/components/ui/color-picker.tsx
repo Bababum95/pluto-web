@@ -52,7 +52,7 @@ export type ColorPickerProps = {
   className?: string
 }
 
-const PRESET_COLORS = ['#3b82f6', '#22c55e', '#eab308', '#ef4444', '#8b5cf6']
+const PRESET_COLORS = ['#00a4e8', '#22c55e', '#eab308', '#ef4444', '#8b5cf6']
 
 function ColorPickerRoot({
   value: valueProp,

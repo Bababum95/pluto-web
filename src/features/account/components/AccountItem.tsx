@@ -9,27 +9,40 @@ import {
 import { HugeiconsIcon } from '@hugeicons/react'
 import type { FC } from 'react'
 
-import type { AccountItemProps } from '../type'
+import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
+import type { Account } from '../types'
 
-export const AccountItem: FC<AccountItemProps> = ({
+type Props = Account & {
+  onClick?: () => void
+  actions?: React.ReactNode
+}
+
+export const AccountItem: FC<Props> = ({
   name,
   currency,
   balance,
-  iconColor,
+  color,
   icon,
   onClick,
   actions,
 }) => {
-  const balanceContent = `${currency} ${balance}`
+  const iconElement = getIconByName(icon) ?? DEFAULT_ICON
+  const currencyCode =
+    typeof currency === 'string' ? currency : currency?.code || ''
+  const balanceContent = `${currencyCode} ${balance.toFixed(2)}`
 
   return (
     <Item size="sm" onClick={onClick}>
-      <ItemMedia variant="icon" style={{ backgroundColor: iconColor }}>
-        <HugeiconsIcon icon={icon} className="size-5" />
+      <ItemMedia variant="icon" style={{ backgroundColor: color }}>
+        <HugeiconsIcon icon={iconElement} className="size-5" />
       </ItemMedia>
-      <ItemContent className='gap-0'>
+      <ItemContent className="gap-0">
         <ItemTitle>{name}</ItemTitle>
-        {actions && <ItemDescription className='text-xs'>{balanceContent}</ItemDescription>}
+        {actions && (
+          <ItemDescription className="text-xs">
+            {balanceContent}
+          </ItemDescription>
+        )}
       </ItemContent>
       <ItemActions>
         {actions || <span className="font-medium">{balanceContent}</span>}

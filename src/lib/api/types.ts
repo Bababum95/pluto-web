@@ -287,11 +287,70 @@ export interface paths {
         patch: operations["CategoryController_update"];
         trace?: never;
     };
+    "/v1/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all accounts for the current user */
+        get: operations["AccountController_findAll"];
+        put?: never;
+        /** Create a new account */
+        post: operations["AccountController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/accounts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an account by ID */
+        get: operations["AccountController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete an account by ID */
+        delete: operations["AccountController_remove"];
+        options?: never;
+        head?: never;
+        /** Update an account by ID */
+        patch: operations["AccountController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         CreateCurrencyDto: Record<string, never>;
+        CurrencyDto: {
+            id: string;
+            /** @example USD */
+            code: string;
+            /** @example $ */
+            symbol: string;
+            /** @example US Dollar */
+            name: string;
+            /** @example $ */
+            symbol_native: string;
+            /** @example 2 */
+            decimal_digits: number;
+            /** @example 0 */
+            rounding: number;
+            /** @example US dollars */
+            name_plural: string;
+            /**
+             * @example fiat
+             * @enum {string}
+             */
+            type: "fiat" | "crypto";
+        };
         UpdateCurrencyDto: Record<string, never>;
         CreateRateDto: Record<string, never>;
         UpdateRateDto: Record<string, never>;
@@ -363,6 +422,55 @@ export interface components {
             updatedAt: string;
         };
         UpdateCategoryDto: Record<string, never>;
+        CreateAccountDto: {
+            /**
+             * @description Account color in hex format
+             * @example #FF5733
+             */
+            color: string;
+            /**
+             * @description Icon name as string
+             * @example wallet
+             */
+            icon: string;
+            /** @example Main Wallet */
+            name: string;
+            /**
+             * @description Account balance (will be stored in minor units)
+             * @default 0
+             * @example 1000.5
+             */
+            balance: number;
+            /**
+             * @description Number of decimal places for the currency (scale)
+             * @example 2
+             */
+            scale: number;
+            /**
+             * @description Currency ID (MongoDB ObjectId)
+             * @example 507f1f77bcf86cd799439011
+             */
+            currency: string;
+        };
+        AccountDto: {
+            id: string;
+            /** @example #FF5733 */
+            color: string;
+            /** @example wallet */
+            icon: string;
+            /** @example Main Wallet */
+            name: string;
+            /** @example 1000.5 */
+            balance: number;
+            /** @example 2 */
+            scale: number;
+            currency: components["schemas"]["CurrencyDto"];
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
+        UpdateAccountDto: Record<string, never>;
     };
     responses: never;
     parameters: never;
@@ -403,7 +511,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["CurrencyDto"][];
+                };
             };
         };
     };
@@ -425,7 +535,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["CurrencyDto"];
+                };
             };
         };
     };
@@ -445,7 +557,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["CurrencyDto"];
+                };
             };
             /** @description Currency not found. */
             404: {
@@ -468,7 +582,7 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description The currency has been successfully deleted. */
-            200: {
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -503,7 +617,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["CurrencyDto"];
+                };
             };
             /** @description Currency not found. */
             404: {
@@ -1133,6 +1249,160 @@ export interface operations {
                 content?: never;
             };
             /** @description Category name already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AccountController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all accounts for the current user. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountDto"][];
+                };
+            };
+        };
+    };
+    AccountController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAccountDto"];
+            };
+        };
+        responses: {
+            /** @description The account has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountDto"];
+                };
+            };
+            /** @description Bad request. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Account name already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AccountController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The account. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountDto"];
+                };
+            };
+            /** @description Account not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AccountController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The account has been successfully deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Account not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AccountController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateAccountDto"];
+            };
+        };
+        responses: {
+            /** @description The account has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountDto"];
+                };
+            };
+            /** @description Account not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Account name already exists. */
             409: {
                 headers: {
                     [name: string]: unknown;

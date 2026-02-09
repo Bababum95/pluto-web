@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   MoreVerticalIcon,
@@ -18,10 +18,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { PlusButton } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
-import { AccountItem, mockAccounts } from '@/features/account'
+import { AccountItem } from '@/features/account'
+import {
+  selectAccounts,
+  selectAccountsStatus,
+} from '@/store/slices/account'
+import { useAppSelector } from '@/store'
+import { Spinner } from '@/components/ui/spinner'
 
-export const Route = createFileRoute('/_app/accounts')({
+export const Route = createFileRoute('/_app/accounts/')({
   component: AccountsPage,
 })
 
@@ -33,7 +40,9 @@ const actions = [
 
 function AccountsPage() {
   const { t } = useTranslation()
-  const total = '$6,944'
+  const accounts = useAppSelector(selectAccounts)
+  const status = useAppSelector(selectAccountsStatus)
+  const total = accounts.reduce((sum, acc) => sum + acc.balance, 0).toFixed(2)
 
   return (
     <AppLayout
@@ -61,23 +70,35 @@ function AccountsPage() {
         <div className="text-4xl font-bold">{total}</div>
       </div>
 
-      <Card size="sm" className="py-1!">
-        <ItemGroup>
-          {mockAccounts.map((account, index) => (
-            <Fragment key={account.id}>
-              <AccountItem
-                name={account.name}
-                currency={account.currency}
-                balance={account.balance}
-                iconColor={account.iconColor}
-                icon={account.icon}
-                id={account.id}
-              />
-              {index !== mockAccounts.length - 1 && <ItemSeparator />}
-            </Fragment>
-          ))}
-        </ItemGroup>
-      </Card>
+      {status === 'pending' ? (
+        <div className="flex flex-1 items-center justify-center py-8">
+          <Spinner />
+        </div>
+      ) : (
+        <Card size="sm" className="py-1!">
+          <ItemGroup>
+            {accounts.map((account, index) => (
+              <Fragment key={account.id}>
+                <Link
+                  to="/accounts/$accountId"
+                  params={{ accountId: account.id }}
+                  viewTransition={{ types: ['slide-left'] }}
+                >
+                  <AccountItem {...account} />
+                </Link>
+                {index !== accounts.length - 1 && <ItemSeparator />}
+              </Fragment>
+            ))}
+          </ItemGroup>
+        </Card>
+      )}
+      <Link
+        to="/accounts/create"
+        viewTransition={{ types: ['slide-left'] }}
+        className="fixed bottom-16 right-4 z-10"
+      >
+        <PlusButton />
+      </Link>
     </AppLayout>
   )
 }

@@ -2,9 +2,14 @@ import { Card } from '@/components/ui/card'
 import type { FC } from 'react'
 
 import { AccountItem } from './AccountItem'
-import type { AccountItemProps } from '../type'
+import type { Account } from '../types'
 
-export const AccountCard: FC<AccountItemProps> = (props) => {
+type AccountCardProps = Account & {
+  onClick?: () => void
+  actions?: React.ReactNode
+}
+
+export const AccountCard: FC<AccountCardProps> = (props) => {
   return (
     <Card size="sm" className="p-0!">
       <AccountItem {...props} />

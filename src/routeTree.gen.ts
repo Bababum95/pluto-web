@@ -17,10 +17,12 @@ import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AppTransactionRouteImport } from './routes/_app/transaction'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
-import { Route as AppAccountsRouteImport } from './routes/_app/accounts'
 import { Route as AppCategoriesIndexRouteImport } from './routes/_app/categories/index'
+import { Route as AppAccountsIndexRouteImport } from './routes/_app/accounts/index'
 import { Route as AppCategoriesCreateRouteImport } from './routes/_app/categories/create'
 import { Route as AppCategoriesCategoryIdRouteImport } from './routes/_app/categories/$categoryId'
+import { Route as AppAccountsCreateRouteImport } from './routes/_app/accounts/create'
+import { Route as AppAccountsAccountIdRouteImport } from './routes/_app/accounts/$accountId'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -60,14 +62,14 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAccountsRoute = AppAccountsRouteImport.update({
-  id: '/accounts',
-  path: '/accounts',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
   id: '/categories/',
   path: '/categories/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAccountsIndexRoute = AppAccountsIndexRouteImport.update({
+  id: '/accounts/',
+  path: '/accounts/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCategoriesCreateRoute = AppCategoriesCreateRouteImport.update({
@@ -80,84 +82,106 @@ const AppCategoriesCategoryIdRoute = AppCategoriesCategoryIdRouteImport.update({
   path: '/categories/$categoryId',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAccountsCreateRoute = AppAccountsCreateRouteImport.update({
+  id: '/accounts/create',
+  path: '/accounts/create',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAccountsAccountIdRoute = AppAccountsAccountIdRouteImport.update({
+  id: '/accounts/$accountId',
+  path: '/accounts/$accountId',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/accounts': typeof AppAccountsRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/transaction': typeof AppTransactionRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
+  '/accounts/$accountId': typeof AppAccountsAccountIdRoute
+  '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/categories/create': typeof AppCategoriesCreateRoute
+  '/accounts': typeof AppAccountsIndexRoute
   '/categories': typeof AppCategoriesIndexRoute
 }
 export interface FileRoutesByTo {
-  '/accounts': typeof AppAccountsRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/transaction': typeof AppTransactionRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
+  '/accounts/$accountId': typeof AppAccountsAccountIdRoute
+  '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/categories/create': typeof AppCategoriesCreateRoute
+  '/accounts': typeof AppAccountsIndexRoute
   '/categories': typeof AppCategoriesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
-  '/_app/accounts': typeof AppAccountsRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/transaction': typeof AppTransactionRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_app/': typeof AppIndexRoute
+  '/_app/accounts/$accountId': typeof AppAccountsAccountIdRoute
+  '/_app/accounts/create': typeof AppAccountsCreateRoute
   '/_app/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/_app/categories/create': typeof AppCategoriesCreateRoute
+  '/_app/accounts/': typeof AppAccountsIndexRoute
   '/_app/categories/': typeof AppCategoriesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/accounts'
     | '/profile'
     | '/settings'
     | '/transaction'
     | '/login'
     | '/register'
     | '/'
+    | '/accounts/$accountId'
+    | '/accounts/create'
     | '/categories/$categoryId'
     | '/categories/create'
+    | '/accounts'
     | '/categories'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/accounts'
     | '/profile'
     | '/settings'
     | '/transaction'
     | '/login'
     | '/register'
     | '/'
+    | '/accounts/$accountId'
+    | '/accounts/create'
     | '/categories/$categoryId'
     | '/categories/create'
+    | '/accounts'
     | '/categories'
   id:
     | '__root__'
     | '/_app'
     | '/_auth'
-    | '/_app/accounts'
     | '/_app/profile'
     | '/_app/settings'
     | '/_app/transaction'
     | '/_auth/login'
     | '/_auth/register'
     | '/_app/'
+    | '/_app/accounts/$accountId'
+    | '/_app/accounts/create'
     | '/_app/categories/$categoryId'
     | '/_app/categories/create'
+    | '/_app/accounts/'
     | '/_app/categories/'
   fileRoutesById: FileRoutesById
 }
@@ -224,18 +248,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/accounts': {
-      id: '/_app/accounts'
-      path: '/accounts'
-      fullPath: '/accounts'
-      preLoaderRoute: typeof AppAccountsRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/categories/': {
       id: '/_app/categories/'
       path: '/categories'
       fullPath: '/categories'
       preLoaderRoute: typeof AppCategoriesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/accounts/': {
+      id: '/_app/accounts/'
+      path: '/accounts'
+      fullPath: '/accounts'
+      preLoaderRoute: typeof AppAccountsIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/categories/create': {
@@ -252,28 +276,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCategoriesCategoryIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/accounts/create': {
+      id: '/_app/accounts/create'
+      path: '/accounts/create'
+      fullPath: '/accounts/create'
+      preLoaderRoute: typeof AppAccountsCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/accounts/$accountId': {
+      id: '/_app/accounts/$accountId'
+      path: '/accounts/$accountId'
+      fullPath: '/accounts/$accountId'
+      preLoaderRoute: typeof AppAccountsAccountIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
-  AppAccountsRoute: typeof AppAccountsRoute
   AppProfileRoute: typeof AppProfileRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppTransactionRoute: typeof AppTransactionRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppAccountsAccountIdRoute: typeof AppAccountsAccountIdRoute
+  AppAccountsCreateRoute: typeof AppAccountsCreateRoute
   AppCategoriesCategoryIdRoute: typeof AppCategoriesCategoryIdRoute
   AppCategoriesCreateRoute: typeof AppCategoriesCreateRoute
+  AppAccountsIndexRoute: typeof AppAccountsIndexRoute
   AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppAccountsRoute: AppAccountsRoute,
   AppProfileRoute: AppProfileRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppTransactionRoute: AppTransactionRoute,
   AppIndexRoute: AppIndexRoute,
+  AppAccountsAccountIdRoute: AppAccountsAccountIdRoute,
+  AppAccountsCreateRoute: AppAccountsCreateRoute,
   AppCategoriesCategoryIdRoute: AppCategoriesCategoryIdRoute,
   AppCategoriesCreateRoute: AppCategoriesCreateRoute,
+  AppAccountsIndexRoute: AppAccountsIndexRoute,
   AppCategoriesIndexRoute: AppCategoriesIndexRoute,
 }
 

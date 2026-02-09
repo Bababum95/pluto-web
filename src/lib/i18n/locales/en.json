@@ -68,10 +68,38 @@
     "account": "Account"
   },
   "accounts": {
+    "create": "Create account",
+    "edit": "Edit account",
+    "name": "Account name",
+    "icon": "Icon",
+    "color": "Color",
+    "currency": "Currency",
+    "selectCurrency": "Select currency",
+    "balance": "Balance",
+    "scale": "Decimal places",
+    "submit": "Create",
+    "save": "Save",
+    "notFound": "Account not found",
+    "created": "Account created successfully",
+    "updated": "Account updated successfully",
     "actions": {
       "add": "Add account",
       "newTransfer": "New transfer",
       "transferHistory": "Transfer history"
+    },
+    "errors": {
+      "name": {
+        "required": "Account name is required"
+      },
+      "color": {
+        "required": "Color is required"
+      },
+      "icon": {
+        "required": "Icon is required"
+      },
+      "currency": {
+        "required": "Currency is required"
+      }
     }
   },
   "settings": {

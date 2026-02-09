@@ -451,6 +451,11 @@ export interface components {
              * @example 507f1f77bcf86cd799439011
              */
             currency: string;
+            /**
+             * @description Order for sorting accounts (auto-incremented per user)
+             * @example 1
+             */
+            order?: number;
         };
         AccountDto: {
             id: string;
@@ -465,6 +470,8 @@ export interface components {
             /** @example 2 */
             scale: number;
             currency: components["schemas"]["CurrencyDto"];
+            /** @example 1 */
+            order: number;
             /** @example 2021-01-01T10:00:00.000Z */
             createdAt: string;
             /** @example 2021-01-01T10:00:00.000Z */

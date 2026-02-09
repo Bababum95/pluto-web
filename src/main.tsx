@@ -25,6 +25,7 @@ const router = createRouter({
   // defaultViewTransition: true,
   context: {
     isAuth: false,
+    store,
   },
 })
 

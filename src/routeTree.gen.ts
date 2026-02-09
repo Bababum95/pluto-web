@@ -20,6 +20,7 @@ import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppAccountsRouteImport } from './routes/_app/accounts'
 import { Route as AppCategoriesIndexRouteImport } from './routes/_app/categories/index'
 import { Route as AppCategoriesCreateRouteImport } from './routes/_app/categories/create'
+import { Route as AppCategoriesCategoryIdRouteImport } from './routes/_app/categories/$categoryId'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -74,6 +75,11 @@ const AppCategoriesCreateRoute = AppCategoriesCreateRouteImport.update({
   path: '/categories/create',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCategoriesCategoryIdRoute = AppCategoriesCategoryIdRouteImport.update({
+  id: '/categories/$categoryId',
+  path: '/categories/$categoryId',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/accounts': typeof AppAccountsRoute
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
+  '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/categories/create': typeof AppCategoriesCreateRoute
   '/categories': typeof AppCategoriesIndexRoute
 }
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
+  '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/categories/create': typeof AppCategoriesCreateRoute
   '/categories': typeof AppCategoriesIndexRoute
 }
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_app/': typeof AppIndexRoute
+  '/_app/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/_app/categories/create': typeof AppCategoriesCreateRoute
   '/_app/categories/': typeof AppCategoriesIndexRoute
 }
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/'
+    | '/categories/$categoryId'
     | '/categories/create'
     | '/categories'
   fileRoutesByTo: FileRoutesByTo
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/'
+    | '/categories/$categoryId'
     | '/categories/create'
     | '/categories'
   id:
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/register'
     | '/_app/'
+    | '/_app/categories/$categoryId'
     | '/_app/categories/create'
     | '/_app/categories/'
   fileRoutesById: FileRoutesById
@@ -233,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCategoriesCreateRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/categories/$categoryId': {
+      id: '/_app/categories/$categoryId'
+      path: '/categories/$categoryId'
+      fullPath: '/categories/$categoryId'
+      preLoaderRoute: typeof AppCategoriesCategoryIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -242,6 +261,7 @@ interface AppRouteChildren {
   AppSettingsRoute: typeof AppSettingsRoute
   AppTransactionRoute: typeof AppTransactionRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppCategoriesCategoryIdRoute: typeof AppCategoriesCategoryIdRoute
   AppCategoriesCreateRoute: typeof AppCategoriesCreateRoute
   AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
 }
@@ -252,6 +272,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppSettingsRoute: AppSettingsRoute,
   AppTransactionRoute: AppTransactionRoute,
   AppIndexRoute: AppIndexRoute,
+  AppCategoriesCategoryIdRoute: AppCategoriesCategoryIdRoute,
   AppCategoriesCreateRoute: AppCategoriesCreateRoute,
   AppCategoriesIndexRoute: AppCategoriesIndexRoute,
 }

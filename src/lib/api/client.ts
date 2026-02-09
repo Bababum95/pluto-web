@@ -49,7 +49,7 @@ export async function apiFetch<T>(
     ...init.headers,
   }
   if (token) {
-    (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`
+    ;(headers as Record<string, string>)['Authorization'] = `Bearer ${token}`
   }
 
   const res = await fetch(url.toString(), {

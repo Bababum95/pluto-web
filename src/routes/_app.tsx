@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 const AppLayout = () => {
   return (
-    <div className="flex flex-col min-h-dvh [view-transition-name:main-content]">
+    <div className="flex flex-col min-h-dvh [view-transition-name:main-content] pb-safe">
       <Outlet />
     </div>
   )

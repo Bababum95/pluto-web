@@ -56,7 +56,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
         </AnimatePresence>
       </motion.div>
 
-      <TabsList className="w-full h-12 rounded-none border-0 bg-background fixed bottom-0 left-0 right-0 z-50 border-t pb-safe">
+      <TabsList className="w-full h-12 rounded-none border-0 bg-background fixed bottom-safe left-0 right-0 z-50 border-t">
         {TABS.map((tab) => (
           <TabsTrigger key={tab} value={tab} className="flex-1 text-base">
             {t(`transactionType.${tab}`)}

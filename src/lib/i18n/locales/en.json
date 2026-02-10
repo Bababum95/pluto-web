@@ -121,10 +121,10 @@
   },
   "currency": {
     "select": {
-      "title": "Select currency",
+      "title": "Currencies",
+      "description": "Choose the currency",
       "searchPlaceholder": "Search by name or code",
-      "noResults": "No currencies found",
-      "results": "results"
+      "noResults": "No currencies found"
     }
   }
 }

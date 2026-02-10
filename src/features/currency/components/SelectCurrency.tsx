@@ -79,27 +79,26 @@ export const SelectCurrency: FC<Props> = ({ value, onChange }) => {
       </DrawerTrigger>
       <DrawerContent className="h-[80vh]">
         <DrawerHeader>
-          <DrawerTitle className="mb-2">
-            {t('currency.select.title')}
-          </DrawerTitle>
-          <DrawerDescription className="mb-3">
-            <InputGroup>
-              <InputGroupAddon align="inline-start">
-                <HugeiconsIcon icon={Search01Icon} className="size-4" />
-              </InputGroupAddon>
-              <InputGroupInput
-                type="search"
-                placeholder={t('currency.select.searchPlaceholder')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoComplete="off"
-              />
-            </InputGroup>
+          <DrawerTitle>{t('currency.select.title')}</DrawerTitle>
+          <DrawerDescription className="mb-2">
+            {t('currency.select.description')}
           </DrawerDescription>
+          <InputGroup>
+            <InputGroupAddon align="inline-start">
+              <HugeiconsIcon icon={Search01Icon} className="size-4" />
+            </InputGroupAddon>
+            <InputGroupInput
+              type="search"
+              placeholder={t('currency.select.searchPlaceholder')}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              autoComplete="off"
+            />
+          </InputGroup>
         </DrawerHeader>
         <div className="overflow-y-auto pb-4">
           {filteredData.length === 0 ? (
-            <p className="px-4 py-3 text-muted-foreground text-sm">
+            <p className="px-4 py-3 text-muted-foreground text-sm text-center">
               {t('currency.select.noResults')}
             </p>
           ) : (

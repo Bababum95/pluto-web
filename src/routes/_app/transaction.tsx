@@ -6,10 +6,11 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useState } from 'react'
 
 import { TransactionTypeTabs } from '@/features/transaction-type'
-import { AccountCard, mockAccounts } from '@/features/account'
+import { AccountCard } from '@/features/account'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Icon } from '@/components/ui/icon'
 import {
   Drawer,
   DrawerContent,
@@ -87,22 +88,14 @@ function TransactionPage() {
                   value={selectedAccountId}
                   onValueChange={handleChangeAccount}
                 >
-                  {mockAccounts.map((account) => (
+                  {accounts.map((account) => (
                     <FieldLabel htmlFor={account.id} key={account.id}>
                       <Field orientation="horizontal">
-                        <div
-                          className="flex items-center justify-center size-8 rounded-md mt-0.75 shrink-0"
-                          style={{ backgroundColor: account.iconColor }}
-                        >
-                          <HugeiconsIcon
-                            icon={account.icon}
-                            className="size-5"
-                          />
-                        </div>
+                        <Icon name={account.icon} color={account.color} />
                         <FieldContent className="gap-0">
                           <FieldTitle>{account.name}</FieldTitle>
                           <FieldDescription>
-                            {account.balance} {account.currency}
+                            {account.balance} {account.currency.symbol}
                           </FieldDescription>
                         </FieldContent>
                         <RadioGroupItem value={account.id} id={account.id} />

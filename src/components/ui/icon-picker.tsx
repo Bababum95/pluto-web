@@ -5,13 +5,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { MoreHorizontalCircle01Icon } from '@hugeicons/core-free-icons'
 
 import { cn } from '@/lib/utils'
-import {
-  POPULAR_ICONS,
-  DEFAULT_ICON,
-  getIconByName,
-  isIconName,
-  ICON_CATEGORIES,
-} from '@/lib/icons'
+import { POPULAR_ICONS, isIconName, ICON_CATEGORIES } from '@/lib/icons'
 import { Field, FieldLabel } from '@/components/ui/field'
 import { Button } from '@/components/ui/button'
 import {
@@ -22,6 +16,7 @@ import {
   DrawerTitle,
   DrawerDescription,
 } from '@/components/ui/drawer'
+import { Icon } from '@/components/ui/icon'
 
 /* -------------------------------------------------------------------------- */
 /* IconPicker                                                                 */
@@ -113,48 +108,6 @@ const IconPickerRoot: FC<IconPickerProps> = ({
   )
 }
 
-/* -------------------------------------------------------------------------- */
-/* Icon                                                                       */
-/* -------------------------------------------------------------------------- */
-
-export type IconProps = React.ComponentProps<'div'> & {
-  /** Icon name from the registry (e.g. "Dollar01Icon"). */
-  name: string
-  /** Optional size in pixels. */
-  size?: number
-  /** Optional className for the svg wrapper. */
-  className?: string
-  /** Optional style. */
-  color?: string
-}
-
-/**
- * Renders an icon by its registry name.
- * Use the value from IconPicker to display the selected icon elsewhere.
- */
-const Icon: FC<IconProps> = ({
-  name,
-  className,
-  size = 28,
-  color,
-  ...props
-}) => {
-  const icon = getIconByName(name)
-
-  return (
-    <div
-      style={{ backgroundColor: color }}
-      className={cn(
-        'rounded-sm bg-muted p-2 aspect-square flex items-center justify-center',
-        className
-      )}
-      {...props}
-    >
-      <HugeiconsIcon icon={icon || DEFAULT_ICON} size={size} />
-    </div>
-  )
-}
-
 type IconDrawerProps = {
   onChange: (value: string) => void
   value?: string
@@ -194,7 +147,9 @@ const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
         <div className="px-4 overflow-y-auto py-2">
           {ICON_CATEGORIES.map((category) => (
             <div key={category.name}>
-              <h3 className="text-sm font-medium mb-2 text-muted-foreground">{category.name}</h3>
+              <h3 className="text-sm font-medium mb-2 text-muted-foreground">
+                {category.name}
+              </h3>
               <div className="grid grid-cols-5 gap-2 mb-4">
                 {category.icons.map((icon) => (
                   <Icon

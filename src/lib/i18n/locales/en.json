@@ -118,5 +118,13 @@
       "system": "System",
       "changeTheme": "Change theme"
     }
+  },
+  "currency": {
+    "select": {
+      "title": "Select currency",
+      "searchPlaceholder": "Search by name or code",
+      "noResults": "No currencies found",
+      "results": "results"
+    }
   }
 }

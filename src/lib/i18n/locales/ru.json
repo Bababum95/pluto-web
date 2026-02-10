@@ -62,9 +62,15 @@
     "save": "Сохранить",
     "notFound": "Категория не найдена",
     "errors": {
-      "name": { "required": "Введите название категории" },
-      "color": { "required": "Выберите цвет" },
-      "icon": { "required": "Выберите иконку" }
+      "name": {
+        "required": "Введите название категории"
+      },
+      "color": {
+        "required": "Выберите цвет"
+      },
+      "icon": {
+        "required": "Выберите иконку"
+      }
     }
   },
   "accounts": {
@@ -100,6 +106,14 @@
       "currency": {
         "required": "Выберите валюту"
       }
+    }
+  },
+  "currency": {
+    "select": {
+      "title": "Выберите валюту",
+      "searchPlaceholder": "Поиск по названию или коду",
+      "noResults": "Валюты не найдены",
+      "results": "результатов"
     }
   }
 }

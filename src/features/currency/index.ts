@@ -1,2 +1,3 @@
 export { currencyApi } from './api'
-export type { Currency } from './types'
+
+export { SelectCurrency } from './components/SelectCurrency'

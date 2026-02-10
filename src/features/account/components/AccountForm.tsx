@@ -1,7 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
-import { useQuery } from '@tanstack/react-query'
 import type { FC } from 'react'
 
 import { FieldGroup } from '@/components/ui/field'
@@ -9,14 +8,10 @@ import { FormField } from '@/components/forms/form-field'
 import { ColorPicker } from '@/components/ui/color-picker'
 import { IconPicker } from '@/components/ui/icon-picker'
 import { Button } from '@/components/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { currencyApi } from '@/features/currency'
+import { ButtonGroup } from '@/components/ui/button-group'
+import { SelectCurrency } from '@/features/currency'
+import { Input } from '@/components/ui/input'
+
 import type { CreateAccountDto } from '../types'
 
 export type AccountFormValues = CreateAccountDto
@@ -43,10 +38,6 @@ export const AccountForm: FC<Props> = ({
 }) => {
   const { t } = useTranslation()
   const initialValues = { ...DEFAULT_VALUES, ...defaultValues }
-  const { data: currencies = [] } = useQuery({
-    queryKey: ['currencies'],
-    queryFn: currencyApi.list,
-  })
 
   const form = useForm({
     validators: {
@@ -83,14 +74,36 @@ export const AccountForm: FC<Props> = ({
       }}
     >
       <FieldGroup>
+        <ButtonGroup className="w-full">
+          <form.Field
+            name="balance"
+            children={(field) => (
+              <Input
+                autoFocus
+                placeholder="0"
+                type="number"
+                step="0.01"
+                value={field.state.value}
+                onChange={(e) => {
+                  field.handleChange(parseFloat(e.target.value))
+                }}
+              />
+            )}
+          />
+          <form.Field
+            name="currency"
+            children={(field) => (
+              <SelectCurrency
+                value={field.state.value}
+                onChange={(value) => field.handleChange(value)}
+              />
+            )}
+          />
+        </ButtonGroup>
         <form.Field
           name="name"
           children={(field) => (
-            <FormField
-              field={field}
-              label={t('accounts.name')}
-              inputProps={{ autoFocus: true }}
-            />
+            <FormField field={field} label={t('accounts.name')} />
           )}
         />
         <form.Subscribe
@@ -116,66 +129,6 @@ export const AccountForm: FC<Props> = ({
               value={field.state.value as string}
               onChange={(value) => field.handleChange(value)}
               label={t('accounts.color')}
-            />
-          )}
-        />
-        <form.Field
-          name="currency"
-          children={(field) => (
-            <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                {t('accounts.currency')}
-              </label>
-              <Select
-                value={field.state.value}
-                onValueChange={(value) => {
-                  field.handleChange(value)
-                  // Auto-set scale from selected currency
-                  const selectedCurrency = currencies.find(
-                    (c) => c.id === value
-                  )
-                  if (selectedCurrency) {
-                    form.setFieldValue('scale', selectedCurrency.decimal_digits)
-                  }
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t('accounts.selectCurrency')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {currencies.map((currency) => (
-                    <SelectItem key={currency.id} value={currency.id}>
-                      {currency.code} - {currency.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {field.state.meta.isTouched && !field.state.meta.isValid && (
-                <div className="text-sm text-destructive">
-                  {field.state.meta.errors
-                    .map((error) => error?.message)
-                    .filter(Boolean)
-                    .join('\n')}
-                </div>
-              )}
-            </div>
-          )}
-        />
-        <form.Field
-          name="balance"
-          children={(field) => (
-            <FormField
-              field={field}
-              label={t('accounts.balance')}
-              inputProps={{
-                type: 'number',
-                step: '0.01',
-                placeholder: '0',
-                value: field.state.value ?? '',
-                onChange: (e) => {
-                  field.handleChange(parseFloat(e.target.value))
-                },
-              }}
             />
           )}
         />

@@ -26,6 +26,8 @@ import {
   FieldTitle,
 } from '@/components/ui/field'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { selectAccounts } from '@/store/slices/account'
+import { useAppSelector } from '@/store/hooks'
 
 export const Route = createFileRoute('/_app/transaction')({
   component: TransactionPage,
@@ -35,7 +37,8 @@ function TransactionPage() {
   const { t } = useTranslation()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>('1')
-  const account = mockAccounts.find((acc) => acc.id === selectedAccountId)
+  const accounts = useAppSelector(selectAccounts)
+  const account = accounts.find((acc) => acc.id === selectedAccountId)
 
   const handleChangeAccount = (id: string) => {
     setSelectedAccountId(id)
@@ -62,12 +65,7 @@ function TransactionPage() {
               <DrawerTrigger asChild>
                 {account ? (
                   <AccountCard
-                    name={account.name}
-                    currency={account.currency}
-                    balance={account.balance}
-                    iconColor={account.iconColor}
-                    icon={account.icon}
-                    id={account.id}
+                    {...account}
                     actions={<HugeiconsIcon size={20} icon={UnfoldMoreIcon} />}
                   />
                 ) : (

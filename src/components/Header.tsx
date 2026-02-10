@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { Link, useRouter } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu01Icon, ArrowLeft02Icon } from '@hugeicons/core-free-icons'
@@ -61,7 +62,7 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
                   <Logo className="h-6 w-auto" />
                 </SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col gap-4 px-4">
+              <nav className="flex flex-col gap-4 px-4 h-full pb-safe">
                 {MENU_ITEMS.map(({ label, to }) => (
                   <Link
                     to={to}
@@ -72,6 +73,10 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
                     {t(label)}
                   </Link>
                 ))}
+                <div className="mt-auto text-xs text-muted-foreground">
+                  v{__APP_VERSION__} ·{' '}
+                  {dayjs(__BUILD_DATE__).format('DD.MM.YYYY')}
+                </div>
               </nav>
             </SheetContent>
           </Sheet>

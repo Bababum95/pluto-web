@@ -80,7 +80,7 @@
   }
 
   .bottom-safe {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    bottom: env(safe-area-inset-bottom, 0px);
   }
 
   .pt-safe {

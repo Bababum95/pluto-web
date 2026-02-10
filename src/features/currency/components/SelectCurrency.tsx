@@ -61,7 +61,9 @@ export const SelectCurrency: FC<Props> = ({ value, onChange }) => {
   }, [])
 
   const selectedCurrency = useMemo(
-    () => data.find((currency) => currency.id === value),
+    () =>
+      data.find((currency) => currency.id === value) ??
+      data.find((currency) => currency.code === 'USD'),
     [data, value]
   )
 
@@ -107,7 +109,7 @@ export const SelectCurrency: FC<Props> = ({ value, onChange }) => {
                 key={currency.id}
                 onClick={() => handleChange(currency.id)}
                 className={cn('flex items-center justify-between px-4 py-3', {
-                  'bg-accent/50': currency.id === value,
+                  'bg-accent/50': currency.id === selectedCurrency?.id,
                 })}
               >
                 <span>{currency.name}</span>

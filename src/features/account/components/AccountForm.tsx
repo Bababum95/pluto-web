@@ -28,7 +28,7 @@ const DEFAULT_VALUES: AccountFormValues = {
   icon: '',
   currency: '',
   balance: 0,
-  scale: 2,
+  scale: 0,
 }
 
 export const AccountForm: FC<Props> = ({

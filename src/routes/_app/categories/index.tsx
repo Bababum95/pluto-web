@@ -38,15 +38,15 @@ const CategoriesPage = () => {
             ))}
           </div>
         )}
-        <Link
-          to="/categories/create"
-          viewTransition={{ types: ['slide-left'] }}
-          className="fixed right-4 z-10"
-          style={{ bottom: 'calc(env(safe-area-inset-bottom) + 64px)' }}
-        >
-          <PlusButton />
-        </Link>
       </TransactionTypeTabs>
+      <Link
+        to="/categories/create"
+        viewTransition={{ types: ['slide-left'] }}
+        className="fixed right-4 z-10"
+        style={{ bottom: 'calc(env(safe-area-inset-bottom) + 64px)' }}
+      >
+        <PlusButton />
+      </Link>
     </AppLayout>
   )
 }

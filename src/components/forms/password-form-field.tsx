@@ -2,14 +2,20 @@ import type { AnyFieldApi } from '@tanstack/react-form'
 import type { FC } from 'react'
 
 import { Field, FieldLabel, FieldError } from '@/components/ui/field'
-import { PasswordInput, type PasswordInputProps } from '@/components/ui/password-input'
+import {
+  PasswordInput,
+  type PasswordInputProps,
+} from '@/components/ui/password-input'
 import { cn } from '@/lib/utils'
 
 type Props = {
   field: AnyFieldApi
   label?: string
   className?: string
-  inputProps?: Omit<PasswordInputProps, 'id' | 'name' | 'value' | 'onChange' | 'onBlur'>
+  inputProps?: Omit<
+    PasswordInputProps,
+    'id' | 'name' | 'value' | 'onChange' | 'onBlur'
+  >
 }
 
 export const PasswordFormField: FC<Props> = ({

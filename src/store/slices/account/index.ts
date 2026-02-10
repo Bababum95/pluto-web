@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from '@reduxjs/toolkit'
 
 import { accountApi } from '@/features/account'
 import type { Account } from '@/features/account/types'
@@ -14,9 +18,8 @@ const initialState: AccountState = {
   status: 'idle',
 }
 
-export const fetchAccounts = createAsyncThunk(
-  'account/fetchAccounts',
-  () => accountApi.list()
+export const fetchAccounts = createAsyncThunk('account/fetchAccounts', () =>
+  accountApi.list()
 )
 
 export const accountSlice = createSlice({
@@ -54,12 +57,8 @@ export const accountSlice = createSlice({
   },
 })
 
-export const {
-  setAccounts,
-  addAccount,
-  updateAccount,
-  removeAccount,
-} = accountSlice.actions
+export const { setAccounts, addAccount, updateAccount, removeAccount } =
+  accountSlice.actions
 
 export const selectAccounts = (state: RootState) => state.account.accounts
 export const selectAccountsStatus = (state: RootState) => state.account.status

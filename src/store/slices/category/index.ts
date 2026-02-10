@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from '@reduxjs/toolkit'
 
 import { categoryApi } from '@/features/category'
 import type { Category } from '@/features/category/types'
@@ -54,14 +58,11 @@ export const categorySlice = createSlice({
   },
 })
 
-export const {
-  setCategories,
-  addCategory,
-  updateCategory,
-  removeCategory,
-} = categorySlice.actions
+export const { setCategories, addCategory, updateCategory, removeCategory } =
+  categorySlice.actions
 
 export const selectCategories = (state: RootState) => state.category.categories
-export const selectCategoriesStatus = (state: RootState) => state.category.status
+export const selectCategoriesStatus = (state: RootState) =>
+  state.category.status
 
 export default categorySlice.reducer

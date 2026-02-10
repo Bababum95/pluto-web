@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "preview": "vite preview",
-    "generate:api": "openapi-typescript http://localhost:3000/api-docs-json -o src/lib/api/types.ts"
+    "generate:api": "openapi-typescript http://localhost:3000/api-docs-json -o src/lib/api/types.ts",
+    "precommit": "pnpm lint && pnpm format && pnpm generate:api && pnpm build && pnpm version patch"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",

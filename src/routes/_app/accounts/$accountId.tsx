@@ -5,7 +5,6 @@ import { toast } from 'sonner'
 
 import { AppLayout } from '@/components/AppLayout'
 import { AccountForm, accountApi } from '@/features/account'
-import { toDecimalString } from '@/features/money'
 import { useAppDispatch, useAppSelector } from '@/store'
 import {
   selectAccounts,
@@ -56,7 +55,7 @@ const EditAccountPage = () => {
           color: account.color,
           icon: account.icon,
           currency: account.currency?.id,
-          balance: toDecimalString(account.balance, account.scale),
+          balance: account.balance.toString(),
         }}
         submitLabel={t('accounts.save')}
         onSubmit={async (values) => {

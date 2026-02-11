@@ -1,11 +1,18 @@
 import { apiFetch, queryClient } from '@/lib/api'
-import type { Account, CreateAccountDto, UpdateAccountDto } from './types'
+import type {
+  Account,
+  AccountListResponseDto,
+  AccountSummaryDto,
+  CreateAccountDto,
+  UpdateAccountDto,
+} from './types'
 
 const BASE = 'accounts'
 const QUERY_KEY = ['accounts'] as const
 
 export const accountApi = {
-  list: (): Promise<Account[]> => apiFetch(BASE),
+  list: (): Promise<AccountListResponseDto> => apiFetch(BASE),
+  summary: (): Promise<AccountSummaryDto> => apiFetch(`${BASE}/summary`),
 
   getById: (id: string): Promise<Account> => apiFetch(`${BASE}/${id}`),
 

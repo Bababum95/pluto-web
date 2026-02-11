@@ -20,9 +20,14 @@ import {
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
 import { AccountItem } from '@/features/account'
-import { selectAccounts, selectAccountsStatus } from '@/store/slices/account'
+import {
+  selectAccounts,
+  selectAccountsSummary,
+  selectAccountsStatus,
+} from '@/store/slices/account'
 import { useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
+import { Balance } from '@/features/money'
 
 export const Route = createFileRoute('/_app/accounts/')({
   component: AccountsPage,
@@ -41,8 +46,8 @@ const actions = [
 function AccountsPage() {
   const { t } = useTranslation()
   const accounts = useAppSelector(selectAccounts)
+  const summary = useAppSelector(selectAccountsSummary)
   const status = useAppSelector(selectAccountsStatus)
-  const total = accounts.reduce((sum, acc) => sum + acc.balance, 0).toFixed(2)
 
   return (
     <AppLayout
@@ -73,7 +78,13 @@ function AccountsPage() {
     >
       <div className="mb-6">
         <div className="text-sm mb-2">{t('common.total')}:</div>
-        <div className="text-4xl font-bold">{total}</div>
+        {summary && (
+          <Balance
+            balance={summary.total}
+            currency={summary.currency}
+            className="text-4xl font-bold"
+          />
+        )}
       </div>
 
       {status === 'pending' ? (

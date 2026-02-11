@@ -5,21 +5,23 @@ import {
 } from '@reduxjs/toolkit'
 
 import { accountApi } from '@/features/account'
-import type { Account } from '@/features/account/types'
+import type { Account, AccountSummaryDto } from '@/features/account/types'
 import type { RootState } from '@/store'
 
 type AccountState = {
   accounts: Account[]
+  summary: AccountSummaryDto | null
   status: 'idle' | 'pending' | 'success' | 'failed'
 }
 
 const initialState: AccountState = {
   accounts: [],
+  summary: null,
   status: 'idle',
 }
 
 export const fetchAccounts = createAsyncThunk('account/fetchAccounts', () =>
-  accountApi.list()
+  accountApi.list(),
 )
 
 export const accountSlice = createSlice({
@@ -49,7 +51,8 @@ export const accountSlice = createSlice({
       })
       .addCase(fetchAccounts.fulfilled, (state, action) => {
         state.status = 'success'
-        state.accounts = action.payload
+        state.accounts = action.payload.list
+        state.summary = action.payload.summary
       })
       .addCase(fetchAccounts.rejected, (state) => {
         state.status = 'failed'
@@ -61,6 +64,7 @@ export const { setAccounts, addAccount, updateAccount, removeAccount } =
   accountSlice.actions
 
 export const selectAccounts = (state: RootState) => state.account.accounts
+export const selectAccountsSummary = (state: RootState) => state.account.summary
 export const selectAccountsStatus = (state: RootState) => state.account.status
 
 export default accountSlice.reducer

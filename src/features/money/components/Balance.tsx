@@ -8,10 +8,10 @@ type Props = FormatBalanceParams & {
   className?: string
 }
 
-export const Balance: FC<Props> = ({ balance, scale, currency, className }) => {
+export const Balance: FC<Props> = ({ balance, currency, className }) => {
   return (
     <span className={cn('font-medium', className)}>
-      {formatBalance({ balance, scale, currency })}
+      {formatBalance({ balance, currency })}
     </span>
   )
 }

@@ -39,6 +39,7 @@ import {
   Video01Icon,
   ClothesIcon,
   ReceiptDollarIcon,
+  EthereumIcon,
 } from '@hugeicons/core-free-icons'
 
 export const DEFAULT_ICON = Dollar01Icon
@@ -78,6 +79,7 @@ export const ICON_REGISTRY: Record<string, IconSvgElement> = {
   Video01Icon,
   ClothesIcon,
   ReceiptDollarIcon,
+  EthereumIcon,
 }
 
 export type IconName = keyof typeof ICON_REGISTRY
@@ -105,6 +107,7 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'PiggyBankIcon',
       'ReceiptDollarIcon',
       'CalculatorIcon',
+      'EthereumIcon',
     ],
   },
   {
@@ -150,7 +153,7 @@ export const ICON_CATEGORIES: IconCategory[] = [
 
 /** Popular icons (11 items) for quick access in IconPicker or similar. */
 export const POPULAR_ICONS: IconName[] = [
-  'Dollar01Icon',
+  'EthereumIcon',
   'Wallet01Icon',
   'CreditCardIcon',
   'BankIcon',

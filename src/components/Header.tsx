@@ -63,13 +63,14 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
                 </SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-4 px-4 h-full pb-safe">
-                {MENU_ITEMS.map(({ label, to }) => (
+                {MENU_ITEMS.map(({ label, to, icon }) => (
                   <Link
                     to={to}
                     key={to}
-                    className="text-sm font-medium transition-colors hover:text-primary"
+                    className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
                     viewTransition={{ types: ['slide-left'] }}
                   >
+                    <HugeiconsIcon icon={icon ?? Menu01Icon} size={18} />
                     {t(label)}
                   </Link>
                 ))}

@@ -61,9 +61,7 @@ export const SelectCurrency: FC<Props> = ({ value, onChange }) => {
   }, [])
 
   const selectedCurrency = useMemo(
-    () =>
-      data.find((currency) => currency.id === value) ??
-      data.find((currency) => currency.code === 'USD'),
+    () => data.find((currency) => currency.id === value),
     [data, value]
   )
 

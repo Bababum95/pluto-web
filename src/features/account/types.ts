@@ -4,3 +4,6 @@ export type Account = components['schemas']['AccountDto']
 
 export type CreateAccountDto = components['schemas']['CreateAccountDto']
 export type UpdateAccountDto = Partial<CreateAccountDto>
+export type AccountFormValues = Omit<CreateAccountDto, 'balance' | 'scale'> & {
+  balance: string
+}

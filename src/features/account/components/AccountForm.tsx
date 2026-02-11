@@ -9,26 +9,17 @@ import { ColorPicker } from '@/components/ui/color-picker'
 import { IconPicker } from '@/components/ui/icon-picker'
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
-import { SelectCurrency } from '@/features/currency'
 import { Input } from '@/components/ui/input'
+import { SelectCurrency } from '@/features/currency'
+import { parseDecimal, sanitizeDecimal } from '@/features/money'
 
-import type { CreateAccountDto } from '../types'
-
-export type AccountFormValues = CreateAccountDto
+import type { CreateAccountDto, AccountFormValues } from '../types'
+import { DEFAULT_ACCOUNT_FORM_VALUES } from '../constants'
 
 type Props = {
-  defaultValues?: Partial<AccountFormValues>
-  onSubmit: (values: AccountFormValues) => Promise<void>
+  defaultValues?: AccountFormValues
+  onSubmit: (values: CreateAccountDto) => Promise<void>
   submitLabel?: string
-}
-
-const DEFAULT_VALUES: AccountFormValues = {
-  name: '',
-  color: '#00a4e8',
-  icon: '',
-  currency: '',
-  balance: 0,
-  scale: 0,
 }
 
 export const AccountForm: FC<Props> = ({
@@ -37,7 +28,7 @@ export const AccountForm: FC<Props> = ({
   submitLabel,
 }) => {
   const { t } = useTranslation()
-  const initialValues = { ...DEFAULT_VALUES, ...defaultValues }
+  const initialValues = { ...DEFAULT_ACCOUNT_FORM_VALUES, ...defaultValues }
 
   const form = useForm({
     validators: {
@@ -54,13 +45,16 @@ export const AccountForm: FC<Props> = ({
         currency: z
           .string()
           .min(1, { message: t('accounts.errors.currency.required') }),
-        balance: z.number(),
-        scale: z.number().min(0).max(18),
+        balance: z.string(),
       }),
     },
     defaultValues: initialValues,
     onSubmit: async ({ value }) => {
-      await onSubmit(value)
+      console.log(value)
+      await onSubmit({
+        ...value,
+        ...parseDecimal(value.balance),
+      })
     },
   })
 
@@ -81,11 +75,11 @@ export const AccountForm: FC<Props> = ({
               <Input
                 autoFocus
                 placeholder="0"
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="decimal"
                 value={field.state.value}
                 onChange={(e) => {
-                  field.handleChange(parseFloat(e.target.value))
+                  field.handleChange(sanitizeDecimal(e.target.value))
                 }}
               />
             )}

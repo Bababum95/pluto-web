@@ -10,6 +10,8 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import type { FC } from 'react'
 
 import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
+import { Balance } from '@/features/money'
+
 import type { Account } from '../types'
 
 type Props = Account & {
@@ -25,11 +27,9 @@ export const AccountItem: FC<Props> = ({
   icon,
   onClick,
   actions,
+  scale,
 }) => {
   const iconElement = getIconByName(icon) ?? DEFAULT_ICON
-  const currencyCode =
-    typeof currency === 'string' ? currency : currency?.code || ''
-  const balanceContent = `${currencyCode} ${balance.toFixed(2)}`
 
   return (
     <Item size="sm" onClick={onClick}>
@@ -40,12 +40,14 @@ export const AccountItem: FC<Props> = ({
         <ItemTitle>{name}</ItemTitle>
         {actions && (
           <ItemDescription className="text-xs">
-            {balanceContent}
+            <Balance balance={balance} scale={scale} currency={currency} />
           </ItemDescription>
         )}
       </ItemContent>
       <ItemActions>
-        {actions || <span className="font-medium">{balanceContent}</span>}
+        {actions || (
+          <Balance balance={balance} scale={scale} currency={currency} />
+        )}
       </ItemActions>
     </Item>
   )

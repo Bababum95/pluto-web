@@ -5,6 +5,7 @@ import timeRangeReducer from './slices/time-range'
 import userReducer from './slices/user'
 import categoryReducer from './slices/category'
 import accountReducer from './slices/account'
+import settingsReducer from './slices/settings'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     user: userReducer,
     category: categoryReducer,
     account: accountReducer,
+    settings: settingsReducer,
   },
 })
 

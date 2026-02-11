@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 import { fetchCategories } from '@/store/slices/category'
 import { fetchAccounts } from '@/store/slices/account'
+import { fetchSettings } from '@/store/slices/settings'
 
 const AppLayout = () => {
   return (
@@ -20,6 +21,9 @@ export const Route = createFileRoute('/_app')({
     }
     if (state.account.status === 'idle') {
       await context.store.dispatch(fetchAccounts())
+    }
+    if (state.settings.status === 'idle') {
+      await context.store.dispatch(fetchSettings())
     }
   },
   beforeLoad: ({ context, location }) => {

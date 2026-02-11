@@ -9,6 +9,7 @@ import { ColorPicker } from '@/components/ui/color-picker'
 import { IconPicker } from '@/components/ui/icon-picker'
 import { Button } from '@/components/ui/button'
 import type { CreateCategoryDto } from '../types'
+import { DEFAULT_CATEGORY_FORM_VALUES } from '../constants'
 
 export type CategoryFormValues = CreateCategoryDto
 
@@ -18,19 +19,13 @@ type Props = {
   submitLabel?: string
 }
 
-const DEFAULT_VALUES: CategoryFormValues = {
-  name: '',
-  color: '#00a4e8',
-  icon: '',
-}
-
 export const CategoryForm: FC<Props> = ({
   defaultValues,
   onSubmit,
   submitLabel,
 }) => {
   const { t } = useTranslation()
-  const initialValues = { ...DEFAULT_VALUES, ...defaultValues }
+  const initialValues = { ...DEFAULT_CATEGORY_FORM_VALUES, ...defaultValues }
 
   const form = useForm({
     validators: {

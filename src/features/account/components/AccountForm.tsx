@@ -14,7 +14,6 @@ import { SelectCurrency } from '@/features/currency'
 import { parseDecimal, sanitizeDecimal } from '@/features/money'
 
 import type { CreateAccountDto, AccountFormValues } from '../types'
-import { DEFAULT_ACCOUNT_FORM_VALUES } from '../constants'
 
 type Props = {
   defaultValues?: AccountFormValues
@@ -28,7 +27,6 @@ export const AccountForm: FC<Props> = ({
   submitLabel,
 }) => {
   const { t } = useTranslation()
-  const initialValues = { ...DEFAULT_ACCOUNT_FORM_VALUES, ...defaultValues }
 
   const form = useForm({
     validators: {
@@ -48,7 +46,7 @@ export const AccountForm: FC<Props> = ({
         balance: z.string(),
       }),
     },
-    defaultValues: initialValues,
+    defaultValues: defaultValues,
     onSubmit: async ({ value }) => {
       console.log(value)
       await onSubmit({

@@ -26,4 +26,6 @@ export const accountApi = {
     }),
 
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+  delete: (id: string): Promise<void> =>
+    apiFetch(`${BASE}/${id}`, { method: 'DELETE' }),
 }

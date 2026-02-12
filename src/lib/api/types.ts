@@ -446,6 +446,8 @@ export interface components {
             currency: components["schemas"]["CurrencyDto"];
             /** @example 1 */
             order: number;
+            /** @example false */
+            excluded: boolean;
             /** @example 2021-01-01T10:00:00.000Z */
             createdAt: string;
             /** @example 2021-01-01T10:00:00.000Z */
@@ -509,6 +511,11 @@ export interface components {
              * @example 1
              */
             order?: number;
+            /**
+             * @description Whether the account is excluded from the total balance
+             * @example false
+             */
+            excluded?: boolean;
         };
         AccountSummaryDto: {
             /**

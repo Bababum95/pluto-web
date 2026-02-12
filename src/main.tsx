@@ -8,7 +8,6 @@ import { AuthProvider, useAuth } from '@/features/auth'
 import { ThemeProvider } from '@/features/theme'
 import { store } from '@/store'
 import { queryClient } from '@/lib/api'
-import { Toaster } from '@/components/ui/sonner'
 import { FullScreenLoader } from '@/components/FullScreenLoader'
 import '@/lib/i18n/config'
 
@@ -64,7 +63,6 @@ if (!rootElement.innerHTML) {
           </AuthProvider>
         </Provider>
       </QueryClientProvider>
-      <Toaster position="top-right" />
     </StrictMode>
   )
 }

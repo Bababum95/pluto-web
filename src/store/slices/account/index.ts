@@ -7,11 +7,12 @@ import {
 import { accountApi } from '@/features/account'
 import type { Account, AccountSummaryDto } from '@/features/account/types'
 import type { RootState } from '@/store'
+import type { Status } from '@/lib/types'
 
 type AccountState = {
   accounts: Account[]
   summary: AccountSummaryDto | null
-  status: 'idle' | 'pending' | 'success' | 'failed'
+  status: Status
 }
 
 const initialState: AccountState = {
@@ -21,7 +22,12 @@ const initialState: AccountState = {
 }
 
 export const fetchAccounts = createAsyncThunk('account/fetchAccounts', () =>
-  accountApi.list(),
+  accountApi.list()
+)
+
+export const deleteAccount = createAsyncThunk(
+  'account/deleteAccount',
+  (id: string) => accountApi.delete(id)
 )
 
 export const accountSlice = createSlice({
@@ -55,6 +61,16 @@ export const accountSlice = createSlice({
         state.summary = action.payload.summary
       })
       .addCase(fetchAccounts.rejected, (state) => {
+        state.status = 'failed'
+      })
+      .addCase(deleteAccount.pending, (state) => {
+        state.status = 'pending'
+      })
+      .addCase(deleteAccount.fulfilled, (state, action) => {
+        state.status = 'success'
+        state.accounts = state.accounts.filter((a) => a.id !== action.meta.arg)
+      })
+      .addCase(deleteAccount.rejected, (state) => {
         state.status = 'failed'
       })
   },

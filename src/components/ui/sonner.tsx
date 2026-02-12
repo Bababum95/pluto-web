@@ -1,5 +1,5 @@
 import { useTheme } from 'next-themes'
-import { Toaster as Sonner, type ToasterProps } from 'sonner'
+import { Toaster as Sonner, type ToasterProps, toast } from 'sonner'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   CheckmarkCircle02Icon,
@@ -8,9 +8,23 @@ import {
   MultiplicationSignCircleIcon,
   Loading03Icon,
 } from '@hugeicons/core-free-icons'
+import { useEffect, useRef } from 'react'
+import { useLocation } from '@tanstack/react-router'
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme()
+
+  const location = useLocation()
+  const isInitialMount = useRef(true)
+
+  useEffect(() => {
+    // Skip dismiss on initial mount (no navigation has occurred yet)
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      return
+    }
+    toast.dismiss()
+  }, [location.pathname])
 
   return (
     <Sonner

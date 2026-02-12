@@ -82,10 +82,13 @@
     "notFound": "Account not found",
     "created": "Account created successfully",
     "updated": "Account updated successfully",
+    "deleted": "Account deleted successfully",
     "actions": {
       "add": "Add account",
       "newTransfer": "New transfer",
-      "transferHistory": "Transfer history"
+      "transferHistory": "Transfer history",
+      "delete": "Delete account",
+      "hide": "Exclude from total"
     },
     "errors": {
       "name": {

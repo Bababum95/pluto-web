@@ -1,5 +1,6 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 
+import { Toaster } from '@/components/ui/sonner'
 import { Devtools } from '@/components/Devtools'
 import type { AppStore } from '@/store'
 
@@ -14,6 +15,7 @@ type RouterContext = {
 function RootComponent() {
   return (
     <>
+      <Toaster position="top-right" />
       <Outlet />
       {showDevtools && <Devtools />}
     </>

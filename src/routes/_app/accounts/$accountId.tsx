@@ -2,6 +2,12 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import {
+  Delete01Icon,
+  MoreVerticalIcon,
+  ViewOffSlashIcon,
+} from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 
 import { AppLayout } from '@/components/AppLayout'
 import { AccountForm, accountApi } from '@/features/account'
@@ -10,7 +16,16 @@ import {
   selectAccounts,
   selectAccountsStatus,
   updateAccount,
+  deleteAccount,
 } from '@/store/slices/account'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
 
 const EditAccountPage = () => {
   const { accountId } = Route.useParams()
@@ -32,10 +47,16 @@ const EditAccountPage = () => {
     }) => accountApi.update(id, data),
     onSuccess: (updated) => {
       dispatch(updateAccount(updated))
-      toast.success(t('accounts.updated'))
       navigate({ to: '/accounts' })
+      toast.success(t('accounts.updated'))
     },
   })
+
+  const handleDelete = async () => {
+    await dispatch(deleteAccount(accountId))
+    navigate({ to: '/accounts' })
+    toast.success(t('accounts.deleted'))
+  }
 
   if (isLoading || !account) {
     return (
@@ -48,7 +69,34 @@ const EditAccountPage = () => {
   }
 
   return (
-    <AppLayout title={t('accounts.edit')} showBackButton>
+    <AppLayout
+      title={t('accounts.edit')}
+      showBackButton
+      actions={
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="[&_svg]:size-6">
+              <HugeiconsIcon icon={MoreVerticalIcon} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-44">
+            <DropdownMenuItem key="hide">
+              <HugeiconsIcon icon={ViewOffSlashIcon} />
+              <span>{t(`accounts.actions.hide`)}</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              key="delete"
+              variant="destructive"
+              onClick={handleDelete}
+            >
+              <HugeiconsIcon icon={Delete01Icon} />
+              <span>{t(`accounts.actions.delete`)}</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      }
+    >
       <AccountForm
         defaultValues={{
           name: account.name,

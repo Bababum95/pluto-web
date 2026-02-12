@@ -1,5 +1,4 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
@@ -10,7 +9,7 @@ import {
 import { HugeiconsIcon } from '@hugeicons/react'
 
 import { AppLayout } from '@/components/AppLayout'
-import { AccountForm, accountApi } from '@/features/account'
+import { AccountForm } from '@/features/account'
 import { useAppDispatch, useAppSelector } from '@/store'
 import {
   selectAccounts,
@@ -26,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import type { UpdateAccountDto } from '@/features/account/types'
 
 const EditAccountPage = () => {
   const { accountId } = Route.useParams()
@@ -37,20 +37,11 @@ const EditAccountPage = () => {
   const account = accounts.find((a) => a.id === accountId)
   const isLoading = status === 'pending'
 
-  const updateMutation = useMutation({
-    mutationFn: ({
-      id,
-      data,
-    }: {
-      id: string
-      data: Parameters<typeof accountApi.update>[1]
-    }) => accountApi.update(id, data),
-    onSuccess: (updated) => {
-      dispatch(updateAccount(updated))
-      navigate({ to: '/accounts' })
-      toast.success(t('accounts.updated'))
-    },
-  })
+  const handleSubmit = async (values: UpdateAccountDto) => {
+    await dispatch(updateAccount({ id: accountId, data: values }))
+    navigate({ to: '/accounts' })
+    toast.success(t('accounts.updated'))
+  }
 
   const handleDelete = async () => {
     await dispatch(deleteAccount(accountId))
@@ -106,9 +97,7 @@ const EditAccountPage = () => {
           balance: account.balance.toString(),
         }}
         submitLabel={t('accounts.save')}
-        onSubmit={async (values) => {
-          await updateMutation.mutateAsync({ id: accountId, data: values })
-        }}
+        onSubmit={handleSubmit}
       />
     </AppLayout>
   )

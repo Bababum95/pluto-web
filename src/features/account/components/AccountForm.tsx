@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import type { FC } from 'react'
 
-import { FieldGroup } from '@/components/ui/field'
+import { FieldGroup, FieldSet } from '@/components/ui/field'
 import { FormField } from '@/components/forms/form-field'
 import { ColorPicker } from '@/components/ui/color-picker'
 import { IconPicker } from '@/components/ui/icon-picker'
@@ -48,7 +48,6 @@ export const AccountForm: FC<Props> = ({
     },
     defaultValues: defaultValues,
     onSubmit: async ({ value }) => {
-      console.log(value)
       await onSubmit({
         ...value,
         ...parseDecimal(value.balance),
@@ -66,64 +65,66 @@ export const AccountForm: FC<Props> = ({
       }}
     >
       <FieldGroup>
-        <ButtonGroup className="w-full">
-          <form.Field
-            name="balance"
-            children={(field) => (
-              <Input
-                autoFocus
-                placeholder="0"
-                type="text"
-                inputMode="decimal"
-                value={field.state.value}
-                onChange={(e) => {
-                  field.handleChange(sanitizeDecimal(e.target.value))
-                }}
-              />
-            )}
-          />
-          <form.Field
-            name="currency"
-            children={(field) => (
-              <SelectCurrency
-                value={field.state.value}
-                onChange={(value) => field.handleChange(value)}
-              />
-            )}
-          />
-        </ButtonGroup>
-        <form.Field
-          name="name"
-          children={(field) => (
-            <FormField field={field} label={t('accounts.name')} />
-          )}
-        />
-        <form.Subscribe
-          selector={(state) => state.values.color}
-          children={(color) => (
+        <FieldSet disabled={form.state.isSubmitting}>
+          <ButtonGroup className="w-full">
             <form.Field
-              name="icon"
+              name="balance"
               children={(field) => (
-                <IconPicker
-                  value={field.state.value as string}
-                  onChange={(value) => field.handleChange(value)}
-                  label={t('accounts.icon')}
-                  iconColor={color}
+                <Input
+                  autoFocus
+                  placeholder="0"
+                  type="text"
+                  inputMode="decimal"
+                  value={field.state.value}
+                  onChange={(e) => {
+                    field.handleChange(sanitizeDecimal(e.target.value))
+                  }}
                 />
               )}
             />
-          )}
-        />
-        <form.Field
-          name="color"
-          children={(field) => (
-            <ColorPicker
-              value={field.state.value as string}
-              onChange={(value) => field.handleChange(value)}
-              label={t('accounts.color')}
+            <form.Field
+              name="currency"
+              children={(field) => (
+                <SelectCurrency
+                  value={field.state.value}
+                  onChange={(value) => field.handleChange(value)}
+                />
+              )}
             />
-          )}
-        />
+          </ButtonGroup>
+          <form.Field
+            name="name"
+            children={(field) => (
+              <FormField field={field} label={t('accounts.name')} />
+            )}
+          />
+          <form.Subscribe
+            selector={(state) => state.values.color}
+            children={(color) => (
+              <form.Field
+                name="icon"
+                children={(field) => (
+                  <IconPicker
+                    value={field.state.value as string}
+                    onChange={(value) => field.handleChange(value)}
+                    label={t('accounts.icon')}
+                    iconColor={color}
+                  />
+                )}
+              />
+            )}
+          />
+          <form.Field
+            name="color"
+            children={(field) => (
+              <ColorPicker
+                value={field.state.value as string}
+                onChange={(value) => field.handleChange(value)}
+                label={t('accounts.color')}
+              />
+            )}
+          />
+        </FieldSet>
       </FieldGroup>
       <form.Subscribe
         selector={(state) => [state.canSubmit, state.isSubmitting]}

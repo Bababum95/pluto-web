@@ -5,7 +5,12 @@ import {
 } from '@reduxjs/toolkit'
 
 import { accountApi } from '@/features/account'
-import type { Account, AccountSummaryDto } from '@/features/account/types'
+import type {
+  Account,
+  AccountSummaryDto,
+  CreateAccountDto,
+  UpdateAccountDto,
+} from '@/features/account/types'
 import type { RootState } from '@/store'
 import type { Status } from '@/lib/types'
 
@@ -30,6 +35,17 @@ export const deleteAccount = createAsyncThunk(
   (id: string) => accountApi.delete(id)
 )
 
+export const createAccount = createAsyncThunk(
+  'account/createAccount',
+  (data: CreateAccountDto) => accountApi.create(data)
+)
+
+export const updateAccount = createAsyncThunk(
+  'account/updateAccount',
+  ({ id, data }: { id: string; data: UpdateAccountDto }) =>
+    accountApi.update(id, data)
+)
+
 export const accountSlice = createSlice({
   name: 'account',
   initialState,
@@ -45,6 +61,9 @@ export const accountSlice = createSlice({
       if (idx !== -1) {
         state.accounts[idx] = action.payload
       }
+    },
+    setSummary: (state, action: PayloadAction<AccountSummaryDto | null>) => {
+      state.summary = action.payload
     },
     removeAccount: (state, action: PayloadAction<string>) => {
       state.accounts = state.accounts.filter((a) => a.id !== action.payload)
@@ -69,15 +88,29 @@ export const accountSlice = createSlice({
       .addCase(deleteAccount.fulfilled, (state, action) => {
         state.status = 'success'
         state.accounts = state.accounts.filter((a) => a.id !== action.meta.arg)
+        state.summary = action.payload
       })
-      .addCase(deleteAccount.rejected, (state) => {
-        state.status = 'failed'
+      .addCase(createAccount.fulfilled, (state, action) => {
+        state.accounts.push(action.payload.account)
+        state.summary = action.payload.summary
+      })
+      .addCase(updateAccount.fulfilled, (state, action) => {
+        const idx = state.accounts.findIndex((a) => a.id === action.meta.arg.id)
+        if (idx !== -1) {
+          state.accounts[idx] = action.payload.account
+          state.summary = action.payload.summary
+        }
       })
   },
 })
 
-export const { setAccounts, addAccount, updateAccount, removeAccount } =
-  accountSlice.actions
+export const {
+  setAccounts,
+  addAccount,
+  // updateAccount,
+  removeAccount,
+  setSummary,
+} = accountSlice.actions
 
 export const selectAccounts = (state: RootState) => state.account.accounts
 export const selectAccountsSummary = (state: RootState) => state.account.summary

@@ -322,6 +322,23 @@ export interface paths {
         patch: operations["AccountController_update"];
         trace?: never;
     };
+    "/v1/accounts/excluded/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Toggle account excluded from total balance */
+        patch: operations["AccountController_toggleExcluded"];
+        trace?: never;
+    };
     "/v1/categories": {
         parameters: {
             query?: never;
@@ -1298,13 +1315,16 @@ export interface operations {
             };
         };
         responses: {
-            /** @description The account has been successfully created. */
+            /** @description The account has been successfully created. Returns account and new total. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AccountDto"];
+                    "application/json": {
+                        account?: components["schemas"]["AccountDto"];
+                        summary?: components["schemas"]["AccountSummaryDto"];
+                    };
                 };
             };
             /** @description Bad request. */
@@ -1390,12 +1410,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description The account has been successfully deleted. */
-            204: {
+            /** @description The account has been successfully deleted. Returns new total balance. */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["AccountSummaryDto"];
+                };
             };
             /** @description Account not found. */
             404: {
@@ -1421,13 +1443,16 @@ export interface operations {
             };
         };
         responses: {
-            /** @description The account has been successfully updated. */
+            /** @description The account has been successfully updated. Returns account and new total. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AccountDto"];
+                    "application/json": {
+                        account?: components["schemas"]["AccountDto"];
+                        summary?: components["schemas"]["AccountSummaryDto"];
+                    };
                 };
             };
             /** @description Account not found. */
@@ -1439,6 +1464,38 @@ export interface operations {
             };
             /** @description Account name already exists. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AccountController_toggleExcluded: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The account excluded flag has been toggled. Returns account and new total. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        account?: components["schemas"]["AccountDto"];
+                        summary?: components["schemas"]["AccountSummaryDto"];
+                    };
+                };
+            };
+            /** @description Account not found. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

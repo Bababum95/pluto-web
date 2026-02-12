@@ -3,6 +3,7 @@ import type {
   Account,
   AccountListResponseDto,
   AccountSummaryDto,
+  AccountWithSummaryResponseDto,
   CreateAccountDto,
   UpdateAccountDto,
 } from './types'
@@ -16,16 +17,22 @@ export const accountApi = {
 
   getById: (id: string): Promise<Account> => apiFetch(`${BASE}/${id}`),
 
-  create: (data: CreateAccountDto): Promise<Account> =>
+  create: (data: CreateAccountDto): Promise<AccountWithSummaryResponseDto> =>
     apiFetch(BASE, { method: 'POST', body: JSON.stringify(data) }),
 
-  update: (id: string, data: UpdateAccountDto): Promise<Account> =>
+  update: (
+    id: string,
+    data: UpdateAccountDto
+  ): Promise<AccountWithSummaryResponseDto> =>
     apiFetch(`${BASE}/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
     }),
 
+  toggleExcluded: (id: string): Promise<AccountWithSummaryResponseDto> =>
+    apiFetch(`${BASE}/excluded/${id}`, { method: 'PATCH' }),
+
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
-  delete: (id: string): Promise<void> =>
+  delete: (id: string): Promise<AccountSummaryDto> =>
     apiFetch(`${BASE}/${id}`, { method: 'DELETE' }),
 }

@@ -31,6 +31,8 @@
     "color": "Color",
     "submit": "Create",
     "save": "Save",
+    "select": "Select category",
+    "selectDescription": "Choose a category for the transaction",
     "notFound": "Category not found",
     "created": "Category created successfully",
     "updated": "Category updated successfully",

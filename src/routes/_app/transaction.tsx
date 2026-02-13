@@ -15,6 +15,7 @@ import { sanitizeDecimal } from '@/features/money'
 import { selectSettings } from '@/store/slices/settings'
 import { SelectAccount } from '@/features/account'
 import { FormField } from '@/components/forms/form-field'
+import { CategoryPicker } from '@/features/category'
 
 export const Route = createFileRoute('/_app/transaction')({
   component: TransactionPage,
@@ -30,12 +31,16 @@ function TransactionPage() {
         account: z
           .string()
           .min(1, { message: t('transaction.accountRequired') }),
+        category: z
+          .string()
+          .min(1, { message: t('transaction.categoryRequired') }),
       }),
     },
     defaultValues: {
       amount: '',
       account: '',
       comment: '',
+      category: '',
     },
   })
   const accounts = useAppSelector(selectAccounts)
@@ -82,6 +87,15 @@ function TransactionPage() {
             name="account"
             children={(field) => (
               <SelectAccount
+                value={field.state.value}
+                onChange={(value) => field.handleChange(value)}
+              />
+            )}
+          />
+          <form.Field
+            name="category"
+            children={(field) => (
+              <CategoryPicker
                 value={field.state.value}
                 onChange={(value) => field.handleChange(value)}
               />

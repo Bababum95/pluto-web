@@ -18,7 +18,7 @@ export const CategoryCard: FC<Props> = ({ category, className, ...props }) => {
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center gap-2 rounded-xl p-1 active:scale-[0.98]',
+        'flex flex-col items-center justify-center gap-1 rounded-xl p-2 active:scale-[0.98]',
         className
       )}
       {...props}
@@ -29,7 +29,7 @@ export const CategoryCard: FC<Props> = ({ category, className, ...props }) => {
       >
         <HugeiconsIcon
           icon={icon ?? DEFAULT_ICON}
-          size={28}
+          size={34}
           className="text-white"
         />
       </div>

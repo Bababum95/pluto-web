@@ -20,14 +20,10 @@ import {
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
 import { AccountItem } from '@/features/account'
-import {
-  selectAccounts,
-  selectAccountsSummary,
-  selectAccountsStatus,
-} from '@/store/slices/account'
+import { selectAccounts, selectAccountsStatus } from '@/store/slices/account'
 import { useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
-import { Balance } from '@/features/money'
+import { Total } from '@/features/money'
 
 export const Route = createFileRoute('/_app/accounts/')({
   component: AccountsPage,
@@ -42,7 +38,6 @@ const actions = [
 function AccountsPage() {
   const { t } = useTranslation()
   const accounts = useAppSelector(selectAccounts)
-  const summary = useAppSelector(selectAccountsSummary)
   const status = useAppSelector(selectAccountsStatus)
 
   return (
@@ -72,16 +67,7 @@ function AccountsPage() {
         </DropdownMenu>
       }
     >
-      <div className="mb-6">
-        <div className="text-sm mb-2">{t('common.total')}:</div>
-        {summary && (
-          <Balance
-            balance={summary.total}
-            currency={summary.currency}
-            className="text-4xl font-bold"
-          />
-        )}
-      </div>
+      <Total size="lg" className="mb-4 flex flex-col gap-2" />
 
       {status === 'pending' ? (
         <div className="flex flex-1 items-center justify-center py-8">

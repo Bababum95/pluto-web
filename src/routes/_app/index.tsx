@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { AppLayout } from '@/components/AppLayout'
 import { HomePageContent } from '@/features/home'
 import { TransactionTypeTabs } from '@/features/transaction-type'
+import { Total } from '@/features/money'
 
 export const Route = createFileRoute('/_app/')({
   component: HomePage,
@@ -10,7 +11,14 @@ export const Route = createFileRoute('/_app/')({
 
 function HomePage() {
   return (
-    <AppLayout>
+    <AppLayout
+      title={
+        <Total
+          size="sm"
+          className="flex flex-col items-center justify-center"
+        />
+      }
+    >
       <TransactionTypeTabs>
         <HomePageContent />
       </TransactionTypeTabs>

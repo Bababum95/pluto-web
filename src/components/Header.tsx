@@ -69,11 +69,11 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
                     key={to}
                     viewTransition={{ types: ['slide-left'] }}
                     className={cn(
-                      'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors',
+                      'flex items-center gap-3 px-4 py-2 text-base transition-colors',
                       'data-[status=active]:text-primary data-[status=active]:bg-muted'
                     )}
                   >
-                    <HugeiconsIcon icon={icon ?? Menu01Icon} size={18} />
+                    <HugeiconsIcon icon={icon ?? Menu01Icon} size={20} />
                     {t(label)}
                   </Link>
                 ))}

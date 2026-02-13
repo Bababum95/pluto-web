@@ -11,11 +11,16 @@ import {
 } from '@/store/slices/category'
 import { useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
+import { selectTransactionType } from '@/store/slices/transaction-type'
 
 const CategoriesPage = () => {
   const { t } = useTranslation()
   const categories = useAppSelector(selectCategories)
   const status = useAppSelector(selectCategoriesStatus)
+  const transactionType = useAppSelector(selectTransactionType)
+  const filteredCategories = categories.filter(
+    (category) => category.type === transactionType
+  )
 
   return (
     <AppLayout title={t('common.categories')}>
@@ -26,7 +31,7 @@ const CategoriesPage = () => {
           </div>
         ) : (
           <div className="grid grid-cols-4 gap-2">
-            {categories.map((category) => (
+            {filteredCategories.map((category) => (
               <Link
                 to="/categories/$categoryId"
                 key={category.id}

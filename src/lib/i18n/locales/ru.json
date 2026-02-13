@@ -49,7 +49,7 @@
     }
   },
   "transactionType": {
-    "expenses": "Расходы",
+    "expense": "Расходы",
     "income": "Доходы"
   },
   "categories": {

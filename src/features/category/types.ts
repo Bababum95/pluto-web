@@ -4,3 +4,5 @@ export type Category = components['schemas']['CategoryDto']
 
 export type CreateCategoryDto = components['schemas']['CreateCategoryDto']
 export type UpdateCategoryDto = Partial<CreateCategoryDto>
+
+export type CategoryFormValues = Omit<CreateCategoryDto, 'type'>

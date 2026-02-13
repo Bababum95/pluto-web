@@ -567,6 +567,11 @@ export interface components {
             icon: string;
             /** @example Food & Dining */
             name: string;
+            /**
+             * @description Transaction type
+             * @example expense
+             */
+            type: string;
         };
         CategoryDto: {
             id: string;
@@ -576,6 +581,8 @@ export interface components {
             icon: string;
             /** @example Food & Dining */
             name: string;
+            /** @example expense */
+            type: string;
             /** @example 2021-01-01T10:00:00.000Z */
             createdAt: string;
             /** @example 2021-01-01T10:00:00.000Z */

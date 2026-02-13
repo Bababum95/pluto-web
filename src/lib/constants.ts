@@ -1,13 +1,15 @@
 import {
   Settings01Icon,
-  DiscoverCircleIcon,
   UserCircleIcon,
+  Home01Icon,
+  ArchiveIcon,
+  Briefcase06Icon,
 } from '@hugeicons/core-free-icons'
 
 export const MENU_ITEMS = [
-  { label: 'common.home', to: '/', icon: DiscoverCircleIcon },
-  { label: 'common.accounts', to: '/accounts' },
+  { label: 'common.home', to: '/', icon: Home01Icon },
+  { label: 'common.accounts', to: '/accounts', icon: Briefcase06Icon },
   { label: 'common.settings', to: '/settings', icon: Settings01Icon },
-  { label: 'common.categories', to: '/categories' },
+  { label: 'common.categories', to: '/categories', icon: ArchiveIcon },
   { label: 'common.profile', to: '/profile', icon: UserCircleIcon },
 ]

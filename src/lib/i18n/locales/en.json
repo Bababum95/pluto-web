@@ -60,7 +60,7 @@
   },
   "home": {},
   "transactionType": {
-    "expenses": "Expenses",
+    "expense": "Expenses",
     "income": "Income"
   },
   "transaction": {

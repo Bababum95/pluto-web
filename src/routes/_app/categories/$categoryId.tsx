@@ -1,10 +1,9 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
 import { AppLayout } from '@/components/AppLayout'
 import { TransactionTypeTabs } from '@/features/transaction-type'
-import { CategoryForm, categoryApi } from '@/features/category'
+import { CategoryForm } from '@/features/category'
 import { useAppDispatch, useAppSelector } from '@/store'
 import {
   selectCategories,
@@ -12,6 +11,7 @@ import {
   updateCategory,
 } from '@/store/slices/category'
 import { toast } from 'sonner'
+import type { CategoryFormValues } from '@/features/category/types'
 
 const EditCategoryPage = () => {
   const { categoryId } = Route.useParams()
@@ -23,20 +23,11 @@ const EditCategoryPage = () => {
   const category = categories.find((c) => c.id === categoryId)
   const isLoading = status === 'pending'
 
-  const updateMutation = useMutation({
-    mutationFn: ({
-      id,
-      data,
-    }: {
-      id: string
-      data: Parameters<typeof categoryApi.update>[1]
-    }) => categoryApi.update(id, data),
-    onSuccess: (updated) => {
-      dispatch(updateCategory(updated))
-      toast.success(t('categories.updated'))
-      navigate({ to: '/categories' })
-    },
-  })
+  const handleSubmit = async (values: CategoryFormValues) => {
+    await dispatch(updateCategory({ id: categoryId, data: values }))
+    navigate({ to: '/categories' })
+    toast.success(t('categories.updated'))
+  }
 
   if (isLoading || !category) {
     return (
@@ -54,15 +45,10 @@ const EditCategoryPage = () => {
     <AppLayout title={t('categories.edit')} showBackButton>
       <TransactionTypeTabs>
         <CategoryForm
-          defaultValues={{
-            name: category.name,
-            color: category.color,
-            icon: category.icon,
-          }}
+          defaultValues={category}
           submitLabel={t('categories.save')}
-          onSubmit={async (values) => {
-            await updateMutation.mutateAsync({ id: categoryId, data: values })
-          }}
+          onSubmit={handleSubmit}
+          key="edit-category-form"
         />
       </TransactionTypeTabs>
     </AppLayout>

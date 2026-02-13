@@ -4,6 +4,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu01Icon, ArrowLeft02Icon } from '@hugeicons/core-free-icons'
 import type { FC } from 'react'
 
+import Logo from '@/assets/logo.svg?react'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -13,9 +14,8 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { useTranslation } from '@/lib/i18n'
-
-import Logo from '@/assets/logo.svg?react'
 import { MENU_ITEMS } from '@/lib/constants'
+import { cn } from '@/lib/utils'
 
 type Props = {
   title?: React.ReactNode
@@ -62,19 +62,22 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
                   <Logo className="h-6 w-auto" />
                 </SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col gap-4 px-4 h-full pb-safe">
+              <nav className="flex flex-col h-full pb-safe">
                 {MENU_ITEMS.map(({ label, to, icon }) => (
                   <Link
                     to={to}
                     key={to}
-                    className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
                     viewTransition={{ types: ['slide-left'] }}
+                    className={cn(
+                      'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors',
+                      'data-[status=active]:text-primary data-[status=active]:bg-muted'
+                    )}
                   >
                     <HugeiconsIcon icon={icon ?? Menu01Icon} size={18} />
                     {t(label)}
                   </Link>
                 ))}
-                <div className="mt-auto text-xs text-muted-foreground">
+                <div className="mt-auto text-xs text-muted-foreground px-4 pb-4">
                   v{__APP_VERSION__} ·{' '}
                   {dayjs(__BUILD_DATE__).format('DD.MM.YYYY')}
                 </div>

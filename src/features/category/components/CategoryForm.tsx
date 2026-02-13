@@ -8,13 +8,10 @@ import { FormField } from '@/components/forms/form-field'
 import { ColorPicker } from '@/components/ui/color-picker'
 import { IconPicker } from '@/components/ui/icon-picker'
 import { Button } from '@/components/ui/button'
-import type { CreateCategoryDto } from '../types'
-import { DEFAULT_CATEGORY_FORM_VALUES } from '../constants'
-
-export type CategoryFormValues = CreateCategoryDto
+import type { CategoryFormValues } from '../types'
 
 type Props = {
-  defaultValues?: Partial<CategoryFormValues>
+  defaultValues?: CategoryFormValues
   onSubmit: (values: CategoryFormValues) => Promise<void>
   submitLabel?: string
 }
@@ -25,7 +22,6 @@ export const CategoryForm: FC<Props> = ({
   submitLabel,
 }) => {
   const { t } = useTranslation()
-  const initialValues = { ...DEFAULT_CATEGORY_FORM_VALUES, ...defaultValues }
 
   const form = useForm({
     validators: {
@@ -41,7 +37,7 @@ export const CategoryForm: FC<Props> = ({
           .min(1, { message: t('categories.errors.icon.required') }),
       }),
     },
-    defaultValues: initialValues,
+    defaultValues: defaultValues,
     onSubmit: async ({ value }) => {
       await onSubmit(value)
     },

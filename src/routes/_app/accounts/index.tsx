@@ -3,8 +3,8 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import {
   MoreVerticalIcon,
   Clock04Icon,
-  ArrowDataTransferHorizontalIcon,
   PlusSignIcon,
+  CardExchange01Icon,
 } from '@hugeicons/core-free-icons'
 import { Fragment } from 'react'
 
@@ -35,11 +35,7 @@ export const Route = createFileRoute('/_app/accounts/')({
 
 const actions = [
   { value: 'add', icon: PlusSignIcon, to: '/accounts/create' },
-  {
-    value: 'newTransfer',
-    icon: ArrowDataTransferHorizontalIcon,
-    to: '/accounts/create',
-  },
+  { value: 'newTransfer', icon: CardExchange01Icon, to: '/accounts/create' },
   { value: 'transferHistory', icon: Clock04Icon, to: '/accounts/create' },
 ]
 

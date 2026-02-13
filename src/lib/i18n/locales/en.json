@@ -65,7 +65,9 @@
   },
   "transaction": {
     "title": "Add transaction",
-    "account": "Account"
+    "account": "Account",
+    "accountRequired": "Account is required",
+    "comment": "Comment"
   },
   "accounts": {
     "create": "Create account",
@@ -103,6 +105,10 @@
       "currency": {
         "required": "Currency is required"
       }
+    },
+    "select": {
+      "title": "Select account",
+      "description": "Choose an account"
     }
   },
   "settings": {

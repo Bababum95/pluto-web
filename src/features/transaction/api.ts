@@ -1,5 +1,10 @@
 import { apiFetch, queryClient } from '@/lib/api'
-import type { CreateTransactionDto, Transaction, UpdateTransactionDto } from './types'
+import type {
+  CreateTransactionDto,
+  Transaction,
+  TransactionMutationResponse,
+  UpdateTransactionDto,
+} from './types'
 
 const BASE = 'transactions'
 const QUERY_KEY = ['transactions'] as const
@@ -9,7 +14,7 @@ export const transactionApi = {
 
   getById: (id: string): Promise<Transaction> => apiFetch(`${BASE}/${id}`),
 
-  create: (data: CreateTransactionDto): Promise<Transaction> =>
+  create: (data: CreateTransactionDto): Promise<TransactionMutationResponse> =>
     apiFetch(BASE, { method: 'POST', body: JSON.stringify(data) }),
 
   update: (id: string, data: UpdateTransactionDto): Promise<Transaction> =>

@@ -1808,13 +1808,17 @@ export interface operations {
             };
         };
         responses: {
-            /** @description The transaction has been successfully created. */
+            /** @description The transaction has been successfully created. Returns transaction, updated account, and total balance summary. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TransactionDto"];
+                    "application/json": {
+                        transaction?: components["schemas"]["TransactionDto"];
+                        account?: components["schemas"]["AccountDto"];
+                        summary?: components["schemas"]["AccountSummaryDto"];
+                    };
                 };
             };
             /** @description Bad request. Category or account not found. */

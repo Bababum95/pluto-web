@@ -94,7 +94,7 @@ export const transactionSlice = createSlice({
       })
       .addCase(createTransaction.fulfilled, (state, action) => {
         state.status = 'success'
-        state.transactions.push(action.payload)
+        state.transactions.push(action.payload.transaction)
       })
       .addCase(createTransaction.rejected, (state) => {
         state.status = 'failed'

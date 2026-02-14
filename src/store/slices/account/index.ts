@@ -11,6 +11,7 @@ import type {
   CreateAccountDto,
   UpdateAccountDto,
 } from '@/features/account/types'
+import { createTransaction } from '@/store/slices/transaction'
 import type { RootState } from '@/store'
 import type { Status } from '@/lib/types'
 
@@ -24,6 +25,18 @@ const initialState: AccountState = {
   accounts: [],
   summary: null,
   status: 'idle',
+}
+
+function applyAccountUpdate(
+  state: AccountState,
+  account: Account,
+  summary: AccountSummaryDto
+) {
+  const idx = state.accounts.findIndex((a) => a.id === account.id)
+  if (idx !== -1) {
+    state.accounts[idx] = account
+  }
+  state.summary = summary
 }
 
 export const fetchAccounts = createAsyncThunk('account/fetchAccounts', () =>
@@ -95,11 +108,18 @@ export const accountSlice = createSlice({
         state.summary = action.payload.summary
       })
       .addCase(updateAccount.fulfilled, (state, action) => {
-        const idx = state.accounts.findIndex((a) => a.id === action.meta.arg.id)
-        if (idx !== -1) {
-          state.accounts[idx] = action.payload.account
-          state.summary = action.payload.summary
-        }
+        applyAccountUpdate(
+          state,
+          action.payload.account,
+          action.payload.summary
+        )
+      })
+      .addCase(createTransaction.fulfilled, (state, action) => {
+        applyAccountUpdate(
+          state,
+          action.payload.account,
+          action.payload.summary
+        )
       })
   },
 })

@@ -11,7 +11,7 @@ import {
   selectTransactionsSummary,
   selectTransactionsGroupedByCategory,
 } from '@/store/slices/transaction'
-import { formatBalance } from '@/features/money'
+import { formatBalance, toDecimal } from '@/features/money'
 import { DEFAULT_CURRENCY } from '@/features/money/constants'
 import { Icon } from '@/components/ui/icon'
 
@@ -30,7 +30,7 @@ export const HomePageContent: FC = () => {
         <CardContent className="flex-1 pb-0">
           <ChartPieDonutText
             total={formatBalance({
-              balance: summary?.total ?? 0,
+              balance: summary?.total_raw ?? 0,
               currency: summary?.currency ?? DEFAULT_CURRENCY,
             })}
           />
@@ -65,7 +65,10 @@ export const HomePageContent: FC = () => {
                 </ItemContent>
                 <ItemActions>
                   <span className="font-medium">
-                    {formatBalance({ currency, balance: total })}
+                    {formatBalance({
+                      currency,
+                      balance: toDecimal(total, currency.decimal_digits),
+                    })}
                   </span>
                 </ItemActions>
               </Item>

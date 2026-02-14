@@ -17,6 +17,7 @@ import {
   Field,
   FieldContent,
   FieldDescription,
+  FieldError,
   FieldLabel,
   FieldTitle,
 } from '@/components/ui/field'
@@ -24,13 +25,21 @@ import { AccountCard } from './AccountCard'
 import { useAppSelector } from '@/store/hooks'
 import { selectAccounts } from '@/store/slices/account'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 type Props = {
   value?: string
   onChange: (value: string) => void
+  isError?: boolean
+  errorMessage?: string
 }
 
-export const SelectAccount: FC<Props> = ({ value, onChange }) => {
+export const SelectAccount: FC<Props> = ({
+  value,
+  onChange,
+  isError,
+  errorMessage,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
   const accounts = useAppSelector(selectAccounts)
   const { t } = useTranslation()
@@ -53,7 +62,14 @@ export const SelectAccount: FC<Props> = ({ value, onChange }) => {
               actions={<HugeiconsIcon size={20} icon={UnfoldMoreIcon} />}
             />
           ) : (
-            <Button variant="outline" className="justify-between w-full">
+            <Button
+              variant="outline"
+              type="button"
+              className={cn(
+                'justify-between w-full',
+                isError ? 'border-destructive text-destructive' : ''
+              )}
+            >
               {t('accounts.select.title')}
               <HugeiconsIcon size={20} icon={UnfoldMoreIcon} />
             </Button>
@@ -88,6 +104,7 @@ export const SelectAccount: FC<Props> = ({ value, onChange }) => {
           </RadioGroup>
         </DrawerContent>
       </Drawer>
+      {isError && <FieldError>{errorMessage}</FieldError>}
     </div>
   )
 }

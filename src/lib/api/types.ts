@@ -4,14 +4,14 @@
  */
 
 export interface paths {
-    "/v1": {
+    "/v1/health": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["AppController_getHello"];
+        get: operations["AppController_getHealth"];
         put?: never;
         post?: never;
         delete?: never;
@@ -376,6 +376,43 @@ export interface paths {
         patch: operations["CategoryController_update"];
         trace?: never;
     };
+    "/v1/transactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all transactions for the current user */
+        get: operations["TransactionController_findAll"];
+        put?: never;
+        /** Create a new transaction */
+        post: operations["TransactionController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/transactions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a transaction by ID */
+        get: operations["TransactionController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a transaction by ID */
+        delete: operations["TransactionController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a transaction by ID */
+        patch: operations["TransactionController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -589,6 +626,80 @@ export interface components {
             updatedAt: string;
         };
         UpdateCategoryDto: Record<string, never>;
+        CreateTransactionDto: {
+            /**
+             * @example expense
+             * @enum {string}
+             */
+            type: "expense" | "income";
+            /**
+             * @description Category ID
+             * @example 507f1f77bcf86cd799439011
+             */
+            category: string;
+            /** @example Lunch at cafe */
+            comment?: string;
+            /**
+             * @description Account ID
+             * @example 507f1f77bcf86cd799439012
+             */
+            account: string;
+            /**
+             * @description Amount (decimal). Negative for expense, positive for income.
+             * @example -1500.5
+             */
+            amount: number;
+            /**
+             * @description Decimal places (scale)
+             * @example 2
+             */
+            scale: number;
+            /**
+             * @example [
+             *       "food",
+             *       "restaurant"
+             *     ]
+             */
+            tags?: string[];
+        };
+        TransactionDto: {
+            id: string;
+            /**
+             * @example expense
+             * @enum {string}
+             */
+            type: "expense" | "income";
+            /** @example 507f1f77bcf86cd799439011 */
+            category: string;
+            /** @example Lunch at cafe */
+            comment: string;
+            /** @example 507f1f77bcf86cd799439012 */
+            account: string;
+            /**
+             * @description Amount in decimal form
+             * @example -1500.5
+             */
+            amount: number;
+            /**
+             * @description Amount in minor units
+             * @example -150050
+             */
+            amount_raw: number;
+            /** @example 2 */
+            scale: number;
+            /**
+             * @example [
+             *       "food",
+             *       "restaurant"
+             *     ]
+             */
+            tags: string[];
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
+        UpdateTransactionDto: Record<string, never>;
     };
     responses: never;
     parameters: never;
@@ -598,7 +709,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    AppController_getHello: {
+    AppController_getHealth: {
         parameters: {
             query?: never;
             header?: never;
@@ -1657,6 +1768,153 @@ export interface operations {
             };
             /** @description Category name already exists. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransactionController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all transactions for the current user. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransactionDto"][];
+                };
+            };
+        };
+    };
+    TransactionController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTransactionDto"];
+            };
+        };
+        responses: {
+            /** @description The transaction has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransactionDto"];
+                };
+            };
+            /** @description Bad request. Category or account not found. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransactionController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The transaction. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransactionDto"];
+                };
+            };
+            /** @description Transaction not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransactionController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The transaction has been successfully deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Transaction not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransactionController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTransactionDto"];
+            };
+        };
+        responses: {
+            /** @description The transaction has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransactionDto"];
+                };
+            };
+            /** @description Category or account not found. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Transaction not found. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

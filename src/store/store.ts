@@ -6,6 +6,7 @@ import userReducer from './slices/user'
 import categoryReducer from './slices/category'
 import accountReducer from './slices/account'
 import settingsReducer from './slices/settings'
+import transactionReducer from './slices/transaction'
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     category: categoryReducer,
     account: accountReducer,
     settings: settingsReducer,
+    transaction: transactionReducer,
   },
 })
 

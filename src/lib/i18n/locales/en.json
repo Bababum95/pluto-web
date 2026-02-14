@@ -69,7 +69,14 @@
     "title": "Add transaction",
     "account": "Account",
     "accountRequired": "Account is required",
-    "comment": "Comment"
+    "comment": "Comment",
+    "add": "Add transaction",
+    "added": "Transaction added successfully",
+    "errors": {
+      "amountRequired": "Amount is required",
+      "accountRequired": "Account is required",
+      "categoryRequired": "Category is required"
+    }
   },
   "accounts": {
     "create": "Create account",

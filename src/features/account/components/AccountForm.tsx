@@ -9,9 +9,8 @@ import { ColorPicker } from '@/components/ui/color-picker'
 import { IconPicker } from '@/components/ui/icon-picker'
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
-import { Input } from '@/components/ui/input'
 import { SelectCurrency } from '@/features/currency'
-import { parseDecimal, sanitizeDecimal } from '@/features/money'
+import { MoneyInput, parseDecimal } from '@/features/money'
 
 import type { CreateAccountDto, AccountFormValues } from '../types'
 
@@ -70,15 +69,9 @@ export const AccountForm: FC<Props> = ({
             <form.Field
               name="balance"
               children={(field) => (
-                <Input
-                  autoFocus
-                  placeholder="0"
-                  type="text"
-                  inputMode="decimal"
+                <MoneyInput
                   value={field.state.value}
-                  onChange={(e) => {
-                    field.handleChange(sanitizeDecimal(e.target.value))
-                  }}
+                  onChange={(value) => field.handleChange(value)}
                 />
               )}
             />

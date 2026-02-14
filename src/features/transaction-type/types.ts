@@ -1,3 +1,3 @@
 import type { TABS } from './constants'
 
-export type TabType = (typeof TABS)[number]
+export type TransactionType = (typeof TABS)[number]

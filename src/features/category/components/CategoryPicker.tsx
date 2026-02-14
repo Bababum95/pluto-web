@@ -10,7 +10,7 @@ import { selectCategories } from '@/store/slices/category'
 import { selectTransactionType } from '@/store/slices/transaction-type'
 import { CategoryCard } from './CategoryCard'
 import { Button } from '@/components/ui/button'
-import { Field, FieldLabel } from '@/components/ui/field'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import {
   Drawer,
   DrawerContent,
@@ -36,6 +36,8 @@ export type CategoryPickerProps = {
   /** Optional transaction type override; defaults to store value. */
   transactionType?: string
   className?: string
+  isError?: boolean
+  errorMessage?: string
 }
 
 const CategoryPickerRoot: FC<CategoryPickerProps> = ({
@@ -44,6 +46,8 @@ const CategoryPickerRoot: FC<CategoryPickerProps> = ({
   onChange,
   transactionType: transactionTypeProp,
   className,
+  isError,
+  errorMessage,
 }) => {
   const { t } = useTranslation()
   const storeTransactionType = useAppSelector(selectTransactionType)
@@ -101,6 +105,7 @@ const CategoryPickerRoot: FC<CategoryPickerProps> = ({
           />
         )}
       </div>
+      {isError && <FieldError>{errorMessage}</FieldError>}
     </Field>
   )
 }

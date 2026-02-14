@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from '@/components/ui/chart'
-import { type FC } from 'react'
+import type { FC } from 'react'
 
 const chartData = [
   { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
@@ -46,10 +46,9 @@ const chartConfig = {
 
 type Props = {
   total: string
-  label?: string
 }
 
-export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
+export const ChartPieDonutText: FC<Props> = ({ total }) => {
   return (
     <ChartContainer
       config={chartConfig}
@@ -81,22 +80,11 @@ export const ChartPieDonutText: FC<Props> = ({ total, label }) => {
                   >
                     <tspan
                       x={viewBox.cx}
-                      y={
-                        (viewBox.cy || 0) + (label && label.length > 0 ? 0 : 4)
-                      }
+                      y={(viewBox.cy || 0) + 4}
                       className="fill-foreground text-2xl font-semibold"
                     >
                       {total}
                     </tspan>
-                    {label && (
-                      <tspan
-                        x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 22}
-                        className="fill-muted-foreground"
-                      >
-                        {label}
-                      </tspan>
-                    )}
                   </text>
                 )
               }

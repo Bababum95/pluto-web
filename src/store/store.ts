@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import transactionTypeReducer from './slices/transaction-type'
 import timeRangeReducer from './slices/time-range'
 import userReducer from './slices/user'
+import appReducer from './slices/app'
 import categoryReducer from './slices/category'
 import accountReducer from './slices/account'
 import settingsReducer from './slices/settings'
@@ -13,6 +14,7 @@ export const store = configureStore({
     transactionType: transactionTypeReducer,
     timeRange: timeRangeReducer,
     user: userReducer,
+    app: appReducer,
     category: categoryReducer,
     account: accountReducer,
     settings: settingsReducer,

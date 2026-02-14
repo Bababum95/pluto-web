@@ -4,13 +4,15 @@ import type {
   Transaction,
   TransactionMutationResponse,
   UpdateTransactionDto,
+  TransactionFilterDto,
 } from './types'
 
 const BASE = 'transactions'
 const QUERY_KEY = ['transactions'] as const
 
 export const transactionApi = {
-  list: (): Promise<Transaction[]> => apiFetch(BASE),
+  list: (filters?: TransactionFilterDto): Promise<Transaction[]> =>
+    apiFetch(BASE, { params: filters }),
 
   getById: (id: string): Promise<Transaction> => apiFetch(`${BASE}/${id}`),
 

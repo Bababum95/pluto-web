@@ -10,22 +10,40 @@ import type {
   Transaction,
   UpdateTransactionDto,
 } from '@/features/transaction/types'
+import { toDecimal } from '@/features/money/utils/toDecimal'
 import type { RootState } from '@/store'
 import type { Status } from '@/lib/types'
 
 type TransactionState = {
   transactions: Transaction[]
   status: Status
+  summary: {
+    total: number
+    total_raw: number
+    scale: number
+    currency: {
+      code: string
+      symbol: string
+      decimal_digits: number
+    }
+  } | null
 }
 
 const initialState: TransactionState = {
   transactions: [],
+  summary: null,
   status: 'idle',
 }
 
 export const fetchTransactions = createAsyncThunk(
   'transaction/fetchTransactions',
-  () => transactionApi.list()
+  (_, { getState }) => {
+    const rootState = getState() as RootState
+
+    return transactionApi.list({
+      type: rootState.transactionType.transactionType,
+    })
+  }
 )
 
 export const createTransaction = createAsyncThunk(
@@ -49,6 +67,10 @@ export const deleteTransaction = createAsyncThunk(
   'transaction/deleteTransaction',
   (id: string) => transactionApi.delete(id)
 )
+
+const countTotal = (transactions: Transaction[]) => {
+  return transactions.reduce((acc, t) => acc + t.amount.converted.raw, 0)
+}
 
 export const transactionSlice = createSlice({
   name: 'transaction',
@@ -85,6 +107,16 @@ export const transactionSlice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.status = 'success'
         state.transactions = action.payload
+        const first = action.payload[0]?.amount?.converted
+        if (first) {
+          const total = countTotal(action.payload)
+          state.summary = {
+            total,
+            total_raw: toDecimal(total, first.scale),
+            scale: first.scale,
+            currency: first.currency,
+          }
+        }
       })
       .addCase(fetchTransactions.rejected, (state) => {
         state.status = 'failed'
@@ -123,11 +155,5 @@ export const {
   clearTransactions,
 } = transactionSlice.actions
 
-export const selectTransactions = (state: RootState) =>
-  state.transaction.transactions
-export const selectTransactionsStatus = (state: RootState) =>
-  state.transaction.status
-export const selectTransactionById = (id: string) => (state: RootState) =>
-  state.transaction.transactions.find((t) => t.id === id)
-
+export * from './selectors'
 export default transactionSlice.reducer

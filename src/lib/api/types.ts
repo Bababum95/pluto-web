@@ -383,7 +383,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get all transactions for the current user */
+        /**
+         * Get all transactions for the current user
+         * @description Optional query filters: dateFrom, dateTo (period), type, category, account. Any combination is supported.
+         */
         get: operations["TransactionController_findAll"];
         put?: never;
         /** Create a new transaction */
@@ -662,6 +665,38 @@ export interface components {
              */
             tags?: string[];
         };
+        MoneyViewCurrencyDto: {
+            /** @example USD */
+            code: string;
+            /** @example $ */
+            symbol: string;
+            /** @example 2 */
+            decimal_digits: number;
+        };
+        MoneyViewDto: {
+            /**
+             * @description Amount in decimal form
+             * @example -1500.5
+             */
+            value: number;
+            /**
+             * @description Amount in minor units
+             * @example -150050
+             */
+            raw: number;
+            /**
+             * @description Decimal places (scale)
+             * @example 2
+             */
+            scale: number;
+            currency: components["schemas"]["MoneyViewCurrencyDto"];
+        };
+        TransactionAmountViewDto: {
+            /** @description Amount in transaction (account) currency */
+            original: components["schemas"]["MoneyViewDto"];
+            /** @description Amount in converted (e.g. base) currency */
+            converted: components["schemas"]["MoneyViewDto"];
+        };
         TransactionDto: {
             id: string;
             /**
@@ -669,24 +704,12 @@ export interface components {
              * @enum {string}
              */
             type: "expense" | "income";
-            /** @example 507f1f77bcf86cd799439011 */
-            category: string;
+            /** @description Category data */
+            category: components["schemas"]["CategoryDto"];
             /** @example Lunch at cafe */
             comment: string;
-            /** @example 507f1f77bcf86cd799439012 */
-            account: string;
-            /**
-             * @description Amount in decimal form
-             * @example -1500.5
-             */
-            amount: number;
-            /**
-             * @description Amount in minor units
-             * @example -150050
-             */
-            amount_raw: number;
-            /** @example 2 */
-            scale: number;
+            /** @description Amount: original (account currency) and converted */
+            amount: components["schemas"]["TransactionAmountViewDto"];
             /**
              * @example [
              *       "food",
@@ -1777,7 +1800,17 @@ export interface operations {
     };
     TransactionController_findAll: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Start of period (inclusive). ISO date or datetime. */
+                from?: string;
+                /** @description End of period (inclusive). ISO date or datetime. */
+                to?: string;
+                type?: "expense" | "income";
+                /** @description Filter by category ID. */
+                category?: string;
+                /** @description Filter by account ID. */
+                account?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;

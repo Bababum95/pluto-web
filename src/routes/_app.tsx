@@ -1,8 +1,6 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
-import { fetchCategories } from '@/store/slices/category'
-import { fetchAccounts } from '@/store/slices/account'
-import { fetchSettings } from '@/store/slices/settings'
+import { initApp } from '@/store/slices/app'
 
 const AppLayout = () => {
   return (
@@ -15,15 +13,8 @@ const AppLayout = () => {
 export const Route = createFileRoute('/_app')({
   component: AppLayout,
   loader: async ({ context }) => {
-    const state = context.store.getState()
-    if (state.category.status === 'idle') {
-      await context.store.dispatch(fetchCategories())
-    }
-    if (state.account.status === 'idle') {
-      await context.store.dispatch(fetchAccounts())
-    }
-    if (state.settings.status === 'idle') {
-      await context.store.dispatch(fetchSettings())
+    if (context.store.getState().app.status === 'idle') {
+      await context.store.dispatch(initApp())
     }
   },
   beforeLoad: ({ context, location }) => {

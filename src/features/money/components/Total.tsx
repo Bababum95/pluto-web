@@ -2,12 +2,13 @@ import { useTranslation } from 'react-i18next'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { FC } from 'react'
 
-import { Balance } from './Balance'
 import {
   selectAccountsStatus,
   selectAccountsSummary,
 } from '@/store/slices/account'
 import { useAppSelector } from '@/store'
+
+import { Balance } from './Balance'
 
 const balanceVariants = cva('text-2xl', {
   variants: {

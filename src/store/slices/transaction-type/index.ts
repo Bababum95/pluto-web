@@ -1,18 +1,18 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 import { DEFAULT_TAB, TABS } from '@/features/transaction-type/constants'
-import type { TabType } from '@/features/transaction-type/types'
+import type { TransactionType } from '@/features/transaction-type/types'
 import type { RootState } from '@/store'
 
 type TransactionTypeState = {
-  transactionType: TabType
+  transactionType: TransactionType
 }
 
 const initialState: TransactionTypeState = {
   transactionType: DEFAULT_TAB,
 }
 
-function isTab(value: string): value is TabType {
+function isTab(value: string): value is TransactionType {
   return (TABS as readonly string[]).includes(value)
 }
 

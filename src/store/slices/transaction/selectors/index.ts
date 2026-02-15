@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 
 import type { Transaction } from '@/features/transaction/types'
+import type { Category } from '@/features/category/types'
 import type { RootState } from '@/store'
 
 export const selectTransactions = (state: RootState) =>
@@ -12,24 +13,37 @@ export const selectTransactionsSummary = (state: RootState) =>
 export const selectTransactionById = (id: string) => (state: RootState) =>
   state.transaction.transactions.find((t) => t.id === id)
 
-export const selectTransactionsGroupedByCategory = createSelector(
+type TransactionsByCategory = {
+  list: Omit<Transaction, 'category'>[]
+  total: number
+  scale: number
+  category: Category
+}
+
+export const selectTransactionsByCategory = createSelector(
   selectTransactions,
-  (transactions) => {
-    return transactions.reduce<Record<string, Transaction[]>>(
-      (acc, transaction) => {
-        const categoryKey =
-          typeof transaction.category === 'string'
-            ? transaction.category
-            : transaction.category.id
+  (transactions): TransactionsByCategory[] => {
+    const data: Record<string, TransactionsByCategory> = {}
 
-        if (!acc[categoryKey]) {
-          acc[categoryKey] = []
+    for (const { category, ...transaction } of transactions) {
+      const categoryKey = typeof category === 'string' ? category : category.id
+      const converted = transaction.amount.converted
+
+      if (!data[categoryKey]) {
+        data[categoryKey] = {
+          list: [],
+          total: 0,
+          category,
+          scale: converted.scale,
         }
+      }
 
-        acc[categoryKey].push(transaction)
-        return acc
-      },
-      {}
-    )
+      data[categoryKey].list.push(transaction)
+
+      // We assume `amount.raw` is the smallest unit (integer)
+      data[categoryKey].total += converted.raw
+    }
+
+    return Object.values(data)
   }
 )

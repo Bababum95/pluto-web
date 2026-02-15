@@ -1,11 +1,9 @@
-import {
-  createSlice,
-  createAsyncThunk,
-} from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { settingsApi } from '@/features/settings'
 import type { Settings } from '@/features/settings/types'
 import type { RootState } from '@/store'
+import { DEFAULT_CURRENCY } from '@/features/money/constants'
 
 type SettingsState = {
   settings: Settings | null
@@ -18,7 +16,7 @@ const initialState: SettingsState = {
 }
 
 export const fetchSettings = createAsyncThunk('settings/fetchSettings', () =>
-  settingsApi.get(),
+  settingsApi.get()
 )
 
 export const settingsSlice = createSlice({
@@ -43,5 +41,7 @@ export const settingsSlice = createSlice({
 export const selectSettings = (state: RootState): Settings | null =>
   state.settings.settings
 export const selectSettingsStatus = (state: RootState) => state.settings.status
+export const selectCurrency = (state: RootState) =>
+  state.settings.settings?.currency ?? DEFAULT_CURRENCY
 
 export default settingsSlice.reducer

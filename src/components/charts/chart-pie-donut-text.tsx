@@ -10,45 +10,21 @@ import {
 } from '@/components/ui/chart'
 import type { FC } from 'react'
 
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-other)' },
-]
-
-const chartConfig = {
-  visitors: {
-    label: 'Visitors',
-  },
-  chrome: {
-    label: 'Chrome',
-    color: 'var(--chart-1)',
-  },
-  safari: {
-    label: 'Safari',
-    color: 'var(--chart-2)',
-  },
-  firefox: {
-    label: 'Firefox',
-    color: 'var(--chart-3)',
-  },
-  edge: {
-    label: 'Edge',
-    color: 'var(--chart-4)',
-  },
-  other: {
-    label: 'Other',
-    color: 'var(--chart-5)',
-  },
-} satisfies ChartConfig
-
 type Props = {
   total: string
+  chartConfig: ChartConfig
+  chartData: Record<string, unknown>[]
+  dataKey: string
+  nameKey: string
 }
 
-export const ChartPieDonutText: FC<Props> = ({ total }) => {
+export const ChartPieDonutText: FC<Props> = ({
+  total,
+  chartConfig,
+  chartData,
+  dataKey,
+  nameKey,
+}) => {
   return (
     <ChartContainer
       config={chartConfig}
@@ -61,8 +37,8 @@ export const ChartPieDonutText: FC<Props> = ({ total }) => {
         />
         <Pie
           data={chartData}
-          dataKey="visitors"
-          nameKey="browser"
+          dataKey={dataKey}
+          nameKey={nameKey}
           innerRadius={64}
           strokeWidth={5}
           paddingAngle={1}
@@ -74,17 +50,12 @@ export const ChartPieDonutText: FC<Props> = ({ total }) => {
                 return (
                   <text
                     x={viewBox.cx}
-                    y={viewBox.cy}
+                    y={(viewBox.cy || 0) + 4}
                     textAnchor="middle"
                     dominantBaseline="middle"
+                    className="fill-foreground text-2xl font-semibold"
                   >
-                    <tspan
-                      x={viewBox.cx}
-                      y={(viewBox.cy || 0) + 4}
-                      className="fill-foreground text-2xl font-semibold"
-                    >
-                      {total}
-                    </tspan>
+                    {total}
                   </text>
                 )
               }

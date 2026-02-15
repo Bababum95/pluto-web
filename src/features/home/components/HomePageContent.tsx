@@ -1,25 +1,24 @@
 import { Link } from '@tanstack/react-router'
 import type { FC } from 'react'
 
+import { PlusButton } from '@/components/ui/button'
 import { ChartPieDonutText } from '@/components/charts/chart-pie-donut-text'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { PlusButton } from '@/components/ui/button'
 import { Item, ItemActions, ItemContent, ItemTitle } from '@/components/ui/item'
+import { Icon } from '@/components/ui/icon'
+import { formatBalance, toDecimal } from '@/features/money'
 import { TimeRangeSwitcher } from '@/features/time-range'
 import { useAppSelector } from '@/store'
 import {
   selectTransactionsSummary,
-  selectTransactionsGroupedByCategory,
+  selectTransactionsByCategory,
 } from '@/store/slices/transaction'
-import { formatBalance, toDecimal } from '@/features/money'
-import { DEFAULT_CURRENCY } from '@/features/money/constants'
-import { Icon } from '@/components/ui/icon'
+import { selectCurrency } from '@/store/slices/settings'
 
 export const HomePageContent: FC = () => {
   const summary = useAppSelector(selectTransactionsSummary)
-  const transactionsGroupedByCategory = useAppSelector(
-    selectTransactionsGroupedByCategory
-  )
+  const currency = useAppSelector(selectCurrency)
+  const transactionsByCategory = useAppSelector(selectTransactionsByCategory)
 
   return (
     <div className="flex flex-col gap-2">
@@ -29,9 +28,28 @@ export const HomePageContent: FC = () => {
         </CardHeader>
         <CardContent className="flex-1 pb-0">
           <ChartPieDonutText
+            dataKey="total"
+            nameKey="category"
+            chartData={transactionsByCategory.map(
+              ({ category, total, scale }) => ({
+                category: category.name,
+                fill: category.color,
+                total: toDecimal(total, scale),
+              })
+            )}
+            chartConfig={transactionsByCategory.reduce(
+              (acc, { category }) => ({
+                ...acc,
+                [category.name]: {
+                  label: category.name,
+                  color: category.color,
+                },
+              }),
+              {}
+            )}
             total={formatBalance({
               balance: summary?.total_raw ?? 0,
-              currency: summary?.currency ?? DEFAULT_CURRENCY,
+              currency: summary?.currency ?? currency,
             })}
           />
         </CardContent>
@@ -44,37 +62,30 @@ export const HomePageContent: FC = () => {
         </Link>
       </Card>
       <div className="flex flex-col gap-1">
-        {Object.entries(transactionsGroupedByCategory).map(
-          ([key, transactions]) => {
-            const category = transactions[0].category
-            const currency = transactions[0].amount.converted.currency
-            const total = transactions.reduce(
-              (acc, transaction) => acc + transaction.amount.converted.raw,
-              0
-            )
-            return (
-              <Item variant="outline" size="xs" className="bg-card" key={key}>
-                <Icon
-                  name={category.icon}
-                  data-slot="item-media"
-                  color={category.color}
-                  size={16}
-                />
-                <ItemContent>
-                  <ItemTitle>{category.name}</ItemTitle>
-                </ItemContent>
-                <ItemActions>
-                  <span className="font-medium">
-                    {formatBalance({
-                      currency,
-                      balance: toDecimal(total, currency.decimal_digits),
-                    })}
-                  </span>
-                </ItemActions>
-              </Item>
-            )
-          }
-        )}
+        {transactionsByCategory.map(({ category, total, scale }) => (
+          <Item
+            variant="outline"
+            size="xs"
+            className="bg-card"
+            key={category.id}
+          >
+            <Icon
+              name={category.icon}
+              data-slot="item-media"
+              color={category.color}
+              size={24}
+              className="p-1"
+            />
+            <ItemContent>
+              <ItemTitle>{category.name}</ItemTitle>
+            </ItemContent>
+            <ItemActions>
+              <span className="font-medium">
+                {formatBalance({ currency, balance: toDecimal(total, scale) })}
+              </span>
+            </ItemActions>
+          </Item>
+        ))}
       </div>
     </div>
   )

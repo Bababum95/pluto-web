@@ -9,6 +9,8 @@ import accountReducer from './slices/account'
 import settingsReducer from './slices/settings'
 import transactionReducer from './slices/transaction'
 
+import { transactionTypeListener } from './middlewares/transactionTypeListener'
+
 export const store = configureStore({
   reducer: {
     transactionType: transactionTypeReducer,
@@ -20,6 +22,8 @@ export const store = configureStore({
     settings: settingsReducer,
     transaction: transactionReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(transactionTypeListener.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

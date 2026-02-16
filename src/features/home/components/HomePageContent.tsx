@@ -12,14 +12,15 @@ import { useAppSelector } from '@/store'
 import {
   selectTransactionsSummary,
   selectTransactionsByCategory,
+  selectTransactionsStatus,
 } from '@/store/slices/transaction'
-import { selectCurrency, selectSettingsStatus } from '@/store/slices/settings'
+import { selectCurrency } from '@/store/slices/settings'
 
 export const HomePageContent: FC = () => {
   const summary = useAppSelector(selectTransactionsSummary)
   const currency = useAppSelector(selectCurrency)
   const transactionsByCategory = useAppSelector(selectTransactionsByCategory)
-  const status = useAppSelector(selectSettingsStatus)
+  const status = useAppSelector(selectTransactionsStatus)
 
   return (
     <div className="flex flex-col gap-2">

@@ -48,7 +48,7 @@ export const ChartPieDonutText: FC<Props> = ({
           innerRadius={64}
           strokeWidth={5}
           paddingAngle={1}
-          animationBegin={10}
+          isAnimationActive={false}
           className={cn(isLoading && 'animate-pulse')}
         >
           <Label

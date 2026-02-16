@@ -1,6 +1,7 @@
 'use client'
 
 import { Label, Pie, PieChart } from 'recharts'
+import type { FC } from 'react'
 
 import {
   ChartContainer,
@@ -8,7 +9,9 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from '@/components/ui/chart'
-import type { FC } from 'react'
+import { cn } from '@/lib/utils'
+
+const LOADING_DATA = [{ category: 'loading', fill: '#00a4e8', total: 1 }]
 
 type Props = {
   total: string
@@ -16,6 +19,7 @@ type Props = {
   chartData: Record<string, unknown>[]
   dataKey: string
   nameKey: string
+  loading?: boolean
 }
 
 export const ChartPieDonutText: FC<Props> = ({
@@ -24,7 +28,9 @@ export const ChartPieDonutText: FC<Props> = ({
   chartData,
   dataKey,
   nameKey,
+  loading = false,
 }) => {
+  const isLoading = loading && chartData.length === 0
   return (
     <ChartContainer
       config={chartConfig}
@@ -36,13 +42,14 @@ export const ChartPieDonutText: FC<Props> = ({
           content={<ChartTooltipContent hideLabel />}
         />
         <Pie
-          data={chartData}
+          data={isLoading ? LOADING_DATA : chartData}
           dataKey={dataKey}
           nameKey={nameKey}
           innerRadius={64}
           strokeWidth={5}
           paddingAngle={1}
-          isAnimationActive={false}
+          animationBegin={10}
+          className={cn(isLoading && 'animate-pulse')}
         >
           <Label
             content={({ viewBox }) => {
@@ -53,7 +60,10 @@ export const ChartPieDonutText: FC<Props> = ({
                     y={(viewBox.cy || 0) + 4}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    className="fill-foreground text-2xl font-semibold"
+                    className={cn(
+                      'fill-foreground text-2xl font-semibold',
+                      isLoading && 'animate-pulse'
+                    )}
                   >
                     {total}
                   </text>

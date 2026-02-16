@@ -13,12 +13,13 @@ import {
   selectTransactionsSummary,
   selectTransactionsByCategory,
 } from '@/store/slices/transaction'
-import { selectCurrency } from '@/store/slices/settings'
+import { selectCurrency, selectSettingsStatus } from '@/store/slices/settings'
 
 export const HomePageContent: FC = () => {
   const summary = useAppSelector(selectTransactionsSummary)
   const currency = useAppSelector(selectCurrency)
   const transactionsByCategory = useAppSelector(selectTransactionsByCategory)
+  const status = useAppSelector(selectSettingsStatus)
 
   return (
     <div className="flex flex-col gap-2">
@@ -30,6 +31,7 @@ export const HomePageContent: FC = () => {
           <ChartPieDonutText
             dataKey="total"
             nameKey="category"
+            loading={status === 'pending'}
             chartData={transactionsByCategory.map(
               ({ category, total, scale }) => ({
                 category: category.name,

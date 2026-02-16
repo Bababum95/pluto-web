@@ -8,6 +8,6 @@ export const transactionTypeListener = createListenerMiddleware()
 transactionTypeListener.startListening({
   actionCreator: setTransactionType,
   effect: async (_, api) => {
-    await api.dispatch(fetchTransactions())
+    await api.dispatch(fetchTransactions({ clear: true }))
   },
 })

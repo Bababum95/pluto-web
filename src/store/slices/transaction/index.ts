@@ -35,9 +35,13 @@ const initialState: TransactionState = {
   status: 'idle',
 }
 
+type FetchTransactionsPayload = {
+  clear?: boolean
+}
+
 export const fetchTransactions = createAsyncThunk(
   'transaction/fetchTransactions',
-  (_, { getState }) => {
+  (_payload: FetchTransactionsPayload | undefined, { getState }) => {
     const rootState = getState() as RootState
 
     return transactionApi.list({
@@ -101,8 +105,12 @@ export const transactionSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTransactions.pending, (state) => {
+      .addCase(fetchTransactions.pending, (state, action) => {
         state.status = 'pending'
+
+        if (action.meta.arg?.clear) {
+          state.transactions = []
+        }
       })
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.status = 'success'

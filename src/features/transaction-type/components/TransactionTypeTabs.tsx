@@ -63,7 +63,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
           </TabsTrigger>
         ))}
       </TabsList>
-      <div className="w-full pb-safe bg-background fixed left-0 right-0 bottom-0" />
+      <div className="w-full pb-safe bg-background fixed left-0 right-0 bottom-0 z-49" />
     </Tabs>
   )
 }

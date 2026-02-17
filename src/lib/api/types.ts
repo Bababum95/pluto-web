@@ -486,6 +486,38 @@ export interface components {
             /** @example secret123 */
             password: string;
         };
+        MoneyViewCurrencyDto: {
+            /** @example USD */
+            code: string;
+            /** @example $ */
+            symbol: string;
+            /** @example 2 */
+            decimal_digits: number;
+        };
+        MoneyViewDto: {
+            /**
+             * @description Amount in decimal form
+             * @example -1500.5
+             */
+            value: number;
+            /**
+             * @description Amount in minor units
+             * @example -150050
+             */
+            raw: number;
+            /**
+             * @description Decimal places (scale)
+             * @example 2
+             */
+            scale: number;
+            currency: components["schemas"]["MoneyViewCurrencyDto"];
+        };
+        AccountBalanceViewDto: {
+            /** @description Balance in account currency */
+            original: components["schemas"]["MoneyViewDto"];
+            /** @description Balance in converted (e.g. base) currency */
+            converted: components["schemas"]["MoneyViewDto"];
+        };
         AccountDto: {
             id: string;
             /** @example #FF5733 */
@@ -494,13 +526,8 @@ export interface components {
             icon: string;
             /** @example Main Wallet */
             name: string;
-            /** @example 1000.5 */
-            balance: number;
-            /** @example 100050 */
-            balance_raw: number;
-            /** @example 2 */
-            scale: number;
-            currency: components["schemas"]["CurrencyDto"];
+            /** @description Balance: original (account currency) and converted */
+            balance: components["schemas"]["AccountBalanceViewDto"];
             /** @example 1 */
             order: number;
             /** @example false */
@@ -664,32 +691,6 @@ export interface components {
              *     ]
              */
             tags?: string[];
-        };
-        MoneyViewCurrencyDto: {
-            /** @example USD */
-            code: string;
-            /** @example $ */
-            symbol: string;
-            /** @example 2 */
-            decimal_digits: number;
-        };
-        MoneyViewDto: {
-            /**
-             * @description Amount in decimal form
-             * @example -1500.5
-             */
-            value: number;
-            /**
-             * @description Amount in minor units
-             * @example -150050
-             */
-            raw: number;
-            /**
-             * @description Decimal places (scale)
-             * @example 2
-             */
-            scale: number;
-            currency: components["schemas"]["MoneyViewCurrencyDto"];
         };
         TransactionAmountViewDto: {
             /** @description Amount in transaction (account) currency */

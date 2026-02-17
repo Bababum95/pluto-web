@@ -96,8 +96,9 @@ function TransactionPage() {
                       selector={(state) => state.values.account}
                       children={(accountId) => (
                         <Button variant="outline" size="lg" type="button">
-                          {accounts.find((acc) => acc.id === accountId)
-                            ?.currency?.code ?? settings?.currency?.code}
+                          {accounts.find((acc) => acc.id === accountId)?.balance
+                            .original.currency?.code ??
+                            settings?.currency?.code}
                         </Button>
                       )}
                     />

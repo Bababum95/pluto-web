@@ -21,7 +21,6 @@ type Props = Account & {
 
 export const AccountItem: FC<Props> = ({
   name,
-  currency,
   balance,
   color,
   icon,
@@ -39,12 +38,30 @@ export const AccountItem: FC<Props> = ({
         <ItemTitle>{name}</ItemTitle>
         {actions && (
           <ItemDescription className="text-xs">
-            <Balance balance={balance} currency={currency} />
+            <Balance
+              balance={balance.original.value}
+              currency={balance.original.currency}
+            />
           </ItemDescription>
         )}
       </ItemContent>
       <ItemActions>
-        {actions || <Balance balance={balance} currency={currency} />}
+        {actions || (
+          <div className="flex flex-col items-end">
+            <Balance
+              balance={balance.original.value}
+              currency={balance.original.currency}
+            />
+            {balance.converted.currency.code !==
+              balance.original.currency.code && (
+              <Balance
+                className="text-xs text-muted-foreground font-normal"
+                balance={balance.converted.value}
+                currency={balance.converted.currency}
+              />
+            )}
+          </div>
+        )}
       </ItemActions>
     </Item>
   )

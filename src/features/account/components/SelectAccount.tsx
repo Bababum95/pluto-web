@@ -26,6 +26,7 @@ import { useAppSelector } from '@/store/hooks'
 import { selectAccounts } from '@/store/slices/account'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { Balance } from '@/features/money/components/Balance'
 
 type Props = {
   value?: string
@@ -94,7 +95,10 @@ export const SelectAccount: FC<Props> = ({
                   <FieldContent className="gap-0">
                     <FieldTitle>{account.name}</FieldTitle>
                     <FieldDescription>
-                      {account.balance} {account.currency.symbol}
+                      <Balance
+                        balance={account.balance.original.value}
+                        currency={account.balance.original.currency}
+                      />
                     </FieldDescription>
                   </FieldContent>
                   <RadioGroupItem value={account.id} id={account.id} />

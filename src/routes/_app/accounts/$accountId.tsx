@@ -93,8 +93,8 @@ const EditAccountPage = () => {
           name: account.name,
           color: account.color,
           icon: account.icon,
-          currency: account.currency?.id,
-          balance: account.balance.toString(),
+          currency: account.balance.original.currency?.code,
+          balance: account.balance.original.value.toString(),
         }}
         submitLabel={t('accounts.save')}
         onSubmit={handleSubmit}

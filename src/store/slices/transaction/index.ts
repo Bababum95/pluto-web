@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 
 import { transactionApi } from '@/features/transaction'
+import { getTimeRangeBounds } from '@/features/time-range'
 import type {
   CreateTransactionDto,
   Transaction,
@@ -43,9 +44,13 @@ export const fetchTransactions = createAsyncThunk(
   'transaction/fetchTransactions',
   (_payload: FetchTransactionsPayload | undefined, { getState }) => {
     const rootState = getState() as RootState
+    const { timeRange, timeRangeIndex } = rootState.timeRange
+    const bounds = getTimeRangeBounds(timeRange, timeRangeIndex)
 
     return transactionApi.list({
       type: rootState.transactionType.transactionType,
+      from: bounds.from,
+      to: bounds.to,
     })
   }
 )
@@ -115,15 +120,15 @@ export const transactionSlice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.status = 'success'
         state.transactions = action.payload
-        const first = action.payload[0]?.amount?.converted
-        if (first) {
-          const total = countTotal(action.payload)
-          state.summary = {
-            total,
-            total_raw: toDecimal(total, first.scale),
-            scale: first.scale,
-            currency: first.currency,
-          }
+        const data = action.payload[0]?.amount?.converted ?? state.summary
+        const scale = data?.scale ?? 0
+
+        const total = countTotal(action.payload)
+        state.summary = {
+          total,
+          scale,
+          total_raw: toDecimal(total, scale),
+          currency: data?.currency,
         }
       })
       .addCase(fetchTransactions.rejected, (state) => {

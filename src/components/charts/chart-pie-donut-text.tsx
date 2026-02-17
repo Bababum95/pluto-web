@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/chart'
 import { cn } from '@/lib/utils'
 
-const LOADING_DATA = [{ category: 'loading', fill: '#00a4e8', total: 1 }]
+const LOADING_DATA = [{ category: 'loading', fill: '#1e2939', total: 1 }]
 
 type Props = {
   total: string
@@ -30,26 +30,30 @@ export const ChartPieDonutText: FC<Props> = ({
   nameKey,
   loading = false,
 }) => {
-  const isLoading = loading && chartData.length === 0
+  const isEmpty = chartData?.length > 0 ? false : true
+
   return (
     <ChartContainer
       config={chartConfig}
       className="mx-auto aspect-square max-h-[250px] scale-125"
     >
       <PieChart>
-        <ChartTooltip
-          cursor={false}
-          content={<ChartTooltipContent hideLabel />}
-        />
+        {!isEmpty && (
+          <ChartTooltip
+            cursor={false}
+            content={<ChartTooltipContent hideLabel />}
+          />
+        )}
         <Pie
-          data={isLoading ? LOADING_DATA : chartData}
+          data={isEmpty ? LOADING_DATA : chartData}
           dataKey={dataKey}
           nameKey={nameKey}
           innerRadius={64}
           strokeWidth={5}
           paddingAngle={1}
           isAnimationActive={false}
-          className={cn(isLoading && 'animate-pulse')}
+          animationBegin={0}
+          className={cn(loading && 'animate-pulse')}
         >
           <Label
             content={({ viewBox }) => {
@@ -62,7 +66,7 @@ export const ChartPieDonutText: FC<Props> = ({
                     dominantBaseline="middle"
                     className={cn(
                       'fill-foreground text-2xl font-semibold',
-                      isLoading && 'animate-pulse'
+                      loading && 'animate-pulse'
                     )}
                   >
                     {total}

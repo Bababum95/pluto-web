@@ -115,6 +115,9 @@ export const transactionSlice = createSlice({
 
         if (action.meta.arg?.clear) {
           state.transactions = []
+          state.summary = state.summary
+            ? { ...state.summary, total: 0, total_raw: 0 }
+            : null
         }
       })
       .addCase(fetchTransactions.fulfilled, (state, action) => {

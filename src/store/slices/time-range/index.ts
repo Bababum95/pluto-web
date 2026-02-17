@@ -19,6 +19,7 @@ export const timeRangeSlice = createSlice({
   reducers: {
     setTimeRange: (state, action: PayloadAction<TimeRangeType>) => {
       state.timeRange = action.payload
+      state.timeRangeIndex = 0
     },
     setTimeRangeIndex: (state, action: PayloadAction<number>) => {
       state.timeRangeIndex = action.payload

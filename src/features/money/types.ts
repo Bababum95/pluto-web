@@ -5,5 +5,8 @@ export type MoneyViewCurrency = components['schemas']['MoneyViewCurrencyDto']
 
 export type FormatBalanceParams = {
   balance: number
-  currency: MoneyViewCurrency
+  currency: {
+    code: string
+    decimal_digits: number
+  }
 }

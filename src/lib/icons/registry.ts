@@ -7,8 +7,11 @@ import type { SvgIcon } from './types'
 import { Airplane01Icon } from './components/Airplane01Icon'
 import { BankBuildingIcon } from './components/BankBuildingIcon'
 import { BankIcon } from './components/BankIcon'
+import { BinanceIcon } from './components/BinanceIcon'
+import { BitgetIcon } from './components/BitgetIcon'
 import { Book01Icon } from './components/Book01Icon'
 import { Bus01Icon } from './components/Bus01Icon'
+import { BybitIcon } from './components/BybitIcon'
 import { CalculatorIcon } from './components/CalculatorIcon'
 import { Car01Icon } from './components/Car01Icon'
 import { ClothesIcon } from './components/ClothesIcon'
@@ -27,6 +30,8 @@ import { Home02Icon } from './components/Home02Icon'
 import { Money01Icon } from './components/Money01Icon'
 import { Money02Icon } from './components/Money02Icon'
 import { MusicNote01Icon } from './components/MusicNote01Icon'
+import { OkxCompactIcon } from './components/OkxCompactIcon'
+import { OkxIcon } from './components/OkxIcon'
 import { PiggyBankIcon } from './components/PiggyBankIcon'
 import { Pizza01Icon } from './components/Pizza01Icon'
 import { ReceiptDollarIcon } from './components/ReceiptDollarIcon'
@@ -35,7 +40,9 @@ import { ShoppingBag01Icon } from './components/ShoppingBag01Icon'
 import { ShoppingBasket01Icon } from './components/ShoppingBasket01Icon'
 import { ShoppingCart01Icon } from './components/ShoppingCart01Icon'
 import { TaxiIcon } from './components/TaxiIcon'
+import { TBankIcon } from './components/TBankIcon'
 import { Train01Icon } from './components/Train01Icon'
+import { TrustWalletIcon } from './components/TrustWalletIcon'
 import { Video01Icon } from './components/Video01Icon'
 import { Wallet01Icon } from './components/Wallet01Icon'
 import { Wallet02Icon } from './components/Wallet02Icon'
@@ -45,8 +52,11 @@ export const ICON_REGISTRY = {
   Airplane01Icon,
   BankBuildingIcon,
   BankIcon,
+  BinanceIcon,
+  BitgetIcon,
   Book01Icon,
   Bus01Icon,
+  BybitIcon,
   CalculatorIcon,
   Car01Icon,
   ClothesIcon,
@@ -65,6 +75,8 @@ export const ICON_REGISTRY = {
   Money01Icon,
   Money02Icon,
   MusicNote01Icon,
+  OkxCompactIcon,
+  OkxIcon,
   PiggyBankIcon,
   Pizza01Icon,
   ReceiptDollarIcon,
@@ -72,8 +84,10 @@ export const ICON_REGISTRY = {
   ShoppingBag01Icon,
   ShoppingBasket01Icon,
   ShoppingCart01Icon,
+  TBankIcon,
   TaxiIcon,
   Train01Icon,
+  TrustWalletIcon,
   Video01Icon,
   Wallet01Icon,
   Wallet02Icon,
@@ -109,6 +123,13 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'CalculatorIcon',
       'EthereumIcon',
       'DongIcon',
+      'BinanceIcon',
+      'BybitIcon',
+      'BitgetIcon',
+      'OkxIcon',
+      'OkxCompactIcon',
+      'TrustWalletIcon',
+      'TBankIcon',
     ],
   },
   {

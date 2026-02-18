@@ -6,8 +6,7 @@ import {
   ItemMedia,
   ItemTitle,
 } from '@/components/ui/item'
-import { HugeiconsIcon } from '@hugeicons/react'
-import type { FC } from 'react'
+import { type FC, createElement } from 'react'
 
 import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
 import { Balance } from '@/features/money'
@@ -27,12 +26,12 @@ export const AccountItem: FC<Props> = ({
   onClick,
   actions,
 }) => {
-  const iconElement = getIconByName(icon) ?? DEFAULT_ICON
+  const ResolvedIcon = getIconByName(icon) ?? DEFAULT_ICON
 
   return (
     <Item size="sm" onClick={onClick}>
       <ItemMedia variant="icon" style={{ backgroundColor: color }}>
-        <HugeiconsIcon icon={iconElement} className="size-5" />
+        {createElement(ResolvedIcon, { size: 20, className: 'size-5' })}
       </ItemMedia>
       <ItemContent className="gap-0">
         <ItemTitle>{name}</ItemTitle>

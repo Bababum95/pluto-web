@@ -1,5 +1,4 @@
-import { HugeiconsIcon } from '@hugeicons/react'
-import type { FC } from 'react'
+import { type FC, createElement } from 'react'
 
 import { cn } from '@/lib/utils'
 import { DEFAULT_ICON, getIconByName } from '@/lib/icons'
@@ -26,7 +25,7 @@ export const Icon: FC<IconProps> = ({
   color,
   ...props
 }) => {
-  const icon = getIconByName(name)
+  const ResolvedIcon = getIconByName(name) ?? DEFAULT_ICON
 
   return (
     <div
@@ -37,7 +36,7 @@ export const Icon: FC<IconProps> = ({
       )}
       {...props}
     >
-      <HugeiconsIcon icon={icon || DEFAULT_ICON} size={size} />
+      {createElement(ResolvedIcon, { size })}
     </div>
   )
 }

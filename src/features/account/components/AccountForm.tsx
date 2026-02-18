@@ -117,6 +117,12 @@ export const AccountForm: FC<Props> = ({
               />
             )}
           />
+          <form.Field
+            name="description"
+            children={(field) => (
+              <FormField field={field} label={t('accounts.description')} />
+            )}
+          />
         </FieldSet>
       </FieldGroup>
       <form.Subscribe

@@ -25,6 +25,7 @@ export const AccountItem: FC<Props> = ({
   icon,
   onClick,
   actions,
+  description,
 }) => {
   const ResolvedIcon = getIconByName(icon) ?? DEFAULT_ICON
 
@@ -35,13 +36,17 @@ export const AccountItem: FC<Props> = ({
       </ItemMedia>
       <ItemContent className="gap-0">
         <ItemTitle>{name}</ItemTitle>
-        {actions && (
+        {actions ? (
           <ItemDescription className="text-xs">
             <Balance
               balance={balance.original.value}
               currency={balance.original.currency}
             />
           </ItemDescription>
+        ) : (
+          description && (
+            <ItemDescription className="text-xs">{description}</ItemDescription>
+          )
         )}
       </ItemContent>
       <ItemActions>

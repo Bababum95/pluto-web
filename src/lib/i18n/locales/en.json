@@ -82,6 +82,7 @@
     "create": "Create account",
     "edit": "Edit account",
     "name": "Account name",
+    "description": "Account description",
     "icon": "Icon",
     "color": "Color",
     "currency": "Currency",

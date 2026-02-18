@@ -4,7 +4,7 @@ import {
   MoreVerticalIcon,
   Clock04Icon,
   PlusSignIcon,
-  CardExchange01Icon,
+  ArrowDataTransferHorizontalIcon,
 } from '@hugeicons/core-free-icons'
 import { Fragment } from 'react'
 
@@ -31,8 +31,18 @@ export const Route = createFileRoute('/_app/accounts/')({
 
 const actions = [
   { value: 'add', icon: PlusSignIcon, to: '/accounts/create' },
-  { value: 'newTransfer', icon: CardExchange01Icon, to: '/accounts/create' },
-  { value: 'transferHistory', icon: Clock04Icon, to: '/accounts/create' },
+  {
+    value: 'newTransfer',
+    icon: ArrowDataTransferHorizontalIcon,
+    to: '/accounts/create',
+    disabled: true,
+  },
+  {
+    value: 'transferHistory',
+    icon: Clock04Icon,
+    to: '/accounts/create',
+    disabled: true,
+  },
 ]
 
 function AccountsPage() {
@@ -50,9 +60,13 @@ function AccountsPage() {
               <HugeiconsIcon icon={MoreVerticalIcon} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-42">
+          <DropdownMenuContent align="end" className="w-48">
             {actions.map((action) => (
-              <DropdownMenuItem key={action.value} asChild>
+              <DropdownMenuItem
+                key={action.value}
+                asChild
+                disabled={action.disabled}
+              >
                 <Link
                   to={action.to}
                   key={action.value}

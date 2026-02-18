@@ -38,7 +38,8 @@ const EditAccountPage = () => {
   const isLoading = status === 'pending'
 
   const handleSubmit = async (values: UpdateAccountDto) => {
-    await dispatch(updateAccount({ id: accountId, data: values }))
+    await dispatch(updateAccount({ id: accountId, data: values })).unwrap()
+
     navigate({ to: '/accounts' })
     toast.success(t('accounts.updated'))
   }
@@ -93,8 +94,9 @@ const EditAccountPage = () => {
           name: account.name,
           color: account.color,
           icon: account.icon,
-          currency: account.balance.original.currency?.code,
+          currency: account.balance.original.currency.id,
           balance: account.balance.original.value.toString(),
+          description: account.description,
         }}
         submitLabel={t('accounts.save')}
         onSubmit={handleSubmit}

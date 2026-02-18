@@ -33,7 +33,8 @@ type RequestConfig = RequestInit & { params?: Record<string, string> }
 
 export async function apiFetch<T>(
   path: string,
-  config: RequestConfig = {}
+  config: RequestConfig = {},
+  onError?: (error: unknown) => void
 ): Promise<T> {
   const { params, ...init } = config
 
@@ -73,6 +74,13 @@ export async function apiFetch<T>(
         : Array.isArray(raw)
           ? raw[0]
           : res.statusText
+    if (onError) {
+      onError(new ApiError(res.status, String(message), errBody ?? undefined))
+    } else {
+      handleApiError(
+        new ApiError(res.status, String(message), errBody ?? undefined)
+      )
+    }
     throw new ApiError(res.status, String(message), errBody ?? undefined)
   }
 

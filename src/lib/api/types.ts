@@ -487,6 +487,8 @@ export interface components {
             password: string;
         };
         MoneyViewCurrencyDto: {
+            /** @example 507f1f77bcf86cd799439011 */
+            id: string;
             /** @example USD */
             code: string;
             /** @example $ */
@@ -526,6 +528,11 @@ export interface components {
             icon: string;
             /** @example Main Wallet */
             name: string;
+            /**
+             * @description Optional account description
+             * @example Personal spending account
+             */
+            description?: string;
             /** @description Balance: original (account currency) and converted */
             balance: components["schemas"]["AccountBalanceViewDto"];
             /** @example 1 */
@@ -574,6 +581,11 @@ export interface components {
             icon: string;
             /** @example Main Wallet */
             name: string;
+            /**
+             * @description Optional account description
+             * @example Personal spending account
+             */
+            description?: string;
             /**
              * @description Account balance (will be stored in minor units)
              * @default 0

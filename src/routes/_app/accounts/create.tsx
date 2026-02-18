@@ -16,7 +16,7 @@ const CreateAccountPage = () => {
   const settings = useAppSelector(selectSettings)
 
   const handleSubmit = async (values: CreateAccountDto) => {
-    await dispatch(createAccount(values))
+    await dispatch(createAccount(values)).unwrap()
     navigate({ to: '/accounts' })
     toast.success(t('accounts.created'))
   }

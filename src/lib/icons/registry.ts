@@ -5,14 +5,15 @@ import type { SvgIcon } from './types'
  * Add icons: create IconName.tsx in components/, then add to ICON_REGISTRY below.
  */
 import { Airplane01Icon } from './components/Airplane01Icon'
+import { BahtIcon } from './components/BahtIcon'
 import { BankBuildingIcon } from './components/BankBuildingIcon'
 import { BankIcon } from './components/BankIcon'
 import { BinanceIcon } from './components/BinanceIcon'
+import { BingxIcon } from './components/BingxIcon'
 import { BitgetIcon } from './components/BitgetIcon'
 import { Book01Icon } from './components/Book01Icon'
 import { Bus01Icon } from './components/Bus01Icon'
 import { BybitIcon } from './components/BybitIcon'
-import { CalculatorIcon } from './components/CalculatorIcon'
 import { Car01Icon } from './components/Car01Icon'
 import { ClothesIcon } from './components/ClothesIcon'
 import { Coffee01Icon } from './components/Coffee01Icon'
@@ -22,6 +23,7 @@ import { Dollar02Icon } from './components/Dollar02Icon'
 import { DongIcon } from './components/DongIcon'
 import { EthereumIcon } from './components/EthereumIcon'
 import { GiftIcon } from './components/GiftIcon'
+import { GolomtIcon } from './components/GolomtIcon'
 import { GameController01Icon } from './components/GameController01Icon'
 import { Hamburger01Icon } from './components/Hamburger01Icon'
 import { HealthIcon } from './components/HealthIcon'
@@ -29,6 +31,7 @@ import { Home01Icon } from './components/Home01Icon'
 import { Home02Icon } from './components/Home02Icon'
 import { Money01Icon } from './components/Money01Icon'
 import { Money02Icon } from './components/Money02Icon'
+import { KucoinIcon } from './components/KucoinIcon'
 import { MusicNote01Icon } from './components/MusicNote01Icon'
 import { OkxCompactIcon } from './components/OkxCompactIcon'
 import { OkxIcon } from './components/OkxIcon'
@@ -41,6 +44,8 @@ import { ShoppingBasket01Icon } from './components/ShoppingBasket01Icon'
 import { ShoppingCart01Icon } from './components/ShoppingCart01Icon'
 import { TaxiIcon } from './components/TaxiIcon'
 import { TBankIcon } from './components/TBankIcon'
+import { TonIdIcon } from './components/TonIdIcon'
+import { TonWalletIcon } from './components/TonWalletIcon'
 import { Train01Icon } from './components/Train01Icon'
 import { TrustWalletIcon } from './components/TrustWalletIcon'
 import { Video01Icon } from './components/Video01Icon'
@@ -52,12 +57,13 @@ export const ICON_REGISTRY = {
   Airplane01Icon,
   BankBuildingIcon,
   BankIcon,
+  BahtIcon,
   BinanceIcon,
+  BingxIcon,
   BitgetIcon,
   Book01Icon,
   Bus01Icon,
   BybitIcon,
-  CalculatorIcon,
   Car01Icon,
   ClothesIcon,
   Coffee01Icon,
@@ -68,10 +74,12 @@ export const ICON_REGISTRY = {
   EthereumIcon,
   GiftIcon,
   GameController01Icon,
+  GolomtIcon,
   Hamburger01Icon,
   HealthIcon,
   Home01Icon,
   Home02Icon,
+  KucoinIcon,
   Money01Icon,
   Money02Icon,
   MusicNote01Icon,
@@ -86,6 +94,8 @@ export const ICON_REGISTRY = {
   ShoppingCart01Icon,
   TBankIcon,
   TaxiIcon,
+  TonIdIcon,
+  TonWalletIcon,
   Train01Icon,
   TrustWalletIcon,
   Video01Icon,
@@ -120,9 +130,9 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'BankBuildingIcon',
       'PiggyBankIcon',
       'ReceiptDollarIcon',
-      'CalculatorIcon',
       'EthereumIcon',
       'DongIcon',
+      'BahtIcon',
       'BinanceIcon',
       'BybitIcon',
       'BitgetIcon',
@@ -130,6 +140,11 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'OkxCompactIcon',
       'TrustWalletIcon',
       'TBankIcon',
+      'TonWalletIcon',
+      'TonIdIcon',
+      'KucoinIcon',
+      'BingxIcon',
+      'GolomtIcon',
     ],
   },
   {

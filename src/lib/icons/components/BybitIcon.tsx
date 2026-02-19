@@ -8,7 +8,7 @@ export const BybitIcon: FC<SvgIconProps> = ({ size = 24, className }) => (
     width={size * 1.2}
     height={size}
     className={className}
-    viewBox="0 0 24 10"
+    viewBox="0 1 24 10"
     fill="none"
   >
     <path d="M17.105 7.70983V0H18.3451V7.70983H17.105Z" fill="#F6A500" />

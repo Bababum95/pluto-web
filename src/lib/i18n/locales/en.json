@@ -95,12 +95,15 @@
     "created": "Account created successfully",
     "updated": "Account updated successfully",
     "deleted": "Account deleted successfully",
+    "shown": "Account shown successfully",
+    "hidden": "Account hidden successfully",
     "actions": {
       "add": "Add account",
       "newTransfer": "New transfer",
       "transferHistory": "Transfer history",
       "delete": "Delete account",
-      "hide": "Exclude from total"
+      "hide": "Exclude from total",
+      "show": "Include in total"
     },
     "errors": {
       "name": {

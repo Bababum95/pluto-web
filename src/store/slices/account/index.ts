@@ -68,6 +68,11 @@ export const reorderAccounts = createAsyncThunk(
   async (ids: string[]): Promise<void> => accountApi.reorder({ ids })
 )
 
+export const toggleExcluded = createAsyncThunk(
+  'account/toggleExcluded',
+  (id: string) => accountApi.toggleExcluded(id)
+)
+
 export const accountSlice = createSlice({
   name: 'account',
   initialState,
@@ -124,6 +129,13 @@ export const accountSlice = createSlice({
         )
       })
       .addCase(createTransaction.fulfilled, (state, action) => {
+        applyAccountUpdate(
+          state,
+          action.payload.account,
+          action.payload.summary
+        )
+      })
+      .addCase(toggleExcluded.fulfilled, (state, action) => {
         applyAccountUpdate(
           state,
           action.payload.account,

@@ -10,7 +10,10 @@ import { BankBuildingIcon } from './components/BankBuildingIcon'
 import { BankIcon } from './components/BankIcon'
 import { BinanceIcon } from './components/BinanceIcon'
 import { BingxIcon } from './components/BingxIcon'
+import { Bitcoin1Icon } from './components/Bitcoin1Icon'
+import { BitcoinLogoIcon } from './components/BitcoinLogoIcon'
 import { BitgetIcon } from './components/BitgetIcon'
+import { BtcAltIcon } from './components/BtcAltIcon'
 import { Book01Icon } from './components/Book01Icon'
 import { Bus01Icon } from './components/Bus01Icon'
 import { BybitIcon } from './components/BybitIcon'
@@ -22,6 +25,7 @@ import { Dollar01Icon } from './components/Dollar01Icon'
 import { Dollar02Icon } from './components/Dollar02Icon'
 import { DongIcon } from './components/DongIcon'
 import { EthereumIcon } from './components/EthereumIcon'
+import { EthereumLogoIcon } from './components/EthereumLogoIcon'
 import { GiftIcon } from './components/GiftIcon'
 import { GolomtIcon } from './components/GolomtIcon'
 import { GameController01Icon } from './components/GameController01Icon'
@@ -32,6 +36,7 @@ import { Home02Icon } from './components/Home02Icon'
 import { Money01Icon } from './components/Money01Icon'
 import { Money02Icon } from './components/Money02Icon'
 import { KucoinIcon } from './components/KucoinIcon'
+import { MexcIcon } from './components/MexcIcon'
 import { MusicNote01Icon } from './components/MusicNote01Icon'
 import { OkxCompactIcon } from './components/OkxCompactIcon'
 import { OkxIcon } from './components/OkxIcon'
@@ -60,7 +65,10 @@ export const ICON_REGISTRY = {
   BahtIcon,
   BinanceIcon,
   BingxIcon,
+  Bitcoin1Icon,
+  BitcoinLogoIcon,
   BitgetIcon,
+  BtcAltIcon,
   Book01Icon,
   Bus01Icon,
   BybitIcon,
@@ -72,6 +80,7 @@ export const ICON_REGISTRY = {
   Dollar02Icon,
   DongIcon,
   EthereumIcon,
+  EthereumLogoIcon,
   GiftIcon,
   GameController01Icon,
   GolomtIcon,
@@ -80,6 +89,7 @@ export const ICON_REGISTRY = {
   Home01Icon,
   Home02Icon,
   KucoinIcon,
+  MexcIcon,
   Money01Icon,
   Money02Icon,
   MusicNote01Icon,
@@ -131,8 +141,12 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'PiggyBankIcon',
       'ReceiptDollarIcon',
       'EthereumIcon',
+      'EthereumLogoIcon',
       'DongIcon',
       'BahtIcon',
+      'BtcAltIcon',
+      'Bitcoin1Icon',
+      'BitcoinLogoIcon',
       'BinanceIcon',
       'BybitIcon',
       'BitgetIcon',
@@ -143,6 +157,7 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'TonWalletIcon',
       'TonIdIcon',
       'KucoinIcon',
+      'MexcIcon',
       'BingxIcon',
       'GolomtIcon',
     ],

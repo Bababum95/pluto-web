@@ -1,4 +1,6 @@
 import { type FC, createElement } from 'react'
+import { ViewOffSlashIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 
 import {
   Item,
@@ -28,6 +30,7 @@ export const AccountItem: FC<Props> = ({
   actions,
   description,
   onClick,
+  excluded,
   separator = false,
 }) => {
   const ResolvedIcon = getIconByName(icon) ?? DEFAULT_ICON
@@ -42,21 +45,26 @@ export const AccountItem: FC<Props> = ({
           {createElement(ResolvedIcon, { size: 20, className: 'size-5' })}
         </ItemMedia>
         <ItemContent className="gap-0">
-          <ItemTitle>{name}</ItemTitle>
-          {actions ? (
-            <ItemDescription className="text-xs">
-              <Balance
-                balance={balance.original.value}
-                currency={balance.original.currency}
-              />
-            </ItemDescription>
-          ) : (
-            description && (
-              <ItemDescription className="text-xs">
-                {description}
-              </ItemDescription>
-            )
-          )}
+          <div className="flex items-center justify-between">
+            <div>
+              <ItemTitle>{name}</ItemTitle>
+              {actions ? (
+                <ItemDescription className="text-xs">
+                  <Balance
+                    balance={balance.original.value}
+                    currency={balance.original.currency}
+                  />
+                </ItemDescription>
+              ) : (
+                description && (
+                  <ItemDescription className="text-xs">
+                    {description}
+                  </ItemDescription>
+                )
+              )}
+            </div>
+            {excluded && <HugeiconsIcon icon={ViewOffSlashIcon} size={18} />}
+          </div>
         </ItemContent>
         <ItemActions>
           {actions || (

@@ -5,6 +5,7 @@ import {
   Delete01Icon,
   MoreVerticalIcon,
   ViewOffSlashIcon,
+  ViewIcon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
@@ -16,6 +17,7 @@ import {
   selectAccountsStatus,
   updateAccount,
   deleteAccount,
+  toggleExcluded,
 } from '@/store/slices/account'
 import {
   DropdownMenu,
@@ -45,9 +47,17 @@ const EditAccountPage = () => {
   }
 
   const handleDelete = async () => {
-    await dispatch(deleteAccount(accountId))
+    await dispatch(deleteAccount(accountId)).unwrap()
     navigate({ to: '/accounts' })
     toast.success(t('accounts.deleted'))
+  }
+
+  const handleToggleExcluded = async () => {
+    const result = await dispatch(toggleExcluded(accountId)).unwrap()
+
+    toast.success(
+      result.account.excluded ? t('accounts.shown') : t('accounts.hidden')
+    )
   }
 
   if (isLoading || !account) {
@@ -72,9 +82,15 @@ const EditAccountPage = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuItem key="hide">
-              <HugeiconsIcon icon={ViewOffSlashIcon} />
-              <span>{t(`accounts.actions.hide`)}</span>
+            <DropdownMenuItem key="hide" onClick={handleToggleExcluded}>
+              <HugeiconsIcon
+                icon={account.excluded ? ViewIcon : ViewOffSlashIcon}
+              />
+              <span>
+                {account.excluded
+                  ? t(`accounts.actions.show`)
+                  : t(`accounts.actions.hide`)}
+              </span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

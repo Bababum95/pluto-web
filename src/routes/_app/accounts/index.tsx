@@ -123,33 +123,28 @@ function AccountsPage() {
           dispatch(reorderAccounts(ids))
         }}
       >
-        <div
-          onContextMenu={(e) => e.preventDefault()}
-          style={{ touchAction: 'none', WebkitTouchCallout: 'none' }}
-        >
-          {status === 'pending' ? (
-            <div className="flex flex-1 items-center justify-center py-8">
-              <Spinner />
-            </div>
-          ) : (
-            <Card size="sm" className="py-1!">
-              <ItemGroup>
-                {accounts.map((account, index) => (
-                  <SortableAccountItem
-                    key={account.id}
-                    id={account.id}
-                    index={index}
-                    accountItemProps={{
-                      ...account,
-                      separator: index !== accounts.length - 1,
-                      onClick: () => handleAccountClick(account.id),
-                    }}
-                  />
-                ))}
-              </ItemGroup>
-            </Card>
-          )}
-        </div>
+        {status === 'pending' ? (
+          <div className="flex flex-1 items-center justify-center py-8">
+            <Spinner />
+          </div>
+        ) : (
+          <Card size="sm" className="py-1!">
+            <ItemGroup>
+              {accounts.map((account, index) => (
+                <SortableAccountItem
+                  key={account.id}
+                  id={account.id}
+                  index={index}
+                  accountItemProps={{
+                    ...account,
+                    separator: index !== accounts.length - 1,
+                    onClick: () => handleAccountClick(account.id),
+                  }}
+                />
+              ))}
+            </ItemGroup>
+          </Card>
+        )}
       </DragDropProvider>
     </AppLayout>
   )

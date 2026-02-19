@@ -71,7 +71,7 @@ const EditAccountPage = () => {
               <HugeiconsIcon icon={MoreVerticalIcon} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-44">
+          <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuItem key="hide">
               <HugeiconsIcon icon={ViewOffSlashIcon} />
               <span>{t(`accounts.actions.hide`)}</span>

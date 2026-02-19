@@ -41,7 +41,9 @@ export const updateCategory = createAsyncThunk(
     const rootState = getState() as RootState
 
     return categoryApi.update(id, {
-      ...data,
+      name: data.name,
+      color: data.color,
+      icon: data.icon,
       type: rootState.transactionType.transactionType,
     })
   }

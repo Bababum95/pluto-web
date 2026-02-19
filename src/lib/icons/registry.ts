@@ -29,6 +29,7 @@ import { EthereumLogoIcon } from './components/EthereumLogoIcon'
 import { GiftIcon } from './components/GiftIcon'
 import { GolomtIcon } from './components/GolomtIcon'
 import { GameController01Icon } from './components/GameController01Icon'
+import { HeartCardiogramIcon } from './components/HeartCardiogramIcon'
 import { Hamburger01Icon } from './components/Hamburger01Icon'
 import { HealthIcon } from './components/HealthIcon'
 import { Home01Icon } from './components/Home01Icon'
@@ -57,6 +58,7 @@ import { Video01Icon } from './components/Video01Icon'
 import { Wallet01Icon } from './components/Wallet01Icon'
 import { Wallet02Icon } from './components/Wallet02Icon'
 import { WorkIcon } from './components/WorkIcon'
+import { Yen } from './components/Yen'
 
 export const ICON_REGISTRY = {
   Airplane01Icon,
@@ -84,6 +86,7 @@ export const ICON_REGISTRY = {
   GiftIcon,
   GameController01Icon,
   GolomtIcon,
+  HeartCardiogramIcon,
   Hamburger01Icon,
   HealthIcon,
   Home01Icon,
@@ -112,6 +115,7 @@ export const ICON_REGISTRY = {
   Wallet01Icon,
   Wallet02Icon,
   WorkIcon,
+  Yen,
 } as const satisfies Record<string, SvgIcon>
 
 export const DEFAULT_ICON = ICON_REGISTRY.Dollar01Icon
@@ -160,6 +164,7 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'MexcIcon',
       'BingxIcon',
       'GolomtIcon',
+      'Yen',
     ],
   },
   {
@@ -193,6 +198,7 @@ export const ICON_CATEGORIES: IconCategory[] = [
     name: 'Lifestyle',
     icons: [
       'HealthIcon',
+      'HeartCardiogramIcon',
       'GiftIcon',
       'Book01Icon',
       'MusicNote01Icon',

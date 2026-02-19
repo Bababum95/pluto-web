@@ -13,6 +13,7 @@ import {
   PointerActivationConstraints,
 } from '@dnd-kit/dom'
 import { useRouter } from '@tanstack/react-router'
+import { move } from '@dnd-kit/helpers'
 
 import { ItemGroup } from '@/components/ui/item'
 import { Card } from '@/components/ui/card'
@@ -25,8 +26,12 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
-import { selectAccounts, selectAccountsStatus } from '@/store/slices/account'
-import { useAppSelector } from '@/store'
+import {
+  reorderAccounts,
+  selectAccounts,
+  selectAccountsStatus,
+} from '@/store/slices/account'
+import { useAppDispatch, useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
 import { Total } from '@/features/money'
 import { SortableAccountItem } from '@/features/account'
@@ -55,6 +60,7 @@ function AccountsPage() {
   const { t } = useTranslation()
   const accounts = useAppSelector(selectAccounts)
   const status = useAppSelector(selectAccountsStatus)
+  const dispatch = useAppDispatch()
   const router = useRouter()
 
   const handleAccountClick = (id: string) => {
@@ -106,13 +112,15 @@ function AccountsPage() {
                 value: 350,
                 tolerance: 5,
               }),
-              new PointerActivationConstraints.Distance({ value: 8 }),
             ],
           }),
           KeyboardSensor,
         ]}
         onDragEnd={(event) => {
-          console.log(event)
+          if (event.canceled) return
+
+          const ids = move(accounts, event).map((account) => account.id)
+          dispatch(reorderAccounts(ids))
         }}
       >
         <div

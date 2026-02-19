@@ -322,6 +322,23 @@ export interface paths {
         patch: operations["AccountController_update"];
         trace?: never;
     };
+    "/v1/accounts/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Reorder accounts by providing list of account IDs (index = order) */
+        patch: operations["AccountController_reorder"];
+        trace?: never;
+    };
     "/v1/accounts/excluded/{id}": {
         parameters: {
             query?: never;
@@ -631,6 +648,16 @@ export interface components {
             total: number;
             /** @description User currency for the total amount */
             currency: components["schemas"]["CurrencyDto"];
+        };
+        ReorderAccountsDto: {
+            /**
+             * @description Account IDs in the desired order (index = display order)
+             * @example [
+             *       "507f1f77bcf86cd799439011",
+             *       "507f1f77bcf86cd799439012"
+             *     ]
+             */
+            ids: string[];
         };
         UpdateAccountDto: Record<string, never>;
         CreateCategoryDto: {
@@ -1618,6 +1645,41 @@ export interface operations {
             };
             /** @description Account name already exists. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AccountController_reorder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReorderAccountsDto"];
+            };
+        };
+        responses: {
+            /** @description Accounts have been reordered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        status?: number;
+                        message?: string;
+                    };
+                };
+            };
+            /** @description One or more accounts not found. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

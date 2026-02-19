@@ -35,7 +35,10 @@ export const AccountItem: FC<Props> = ({
   return (
     <>
       <Item size="sm" onClick={onClick}>
-        <ItemMedia variant="icon" style={{ backgroundColor: color }}>
+        <ItemMedia
+          variant="icon"
+          style={{ backgroundColor: color, color: '#FFFFFF' }}
+        >
           {createElement(ResolvedIcon, { size: 20, className: 'size-5' })}
         </ItemMedia>
         <ItemContent className="gap-0">

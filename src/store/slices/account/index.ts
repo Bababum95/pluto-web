@@ -59,6 +59,15 @@ export const updateAccount = createAsyncThunk(
     accountApi.update(id, data)
 )
 
+/**
+ * Reorders accounts optimistically and sends order updates to backend in background.
+ * Short press = navigate (Link handles it), long press (350ms) = drag.
+ */
+export const reorderAccounts = createAsyncThunk(
+  'account/reorderAccounts',
+  async (ids: string[]): Promise<void> => accountApi.reorder({ ids })
+)
+
 export const accountSlice = createSlice({
   name: 'account',
   initialState,
@@ -124,13 +133,8 @@ export const accountSlice = createSlice({
   },
 })
 
-export const {
-  setAccounts,
-  addAccount,
-  // updateAccount,
-  removeAccount,
-  setSummary,
-} = accountSlice.actions
+export const { setAccounts, addAccount, removeAccount, setSummary } =
+  accountSlice.actions
 
 export const selectAccounts = (state: RootState) => state.account.accounts
 export const selectAccountsSummary = (state: RootState) => state.account.summary

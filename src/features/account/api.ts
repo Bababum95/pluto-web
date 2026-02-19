@@ -32,6 +32,12 @@ export const accountApi = {
   toggleExcluded: (id: string): Promise<AccountWithSummaryResponseDto> =>
     apiFetch(`${BASE}/excluded/${id}`, { method: 'PATCH' }),
 
+  reorder: (data: { ids: string[] }): Promise<void> =>
+    apiFetch(`${BASE}/reorder`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
   delete: (id: string): Promise<AccountSummaryDto> =>
     apiFetch(`${BASE}/${id}`, { method: 'DELETE' }),

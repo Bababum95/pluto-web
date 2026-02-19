@@ -29,7 +29,7 @@ export const Icon: FC<IconProps> = ({
 
   return (
     <div
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: color, color: '#FFFFFF' }}
       className={cn(
         'rounded-sm bg-muted p-2 aspect-square flex items-center justify-center',
         className

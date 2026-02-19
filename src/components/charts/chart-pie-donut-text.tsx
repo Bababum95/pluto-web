@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/chart'
 import { cn } from '@/lib/utils'
 
-const LOADING_DATA = [{ category: 'loading', fill: '#1e2939', total: 1 }]
+const LOADING_DATA = [{ category: 'loading', fill: 'var(--muted)', total: 1 }]
 
 type Props = {
   total: string

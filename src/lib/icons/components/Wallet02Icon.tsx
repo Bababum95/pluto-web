@@ -14,7 +14,7 @@ export const Wallet02Icon: FC<SvgIconProps> = ({ size = 24, className }) => (
     strokeLinejoin="round"
     className={className}
   >
-    {/* <path
+    <path
       d={
         'M13 3.5H14C14.93 3.5 15.395 3.5 15.7765 3.60222C16.8117 3.87962 17.6204 4.68827 17.8978 5.72354C18 6.10504 18 6.57003 18 7.5H5C3.89543 7.5 3 6.60457 3 5.5C3 4.39543 3.89543 3.5 5 3.5H8'
       }
@@ -22,7 +22,7 @@ export const Wallet02Icon: FC<SvgIconProps> = ({ size = 24, className }) => (
       strokeLinecap={'round'}
       strokeLinejoin={'round'}
       strokeWidth={'1.5'}
-    /> */}
+    />
     <path
       d={
         'M3 5.5V15.5C3 18.3284 3 19.7426 3.87868 20.6213C4.75736 21.5 6.17157 21.5 9 21.5H15C17.8284 21.5 19.2426 21.5 20.1213 20.6213C21 19.7426 21 18.3284 21 15.5V13.5C21 10.6716 21 9.25736 20.1213 8.37868C19.2426 7.5 17.8284 7.5 15 7.5H7'

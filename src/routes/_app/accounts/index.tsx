@@ -6,9 +6,15 @@ import {
   PlusSignIcon,
   ArrowDataTransferHorizontalIcon,
 } from '@hugeicons/core-free-icons'
-import { Fragment } from 'react'
+import { DragDropProvider } from '@dnd-kit/react'
+import {
+  PointerSensor,
+  KeyboardSensor,
+  PointerActivationConstraints,
+} from '@dnd-kit/dom'
+import { useRouter } from '@tanstack/react-router'
 
-import { ItemGroup, ItemSeparator } from '@/components/ui/item'
+import { ItemGroup } from '@/components/ui/item'
 import { Card } from '@/components/ui/card'
 import { AppLayout } from '@/components/AppLayout'
 import {
@@ -19,11 +25,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
-import { AccountItem } from '@/features/account'
 import { selectAccounts, selectAccountsStatus } from '@/store/slices/account'
 import { useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
 import { Total } from '@/features/money'
+import { SortableAccountItem } from '@/features/account'
 
 export const Route = createFileRoute('/_app/accounts/')({
   component: AccountsPage,
@@ -49,6 +55,15 @@ function AccountsPage() {
   const { t } = useTranslation()
   const accounts = useAppSelector(selectAccounts)
   const status = useAppSelector(selectAccountsStatus)
+  const router = useRouter()
+
+  const handleAccountClick = (id: string) => {
+    router.navigate({
+      to: '/accounts/$accountId',
+      params: { accountId: id },
+      viewTransition: { types: ['slide-left'] },
+    })
+  }
 
   return (
     <AppLayout
@@ -83,28 +98,51 @@ function AccountsPage() {
     >
       <Total size="lg" className="mb-4 flex flex-col gap-2" />
 
-      {status === 'pending' ? (
-        <div className="flex flex-1 items-center justify-center py-8">
-          <Spinner />
+      <DragDropProvider
+        sensors={[
+          PointerSensor.configure({
+            activationConstraints: [
+              new PointerActivationConstraints.Delay({
+                value: 350,
+                tolerance: 5,
+              }),
+              new PointerActivationConstraints.Distance({ value: 8 }),
+            ],
+          }),
+          KeyboardSensor,
+        ]}
+        onDragEnd={(event) => {
+          console.log(event)
+        }}
+      >
+        <div
+          onContextMenu={(e) => e.preventDefault()}
+          style={{ touchAction: 'none', WebkitTouchCallout: 'none' }}
+        >
+          {status === 'pending' ? (
+            <div className="flex flex-1 items-center justify-center py-8">
+              <Spinner />
+            </div>
+          ) : (
+            <Card size="sm" className="py-1!">
+              <ItemGroup>
+                {accounts.map((account, index) => (
+                  <SortableAccountItem
+                    key={account.id}
+                    id={account.id}
+                    index={index}
+                    accountItemProps={{
+                      ...account,
+                      separator: index !== accounts.length - 1,
+                      onClick: () => handleAccountClick(account.id),
+                    }}
+                  />
+                ))}
+              </ItemGroup>
+            </Card>
+          )}
         </div>
-      ) : (
-        <Card size="sm" className="py-1!">
-          <ItemGroup>
-            {accounts.map((account, index) => (
-              <Fragment key={account.id}>
-                <Link
-                  to="/accounts/$accountId"
-                  params={{ accountId: account.id }}
-                  viewTransition={{ types: ['slide-left'] }}
-                >
-                  <AccountItem {...account} />
-                </Link>
-                {index !== accounts.length - 1 && <ItemSeparator />}
-              </Fragment>
-            ))}
-          </ItemGroup>
-        </Card>
-      )}
+      </DragDropProvider>
     </AppLayout>
   )
 }

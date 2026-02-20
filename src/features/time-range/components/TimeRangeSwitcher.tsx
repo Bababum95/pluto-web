@@ -43,7 +43,7 @@ export const TimeRangeSwitcher: FC = () => {
   }
 
   return (
-    <div className="relative z-50 -mb-2">
+    <div className="relative z-45 -mb-2">
       <Tabs
         value={timeRange}
         onValueChange={(value) => handleTimeRangeChange(value as TimeRangeType)}

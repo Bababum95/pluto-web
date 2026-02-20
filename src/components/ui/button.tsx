@@ -8,7 +8,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 active:scale-90',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 active:scale-95 transition-transform',
   {
     variants: {
       variant: {
@@ -79,7 +79,7 @@ const PlusButton = () => {
   return (
     <Button
       size="icon"
-      className="[&_svg:not([class*='size-'])]:size-6 w-12 h-12 rounded-full"
+      className="[&_svg:not([class*='size-'])]:size-6 w-13 h-13 rounded-full"
     >
       <HugeiconsIcon icon={PlusSignIcon} strokeWidth={2} />
     </Button>

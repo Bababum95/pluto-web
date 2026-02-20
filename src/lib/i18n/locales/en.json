@@ -139,6 +139,12 @@
       "dark": "Dark",
       "system": "System",
       "changeTheme": "Change theme"
+    },
+    "account": {
+      "title": "Default account",
+      "description": "Select the account that will be used as default",
+      "changeAccount": "Change account",
+      "none": "Not set"
     }
   },
   "currency": {

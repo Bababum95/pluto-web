@@ -1,6 +1,7 @@
 export { AccountCard } from './components/AccountCard'
-export { AccountItem } from './components/AccountItem'
+export { AccountDrawer } from './components/AccountDrawer'
 export { AccountForm } from './components/AccountForm'
+export { AccountItem } from './components/AccountItem'
 export { SelectAccount } from './components/SelectAccount'
 export { SortableAccountItem } from './components/SortableAccountItem'
 

@@ -356,43 +356,6 @@ export interface paths {
         patch: operations["AccountController_toggleExcluded"];
         trace?: never;
     };
-    "/v1/categories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get all categories for the current user */
-        get: operations["CategoryController_findAll"];
-        put?: never;
-        /** Create a new category */
-        post: operations["CategoryController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/categories/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get a category by ID */
-        get: operations["CategoryController_findOne"];
-        put?: never;
-        post?: never;
-        /** Delete a category by ID */
-        delete: operations["CategoryController_remove"];
-        options?: never;
-        head?: never;
-        /** Update a category by ID */
-        patch: operations["CategoryController_update"];
-        trace?: never;
-    };
     "/v1/transactions": {
         parameters: {
             query?: never;
@@ -431,6 +394,43 @@ export interface paths {
         head?: never;
         /** Update a transaction by ID */
         patch: operations["TransactionController_update"];
+        trace?: never;
+    };
+    "/v1/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all categories for the current user */
+        get: operations["CategoryController_findAll"];
+        put?: never;
+        /** Create a new category */
+        post: operations["CategoryController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a category by ID */
+        get: operations["CategoryController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a category by ID */
+        delete: operations["CategoryController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a category by ID */
+        patch: operations["CategoryController_update"];
         trace?: never;
     };
 }
@@ -660,41 +660,6 @@ export interface components {
             ids: string[];
         };
         UpdateAccountDto: Record<string, never>;
-        CreateCategoryDto: {
-            /**
-             * @description Category color in hex format
-             * @example #FF5733
-             */
-            color: string;
-            /**
-             * @description Icon name as string
-             * @example wallet
-             */
-            icon: string;
-            /** @example Food & Dining */
-            name: string;
-            /**
-             * @description Transaction type
-             * @example expense
-             */
-            type: string;
-        };
-        CategoryDto: {
-            id: string;
-            /** @example #FF5733 */
-            color: string;
-            /** @example wallet */
-            icon: string;
-            /** @example Food & Dining */
-            name: string;
-            /** @example expense */
-            type: string;
-            /** @example 2021-01-01T10:00:00.000Z */
-            createdAt: string;
-            /** @example 2021-01-01T10:00:00.000Z */
-            updatedAt: string;
-        };
-        UpdateCategoryDto: Record<string, never>;
         CreateTransactionDto: {
             /**
              * @example expense
@@ -731,6 +696,21 @@ export interface components {
              */
             tags?: string[];
         };
+        CategoryDto: {
+            id: string;
+            /** @example #FF5733 */
+            color: string;
+            /** @example wallet */
+            icon: string;
+            /** @example Food & Dining */
+            name: string;
+            /** @example expense */
+            type: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
         TransactionAmountViewDto: {
             /** @description Amount in transaction (account) currency */
             original: components["schemas"]["MoneyViewDto"];
@@ -763,6 +743,26 @@ export interface components {
             updatedAt: string;
         };
         UpdateTransactionDto: Record<string, never>;
+        CreateCategoryDto: {
+            /**
+             * @description Category color in hex format
+             * @example #FF5733
+             */
+            color: string;
+            /**
+             * @description Icon name as string
+             * @example wallet
+             */
+            icon: string;
+            /** @example Food & Dining */
+            name: string;
+            /**
+             * @description Transaction type
+             * @example expense
+             */
+            type: string;
+        };
+        UpdateCategoryDto: Record<string, never>;
     };
     responses: never;
     parameters: never;
@@ -1636,6 +1636,13 @@ export interface operations {
                     };
                 };
             };
+            /** @description Currency cannot be changed when account has transactions. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Account not found. */
             404: {
                 headers: {
@@ -1712,160 +1719,6 @@ export interface operations {
             };
             /** @description Account not found. */
             404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    CategoryController_findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description List of all categories for the current user. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CategoryDto"][];
-                };
-            };
-        };
-    };
-    CategoryController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateCategoryDto"];
-            };
-        };
-        responses: {
-            /** @description The category has been successfully created. */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CategoryDto"];
-                };
-            };
-            /** @description Bad request. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Category name already exists. */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    CategoryController_findOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description The category. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CategoryDto"];
-                };
-            };
-            /** @description Category not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    CategoryController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description The category has been successfully deleted. */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Category not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    CategoryController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateCategoryDto"];
-            };
-        };
-        responses: {
-            /** @description The category has been successfully updated. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CategoryDto"];
-                };
-            };
-            /** @description Category not found. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Category name already exists. */
-            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2027,6 +1880,160 @@ export interface operations {
             };
             /** @description Transaction not found. */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CategoryController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all categories for the current user. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"][];
+                };
+            };
+        };
+    };
+    CategoryController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCategoryDto"];
+            };
+        };
+        responses: {
+            /** @description The category has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"];
+                };
+            };
+            /** @description Bad request. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Category name already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CategoryController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The category. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"];
+                };
+            };
+            /** @description Category not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CategoryController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The category has been successfully deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Category not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CategoryController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCategoryDto"];
+            };
+        };
+        responses: {
+            /** @description The category has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"];
+                };
+            };
+            /** @description Category not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Category name already exists. */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };

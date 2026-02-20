@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { settingsApi } from '@/features/settings'
 import type { Settings } from '@/features/settings/types'
-import type { RootState } from '@/store'
-import { DEFAULT_CURRENCY } from '@/features/money/constants'
+import type { Account } from '@/features/account/types'
+
+import { setDefaultAccount, fetchSettings } from './async-thunks'
 
 type SettingsState = {
   settings: Settings | null
@@ -15,14 +15,15 @@ const initialState: SettingsState = {
   status: 'idle',
 }
 
-export const fetchSettings = createAsyncThunk('settings/fetchSettings', () =>
-  settingsApi.get()
-)
-
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
-  reducers: {},
+  reducers: {
+    setAccount: (state, action: PayloadAction<Account>) => {
+      if (!state.settings) return
+      state.settings.account = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSettings.pending, (state) => {
@@ -35,13 +36,13 @@ export const settingsSlice = createSlice({
       .addCase(fetchSettings.rejected, (state) => {
         state.status = 'failed'
       })
+      .addCase(setDefaultAccount.fulfilled, (state, action) => {
+        state.settings = action.payload
+      })
   },
 })
 
-export const selectSettings = (state: RootState): Settings | null =>
-  state.settings.settings
-export const selectSettingsStatus = (state: RootState) => state.settings.status
-export const selectCurrency = (state: RootState) =>
-  state.settings.settings?.currency ?? DEFAULT_CURRENCY
-
+export * from './selectors'
+export * from './async-thunks'
+export const { setAccount } = settingsSlice.actions
 export default settingsSlice.reducer

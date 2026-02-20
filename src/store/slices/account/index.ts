@@ -12,7 +12,6 @@ import type {
   UpdateAccountDto,
 } from '@/features/account/types'
 import { createTransaction } from '@/store/slices/transaction'
-import type { RootState } from '@/store'
 import type { Status } from '@/lib/types'
 
 type AccountState = {
@@ -148,8 +147,5 @@ export const accountSlice = createSlice({
 export const { setAccounts, addAccount, removeAccount, setSummary } =
   accountSlice.actions
 
-export const selectAccounts = (state: RootState) => state.account.accounts
-export const selectAccountsSummary = (state: RootState) => state.account.summary
-export const selectAccountsStatus = (state: RootState) => state.account.status
-
+export * from './selectors'
 export default accountSlice.reducer

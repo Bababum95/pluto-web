@@ -63,7 +63,7 @@ export const transactionSlice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.status = 'success'
         state.transactions = action.payload
-        const data = action.payload[0]?.amount?.converted ?? state.summary
+        const data = action.payload[0]?.amount?.converted
         const scale = data?.scale ?? 0
 
         const total_raw = countTotal(action.payload)
@@ -82,8 +82,24 @@ export const transactionSlice = createSlice({
       })
       .addCase(createTransaction.fulfilled, (state, action) => {
         state.status = 'success'
-        state.transactions.push(action.payload.transaction)
-        state.summary = action.payload.summary
+        const transaction = action.payload.transaction
+        state.transactions.push(transaction)
+
+        if (state.summary) {
+          const total_raw = countTotal(state.transactions)
+          state.summary = {
+            ...state.summary,
+            total_raw,
+            total: toDecimal(total_raw, transaction.amount.converted.scale),
+          }
+        } else {
+          state.summary = {
+            scale: transaction.amount.converted.scale,
+            total_raw: transaction.amount.converted.raw,
+            total: transaction.amount.converted.value,
+            currency: transaction.amount.converted.currency,
+          }
+        }
       })
       .addCase(createTransaction.rejected, (state) => {
         state.status = 'failed'

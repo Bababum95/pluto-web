@@ -13,7 +13,7 @@ import { MoneyInput, parseDecimal } from '@/features/money'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectAccounts } from '@/store/slices/account'
-import { selectSettings } from '@/store/slices/settings'
+import { selectDefaultAccount, selectSettings } from '@/store/slices/settings'
 import { FieldError } from '@/components/ui/field'
 import { createTransaction } from '@/store/slices/transaction'
 import { toast } from 'sonner'
@@ -26,6 +26,7 @@ function TransactionPage() {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const defaultAccount = useAppSelector(selectDefaultAccount)
 
   const form = useForm({
     validators: {
@@ -44,7 +45,7 @@ function TransactionPage() {
     },
     defaultValues: {
       amount: '',
-      account: '',
+      account: defaultAccount?.id ?? '',
       comment: '',
       category: '',
     },

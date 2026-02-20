@@ -1,81 +1,21 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  type PayloadAction,
-} from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { transactionApi } from '@/features/transaction'
-import { getTimeRangeBounds } from '@/features/time-range'
-import type {
-  CreateTransactionDto,
-  Transaction,
-  UpdateTransactionDto,
-} from '@/features/transaction/types'
 import { toDecimal } from '@/features/money/utils/toDecimal'
-import type { RootState } from '@/store'
-import type { Status } from '@/lib/types'
+import type { Transaction } from '@/features/transaction/types'
 
-type TransactionState = {
-  transactions: Transaction[]
-  status: Status
-  summary: {
-    total: number
-    total_raw: number
-    scale: number
-    currency: {
-      code: string
-      symbol: string
-      decimal_digits: number
-    }
-  } | null
-}
+import {
+  createTransaction,
+  deleteTransaction,
+  fetchTransactions,
+  updateTransaction,
+} from './async-thunks'
+import type { TransactionState } from './types'
 
 const initialState: TransactionState = {
   transactions: [],
   summary: null,
   status: 'idle',
 }
-
-type FetchTransactionsPayload = {
-  clear?: boolean
-}
-
-export const fetchTransactions = createAsyncThunk(
-  'transaction/fetchTransactions',
-  (_payload: FetchTransactionsPayload | undefined, { getState }) => {
-    const rootState = getState() as RootState
-    const { timeRange, timeRangeIndex } = rootState.timeRange
-    const bounds = getTimeRangeBounds(timeRange, timeRangeIndex)
-
-    return transactionApi.list({
-      type: rootState.transactionType.transactionType,
-      from: bounds.from,
-      to: bounds.to,
-    })
-  }
-)
-
-export const createTransaction = createAsyncThunk(
-  'transaction/createTransaction',
-  (data: Omit<CreateTransactionDto, 'type'>, { getState }) => {
-    const rootState = getState() as RootState
-    return transactionApi.create({
-      ...data,
-      type: rootState.transactionType.transactionType,
-    })
-  }
-)
-
-export const updateTransaction = createAsyncThunk(
-  'transaction/updateTransaction',
-  ({ id, data }: { id: string; data: UpdateTransactionDto }) =>
-    transactionApi.update(id, data)
-)
-
-export const deleteTransaction = createAsyncThunk(
-  'transaction/deleteTransaction',
-  (id: string) => transactionApi.delete(id)
-)
 
 const countTotal = (transactions: Transaction[]) => {
   return transactions.reduce((acc, t) => acc + t.amount.converted.raw, 0)
@@ -126,11 +66,11 @@ export const transactionSlice = createSlice({
         const data = action.payload[0]?.amount?.converted ?? state.summary
         const scale = data?.scale ?? 0
 
-        const total = countTotal(action.payload)
+        const total_raw = countTotal(action.payload)
         state.summary = {
-          total,
           scale,
-          total_raw: toDecimal(total, scale),
+          total_raw,
+          total: toDecimal(total_raw, scale),
           currency: data?.currency,
         }
       })
@@ -143,6 +83,7 @@ export const transactionSlice = createSlice({
       .addCase(createTransaction.fulfilled, (state, action) => {
         state.status = 'success'
         state.transactions.push(action.payload.transaction)
+        state.summary = action.payload.summary
       })
       .addCase(createTransaction.rejected, (state) => {
         state.status = 'failed'
@@ -172,4 +113,5 @@ export const {
 } = transactionSlice.actions
 
 export * from './selectors'
+export * from './async-thunks'
 export default transactionSlice.reducer

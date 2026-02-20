@@ -51,7 +51,7 @@ export const HomePageContent: FC = () => {
               {}
             )}
             total={formatBalance({
-              balance: summary?.total_raw ?? 0,
+              balance: summary?.total ?? 0,
               currency: summary?.currency ?? currency,
             })}
           />

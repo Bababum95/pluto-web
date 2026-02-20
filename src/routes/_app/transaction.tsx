@@ -3,6 +3,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
+import { toast } from 'sonner'
 
 import { ButtonGroup } from '@/components/ui/button-group'
 import { Button } from '@/components/ui/button'
@@ -13,10 +14,9 @@ import { MoneyInput, parseDecimal } from '@/features/money'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectAccounts } from '@/store/slices/account'
-import { selectDefaultAccount, selectSettings } from '@/store/slices/settings'
+import { selectSettings } from '@/store/slices/settings'
 import { FieldError } from '@/components/ui/field'
 import { createTransaction } from '@/store/slices/transaction'
-import { toast } from 'sonner'
 
 export const Route = createFileRoute('/_app/transaction')({
   component: TransactionPage,
@@ -26,7 +26,8 @@ function TransactionPage() {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const defaultAccount = useAppSelector(selectDefaultAccount)
+  const settings = useAppSelector(selectSettings)
+  const accounts = useAppSelector(selectAccounts)
 
   const form = useForm({
     validators: {
@@ -45,7 +46,7 @@ function TransactionPage() {
     },
     defaultValues: {
       amount: '',
-      account: defaultAccount?.id ?? '',
+      account: settings?.account?.id ?? '',
       comment: '',
       category: '',
     },
@@ -65,8 +66,6 @@ function TransactionPage() {
       toast.success(t('transaction.added'))
     },
   })
-  const accounts = useAppSelector(selectAccounts)
-  const settings = useAppSelector(selectSettings)
 
   return (
     <AppLayout title={t('transaction.title')} showBackButton>

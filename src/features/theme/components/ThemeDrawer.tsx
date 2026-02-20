@@ -47,7 +47,7 @@ export const ThemeDrawer: FC<Props> = ({ open, onClose }) => {
 
   return (
     <Drawer open={open} onOpenChange={handleOpenChange} modal={true}>
-      <DrawerContent>
+      <DrawerContent className="pb-safe">
         <DrawerHeader>
           <DrawerTitle>{t('settings.theme.title')}</DrawerTitle>
           <DrawerDescription>

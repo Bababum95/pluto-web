@@ -18,6 +18,7 @@ export const FullScreenLoader: FC<Props> = ({ isVisible }) => {
             staggerChildren: -0.2,
             staggerDirection: -1,
             duration: 0.6,
+            delay: 0.3,
             ease: 'easeInOut',
           }}
           initial={{ opacity: 1, y: 0 }}

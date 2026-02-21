@@ -10,7 +10,7 @@ export const HeartCardiogramIcon: FC<SvgIconProps> = ({
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
-    viewBox="5 2 40 40"
+    viewBox="4 2 40 40"
     className={className}
   >
     <path

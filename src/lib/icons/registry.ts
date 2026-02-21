@@ -32,6 +32,7 @@ import { GameController01Icon } from './components/GameController01Icon'
 import { HeartCardiogramIcon } from './components/HeartCardiogramIcon'
 import { Hamburger01Icon } from './components/Hamburger01Icon'
 import { HealthIcon } from './components/HealthIcon'
+import { HomeIcon } from './components/HomeIcon'
 import { Home01Icon } from './components/Home01Icon'
 import { Home02Icon } from './components/Home02Icon'
 import { Money01Icon } from './components/Money01Icon'
@@ -89,6 +90,7 @@ export const ICON_REGISTRY = {
   HeartCardiogramIcon,
   Hamburger01Icon,
   HealthIcon,
+  HomeIcon,
   Home01Icon,
   Home02Icon,
   KucoinIcon,
@@ -173,7 +175,7 @@ export const ICON_CATEGORIES: IconCategory[] = [
   },
   {
     name: 'Home & Work',
-    icons: ['Home01Icon', 'Home02Icon', 'WorkIcon'],
+    icons: ['HomeIcon', 'Home01Icon', 'Home02Icon', 'WorkIcon'],
   },
   {
     name: 'Food & Drinks',

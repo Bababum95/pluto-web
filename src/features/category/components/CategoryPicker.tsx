@@ -59,11 +59,6 @@ const CategoryPickerRoot: FC<CategoryPickerProps> = ({
     [allCategories, transactionType]
   )
 
-  const visibleCategories = useMemo(
-    () => categories.slice(0, VISIBLE_CATEGORIES_COUNT),
-    [categories]
-  )
-
   const [internalValue, setInternalValue] = useState<string | undefined>(
     defaultValue
   )
@@ -72,6 +67,20 @@ const CategoryPickerRoot: FC<CategoryPickerProps> = ({
     () => (isControlled ? valueProp : internalValue),
     [isControlled, valueProp, internalValue]
   )
+
+  // When selected category is not in the visible slice, push it to the front (like IconPicker)
+  const visibleCategories = useMemo(() => {
+    const slice = categories.slice(0, VISIBLE_CATEGORIES_COUNT)
+    if (!value) return slice
+
+    const selectedInSlice = slice.some((c) => c.id === value)
+    if (selectedInSlice) return slice
+
+    const selected = categories.find((c) => c.id === value)
+    if (!selected) return slice
+
+    return [selected, ...slice.slice(0, VISIBLE_CATEGORIES_COUNT - 1)]
+  }, [categories, value])
 
   const handleSelect = useCallback(
     (categoryId: string) => {

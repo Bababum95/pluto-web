@@ -138,7 +138,7 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
         <Button
           variant="outline"
           size="icon"
-          className="aspect-square w-full h-full max-w-14 m-auto"
+          className="aspect-square w-full h-full max-w-14 max-h-14 ml-auto mr-auto mt-2"
           type="button"
         >
           <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />
@@ -152,7 +152,7 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
           </DrawerDescription>
         </DrawerHeader>
         <div className="px-4 overflow-y-auto py-2">
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 gap-2 pb-safe">
             {categories.map((category) => (
               <CategoryCard
                 key={category.id}

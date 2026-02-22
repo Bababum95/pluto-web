@@ -8,7 +8,9 @@
     "settings": "Settings",
     "categories": "Categories",
     "total": "Total",
-    "profile": "Profile"
+    "profile": "Profile",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "auth": {
     "signIn": "Sign in",
@@ -153,6 +155,13 @@
       "description": "Choose the currency",
       "searchPlaceholder": "Search by name or code",
       "noResults": "No currencies found"
+    }
+  },
+  "tags": {
+    "create": {
+      "title": "Create tag",
+      "description": "Create a new tag",
+      "add": "Add tag"
     }
   }
 }

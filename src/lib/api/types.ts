@@ -433,6 +433,43 @@ export interface paths {
         patch: operations["CategoryController_update"];
         trace?: never;
     };
+    "/v1/tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all tags for the current user */
+        get: operations["TagController_findAll"];
+        put?: never;
+        /** Create a new tag */
+        post: operations["TagController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tags/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a tag by ID */
+        get: operations["TagController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a tag by ID */
+        delete: operations["TagController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a tag by ID */
+        patch: operations["TagController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -689,9 +726,10 @@ export interface components {
              */
             scale: number;
             /**
+             * @description Tag IDs
              * @example [
-             *       "food",
-             *       "restaurant"
+             *       "507f1f77bcf86cd799439011",
+             *       "507f1f77bcf86cd799439012"
              *     ]
              */
             tags?: string[];
@@ -717,6 +755,19 @@ export interface components {
             /** @description Amount in converted (e.g. base) currency */
             converted: components["schemas"]["MoneyViewDto"];
         };
+        TagDto: {
+            id: string;
+            /** @example food */
+            name: string;
+            /** @example #6B7280 */
+            color: string;
+            /** @example tag */
+            icon: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
         TransactionDto: {
             id: string;
             /**
@@ -730,13 +781,8 @@ export interface components {
             comment: string;
             /** @description Amount: original (account currency) and converted */
             amount: components["schemas"]["TransactionAmountViewDto"];
-            /**
-             * @example [
-             *       "food",
-             *       "restaurant"
-             *     ]
-             */
-            tags: string[];
+            /** @description Tag entities attached to the transaction */
+            tags: components["schemas"]["TagDto"][];
             /** @example 2021-01-01T10:00:00.000Z */
             createdAt: string;
             /** @example 2021-01-01T10:00:00.000Z */
@@ -763,6 +809,23 @@ export interface components {
             type: string;
         };
         UpdateCategoryDto: Record<string, never>;
+        CreateTagDto: {
+            /** @example food */
+            name: string;
+            /**
+             * @description Tag color in hex format
+             * @default #6B7280
+             * @example #6B7280
+             */
+            color: string;
+            /**
+             * @description Icon name
+             * @default tag
+             * @example tag
+             */
+            icon: string;
+        };
+        UpdateTagDto: Record<string, never>;
     };
     responses: never;
     parameters: never;
@@ -2033,6 +2096,160 @@ export interface operations {
                 content?: never;
             };
             /** @description Category name already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TagController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all tags for the current user. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagDto"][];
+                };
+            };
+        };
+    };
+    TagController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTagDto"];
+            };
+        };
+        responses: {
+            /** @description The tag has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagDto"];
+                };
+            };
+            /** @description Bad request. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Tag name already exists. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TagController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The tag. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagDto"];
+                };
+            };
+            /** @description Tag not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TagController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The tag has been successfully deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Tag not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TagController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTagDto"];
+            };
+        };
+        responses: {
+            /** @description The tag has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagDto"];
+                };
+            };
+            /** @description Tag not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Tag name already exists. */
             409: {
                 headers: {
                     [name: string]: unknown;

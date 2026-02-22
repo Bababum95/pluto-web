@@ -17,6 +17,7 @@ import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AppTransactionRouteImport } from './routes/_app/transaction'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppExchangeRatesRouteImport } from './routes/_app/exchange-rates'
 import { Route as AppCategoriesIndexRouteImport } from './routes/_app/categories/index'
 import { Route as AppAccountsIndexRouteImport } from './routes/_app/accounts/index'
 import { Route as AppCategoriesCreateRouteImport } from './routes/_app/categories/create'
@@ -62,6 +63,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
+const AppExchangeRatesRoute = AppExchangeRatesRouteImport.update({
+  id: '/exchange-rates',
+  path: '/exchange-rates',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
   id: '/categories/',
   path: '/categories/',
@@ -94,6 +100,7 @@ const AppAccountsAccountIdRoute = AppAccountsAccountIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/exchange-rates': typeof AppExchangeRatesRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/transaction': typeof AppTransactionRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof AppCategoriesIndexRoute
 }
 export interface FileRoutesByTo {
+  '/exchange-rates': typeof AppExchangeRatesRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/transaction': typeof AppTransactionRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
+  '/_app/exchange-rates': typeof AppExchangeRatesRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/transaction': typeof AppTransactionRoute
@@ -141,6 +150,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/exchange-rates'
     | '/profile'
     | '/settings'
     | '/transaction'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/categories'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/exchange-rates'
     | '/profile'
     | '/settings'
     | '/transaction'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_app'
     | '/_auth'
+    | '/_app/exchange-rates'
     | '/_app/profile'
     | '/_app/settings'
     | '/_app/transaction'
@@ -248,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/exchange-rates': {
+      id: '/_app/exchange-rates'
+      path: '/exchange-rates'
+      fullPath: '/exchange-rates'
+      preLoaderRoute: typeof AppExchangeRatesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/categories/': {
       id: '/_app/categories/'
       path: '/categories'
@@ -294,6 +313,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppExchangeRatesRoute: typeof AppExchangeRatesRoute
   AppProfileRoute: typeof AppProfileRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppTransactionRoute: typeof AppTransactionRoute
@@ -307,6 +327,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppExchangeRatesRoute: AppExchangeRatesRoute,
   AppProfileRoute: AppProfileRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppTransactionRoute: AppTransactionRoute,

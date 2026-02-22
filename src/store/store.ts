@@ -8,6 +8,7 @@ import categoryReducer from './slices/category'
 import accountReducer from './slices/account'
 import settingsReducer from './slices/settings'
 import transactionReducer from './slices/transaction'
+import exchangeRateReducer from './slices/exchange-rate'
 
 import { timeRangeListener } from './middlewares/timeRangeListener'
 import { transactionTypeListener } from './middlewares/transactionTypeListener'
@@ -22,6 +23,7 @@ export const store = configureStore({
     account: accountReducer,
     settings: settingsReducer,
     transaction: transactionReducer,
+    exchangeRate: exchangeRateReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

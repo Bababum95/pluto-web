@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "preview": "vite preview",
     "generate:api": "openapi-typescript http://localhost:3000/api-docs-json -o src/lib/api/types.ts",
     "icons:generate": "node scripts/generate-icon-components.mjs",

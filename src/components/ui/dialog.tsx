@@ -111,7 +111,7 @@ function DialogFooter({
       {children}
       {showCloseButton && (
         <DialogPrimitive.Close asChild>
-          <Button variant="outline" size="md" className="flex-1">
+          <Button variant="outline" className="flex-1">
             {t('common.cancel')}
           </Button>
         </DialogPrimitive.Close>
@@ -127,7 +127,7 @@ function DialogTitle({
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn('leading-none font-medium', className)}
+      className={cn('leading-none text-lg', className)}
       {...props}
     />
   )

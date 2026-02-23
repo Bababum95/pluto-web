@@ -5,7 +5,7 @@ import { Slot } from 'radix-ui'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = cva(
-  'h-5 gap-1 rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium transition-all has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3! inline-flex items-center justify-center w-fit whitespace-nowrap shrink-0 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-colors overflow-hidden group/badge',
+  'gap-1 rounded-sm border border-transparent font-medium transition-all has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3! inline-flex items-center justify-center w-fit whitespace-nowrap shrink-0 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-colors overflow-hidden group/badge',
   {
     variants: {
       variant: {
@@ -20,9 +20,14 @@ const badgeVariants = cva(
           'hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50',
         link: 'text-primary underline-offset-4 hover:underline',
       },
+      size: {
+        xs: 'px-2 py-0.5 text-xs h-5',
+        sm: 'px-3 py-1 text-sm h-6',
+      },
     },
     defaultVariants: {
       variant: 'default',
+      size: 'sm',
     },
   }
 )
@@ -31,16 +36,31 @@ function Badge({
   className,
   variant = 'default',
   asChild = false,
+  color,
   ...props
 }: React.ComponentProps<'span'> &
   VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot.Root : 'span'
+  const styles: React.CSSProperties = {}
+
+  if (color) {
+    styles.borderColor = color
+
+    if (variant === 'outline') {
+      styles.color = color
+    }
+
+    if (variant === 'default') {
+      styles.backgroundColor = color
+    }
+  }
 
   return (
     <Comp
       data-slot="badge"
       data-variant={variant}
       className={cn(badgeVariants({ variant }), className)}
+      style={styles}
       {...props}
     />
   )

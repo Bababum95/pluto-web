@@ -31,8 +31,6 @@ export type CategoryPickerProps = {
   defaultValue?: string
   /** Called when category changes; receives category id. */
   onChange?: (categoryId: string) => void
-  /** Placeholder when no category is selected. */
-  placeholder?: string
   /** Optional transaction type override; defaults to store value. */
   transactionType?: string
   className?: string

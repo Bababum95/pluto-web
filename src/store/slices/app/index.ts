@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { fetchCategories } from '@/store/slices/category'
+import { fetchTags } from '@/store/slices/tag'
 import { fetchAccounts } from '@/store/slices/account'
 import { fetchSettings } from '@/store/slices/settings'
 import { fetchTransactions } from '@/store/slices/transaction'
@@ -18,6 +19,7 @@ const initialState: AppState = {
 export const initApp = createAsyncThunk('app/init', async (_, { dispatch }) => {
   await Promise.all([
     dispatch(fetchCategories()),
+    dispatch(fetchTags()),
     dispatch(fetchAccounts()),
     dispatch(fetchSettings()),
     dispatch(fetchTransactions()),

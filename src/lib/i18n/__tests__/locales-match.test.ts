@@ -3,7 +3,9 @@ import { describe, expect, it } from 'vitest'
 import en from '../locales/en.json'
 import ru from '../locales/ru.json'
 
-type LocaleObject = Record<string, string | LocaleObject>
+type LocaleObject = {
+  [key: string]: string | LocaleObject
+}
 
 const locales: Record<string, LocaleObject> = { en, ru }
 const localeNames = Object.keys(locales)
@@ -31,7 +33,9 @@ describe('Locale files comparison', () => {
         const sourceKeys = keysByLocale[source]
         const targetKeys = keysByLocale[target]
 
-        const missingKeys = [...sourceKeys].filter((key) => !targetKeys.has(key))
+        const missingKeys = [...sourceKeys].filter(
+          (key) => !targetKeys.has(key)
+        )
 
         expect(missingKeys, `Keys missing in "${target}" locale`).toEqual([])
       })
@@ -46,9 +50,10 @@ describe('Locale files comparison', () => {
 
     const first = counts[0]
     for (const entry of counts.slice(1)) {
-      expect(entry.count, `"${entry.locale}" has ${entry.count} keys, "${first.locale}" has ${first.count}`).toBe(
-        first.count
-      )
+      expect(
+        entry.count,
+        `"${entry.locale}" has ${entry.count} keys, "${first.locale}" has ${first.count}`
+      ).toBe(first.count)
     }
   })
 })

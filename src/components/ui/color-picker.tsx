@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { useCallback, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ColorPickerIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
@@ -62,6 +63,7 @@ function ColorPickerRoot({
   children,
   className,
 }: ColorPickerProps): React.ReactElement {
+  const { t } = useTranslation()
   const [internalValue, setInternalValue] = useState<HSB>(() =>
     parseColor(defaultValue)
   )
@@ -125,10 +127,10 @@ function ColorPickerRoot({
                       value !== undefined && !PRESET_COLORS.includes(hexValue),
                   }
                 )}
-                aria-label="Open color picker"
+                aria-label={t('common.openColorPicker')}
               >
                 <HugeiconsIcon icon={ColorPickerIcon} size={24} />
-                <span className="sr-only">Open color picker</span>
+                <span className="sr-only">{t('common.openColorPicker')}</span>
               </button>
             </DropdownMenuTrigger>
           </div>

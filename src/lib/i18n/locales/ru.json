@@ -10,7 +10,12 @@
     "total": "Итого",
     "profile": "Профиль",
     "cancel": "Отмена",
-    "save": "Сохранить"
+    "save": "Сохранить",
+    "close": "Закрыть",
+    "openColorPicker": "Открыть выбор цвета",
+    "selectIcon": "Выбрать иконку",
+    "chooseIcon": "Выберите иконку",
+    "logout": "Выйти"
   },
   "auth": {
     "signIn": "Войти",

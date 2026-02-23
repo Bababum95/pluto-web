@@ -51,5 +51,11 @@ export default defineConfig([
       ],
     },
   },
+  {
+    files: ['**/*.stories.{ts,tsx}'],
+    rules: {
+      'i18next/no-literal-string': 'off',
+    },
+  },
   ...storybook.configs['flat/recommended'],
 ])

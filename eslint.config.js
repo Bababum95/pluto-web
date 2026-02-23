@@ -3,12 +3,13 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import i18next from 'eslint-plugin-i18next'
+import storybook from 'eslint-plugin-storybook'
 import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'storybook-static', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -44,12 +45,11 @@ export default defineConfig([
             include: ['label', 'placeholder', 'title', 'alt', 'aria-label'],
           },
           words: {
-            exclude: [
-              '[-+/=*!<>#.,:;(){}\\[\\]|&@%$?\\s\\d]+',
-            ],
+            exclude: ['[-+/=*!<>#.,:;(){}\\[\\]|&@%$?\\s\\d]+'],
           },
         },
       ],
     },
   },
+  ...storybook.configs['flat/recommended'],
 ])

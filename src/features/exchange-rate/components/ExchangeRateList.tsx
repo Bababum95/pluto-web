@@ -28,7 +28,10 @@ import {
 import { selectCurrency } from '@/store/slices/settings'
 import type { ExchangeRate } from '../types'
 
-function formatRate(rate: number): string {
+function formatRate(rate: number | undefined | null): string {
+  if (rate == null || typeof rate !== 'number' || Number.isNaN(rate)) {
+    return '—'
+  }
   if (rate >= 1) {
     return rate.toLocaleString(undefined, {
       minimumFractionDigits: 2,
@@ -44,10 +47,7 @@ function formatRate(rate: number): string {
 function matchRate(item: ExchangeRate, query: string): boolean {
   if (!query.trim()) return true
   const q = query.trim().toLowerCase()
-  return (
-    item.baseCurrency.toLowerCase().includes(q) ||
-    item.targetCurrency.toLowerCase().includes(q)
-  )
+  return item.code.toLowerCase().includes(q)
 }
 
 export function ExchangeRateList() {
@@ -126,15 +126,15 @@ export function ExchangeRateList() {
               <div key={rate.id}>
                 <Item size="sm">
                   <ItemContent className="gap-0">
-                    <ItemTitle>{rate.targetCurrency}</ItemTitle>
+                    <ItemTitle>{rate.code}</ItemTitle>
                     <ItemDescription>
-                      1 {rate.baseCurrency} = {formatRate(rate.rate)}{' '}
-                      {rate.targetCurrency}
+                      1 {baseCurrency.code} = {formatRate(rate.value)}
+                      {rate.code}
                     </ItemDescription>
                   </ItemContent>
                   <ItemActions>
                     <span className="text-sm font-medium tabular-nums">
-                      {formatRate(rate.rate)}
+                      {formatRate(rate.value)}
                     </span>
                   </ItemActions>
                 </Item>

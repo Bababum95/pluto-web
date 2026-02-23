@@ -470,6 +470,43 @@ export interface paths {
         patch: operations["TagController_update"];
         trace?: never;
     };
+    "/v1/transfers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all transfers for the current user */
+        get: operations["TransferController_findAll"];
+        put?: never;
+        /** Create a new account-to-account transfer */
+        post: operations["TransferController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/transfers/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a transfer by ID */
+        get: operations["TransferController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a transfer by ID */
+        delete: operations["TransferController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a transfer by ID */
+        patch: operations["TransferController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -499,6 +536,18 @@ export interface components {
         };
         UpdateCurrencyDto: Record<string, never>;
         CreateRateDto: Record<string, never>;
+        RateDto: {
+            /** @example 507f1f77bcf86cd799439011 */
+            id: string;
+            /** @example USD */
+            code: string;
+            /** @example 1 */
+            value: number;
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
         UpdateRateDto: Record<string, never>;
         CreateUserDto: {
             /** @example John Doe */
@@ -814,18 +863,56 @@ export interface components {
             name: string;
             /**
              * @description Tag color in hex format
-             * @default #6B7280
              * @example #6B7280
              */
-            color: string;
+            color?: string;
             /**
              * @description Icon name
-             * @default tag
              * @example tag
              */
-            icon: string;
+            icon?: string;
         };
         UpdateTagDto: Record<string, never>;
+        TransferSideDto: {
+            /**
+             * @description Account ID
+             * @example 507f1f77bcf86cd799439012
+             */
+            account: string;
+            /**
+             * @description Amount in account balance units
+             * @example 10000
+             */
+            value: number;
+            /**
+             * @description Decimal places (scale)
+             * @example 2
+             */
+            scale: number;
+        };
+        CreateTransferDto: {
+            /** @description Source side of transfer */
+            from: components["schemas"]["TransferSideDto"];
+            /** @description Destination side of transfer */
+            to: components["schemas"]["TransferSideDto"];
+            /**
+             * @description Conversion rate from source to destination value
+             * @example 0.91
+             */
+            rate: number;
+        };
+        TransferDto: {
+            id: string;
+            from: components["schemas"]["TransferSideDto"];
+            to: components["schemas"]["TransferSideDto"];
+            /** @example 0.91 */
+            rate: number;
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
+        UpdateTransferDto: Record<string, never>;
     };
     responses: never;
     parameters: never;
@@ -1024,7 +1111,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["RateDto"][];
+                };
             };
         };
     };
@@ -1046,7 +1135,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["RateDto"];
+                };
             };
         };
     };
@@ -1066,7 +1157,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["RateDto"];
+                };
             };
             /** @description Rate not found. */
             404: {
@@ -1093,7 +1186,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["RateDto"];
+                };
             };
             /** @description Rate not found. */
             404: {
@@ -1120,7 +1215,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["RateDto"];
+                };
             };
             /** @description Rate not found. */
             404: {
@@ -1151,7 +1248,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["RateDto"];
+                };
             };
             /** @description Rate not found. */
             404: {
@@ -2251,6 +2350,153 @@ export interface operations {
             };
             /** @description Tag name already exists. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransferController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all transfers for the current user. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransferDto"][];
+                };
+            };
+        };
+    };
+    TransferController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTransferDto"];
+            };
+        };
+        responses: {
+            /** @description The transfer has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransferDto"];
+                };
+            };
+            /** @description Bad request. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransferController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The transfer. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransferDto"];
+                };
+            };
+            /** @description Transfer not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransferController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The transfer has been successfully deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Transfer not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransferController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTransferDto"];
+            };
+        };
+        responses: {
+            /** @description The transfer has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransferDto"];
+                };
+            };
+            /** @description Bad request. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Transfer not found. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

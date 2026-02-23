@@ -162,6 +162,15 @@
       "noResults": "No currencies found"
     }
   },
+  "exchangeRates": {
+    "title": "Exchange rates",
+    "baseCurrency": "Base currency",
+    "searchPlaceholder": "Search by currency code",
+    "noResults": "No rates found",
+    "empty": "No exchange rates available",
+    "error": "Failed to load exchange rates",
+    "updatedAt": "Updated"
+  },
   "tags": {
     "create": {
       "title": "Create tag",

@@ -154,6 +154,15 @@
       "none": "Не задан"
     }
   },
+  "exchangeRates": {
+    "title": "Курсы валют",
+    "baseCurrency": "Базовая валюта",
+    "searchPlaceholder": "Поиск по коду валюты",
+    "noResults": "Курсы не найдены",
+    "empty": "Нет доступных курсов валют",
+    "error": "Не удалось загрузить курсы валют",
+    "updatedAt": "Обновлено"
+  },
   "currency": {
     "select": {
       "title": "Валюты",

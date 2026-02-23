@@ -4,6 +4,7 @@ import {
   Home01Icon,
   Briefcase06Icon,
   ServerStack03Icon,
+  ExchangeDollarIcon,
 } from '@hugeicons/core-free-icons'
 
 export const MENU_ITEMS = [
@@ -12,4 +13,9 @@ export const MENU_ITEMS = [
   { label: 'common.settings', to: '/settings', icon: Settings01Icon },
   { label: 'common.categories', to: '/categories', icon: ServerStack03Icon },
   { label: 'common.profile', to: '/profile', icon: UserCircleIcon },
+  {
+    label: 'common.exchangeRates',
+    to: '/exchange-rates',
+    icon: ExchangeDollarIcon,
+  },
 ]

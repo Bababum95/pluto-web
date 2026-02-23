@@ -25,3 +25,9 @@ dist-ssr
 
 # Environment variables
 .env
+
+# Test coverage
+coverage/
+
+# Storybook
+storybook-static/

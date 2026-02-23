@@ -10,11 +10,15 @@ Frontend for the **Pluto** application: React + TypeScript + Vite with shadcn/ui
 - **Vite 7** — build tool and dev server
 - **TanStack Router** — file-based routing with code splitting
 - **TanStack React Query** — server state and caching
-- **Redux Toolkit** — client state (accounts, transactions, categories)
+- **TanStack Form** — form state and validation
+- **Redux Toolkit** — client state (accounts, transactions, categories, settings)
 - **Tailwind CSS 4** — styling
-- **Radix UI / Base UI** — accessible primitives (shadcn-style)
+- **Radix UI / Base UI / Shadcn UI** — accessible primitives (shadcn-style)
 - **i18next** — internationalization
 - **Zod** — validation (forms and API)
+- **Motion** — animations
+- **Vitest** — unit and integration tests
+- **Storybook** — component development and documentation
 - **PWA** — offline support via Vite PWA (Workbox)
 
 ## Prerequisites
@@ -30,24 +34,30 @@ pnpm install
 
 ## Scripts
 
-| Command             | Description                                                                      |
-| ------------------- | -------------------------------------------------------------------------------- |
-| `pnpm dev`          | Start dev server (Vite)                                                          |
-| `pnpm build`        | Type-check and production build                                                  |
-| `pnpm preview`      | Serve production build locally                                                   |
-| `pnpm lint`         | Run ESLint                                                                       |
-| `pnpm format`       | Format code with Prettier                                                        |
-| `pnpm generate:api` | Generate API types from OpenAPI (API must be running at `http://localhost:3000`) |
-| `pnpm patch`        | Bump patch version                                                               |
+| Command                | Description                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| `pnpm dev`             | Start dev server (Vite)                                                          |
+| `pnpm build`           | Type-check and production build                                                  |
+| `pnpm preview`         | Serve production build locally                                                   |
+| `pnpm lint`            | Run ESLint                                                                       |
+| `pnpm test`            | Run tests (Vitest)                                                               |
+| `pnpm test:watch`      | Run tests in watch mode                                                          |
+| `pnpm test:coverage`   | Run tests with coverage report                                                   |
+| `pnpm storybook`       | Start Storybook dev server (port 6006)                                           |
+| `pnpm build-storybook` | Build Storybook for static export                                                |
+| `pnpm generate:api`    | Generate API types from OpenAPI (API must be running at `http://localhost:3000`) |
+| `pnpm icons:generate`  | Generate icon components from SVG registry                                       |
+| `pnpm patch`           | Bump patch version                                                               |
 
 ## Project structure
 
 - `src/routes/` — TanStack Router file-based routes
-- `src/features/` — feature modules (e.g. account, home)
-- `src/components/` — shared UI components
+- `src/features/` — feature modules (account, home, category, tag, settings, theme, etc.)
+- `src/components/` — shared UI components and Storybook stories
 - `src/store/` — Redux slices and async thunks
 - `src/lib/` — API client, i18n, icons, utilities
 - `src/lib/api/types.ts` — generated OpenAPI types (run `generate:api` when API schema changes)
+- `scripts/` — build scripts (e.g. icon component generation)
 
 ## Environment
 

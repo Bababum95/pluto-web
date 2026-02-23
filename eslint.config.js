@@ -57,5 +57,11 @@ export default defineConfig([
       'i18next/no-literal-string': 'off',
     },
   },
+  {
+    files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+    rules: {
+      'i18next/no-literal-string': 'off',
+    },
+  },
   ...storybook.configs['flat/recommended'],
 ])

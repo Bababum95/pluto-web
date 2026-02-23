@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { MoreHorizontalCircle01Icon } from '@hugeicons/core-free-icons'
 
@@ -115,6 +116,7 @@ type IconDrawerProps = {
 }
 
 const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
 
   const handleSelect = useCallback(
@@ -139,10 +141,8 @@ const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Select Icon</DrawerTitle>
-          <DrawerDescription>
-            Choose an account for the transaction
-          </DrawerDescription>
+          <DrawerTitle>{t('common.selectIcon')}</DrawerTitle>
+          <DrawerDescription>{t('common.chooseIcon')}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4 overflow-y-auto py-2">
           {ICON_CATEGORIES.map((category) => (

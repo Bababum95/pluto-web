@@ -45,14 +45,12 @@ const actions = [
   {
     value: 'newTransfer',
     icon: ArrowDataTransferHorizontalIcon,
-    to: '/accounts/create',
-    disabled: true,
+    to: '/transfers/create',
   },
   {
     value: 'transferHistory',
     icon: Clock04Icon,
-    to: '/accounts/create',
-    disabled: true,
+    to: '/transfers',
   },
 ]
 

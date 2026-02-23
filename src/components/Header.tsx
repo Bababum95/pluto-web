@@ -56,6 +56,7 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
             <SheetContent
               side="left"
               onOpenAutoFocus={(e) => e.preventDefault()}
+              aria-describedby={undefined}
             >
               <SheetHeader>
                 <SheetTitle>

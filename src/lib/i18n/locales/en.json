@@ -10,7 +10,12 @@
     "total": "Total",
     "profile": "Profile",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "close": "Close",
+    "openColorPicker": "Open color picker",
+    "selectIcon": "Select Icon",
+    "chooseIcon": "Choose an icon",
+    "logout": "Logout"
   },
   "auth": {
     "signIn": "Sign in",
@@ -170,7 +175,11 @@
     "create": {
       "title": "Create tag",
       "description": "Create a new tag",
-      "add": "Add tag"
+      "add": "Add tag",
+      "placeholder": "Enter tag name"
+    },
+    "select": {
+      "label": "Select tag"
     }
   }
 }

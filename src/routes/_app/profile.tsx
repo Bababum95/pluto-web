@@ -24,7 +24,7 @@ const ProfilePage = () => {
       <p>{user?.name}</p>
       <p>{user?.email}</p>
       <p>{user?.id}</p>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Button onClick={handleLogout}>{t('common.logout')}</Button>
     </AppLayout>
   )
 }

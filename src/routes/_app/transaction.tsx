@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/forms/form-field'
 import { SelectAccount } from '@/features/account'
 import { CategoryPicker } from '@/features/category'
+import { TagPicker } from '@/features/tag'
 import { MoneyInput, parseDecimal } from '@/features/money'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -42,6 +43,7 @@ function TransactionPage() {
         category: z
           .string()
           .min(1, { message: t('transaction.errors.categoryRequired') }),
+        tags: z.array(z.string()),
       }),
     },
     defaultValues: {
@@ -49,6 +51,7 @@ function TransactionPage() {
       account: settings?.account?.id ?? '',
       comment: '',
       category: '',
+      tags: [] as string[],
     },
     onSubmit: async ({ value }) => {
       const { balance, scale } = parseDecimal(value.amount)
@@ -60,6 +63,7 @@ function TransactionPage() {
           account: value.account,
           comment: value.comment,
           category: value.category,
+          tags: value.tags,
         })
       )
       navigate({ to: '/' })
@@ -147,6 +151,17 @@ function TransactionPage() {
               />
             )}
           />
+          <form.Field
+            name="tags"
+            children={(field) => (
+              <TagPicker
+                values={field.state.value}
+                onChange={(value) => field.handleChange(value)}
+                multiple
+              />
+            )}
+          />
+
           <form.Field
             name="comment"
             children={(field) => (

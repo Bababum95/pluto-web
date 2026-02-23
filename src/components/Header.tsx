@@ -78,8 +78,7 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
                   </Link>
                 ))}
                 <div className="mt-auto text-xs text-muted-foreground px-4 pb-4">
-                  v{__APP_VERSION__} ·{' '}
-                  {dayjs(__BUILD_DATE__).format('DD.MM.YYYY')}
+                  {`v ${__APP_VERSION__} · ${dayjs(__BUILD_DATE__).format('DD.MM.YYYY')}`}
                 </div>
               </nav>
             </SheetContent>

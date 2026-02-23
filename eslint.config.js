@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import i18next from 'eslint-plugin-i18next'
 import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
 import { defineConfig, globalIgnores } from 'eslint/config'
@@ -21,6 +22,9 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    plugins: {
+      i18next,
+    },
     rules: {
       'react-refresh/only-export-components': 'off',
       'no-unused-vars': 'off',
@@ -30,6 +34,20 @@ export default defineConfig([
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      'i18next/no-literal-string': [
+        'warn',
+        {
+          mode: 'jsx-text-only',
+          'jsx-attributes': {
+            include: ['label', 'placeholder', 'title', 'alt', 'aria-label'],
+          },
+          words: {
+            exclude: [
+              '[-+/=*!<>#.,:;(){}\\[\\]|&@%$?\\s\\d]+',
+            ],
+          },
         },
       ],
     },

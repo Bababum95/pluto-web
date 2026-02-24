@@ -5,4 +5,5 @@ export {
   InputGroupText,
   InputGroupInput,
   InputGroupTextarea,
+  inputGroupVariants,
 } from './input-group'

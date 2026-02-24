@@ -7,6 +7,10 @@ const meta = {
   component: Textarea,
   tags: ['autodocs'],
   argTypes: {
+    size: {
+      control: 'select',
+      options: ['sm', 'default', 'lg'],
+    },
     disabled: { control: 'boolean' },
     placeholder: { control: 'text' },
   },
@@ -19,6 +23,20 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     placeholder: 'Type your message here...',
+  },
+}
+
+export const Small: Story = {
+  args: {
+    placeholder: 'Small textarea',
+    size: 'sm',
+  },
+}
+
+export const Large: Story = {
+  args: {
+    placeholder: 'Large textarea',
+    size: 'lg',
   },
 }
 

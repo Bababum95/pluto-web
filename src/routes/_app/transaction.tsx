@@ -99,7 +99,7 @@ function TransactionPage() {
                     <form.Subscribe
                       selector={(state) => state.values.account}
                       children={(accountId) => (
-                        <Button variant="outline" size="lg" type="button">
+                        <Button variant="outline" type="button">
                           {accounts.find((acc) => acc.id === accountId)?.balance
                             .original.currency?.code ??
                             settings?.currency?.code}

@@ -8,9 +8,9 @@ const inputVariants = cva(
   {
     variants: {
       size: {
-        sm: 'h-8 px-3 text-sm file:h-6',
-        default: 'h-9 px-3.5 text-sm file:h-7',
-        lg: 'h-10 px-4 text-sm file:h-8',
+        sm: 'h-9 px-3 text-sm',
+        default: 'h-10 px-3.5',
+        lg: 'h-11 px-4',
       },
     },
     defaultVariants: {

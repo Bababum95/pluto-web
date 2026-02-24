@@ -290,7 +290,7 @@ export const TransferForm: FC<Props> = ({
         </Card>
 
         {/* Rate & Fee section */}
-        <FieldGroup className="gap-3">
+        <FieldGroup className="flex-row gap-3">
           <Field>
             <FieldLabel>{t('transfers.rate')}</FieldLabel>
             <form.Field
@@ -336,10 +336,7 @@ export const TransferForm: FC<Props> = ({
                   const toCode = getCurrencyCode(toAccountId)
 
                   return (
-                    <Select
-                      value={feeType}
-                      onValueChange={handleFeeTypeChange}
-                    >
+                    <Select value={feeType} onValueChange={handleFeeTypeChange}>
                       <SelectTrigger className="w-auto min-w-16">
                         <SelectValue />
                       </SelectTrigger>
@@ -374,9 +371,7 @@ export const TransferForm: FC<Props> = ({
                 <SelectAccount
                   value={field.state.value}
                   onChange={(id) =>
-                    handleAccountChange('to', id, (v) =>
-                      field.handleChange(v)
-                    )
+                    handleAccountChange('to', id, (v) => field.handleChange(v))
                   }
                   isError={
                     field.state.meta.isTouched && !field.state.meta.isValid

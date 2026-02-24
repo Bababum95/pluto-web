@@ -6,4 +6,6 @@ export const DEFAULT_TRANSFER_FORM_VALUES: TransferFormValues = {
   fromAmount: '',
   toAmount: '',
   rate: '1',
+  fee: '0',
+  feeType: 'percent',
 }

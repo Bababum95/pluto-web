@@ -890,6 +890,18 @@ export interface components {
              */
             scale: number;
         };
+        FeeDto: {
+            /**
+             * @description Fee amount in smallest units
+             * @example 50
+             */
+            value: number;
+            /**
+             * @description Decimal places (scale) for fee
+             * @example 2
+             */
+            scale: number;
+        };
         CreateTransferDto: {
             /** @description Source side of transfer */
             from: components["schemas"]["TransferSideDto"];
@@ -900,6 +912,8 @@ export interface components {
              * @example 0.91
              */
             rate: number;
+            /** @description Transfer fee (value + scale). Optional, defaults to { value: 0, scale: 0 }. */
+            fee?: components["schemas"]["FeeDto"];
         };
         TransferDto: {
             id: string;
@@ -907,6 +921,8 @@ export interface components {
             to: components["schemas"]["TransferSideDto"];
             /** @example 0.91 */
             rate: number;
+            /** @description Transfer fee */
+            fee: components["schemas"]["FeeDto"];
             /** @example 2021-01-01T10:00:00.000Z */
             createdAt: string;
             /** @example 2021-01-01T10:00:00.000Z */

@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 import { AppLayout } from '@/components/AppLayout'
 import { TransactionTypeTabs } from '@/features/transaction-type'
@@ -10,7 +11,6 @@ import {
   selectCategoriesStatus,
   updateCategory,
 } from '@/store/slices/category'
-import { toast } from 'sonner'
 import type { CategoryFormValues } from '@/features/category/types'
 
 const EditCategoryPage = () => {

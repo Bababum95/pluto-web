@@ -172,6 +172,36 @@
     "error": "Failed to load exchange rates",
     "updatedAt": "Updated"
   },
+  "transfers": {
+    "title": "Transfers",
+    "create": "New transfer",
+    "detail": "Transfer details",
+    "from": "From",
+    "to": "To",
+    "fromAmount": "Amount",
+    "toAmount": "Amount",
+    "rate": "Exchange rate",
+    "fee": "Fee",
+    "submit": "Create transfer",
+    "empty": "No transfers yet",
+    "notFound": "Transfer not found",
+    "created": "Transfer created successfully",
+    "deleted": "Transfer deleted successfully",
+    "actions": {
+      "delete": "Delete transfer"
+    },
+    "errors": {
+      "fromAccount": {
+        "required": "Source account is required"
+      },
+      "toAccount": {
+        "required": "Destination account is required"
+      },
+      "amount": {
+        "required": "Amount is required"
+      }
+    }
+  },
   "tags": {
     "create": {
       "title": "Create tag",

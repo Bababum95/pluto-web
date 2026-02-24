@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Search01Icon } from '@hugeicons/core-free-icons'
 
+import dayjs from '@/lib/dayjs'
 import { Card } from '@/components/ui/card'
 import {
   Item,
@@ -13,7 +14,6 @@ import {
   ItemDescription,
   ItemActions,
 } from '@/components/ui/item'
-import { Badge } from '@/components/ui/badge'
 import {
   InputGroup,
   InputGroupAddon,
@@ -26,6 +26,7 @@ import {
   selectExchangeRatesStatus,
 } from '@/store/slices/exchange-rate'
 import { selectCurrency } from '@/store/slices/settings'
+
 import type { ExchangeRate } from '../types'
 
 function formatRate(rate: number | undefined | null): string {
@@ -89,13 +90,24 @@ export function ExchangeRateList() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Card size="sm" className="py-3!">
-        <div className="px-4 flex items-center gap-2">
-          <span className="text-muted-foreground text-xs">
-            {t('exchangeRates.baseCurrency')}
-          </span>
-          <Badge variant="secondary">{baseCurrency.code}</Badge>
-        </div>
+      <Card size="sm" className="py-1!">
+        <ItemGroup>
+          <Item>
+            <ItemContent>
+              <ItemTitle>{t('exchangeRates.baseCurrency')}</ItemTitle>
+            </ItemContent>
+            <ItemActions>{baseCurrency.code}</ItemActions>
+          </Item>
+          <ItemSeparator />
+          <Item>
+            <ItemContent>
+              <ItemTitle>{t('exchangeRates.updatedAt')}</ItemTitle>
+            </ItemContent>
+            <ItemActions>
+              {dayjs(rates[0].updatedAt).format('DD.MM.YYYY HH:mm')}
+            </ItemActions>
+          </Item>
+        </ItemGroup>
       </Card>
 
       <InputGroup>

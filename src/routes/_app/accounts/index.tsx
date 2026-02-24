@@ -45,14 +45,12 @@ const actions = [
   {
     value: 'newTransfer',
     icon: ArrowDataTransferHorizontalIcon,
-    to: '/accounts/create',
-    disabled: true,
+    to: '/transfers/create',
   },
   {
     value: 'transferHistory',
     icon: Clock04Icon,
-    to: '/accounts/create',
-    disabled: true,
+    to: '/transfers',
   },
 ]
 
@@ -83,11 +81,7 @@ function AccountsPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             {actions.map((action) => (
-              <DropdownMenuItem
-                key={action.value}
-                asChild
-                disabled={action.disabled}
-              >
+              <DropdownMenuItem key={action.value} asChild>
                 <Link
                   to={action.to}
                   key={action.value}

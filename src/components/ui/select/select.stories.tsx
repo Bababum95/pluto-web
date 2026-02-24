@@ -75,6 +75,20 @@ export const Small: Story = {
   ),
 }
 
+export const Large: Story = {
+  render: () => (
+    <Select>
+      <SelectTrigger size="lg" className="w-48">
+        <SelectValue placeholder="Large trigger" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="a">Option A</SelectItem>
+        <SelectItem value="b">Option B</SelectItem>
+      </SelectContent>
+    </Select>
+  ),
+}
+
 export const Disabled: Story = {
   render: () => (
     <Select disabled>

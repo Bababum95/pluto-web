@@ -3,23 +3,26 @@
 import { useState, forwardRef } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ViewIcon, ViewOffSlashIcon } from '@hugeicons/core-free-icons'
+import type { VariantProps } from 'class-variance-authority'
 
 import {
   InputGroup,
   InputGroupInput,
   InputGroupButton,
+  inputGroupVariants,
 } from '@/components/ui/input-group'
 import { cn } from '@/lib/utils'
 import type { InputProps } from '@/components/ui/input'
 
-type PasswordInputProps = Omit<InputProps, 'type'>
+type PasswordInputProps = Omit<InputProps, 'type'> &
+  VariantProps<typeof inputGroupVariants>
 
 const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, size, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false)
 
     return (
-      <InputGroup className={className}>
+      <InputGroup size={size} className={className}>
         <InputGroupInput
           ref={ref}
           type={showPassword ? 'text' : 'password'}

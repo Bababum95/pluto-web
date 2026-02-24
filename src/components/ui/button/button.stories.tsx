@@ -20,7 +20,7 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: ['default', 'sm', 'md', 'lg', 'icon'],
+      options: ['sm', 'default', 'lg', 'icon'],
     },
     isLoading: { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -77,13 +77,6 @@ export const Small: Story = {
   args: {
     children: 'Small',
     size: 'sm',
-  },
-}
-
-export const Medium: Story = {
-  args: {
-    children: 'Medium',
-    size: 'md',
   },
 }
 

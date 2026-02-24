@@ -118,31 +118,31 @@ const AppAccountsAccountIdRoute = AppAccountsAccountIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AppIndexRoute
   '/exchange-rates': typeof AppExchangeRatesRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/transaction': typeof AppTransactionRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/': typeof AppIndexRoute
   '/accounts/$accountId': typeof AppAccountsAccountIdRoute
   '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/categories/create': typeof AppCategoriesCreateRoute
   '/transfers/$transferId': typeof AppTransfersTransferIdRoute
   '/transfers/create': typeof AppTransfersCreateRoute
-  '/accounts/': typeof AppAccountsIndexRoute
-  '/categories/': typeof AppCategoriesIndexRoute
-  '/transfers/': typeof AppTransfersIndexRoute
+  '/accounts': typeof AppAccountsIndexRoute
+  '/categories': typeof AppCategoriesIndexRoute
+  '/transfers': typeof AppTransfersIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof AppIndexRoute
   '/exchange-rates': typeof AppExchangeRatesRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/transaction': typeof AppTransactionRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/': typeof AppIndexRoute
   '/accounts/$accountId': typeof AppAccountsAccountIdRoute
   '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
@@ -177,31 +177,31 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/exchange-rates'
     | '/profile'
     | '/settings'
     | '/transaction'
     | '/login'
     | '/register'
+    | '/'
     | '/accounts/$accountId'
     | '/accounts/create'
     | '/categories/$categoryId'
     | '/categories/create'
     | '/transfers/$transferId'
     | '/transfers/create'
-    | '/accounts/'
-    | '/categories/'
-    | '/transfers/'
+    | '/accounts'
+    | '/categories'
+    | '/transfers'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/exchange-rates'
     | '/profile'
     | '/settings'
     | '/transaction'
     | '/login'
     | '/register'
+    | '/'
     | '/accounts/$accountId'
     | '/accounts/create'
     | '/categories/$categoryId'
@@ -243,14 +243,14 @@ declare module '@tanstack/react-router' {
     '/_auth': {
       id: '/_auth'
       path: ''
-      fullPath: '/'
+      fullPath: ''
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
       id: '/_app'
       path: ''
-      fullPath: '/'
+      fullPath: ''
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -306,21 +306,21 @@ declare module '@tanstack/react-router' {
     '/_app/transfers/': {
       id: '/_app/transfers/'
       path: '/transfers'
-      fullPath: '/transfers/'
+      fullPath: '/transfers'
       preLoaderRoute: typeof AppTransfersIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/categories/': {
       id: '/_app/categories/'
       path: '/categories'
-      fullPath: '/categories/'
+      fullPath: '/categories'
       preLoaderRoute: typeof AppCategoriesIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/accounts/': {
       id: '/_app/accounts/'
       path: '/accounts'
-      fullPath: '/accounts/'
+      fullPath: '/accounts'
       preLoaderRoute: typeof AppAccountsIndexRouteImport
       parentRoute: typeof AppRoute
     }

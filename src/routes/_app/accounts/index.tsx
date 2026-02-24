@@ -81,11 +81,7 @@ function AccountsPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             {actions.map((action) => (
-              <DropdownMenuItem
-                key={action.value}
-                asChild
-                disabled={action.disabled}
-              >
+              <DropdownMenuItem key={action.value} asChild>
                 <Link
                   to={action.to}
                   key={action.value}

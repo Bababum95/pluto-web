@@ -34,13 +34,17 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() =>
-              router.navigate({
-                to: '..',
-                viewTransition: { types: ['slide-right'] },
-              })
-            }
             className="[&_svg]:size-6"
+            onClick={() => {
+              if (document.startViewTransition) {
+                document.startViewTransition({
+                  types: ['slide-right'],
+                  update: () => router.history.back(),
+                })
+              } else {
+                router.history.back()
+              }
+            }}
           >
             <HugeiconsIcon icon={ArrowLeft02Icon} />
             <span className="sr-only">{t('common.back')}</span>

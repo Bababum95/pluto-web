@@ -17,7 +17,7 @@ const CreateTransferPage = () => {
   const handleSubmit = async (values: CreateTransferDto) => {
     await dispatch(createTransfer(values)).unwrap()
     await dispatch(fetchAccounts())
-    navigate({ to: '/transfers' })
+    navigate({ to: '/accounts' })
     toast.success(t('transfers.created'))
   }
 

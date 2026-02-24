@@ -6,10 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 
 import { AppLayout } from '@/components/AppLayout'
 import { useAppDispatch, useAppSelector } from '@/store'
-import {
-  selectTransferById,
-  deleteTransfer,
-} from '@/store/slices/transfer'
+import { selectTransferById, deleteTransfer } from '@/store/slices/transfer'
 import { fetchAccounts } from '@/store/slices/account'
 import {
   DropdownMenu,
@@ -59,10 +56,7 @@ const TransferDetailPage = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={handleDelete}
-            >
+            <DropdownMenuItem variant="destructive" onClick={handleDelete}>
               <HugeiconsIcon icon={Delete01Icon} />
               <span>{t('transfers.actions.delete')}</span>
             </DropdownMenuItem>

@@ -3,7 +3,6 @@ import type { FC } from 'react'
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer'
@@ -48,12 +47,9 @@ export const AccountDrawer: FC<Props> = ({
 
   return (
     <Drawer open={open} onOpenChange={handleOpenChange} modal={true}>
-      <DrawerContent className="pb-safe">
+      <DrawerContent className="pb-safe" aria-describedby={undefined}>
         <DrawerHeader>
           <DrawerTitle>{t('accounts.select.title')}</DrawerTitle>
-          <DrawerDescription>
-            {t('accounts.select.description')}
-          </DrawerDescription>
         </DrawerHeader>
         <RadioGroup
           className="px-4 gap-1 overflow-y-auto pb-4"

@@ -65,7 +65,13 @@ function TransfersPage() {
         <div className="flex flex-1 flex-col items-center justify-center gap-4 py-8 text-muted-foreground">
           <p>{t('transfers.empty')}</p>
           <Button asChild>
-            <Link to="/transfers/create">{t('transfers.create')}</Link>
+            <Link
+              to="/transfers/create"
+              viewTransition={{ types: ['slide-left'] }}
+            >
+              <HugeiconsIcon icon={PlusSignIcon} />
+              {t('transfers.create')}
+            </Link>
           </Button>
         </div>
       ) : (

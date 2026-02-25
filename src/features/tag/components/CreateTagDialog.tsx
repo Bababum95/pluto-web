@@ -51,7 +51,7 @@ export const CreateTagDialog: FC<Props> = ({ onSuccess }) => {
   return (
     <Dialog modal open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="w-fit rounded-sm">
+        <Button variant="outline" size="xs" className="w-fit">
           <HugeiconsIcon icon={PlusSignIcon} size={14} />
           {t('tags.create.add')}
         </Button>

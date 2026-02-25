@@ -75,7 +75,7 @@ function TransactionPage() {
     <AppLayout title={t('transaction.title')} showBackButton>
       <TransactionTypeTabs>
         <form
-          className="flex flex-col gap-4 pt-2 flex-1"
+          className="flex flex-col gap-4 pt-2 flex-1 pb-14"
           onSubmit={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -99,7 +99,11 @@ function TransactionPage() {
                     <form.Subscribe
                       selector={(state) => state.values.account}
                       children={(accountId) => (
-                        <Button variant="outline" type="button">
+                        <Button
+                          variant="outline"
+                          type="button"
+                          className="min-w-24"
+                        >
                           {accounts.find((acc) => acc.id === accountId)?.balance
                             .original.currency?.code ??
                             settings?.currency?.code}
@@ -173,7 +177,7 @@ function TransactionPage() {
             children={([canSubmit, isSubmitting]) => (
               <Button
                 type="submit"
-                className="mt-auto w-full"
+                className="fixed bottom-14 left-4 right-4 mb-safe"
                 disabled={!canSubmit}
                 isLoading={isSubmitting}
               >

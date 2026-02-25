@@ -1,6 +1,6 @@
 # Pluto Web
 
-[![CI](https://github.com/Bababum95/pluto-web/actions/workflows/ci.yml/badge.svg)](https://github.com/Bababum95/pluto-web/actions/workflows/ci.yml) · [**Storybook**](https://pluto-storybook.vercel.app/)
+[![CI](https://github.com/Bababum95/pluto-web/actions/workflows/ci.yml/badge.svg)](https://github.com/Bababum95/pluto-web/actions/workflows/ci.yml) [![Storybook](https://img.shields.io/badge/Storybook-Live-ff528c?style=flat)](https://pluto-storybook.vercel.app/)
 
 Frontend for the **Pluto** application: React + TypeScript + Vite with shadcn/ui-style components and a full-featured app stack.
 

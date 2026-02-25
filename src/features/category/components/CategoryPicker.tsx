@@ -145,7 +145,7 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
         <Button
           variant="outline"
           size="icon"
-          className="aspect-square w-full h-full max-w-14 max-h-14 ml-auto mr-auto mt-2 rounded-xl"
+          className="aspect-square w-full h-full max-w-14 max-h-14 ml-auto mr-auto mt-2 rounded-lg"
           type="button"
         >
           <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />

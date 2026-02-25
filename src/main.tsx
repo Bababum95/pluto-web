@@ -8,7 +8,7 @@ import { AuthProvider, useAuth } from '@/features/auth'
 import { ThemeProvider } from '@/features/theme'
 import { store } from '@/store'
 import { queryClient } from '@/lib/api'
-import { FullScreenLoader } from '@/components/FullScreenLoader'
+import { FullScreenLoader } from '@/components/full-screen-loader'
 import '@/lib/i18n/config'
 
 // Import the generated route tree

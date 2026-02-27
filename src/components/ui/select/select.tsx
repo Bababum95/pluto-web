@@ -43,9 +43,9 @@ const selectTriggerVariants = cva(
   {
     variants: {
       size: {
-        sm: 'h-9 pl-3',
-        default: 'h-10 pl-3.5',
-        lg: 'h-11 pl-4',
+        sm: 'h-10 pl-3',
+        default: 'h-12 pl-3.5',
+        lg: 'h-14 pl-4',
       },
     },
     defaultVariants: {

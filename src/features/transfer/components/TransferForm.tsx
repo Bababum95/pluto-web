@@ -11,7 +11,9 @@ import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -300,6 +302,7 @@ export const TransferForm: FC<Props> = ({
                   type="text"
                   inputMode="decimal"
                   placeholder="1"
+                  size="sm"
                   value={field.state.value}
                   onChange={(e) => handleRateChange(e.target.value)}
                   onBlur={field.handleBlur}
@@ -318,6 +321,7 @@ export const TransferForm: FC<Props> = ({
                     type="text"
                     inputMode="decimal"
                     placeholder="0"
+                    size="sm"
                     value={field.state.value}
                     onChange={(e) => handleFeeChange(e.target.value)}
                     onBlur={field.handleBlur}
@@ -337,19 +341,24 @@ export const TransferForm: FC<Props> = ({
 
                   return (
                     <Select value={feeType} onValueChange={handleFeeTypeChange}>
-                      <SelectTrigger className="w-auto min-w-16">
+                      <SelectTrigger className="w-auto min-w-16" size="sm">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="percent">%</SelectItem>
-                        {fromCode && (
-                          <SelectItem value="from_currency">
-                            {fromCode}
-                          </SelectItem>
-                        )}
-                        {toCode && (
-                          <SelectItem value="to_currency">{toCode}</SelectItem>
-                        )}
+                        <SelectGroup>
+                          <SelectItem value="percent">%</SelectItem>
+                          {(fromCode || toCode) && <SelectSeparator />}
+                          {fromCode && (
+                            <SelectItem value="from_currency">
+                              {fromCode}
+                            </SelectItem>
+                          )}
+                          {toCode && fromCode !== toCode && (
+                            <SelectItem value="to_currency">
+                              {toCode}
+                            </SelectItem>
+                          )}
+                        </SelectGroup>
                       </SelectContent>
                     </Select>
                   )

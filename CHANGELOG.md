@@ -7,6 +7,14 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## Unreleased
+
+### 📚 Documentation
+
+- add CHANGELOG.md
+
+---
+
 ## 25.02.2026 — v0.1.3
 
 ### ✨ Features

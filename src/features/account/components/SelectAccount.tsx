@@ -46,7 +46,7 @@ export const SelectAccount: FC<Props> = ({
         />
       ) : (
         <Button
-          variant="outline"
+          variant="secondary"
           type="button"
           onClick={() => setIsOpen(true)}
           className={cn(

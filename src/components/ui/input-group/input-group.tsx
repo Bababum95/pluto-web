@@ -13,9 +13,9 @@ const inputGroupVariants = cva(
   {
     variants: {
       size: {
-        sm: 'h-9',
-        default: 'h-10',
-        lg: 'h-11',
+        sm: 'h-10',
+        default: 'h-12',
+        lg: 'h-14',
       },
     },
     defaultVariants: {

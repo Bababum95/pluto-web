@@ -139,7 +139,7 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
   )
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer open={isOpen} onOpenChange={setIsOpen} modal={false}>
       <DrawerTrigger asChild>
         <Button
           variant="outline"
@@ -152,6 +152,7 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
       </DrawerTrigger>
       <DrawerContent
         onOpenAutoFocus={(e) => e.preventDefault()}
+        onCloseAutoFocus={(e) => e.preventDefault()}
         aria-describedby={undefined}
       >
         <DrawerHeader>

@@ -15,6 +15,7 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ### 🧹 Chore
 
+- update dependencies and enhance date handling
 - update UI component sizes and enhance documentation
 
 ---

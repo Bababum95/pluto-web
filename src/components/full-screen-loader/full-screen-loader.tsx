@@ -13,20 +13,19 @@ export const FullScreenLoader: FC<Props> = ({ isVisible }) => {
       {isVisible && (
         <motion.div
           className="flex min-h-dvh items-center justify-center bg-background fixed inset-0 z-100"
-          animate="jump"
-          transition={{
-            staggerChildren: -0.2,
-            staggerDirection: -1,
-            duration: 0.6,
-            delay: 0.3,
-            ease: 'easeInOut',
-          }}
+          transition={{ duration: 0.5, ease: 'easeIn' }}
           initial={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
+            animate="jump"
             exit={{ y: 300 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{
+              staggerChildren: -0.2,
+              staggerDirection: -1,
+              duration: 0.6,
+              ease: 'easeIn',
+            }}
           >
             <motion.img
               src={plutoImage}

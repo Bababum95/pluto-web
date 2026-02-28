@@ -11,9 +11,9 @@ export type FeeType = 'percent' | 'from_currency' | 'to_currency'
 export type TransferFormValues = {
   fromAccount: string
   toAccount: string
-  fromAmount: string
-  toAmount: string
-  rate: string
-  fee: string
+  fromAmount?: string | null
+  toAmount?: string | null
+  rate?: string | null
+  fee?: string | null
   feeType: FeeType
 }

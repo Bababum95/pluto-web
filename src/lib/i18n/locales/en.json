@@ -80,10 +80,17 @@
     "comment": "Comment",
     "add": "Add transaction",
     "added": "Transaction added successfully",
+    "date": "Select date",
     "errors": {
-      "amount": { "required": "Amount is required" },
-      "account": { "required": "Account is required" },
-      "category": { "required": "Category is required" },
+      "amount": {
+        "required": "Amount is required"
+      },
+      "account": {
+        "required": "Account is required"
+      },
+      "category": {
+        "required": "Category is required"
+      },
       "date": {
         "required": "Date is required",
         "notValid": "Invalid date",
@@ -215,7 +222,7 @@
       "placeholder": "Enter tag name"
     },
     "select": {
-      "label": "Select tag"
+      "label": "Select tags"
     }
   },
   "datePicker": {

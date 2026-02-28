@@ -6,20 +6,19 @@ import { z } from 'zod'
 import { toast } from 'sonner'
 
 import dayjs from '@/lib/dayjs'
-import { ButtonGroup } from '@/components/ui/button-group'
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/forms/form-field'
 import { SelectAccount } from '@/features/account'
 import { CategoryPicker } from '@/features/category'
 import { TagPicker } from '@/features/tag'
-import { MoneyInput, parseDecimal } from '@/features/money'
+import { MoneyField, parseDecimal } from '@/features/money'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectAccounts } from '@/store/slices/account'
 import { selectSettings } from '@/store/slices/settings'
-import { FieldError } from '@/components/ui/field'
 import { createTransaction } from '@/store/slices/transaction'
 import { DatePicker } from '@/components/ui/date-picker'
+import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
 
 export const Route = createFileRoute('/_app/transaction')({
   component: TransactionPage,
@@ -88,46 +87,31 @@ function TransactionPage() {
             form.handleSubmit()
           }}
         >
-          <form.Field
-            name="amount"
-            children={(field) => {
-              const isError =
-                field.state.meta.isTouched && !field.state.meta.isValid
-
-              return (
-                <div className="flex flex-col gap-2">
-                  <ButtonGroup className="w-full">
-                    <MoneyInput
-                      value={field.state.value}
-                      onChange={(value) => field.handleChange(value)}
-                      isError={isError}
-                    />
-                    <form.Subscribe
-                      selector={(state) => state.values.account}
-                      children={(accountId) => (
-                        <Button
-                          variant="outline"
-                          type="button"
-                          className="min-w-24"
-                        >
-                          {accounts.find((acc) => acc.id === accountId)?.balance
-                            .original.currency?.code ??
-                            settings?.currency?.code}
-                        </Button>
-                      )}
-                    />
-                  </ButtonGroup>
-                  {isError && (
-                    <FieldError>
-                      {field.state.meta.errors
-                        .map((error) => error?.message)
-                        .filter(Boolean)
-                        .join('\n')}
-                    </FieldError>
-                  )}
-                </div>
-              )
-            }}
+          <form.Subscribe
+            selector={(state) => state.values.account}
+            children={(account) => (
+              <form.Field
+                name="amount"
+                children={(field) => (
+                  <MoneyField
+                    inputProps={{
+                      value: field.state.value,
+                      onChange: (value) => field.handleChange(value),
+                    }}
+                    isError={
+                      field.state.meta.isTouched && !field.state.meta.isValid
+                    }
+                    errorMessage={getFormFieldErrorMessage(
+                      field.state.meta.errors
+                    )}
+                    currency={
+                      accounts.find((acc) => acc.id === account)?.balance
+                        .original.currency?.code
+                    }
+                  />
+                )}
+              />
+            )}
           />
           <form.Field
             name="account"
@@ -135,13 +119,10 @@ function TransactionPage() {
               <SelectAccount
                 value={field.state.value}
                 onChange={(value) => field.handleChange(value)}
+                errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
                 isError={
                   field.state.meta.isTouched && !field.state.meta.isValid
                 }
-                errorMessage={field.state.meta.errors
-                  .map((error) => error?.message)
-                  .filter(Boolean)
-                  .join('\n')}
               />
             )}
           />
@@ -154,10 +135,7 @@ function TransactionPage() {
                 isError={
                   field.state.meta.isTouched && !field.state.meta.isValid
                 }
-                errorMessage={field.state.meta.errors
-                  .map((error) => error?.message)
-                  .filter(Boolean)
-                  .join('\n')}
+                errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
               />
             )}
           />
@@ -172,10 +150,7 @@ function TransactionPage() {
                 isError={
                   field.state.meta.isTouched && !field.state.meta.isValid
                 }
-                errorMessage={field.state.meta.errors
-                  .map((error) => error?.message)
-                  .filter(Boolean)
-                  .join('\n')}
+                errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
                 label={t('transaction.date')}
               />
             )}

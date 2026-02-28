@@ -1,6 +1,6 @@
+import Decimal from 'decimal.js'
 import { useForm } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
-import { useRef, useCallback } from 'react'
 import { z } from 'zod'
 import type { FC } from 'react'
 
@@ -19,18 +19,20 @@ import {
 } from '@/components/ui/select'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { SelectAccount } from '@/features/account'
-import { MoneyInput, parseDecimal } from '@/features/money'
-import { sanitizeDecimal } from '@/features/money/utils/sanitizeDecimal'
+import { MoneyField, DEFAULT_CURRENCY } from '@/features/money'
 import { useAppSelector } from '@/store'
 import { selectAccounts } from '@/store/slices/account'
+import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
 import { selectExchangeRates } from '@/store/slices/exchange-rate'
 
-import type { CreateTransferDto, FeeType, TransferFormValues } from '../types'
 import {
-  computeToAmount,
-  computeFromAmount,
-  computeRate,
-} from '../lib/calculations'
+  calculateTransferRate,
+  deriveFromAmount,
+  deriveToAmount,
+  toDtoAmount,
+  normalizeFeeToFrom,
+} from '../lib'
+import type { CreateTransferDto, FeeType, TransferFormValues } from '../types'
 
 type Props = {
   defaultValues: TransferFormValues
@@ -45,200 +47,105 @@ export const TransferForm: FC<Props> = ({
 }) => {
   const { t } = useTranslation()
   const accounts = useAppSelector(selectAccounts)
-  const exchangeRates = useAppSelector(selectExchangeRates)
+  const rates = useAppSelector(selectExchangeRates)
 
-  const lastEditedRef = useRef<'from' | 'to'>('from')
-  const isRateManualRef = useRef(false)
-
-  const getAccount = useCallback(
-    (id: string) => accounts.find((a) => a.id === id),
-    [accounts]
-  )
-
-  const getCurrencyCode = useCallback(
-    (accountId: string) =>
-      getAccount(accountId)?.balance.original.currency.code,
-    [getAccount]
-  )
-
-  const getCurrencyDigits = useCallback(
-    (accountId: string) =>
-      getAccount(accountId)?.balance.original.currency.decimal_digits,
-    [getAccount]
-  )
+  const getCurrencyCode = (account: string): string => {
+    return (
+      accounts.find((acc) => acc.id === account)?.balance.original.currency
+        ?.code ?? DEFAULT_CURRENCY.code
+    )
+  }
 
   const form = useForm({
     validators: {
-      onSubmit: z.object({
-        fromAccount: z
-          .string()
-          .min(1, { message: t('transfers.errors.fromAccount.required') }),
-        toAccount: z
-          .string()
-          .min(1, { message: t('transfers.errors.toAccount.required') }),
-        fromAmount: z
-          .string()
-          .min(1, { message: t('transfers.errors.amount.required') }),
-        toAmount: z
-          .string()
-          .min(1, { message: t('transfers.errors.amount.required') }),
-        rate: z.string().min(1),
-        fee: z.string(),
-        feeType: z.enum(['percent', 'from_currency', 'to_currency']),
-      }),
+      onSubmit: z
+        .object({
+          fromAccount: z
+            .string()
+            .min(1, { message: t('transfers.errors.fromAccount.required') }),
+          toAccount: z
+            .string()
+            .min(1, { message: t('transfers.errors.toAccount.required') }),
+          fromAmount: z.string().nullable().optional(),
+          toAmount: z.string().nullable().optional(),
+          rate: z.string().nullable().optional(),
+          fee: z.string().nullable().optional(),
+          feeType: z.enum(['percent', 'from_currency', 'to_currency']),
+        })
+        .refine((data) => !!data.fromAmount || !!data.toAmount, {
+          message: t('transfers.errors.amount.required'),
+          path: ['fromAmount'],
+        }),
     },
     defaultValues,
     onSubmit: async ({ value }) => {
-      const fromParsed = parseDecimal(value.fromAmount)
-      const toParsed = parseDecimal(value.toAmount)
-      const feeParsed = parseDecimal(value.fee || '0')
+      const feeDecimal = value.fee ? new Decimal(value.fee) : null
+      let fromDecimal = value.fromAmount ? new Decimal(value.fromAmount) : null
+      let toDecimal = value.toAmount ? new Decimal(value.toAmount) : null
+
+      const rateDecimal = value.rate
+        ? new Decimal(value.rate)
+        : calculateTransferRate({
+            rates,
+            fee: { value: feeDecimal, type: value.feeType },
+            from: {
+              value: fromDecimal,
+              code: getCurrencyCode(value.fromAccount),
+            },
+            to: {
+              value: toDecimal,
+              code: getCurrencyCode(value.toAccount),
+            },
+          })
+
+      if (!rateDecimal) throw new Error('Rate not found')
+
+      fromDecimal = deriveFromAmount({
+        from: fromDecimal,
+        to: toDecimal,
+        rate: rateDecimal,
+        fee: feeDecimal,
+        feeType: value.feeType,
+      })
+
+      toDecimal = deriveToAmount({
+        from: fromDecimal,
+        to: toDecimal,
+        rate: rateDecimal,
+        fee: feeDecimal,
+        feeType: value.feeType,
+      })
+
+      if (!fromDecimal || !toDecimal) {
+        throw new Error('Invalid transfer amounts')
+      }
 
       const dto: CreateTransferDto = {
+        rate: rateDecimal.toNumber(),
         from: {
           account: value.fromAccount,
-          value: fromParsed.balance,
-          scale: fromParsed.scale,
+          ...toDtoAmount(fromDecimal),
         },
         to: {
           account: value.toAccount,
-          value: toParsed.balance,
-          scale: toParsed.scale,
+          ...toDtoAmount(toDecimal),
         },
-        rate: Number(value.rate),
       }
 
-      if (feeParsed.balance > 0) {
-        dto.fee = {
-          value: feeParsed.balance,
-          scale: feeParsed.scale,
-        }
+      if (feeDecimal && feeDecimal.gt(0)) {
+        const normalizedFee = normalizeFeeToFrom(
+          feeDecimal,
+          fromDecimal,
+          rateDecimal,
+          value.feeType
+        )
+
+        dto.fee = toDtoAmount(normalizedFee)
       }
 
       await onSubmit(dto)
     },
   })
-
-  const recalculate = useCallback(
-    (overrides: Partial<TransferFormValues> = {}): void => {
-      const values = { ...form.state.values, ...overrides }
-      const { fromAmount, toAmount, rate, fee, feeType } = values
-
-      if (lastEditedRef.current === 'from' && fromAmount) {
-        const dp = getCurrencyDigits(values.toAccount)
-        const newTo = computeToAmount(fromAmount, rate, fee, feeType, dp)
-        form.setFieldValue('toAmount', newTo)
-      } else if (lastEditedRef.current === 'to' && toAmount) {
-        const dp = getCurrencyDigits(values.fromAccount)
-        const newFrom = computeFromAmount(toAmount, rate, fee, feeType, dp)
-        form.setFieldValue('fromAmount', newFrom)
-      }
-    },
-    [form, getCurrencyDigits]
-  )
-
-  const handleAccountChange = useCallback(
-    (
-      side: 'from' | 'to',
-      accountId: string,
-      handleChange: (v: string) => void
-    ): void => {
-      handleChange(accountId)
-
-      if (isRateManualRef.current) {
-        recalculate(
-          side === 'from'
-            ? { fromAccount: accountId }
-            : { toAccount: accountId }
-        )
-        return
-      }
-
-      const otherAccountId =
-        side === 'from'
-          ? form.getFieldValue('toAccount')
-          : form.getFieldValue('fromAccount')
-
-      const fromCode =
-        side === 'from'
-          ? getCurrencyCode(accountId)
-          : getCurrencyCode(otherAccountId)
-      const toCode =
-        side === 'to'
-          ? getCurrencyCode(accountId)
-          : getCurrencyCode(otherAccountId)
-
-      const newRate = computeRate(fromCode, toCode, exchangeRates)
-
-      if (newRate) {
-        form.setFieldValue('rate', newRate)
-        recalculate(
-          side === 'from'
-            ? { fromAccount: accountId, rate: newRate }
-            : { toAccount: accountId, rate: newRate }
-        )
-      }
-    },
-    [form, exchangeRates, getCurrencyCode, recalculate]
-  )
-
-  const handleFromAmountChange = useCallback(
-    (value: string): void => {
-      const sanitized = sanitizeDecimal(value)
-      lastEditedRef.current = 'from'
-      form.setFieldValue('fromAmount', sanitized)
-
-      const rate = form.getFieldValue('rate')
-      const fee = form.getFieldValue('fee')
-      const feeType = form.getFieldValue('feeType')
-      const dp = getCurrencyDigits(form.getFieldValue('toAccount'))
-      const newTo = computeToAmount(sanitized, rate, fee, feeType, dp)
-      form.setFieldValue('toAmount', newTo)
-    },
-    [form, getCurrencyDigits]
-  )
-
-  const handleToAmountChange = useCallback(
-    (value: string): void => {
-      const sanitized = sanitizeDecimal(value)
-      lastEditedRef.current = 'to'
-      form.setFieldValue('toAmount', sanitized)
-
-      const rate = form.getFieldValue('rate')
-      const fee = form.getFieldValue('fee')
-      const feeType = form.getFieldValue('feeType')
-      const dp = getCurrencyDigits(form.getFieldValue('fromAccount'))
-      const newFrom = computeFromAmount(sanitized, rate, fee, feeType, dp)
-      form.setFieldValue('fromAmount', newFrom)
-    },
-    [form, getCurrencyDigits]
-  )
-
-  const handleRateChange = useCallback(
-    (value: string): void => {
-      const sanitized = sanitizeDecimal(value)
-      isRateManualRef.current = true
-      form.setFieldValue('rate', sanitized)
-      recalculate({ rate: sanitized })
-    },
-    [form, recalculate]
-  )
-
-  const handleFeeChange = useCallback(
-    (value: string): void => {
-      const sanitized = sanitizeDecimal(value)
-      form.setFieldValue('fee', sanitized)
-      recalculate({ fee: sanitized })
-    },
-    [form, recalculate]
-  )
-
-  const handleFeeTypeChange = useCallback(
-    (value: string): void => {
-      form.setFieldValue('feeType', value as FeeType)
-      recalculate({ feeType: value as FeeType })
-    },
-    [form, recalculate]
-  )
 
   return (
     <form
@@ -250,7 +157,6 @@ export const TransferForm: FC<Props> = ({
       }}
     >
       <FieldSet disabled={form.state.isSubmitting}>
-        {/* FROM Card */}
         <Card size="sm">
           <CardHeader>
             <CardTitle>{t('transfers.from')}</CardTitle>
@@ -261,11 +167,7 @@ export const TransferForm: FC<Props> = ({
               children={(field) => (
                 <SelectAccount
                   value={field.state.value}
-                  onChange={(id) =>
-                    handleAccountChange('from', id, (v) =>
-                      field.handleChange(v)
-                    )
-                  }
+                  onChange={(id) => field.handleChange(id)}
                   isError={
                     field.state.meta.isTouched && !field.state.meta.isValid
                   }
@@ -273,21 +175,33 @@ export const TransferForm: FC<Props> = ({
                 />
               )}
             />
-            <Field>
-              <FieldLabel>{t('transfers.fromAmount')}</FieldLabel>
-              <form.Field
-                name="fromAmount"
-                children={(field) => (
-                  <MoneyInput
-                    value={field.state.value}
-                    onChange={handleFromAmountChange}
-                    isError={
-                      field.state.meta.isTouched && !field.state.meta.isValid
-                    }
-                  />
-                )}
-              />
-            </Field>
+            <form.Subscribe
+              selector={(state) => state.values.fromAccount}
+              children={(account) => (
+                <form.Field
+                  name="fromAmount"
+                  children={(field) => (
+                    <MoneyField
+                      label={t('transfers.fromAmount')}
+                      inputProps={{
+                        value: field.state.value ?? '',
+                        onChange: (value) => field.handleChange(value),
+                      }}
+                      isError={
+                        field.state.meta.isTouched && !field.state.meta.isValid
+                      }
+                      errorMessage={getFormFieldErrorMessage(
+                        field.state.meta.errors
+                      )}
+                      currency={
+                        accounts.find((acc) => acc.id === account)?.balance
+                          .original.currency?.code
+                      }
+                    />
+                  )}
+                />
+              )}
+            />
           </CardContent>
         </Card>
 
@@ -303,8 +217,8 @@ export const TransferForm: FC<Props> = ({
                   inputMode="decimal"
                   placeholder="1"
                   size="sm"
-                  value={field.state.value}
-                  onChange={(e) => handleRateChange(e.target.value)}
+                  value={field.state.value ?? ''}
+                  onChange={(evt) => field.handleChange(evt.target.value)}
                   onBlur={field.handleBlur}
                 />
               )}
@@ -322,53 +236,61 @@ export const TransferForm: FC<Props> = ({
                     inputMode="decimal"
                     placeholder="0"
                     size="sm"
-                    value={field.state.value}
-                    onChange={(e) => handleFeeChange(e.target.value)}
-                    onBlur={field.handleBlur}
+                    value={field.state.value ?? ''}
+                    onChange={(evt) => field.handleChange(evt.target.value)}
                     className="flex-1"
+                    onBlur={field.handleBlur}
                   />
                 )}
               />
               <form.Subscribe
                 selector={(state) => ({
-                  feeType: state.values.feeType,
-                  fromAccountId: state.values.fromAccount,
-                  toAccountId: state.values.toAccount,
+                  from: state.values.fromAccount,
+                  to: state.values.toAccount,
                 })}
-                children={({ feeType, fromAccountId, toAccountId }) => {
-                  const fromCode = getCurrencyCode(fromAccountId)
-                  const toCode = getCurrencyCode(toAccountId)
+                children={({ from, to }) => (
+                  <form.Field
+                    name="feeType"
+                    children={(field) => {
+                      const fromCode = getCurrencyCode(from)
+                      const toCode = getCurrencyCode(to)
 
-                  return (
-                    <Select value={feeType} onValueChange={handleFeeTypeChange}>
-                      <SelectTrigger className="w-auto min-w-16" size="sm">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="percent">%</SelectItem>
-                          {(fromCode || toCode) && <SelectSeparator />}
-                          {fromCode && (
-                            <SelectItem value="from_currency">
-                              {fromCode}
-                            </SelectItem>
-                          )}
-                          {toCode && fromCode !== toCode && (
-                            <SelectItem value="to_currency">
-                              {toCode}
-                            </SelectItem>
-                          )}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  )
-                }}
+                      return (
+                        <Select
+                          value={field.state.value ?? ''}
+                          onValueChange={(value) => {
+                            field.handleChange(value as FeeType)
+                          }}
+                        >
+                          <SelectTrigger className="w-auto min-w-16" size="sm">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectItem value="percent">%</SelectItem>
+                              {(fromCode || toCode) && <SelectSeparator />}
+                              {fromCode && (
+                                <SelectItem value="from_currency">
+                                  {fromCode}
+                                </SelectItem>
+                              )}
+                              {toCode && fromCode !== toCode && (
+                                <SelectItem value="to_currency">
+                                  {toCode}
+                                </SelectItem>
+                              )}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      )
+                    }}
+                  />
+                )}
               />
             </ButtonGroup>
           </Field>
         </FieldGroup>
 
-        {/* TO Card */}
         <Card size="sm">
           <CardHeader>
             <CardTitle>{t('transfers.to')}</CardTitle>
@@ -379,9 +301,7 @@ export const TransferForm: FC<Props> = ({
               children={(field) => (
                 <SelectAccount
                   value={field.state.value}
-                  onChange={(id) =>
-                    handleAccountChange('to', id, (v) => field.handleChange(v))
-                  }
+                  onChange={(id) => field.handleChange(id)}
                   isError={
                     field.state.meta.isTouched && !field.state.meta.isValid
                   }
@@ -389,21 +309,33 @@ export const TransferForm: FC<Props> = ({
                 />
               )}
             />
-            <Field>
-              <FieldLabel>{t('transfers.toAmount')}</FieldLabel>
-              <form.Field
-                name="toAmount"
-                children={(field) => (
-                  <MoneyInput
-                    value={field.state.value}
-                    onChange={handleToAmountChange}
-                    isError={
-                      field.state.meta.isTouched && !field.state.meta.isValid
-                    }
-                  />
-                )}
-              />
-            </Field>
+            <form.Subscribe
+              selector={(state) => state.values.toAccount}
+              children={(account) => (
+                <form.Field
+                  name="toAmount"
+                  children={(field) => (
+                    <MoneyField
+                      label={t('transfers.toAmount')}
+                      inputProps={{
+                        value: field.state.value ?? '',
+                        onChange: (value) => field.handleChange(value),
+                      }}
+                      isError={
+                        field.state.meta.isTouched && !field.state.meta.isValid
+                      }
+                      errorMessage={getFormFieldErrorMessage(
+                        field.state.meta.errors
+                      )}
+                      currency={
+                        accounts.find((acc) => acc.id === account)?.balance
+                          .original.currency?.code
+                      }
+                    />
+                  )}
+                />
+              )}
+            />
           </CardContent>
         </Card>
       </FieldSet>

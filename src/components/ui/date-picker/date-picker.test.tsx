@@ -28,7 +28,6 @@ describe('DatePicker', () => {
     const onChange = vi.fn()
     render(<DatePicker onChange={onChange} />)
     await user.click(screen.getByRole('button'))
-    // Calendar opens; click a day (e.g. today or a visible day)
     const buttons = screen.getAllByRole('button')
     const dayButton = buttons.find(
       (b) =>
@@ -37,9 +36,8 @@ describe('DatePicker', () => {
     )
     if (dayButton) {
       await user.click(dayButton)
-      expect(onChange).toHaveBeenCalledWith(
-        expect.stringMatching(/^\d{2}\.\d{2}\.\d{4}$/)
-      )
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(expect.any(Date))
     }
   })
 
@@ -47,7 +45,7 @@ describe('DatePicker', () => {
     const onChange = vi.fn()
     render(
       <DatePicker
-        value="15.01.2025"
+        value={new Date(2025, 0, 15)}
         onChange={onChange}
       />
     )

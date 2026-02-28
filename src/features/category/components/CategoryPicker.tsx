@@ -17,7 +17,6 @@ import {
   DrawerTrigger,
   DrawerHeader,
   DrawerTitle,
-  DrawerDescription,
 } from '@/components/ui/drawer'
 
 import type { Category } from '../types'
@@ -151,12 +150,12 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
           <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        aria-describedby={undefined}
+      >
         <DrawerHeader>
           <DrawerTitle>{t('categories.select')}</DrawerTitle>
-          <DrawerDescription>
-            {t('categories.selectDescription')}
-          </DrawerDescription>
         </DrawerHeader>
         <div className="px-4 overflow-y-auto py-2">
           <div className="grid grid-cols-4 gap-2 pb-safe">

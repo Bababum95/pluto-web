@@ -81,9 +81,14 @@
     "add": "Добавить транзакцию",
     "added": "Транзакция успешно добавлена",
     "errors": {
-      "amountRequired": "Укажите сумму",
-      "accountRequired": "Выберите счёт",
-      "categoryRequired": "Выберите категорию"
+      "amount": { "required": "Укажите сумму" },
+      "account": { "required": "Выберите счёт" },
+      "category": { "required": "Выберите категорию" },
+      "date": {
+        "required": "Укажите дату",
+        "notValid": "Некорректная дата",
+        "inFuture": "Дата не может быть в будущем"
+      }
     }
   },
   "accounts": {
@@ -212,5 +217,8 @@
     "select": {
       "label": "Выберите тег"
     }
+  },
+  "datePicker": {
+    "label": "Выберите дату"
   }
 }

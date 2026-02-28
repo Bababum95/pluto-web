@@ -782,6 +782,11 @@ export interface components {
              *     ]
              */
             tags?: string[];
+            /**
+             * @description Transaction date (YYYY-MM-DD).
+             * @example 2024-01-15
+             */
+            date: string;
         };
         CategoryDto: {
             id: string;
@@ -832,6 +837,11 @@ export interface components {
             amount: components["schemas"]["TransactionAmountViewDto"];
             /** @description Tag entities attached to the transaction */
             tags: components["schemas"]["TagDto"][];
+            /**
+             * @description Transaction date (date only)
+             * @example 2024-01-15
+             */
+            date: string;
             /** @example 2021-01-01T10:00:00.000Z */
             createdAt: string;
             /** @example 2021-01-01T10:00:00.000Z */
@@ -1907,9 +1917,9 @@ export interface operations {
     TransactionController_findAll: {
         parameters: {
             query?: {
-                /** @description Start of period (inclusive). ISO date or datetime. */
+                /** @description Start of period by transaction date (inclusive). ISO date or datetime. */
                 from?: string;
-                /** @description End of period (inclusive). ISO date or datetime. */
+                /** @description End of period by transaction date (inclusive). ISO date or datetime. */
                 to?: string;
                 type?: "expense" | "income";
                 /** @description Filter by category ID. */

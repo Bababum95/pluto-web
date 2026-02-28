@@ -3,7 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useState, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { FieldError } from '@/components/ui/field'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { AccountCard } from './AccountCard'
 import { useAppSelector } from '@/store/hooks'
 import { selectAccountById } from '@/store/slices/account'
@@ -35,8 +35,8 @@ export const SelectAccount: FC<Props> = ({
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <span>{t('transaction.account')}</span>
+    <Field className="flex flex-col gap-2">
+      <FieldLabel>{t('transaction.account')}</FieldLabel>
 
       {account ? (
         <AccountCard
@@ -66,6 +66,6 @@ export const SelectAccount: FC<Props> = ({
         onClose={() => setIsOpen(false)}
         onChange={handleChange}
       />
-    </div>
+    </Field>
   )
 }

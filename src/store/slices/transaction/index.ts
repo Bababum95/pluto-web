@@ -82,8 +82,11 @@ export const transactionSlice = createSlice({
       })
       .addCase(createTransaction.fulfilled, (state, action) => {
         state.status = 'success'
+
+        if (!action.payload.insert) return
+
         const transaction = action.payload.transaction
-        state.transactions.push(transaction)
+        state.transactions.unshift(transaction)
 
         if (state.summary) {
           const total_raw = countTotal(state.transactions)

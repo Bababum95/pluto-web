@@ -81,9 +81,14 @@
     "add": "Add transaction",
     "added": "Transaction added successfully",
     "errors": {
-      "amountRequired": "Amount is required",
-      "accountRequired": "Account is required",
-      "categoryRequired": "Category is required"
+      "amount": { "required": "Amount is required" },
+      "account": { "required": "Account is required" },
+      "category": { "required": "Category is required" },
+      "date": {
+        "required": "Date is required",
+        "notValid": "Invalid date",
+        "inFuture": "Date cannot be in the future"
+      }
     }
   },
   "accounts": {
@@ -212,5 +217,8 @@
     "select": {
       "label": "Select tag"
     }
+  },
+  "datePicker": {
+    "label": "Select date"
   }
 }

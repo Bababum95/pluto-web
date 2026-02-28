@@ -15,7 +15,6 @@ import {
   DrawerTrigger,
   DrawerHeader,
   DrawerTitle,
-  DrawerDescription,
 } from '@/components/ui/drawer'
 import { Icon } from '@/components/ui/icon'
 
@@ -139,10 +138,9 @@ const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
           <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent aria-describedby={undefined}>
         <DrawerHeader>
           <DrawerTitle>{t('common.selectIcon')}</DrawerTitle>
-          <DrawerDescription>{t('common.chooseIcon')}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4 overflow-y-auto py-2">
           {ICON_CATEGORIES.map((category) => (

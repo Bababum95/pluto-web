@@ -13,6 +13,10 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 - add CHANGELOG.md
 
+### 🧹 Chore
+
+- update UI component sizes and enhance documentation
+
 ---
 
 ## 25.02.2026 — v0.1.3

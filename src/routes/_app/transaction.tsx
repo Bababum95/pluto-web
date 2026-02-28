@@ -5,6 +5,7 @@ import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 import { toast } from 'sonner'
 
+import dayjs from '@/lib/dayjs'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/forms/form-field'
@@ -18,6 +19,7 @@ import { selectAccounts } from '@/store/slices/account'
 import { selectSettings } from '@/store/slices/settings'
 import { FieldError } from '@/components/ui/field'
 import { createTransaction } from '@/store/slices/transaction'
+import { DatePicker } from '@/components/ui/date-picker'
 
 export const Route = createFileRoute('/_app/transaction')({
   component: TransactionPage,
@@ -35,15 +37,20 @@ function TransactionPage() {
       onSubmit: z.object({
         amount: z
           .string()
-          .min(1, { message: t('transaction.errors.amountRequired') }),
+          .min(1, { message: t('transaction.errors.amount.required') }),
         comment: z.string(),
         account: z
           .string()
-          .min(1, { message: t('transaction.errors.accountRequired') }),
+          .min(1, { message: t('transaction.errors.account.required') }),
         category: z
           .string()
-          .min(1, { message: t('transaction.errors.categoryRequired') }),
+          .min(1, { message: t('transaction.errors.category.required') }),
         tags: z.array(z.string()),
+        date: z
+          .date({ message: t('transaction.errors.date.required') })
+          .max(dayjs().toDate(), {
+            message: t('transaction.errors.date.inFuture'),
+          }),
       }),
     },
     defaultValues: {
@@ -52,20 +59,19 @@ function TransactionPage() {
       comment: '',
       category: '',
       tags: [] as string[],
+      date: dayjs().toDate(),
     },
     onSubmit: async ({ value }) => {
       const { balance, scale } = parseDecimal(value.amount)
 
       await dispatch(
         createTransaction({
+          ...value,
           amount: balance,
           scale: scale,
-          account: value.account,
-          comment: value.comment,
-          category: value.category,
-          tags: value.tags,
+          date: dayjs(value.date).format('YYYY-MM-DD'),
         })
-      )
+      ).unwrap()
       navigate({ to: '/' })
       toast.success(t('transaction.added'))
     },
@@ -152,6 +158,25 @@ function TransactionPage() {
                   .map((error) => error?.message)
                   .filter(Boolean)
                   .join('\n')}
+              />
+            )}
+          />
+          <form.Field
+            name="date"
+            children={(field) => (
+              <DatePicker
+                value={field.state.value}
+                onChange={(value) => {
+                  if (value) field.handleChange(value)
+                }}
+                isError={
+                  field.state.meta.isTouched && !field.state.meta.isValid
+                }
+                errorMessage={field.state.meta.errors
+                  .map((error) => error?.message)
+                  .filter(Boolean)
+                  .join('\n')}
+                label={t('transaction.date')}
               />
             )}
           />

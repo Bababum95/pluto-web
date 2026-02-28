@@ -73,7 +73,7 @@ export const SelectCurrency: FC<Props> = ({ value, onChange }) => {
   return (
     <Drawer open={isOpen} onOpenChange={handleOpenChange} modal={true}>
       <DrawerTrigger asChild>
-        <Button variant="outline" size="lg">
+        <Button variant="outline" className="min-w-24">
           {selectedCurrency?.code}
         </Button>
       </DrawerTrigger>
@@ -106,7 +106,7 @@ export const SelectCurrency: FC<Props> = ({ value, onChange }) => {
               <div
                 key={currency.id}
                 onClick={() => handleChange(currency.id)}
-                className={cn('flex items-center justify-between px-4 py-3', {
+                className={cn('flex items-center justify-between px-5 py-3', {
                   'bg-accent/50': currency.id === selectedCurrency?.id,
                 })}
               >

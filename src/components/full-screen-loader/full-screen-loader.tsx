@@ -12,7 +12,7 @@ export const FullScreenLoader: FC<Props> = ({ isVisible }) => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="flex min-h-dvh items-center justify-center bg-background"
+          className="flex min-h-dvh items-center justify-center bg-background fixed inset-0 z-100"
           animate="jump"
           transition={{
             staggerChildren: -0.2,
@@ -22,23 +22,28 @@ export const FullScreenLoader: FC<Props> = ({ isVisible }) => {
             ease: 'easeInOut',
           }}
           initial={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 200 }}
+          exit={{ opacity: 0 }}
         >
-          <motion.img
-            src={plutoImage}
-            alt="Pluto"
-            variants={{
-              jump: {
-                transform: 'translateY(-30px)',
-                transition: {
-                  duration: 1.2,
-                  repeat: Infinity,
-                  repeatType: 'mirror',
-                  ease: 'easeInOut',
+          <motion.div
+            exit={{ y: 300 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            <motion.img
+              src={plutoImage}
+              alt="Pluto"
+              variants={{
+                jump: {
+                  transform: 'translateY(-30px)',
+                  transition: {
+                    duration: 1.2,
+                    repeat: Infinity,
+                    repeatType: 'mirror',
+                    ease: 'easeInOut',
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

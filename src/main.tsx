@@ -6,7 +6,8 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 
 import { AuthProvider, useAuth } from '@/features/auth'
 import { ThemeProvider } from '@/features/theme'
-import { store } from '@/store'
+import { store, useAppSelector } from '@/store'
+import { selectAppInitStatus } from '@/store/slices/app'
 import { queryClient } from '@/lib/api'
 import { FullScreenLoader } from '@/components/full-screen-loader'
 import '@/lib/i18n/config'
@@ -37,10 +38,11 @@ declare module '@tanstack/react-router' {
 
 function App() {
   const { isAuth, sessionLoading } = useAuth()
+  const status = useAppSelector(selectAppInitStatus)
 
   return (
     <>
-      <FullScreenLoader isVisible={sessionLoading} />
+      <FullScreenLoader isVisible={sessionLoading || status === 'pending'} />
       {!sessionLoading && (
         <RouterProvider router={router} context={{ isAuth }} />
       )}

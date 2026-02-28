@@ -146,6 +146,10 @@
   }
 }
 
+body {
+  background-color: var(--background);
+}
+
 /* Slide Left Transition */
 html:active-view-transition-type(slide-left) {
   &::view-transition-old(main-content) {

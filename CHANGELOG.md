@@ -7,14 +7,15 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
-## Unreleased
+## 28.02.2026 — v0.1.4
 
-### 📚 Documentation
+### 🐛 Fixes
 
-- add CHANGELOG.md
+- update button border radius for improved aesthetics
 
 ### 🧹 Chore
 
+- add CHANGELOG.md
 - update dependencies and enhance date handling
 - update UI component sizes and enhance documentation
 

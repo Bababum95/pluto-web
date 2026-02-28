@@ -16,7 +16,9 @@ describe('FullScreenLoader', () => {
 
   it('applies full-screen layout when visible', () => {
     render(<FullScreenLoader isVisible={true} />)
-    const wrapper = screen.getByAltText('Pluto').closest('div')
-    expect(wrapper).toHaveClass('min-h-dvh', 'bg-background')
+    const img = screen.getByAltText('Pluto')
+    const fullScreenWrapper = img.closest('div')?.parentElement
+    expect(fullScreenWrapper).toBeTruthy()
+    expect(fullScreenWrapper).toHaveClass('min-h-dvh', 'bg-background')
   })
 })

@@ -12,6 +12,9 @@ const meta = {
     placeholder: { control: 'text' },
     isError: { control: 'boolean' },
   },
+  args: {
+    onChange: () => {},
+  },
 } satisfies Meta<typeof DatePicker>
 
 export default meta
@@ -24,7 +27,7 @@ function DatePickerWrapper(props: {
   isError?: boolean
   errorMessage?: string
 }) {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState<Date | undefined>(undefined)
   return (
     <DatePicker
       value={value}
@@ -37,25 +40,34 @@ function DatePickerWrapper(props: {
   )
 }
 
+const storyArgs = { onChange: () => {} }
+
 export const Default: Story = {
+  args: storyArgs,
   render: () => <DatePickerWrapper />,
 }
 
 export const WithLabel: Story = {
+  args: storyArgs,
   render: () => <DatePickerWrapper label="Select date" />,
 }
 
 export const WithPlaceholder: Story = {
+  args: storyArgs,
   render: () => <DatePickerWrapper placeholder="Choose a date" />,
 }
 
 export const WithValue: Story = {
+  args: storyArgs,
   render: () => {
-    const [value, setValue] = useState('28.02.2025')
+    const [value, setValue] = useState<Date | undefined>(
+      () => new Date(2025, 1, 28)
+    )
     return <DatePicker value={value} onChange={setValue} label="Date" />
   },
 }
 
 export const WithError: Story = {
+  args: storyArgs,
   render: () => <DatePickerWrapper isError errorMessage="Date is required" />,
 }

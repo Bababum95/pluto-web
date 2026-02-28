@@ -7,6 +7,14 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 28.02.2026 — v0.1.5
+
+### ✨ Features
+
+- enhance TransferForm and DatePicker components
+
+---
+
 ## 28.02.2026 — v0.1.4
 
 ### 🐛 Fixes

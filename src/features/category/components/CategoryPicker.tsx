@@ -1,5 +1,3 @@
-'use client'
-
 import { useCallback, useMemo, useState, type FC } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { MoreHorizontalCircle01Icon } from '@hugeicons/core-free-icons'
@@ -139,7 +137,7 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
   )
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen} modal={false}>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <Button
           variant="outline"

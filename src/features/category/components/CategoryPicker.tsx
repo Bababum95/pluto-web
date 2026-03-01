@@ -12,7 +12,6 @@ import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import {
   Drawer,
   DrawerContent,
-  DrawerTrigger,
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer'
@@ -137,46 +136,44 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
   )
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="aspect-square w-full h-full max-w-14 max-h-14 ml-auto mr-auto mt-2 rounded-lg"
-          type="button"
-          asChild
-        >
-          <div>
-            <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />
-          </div>
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent
-        onOpenAutoFocus={(e) => e.preventDefault()}
-        onCloseAutoFocus={(e) => e.preventDefault()}
-        aria-describedby={undefined}
+    <>
+      <Button
+        variant="outline"
+        size="icon"
+        className="aspect-square w-full h-full max-w-14 max-h-14 ml-auto mr-auto mt-2 rounded-lg"
+        type="button"
+        onClick={() => setIsOpen(true)}
       >
-        <DrawerHeader>
-          <DrawerTitle>{t('categories.select')}</DrawerTitle>
-        </DrawerHeader>
-        <div className="px-4 overflow-y-auto py-2">
-          <div className="grid grid-cols-4 gap-2 pb-safe">
-            {categories.map((category) => (
-              <CategoryCard
-                key={category.id}
-                category={category}
-                className="cursor-pointer transition-opacity hover:opacity-90"
-                onClick={() => handleSelect(category.id)}
-                style={{
-                  backgroundColor:
-                    category.id === value ? category.color : 'transparent',
-                }}
-              />
-            ))}
+        <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />
+      </Button>
+      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+        <DrawerContent
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          onCloseAutoFocus={(e) => e.preventDefault()}
+          aria-describedby={undefined}
+        >
+          <DrawerHeader>
+            <DrawerTitle>{t('categories.select')}</DrawerTitle>
+          </DrawerHeader>
+          <div className="px-4 overflow-y-auto py-2">
+            <div className="grid grid-cols-4 gap-2 pb-safe">
+              {categories.map((category) => (
+                <CategoryCard
+                  key={category.id}
+                  category={category}
+                  className="cursor-pointer transition-opacity hover:opacity-90"
+                  onClick={() => handleSelect(category.id)}
+                  style={{
+                    backgroundColor:
+                      category.id === value ? category.color : 'transparent',
+                  }}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </DrawerContent>
-    </Drawer>
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }
 

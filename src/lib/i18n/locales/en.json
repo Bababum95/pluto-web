@@ -226,6 +226,8 @@
     }
   },
   "datePicker": {
-    "label": "Select date"
+    "label": "Select date",
+    "today": "Today",
+    "yesterday": "Yesterday"
   }
 }

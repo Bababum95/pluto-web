@@ -7,6 +7,37 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 01.03.2026 — v0.1.7
+
+### ✨ Features
+
+- add 'today' and 'yesterday' labels to DatePicker in Russian locale
+- enhance MoneyField component with multiplier buttons and clear input functionality
+
+### 🐛 Fixes
+
+- Prevented page scroll reset when selecting a category while adding a new transaction in PWA mode
+
+### 🧹 Chore
+
+- update version and enhance DatePicker functionality
+
+---
+
+## 28.02.2026 — v0.1.6
+
+### 🐛 Fixes
+
+- update FullScreenLoader test and component layout
+
+### 🧹 Chore
+
+- update CHANGELOG for v0.1.5 release
+- remove body background color and wrap App component
+- update CSS and FullScreenLoader component
+
+---
+
 ## 28.02.2026 — v0.1.5
 
 ### ✨ Features

@@ -144,8 +144,11 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
           size="icon"
           className="aspect-square w-full h-full max-w-14 max-h-14 ml-auto mr-auto mt-2 rounded-lg"
           type="button"
+          asChild
         >
-          <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />
+          <div>
+            <HugeiconsIcon icon={MoreHorizontalCircle01Icon} size={24} />
+          </div>
         </Button>
       </DrawerTrigger>
       <DrawerContent

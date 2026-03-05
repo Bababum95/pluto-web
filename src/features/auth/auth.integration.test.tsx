@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 
 import { AuthProvider, useAuth } from '@/features/auth'
@@ -22,6 +23,57 @@ function LoginTestHelper() {
       >
         Login
       </button>
+    </div>
+  )
+}
+
+function RegisterTestHelper() {
+  const { register, isAuth } = useAuth()
+  return (
+    <div>
+      <span data-testid="auth-status">
+        {isAuth ? 'authenticated' : 'anonymous'}
+      </span>
+      <button
+        type="button"
+        onClick={() =>
+          register({
+            name: 'New User',
+            email: 'new@example.com',
+            password: 'password123',
+          })
+        }
+      >
+        Register
+      </button>
+    </div>
+  )
+}
+
+function LogoutTestHelper() {
+  const { logout, isAuth } = useAuth()
+  return (
+    <div>
+      <span data-testid="auth-status">
+        {isAuth ? 'authenticated' : 'anonymous'}
+      </span>
+      <button type="button" onClick={() => logout()}>
+        Logout
+      </button>
+    </div>
+  )
+}
+
+function SessionStatusHelper() {
+  const { isAuth, sessionLoading } = useAuth()
+  return (
+    <div>
+      <span data-testid="auth-status">
+        {isAuth ? 'authenticated' : 'anonymous'}
+      </span>
+      <span data-testid="session-loading">
+        {sessionLoading ? 'loading' : 'ready'}
+      </span>
     </div>
   )
 }
@@ -59,5 +111,81 @@ describe('Auth (integration)', () => {
     )
 
     expect(getByTestId('auth-status')).toHaveTextContent('authenticated')
+  })
+
+  it('register flow: API request, setAccessToken, setUser, isAuth true', async () => {
+    server.use(
+      http.get('http://localhost/v1/auth/me', () =>
+        HttpResponse.json(
+          { message: 'Unauthorized', statusCode: 401 },
+          { status: 401 }
+        )
+      )
+    )
+
+    const { store, getByTestId, getByRole } = renderWithProviders(
+      <AuthProvider>
+        <RegisterTestHelper />
+      </AuthProvider>,
+      { withAuth: false }
+    )
+
+    await waitFor(() => {
+      expect(getByTestId('auth-status')).toHaveTextContent('anonymous')
+    })
+
+    getByRole('button', { name: 'Register' }).click()
+
+    await waitFor(
+      () => {
+        expect(store.getState().user.user?.email).toBe(mockUser.email)
+      },
+      { timeout: 3000 }
+    )
+
+    expect(getByTestId('auth-status')).toHaveTextContent('authenticated')
+  })
+
+  it('logout flow: clearUser, isAuth false', async () => {
+    const user = userEvent.setup()
+    const { store, getByTestId, getByRole } = renderWithProviders(
+      <AuthProvider>
+        <LogoutTestHelper />
+      </AuthProvider>,
+      {
+        withAuth: false,
+        preloadedState: { user: { user: mockUser, status: 'idle' } },
+      }
+    )
+
+    await waitFor(() => {
+      expect(getByTestId('auth-status')).toHaveTextContent('authenticated')
+    })
+
+    await user.click(getByRole('button', { name: 'Logout' }))
+
+    await waitFor(() => {
+      expect(store.getState().user.user).toBeNull()
+      expect(getByTestId('auth-status')).toHaveTextContent('anonymous')
+    })
+  })
+
+  it('session restoration: GET /auth/me success sets user and isAuth', async () => {
+    const { store, getByTestId } = renderWithProviders(
+      <AuthProvider>
+        <SessionStatusHelper />
+      </AuthProvider>,
+      { withAuth: false }
+    )
+
+    await waitFor(
+      () => {
+        expect(getByTestId('session-loading')).toHaveTextContent('ready')
+      },
+      { timeout: 3000 }
+    )
+
+    expect(getByTestId('auth-status')).toHaveTextContent('authenticated')
+    expect(store.getState().user.user?.email).toBe(mockUser.email)
   })
 })

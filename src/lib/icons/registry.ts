@@ -22,6 +22,8 @@ import { Bus01Icon } from './components/Bus01Icon'
 import { BybitIcon } from './components/BybitIcon'
 import { Car01Icon } from './components/Car01Icon'
 import { ClothesIcon } from './components/ClothesIcon'
+import { CloudIcon } from './components/CloudIcon'
+import { SoftwareIcon } from './components/SoftwareIcon'
 import { Coffee01Icon } from './components/Coffee01Icon'
 import { CreditCardIcon } from './components/CreditCardIcon'
 import { Dollar01Icon } from './components/Dollar01Icon'
@@ -136,6 +138,8 @@ export const ICON_REGISTRY = {
   Wallet02Icon,
   WorkIcon,
   Yen,
+  CloudIcon,
+  SoftwareIcon,
 } as const satisfies Record<string, SvgIcon>
 
 export const DEFAULT_ICON = ICON_REGISTRY.Dollar01Icon
@@ -234,6 +238,8 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'GraduationCapVariantIcon',
       'HeartMessageIcon',
       'HeartIcon',
+      'CloudIcon',
+      'SoftwareIcon',
     ],
   },
 ]

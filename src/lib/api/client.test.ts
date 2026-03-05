@@ -1,0 +1,126 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { http, HttpResponse } from 'msw'
+
+import { apiFetch, ApiError } from './client'
+import { server } from '@/testing/server'
+
+vi.mock('@/features/auth/utils/auth-token', () => ({
+  getAccessToken: vi.fn(),
+}))
+
+import { getAccessToken } from '@/features/auth/utils/auth-token'
+
+const base = 'http://localhost/v1'
+
+describe('apiFetch', () => {
+  beforeEach(() => {
+    vi.mocked(getAccessToken).mockReturnValue(null)
+  })
+
+  it('builds URL from path and base', async () => {
+    let capturedUrl = ''
+    server.use(
+      http.get(`${base}/auth/me`, ({ request }) => {
+        capturedUrl = request.url
+        return HttpResponse.json({ id: '1' })
+      })
+    )
+    await apiFetch('/auth/me')
+    expect(capturedUrl).toBe(`${base}/auth/me`)
+  })
+
+  it('appends params to URL as query string', async () => {
+    let capturedUrl = ''
+    server.use(
+      http.get(`${base}/transactions`, ({ request }) => {
+        capturedUrl = request.url
+        return HttpResponse.json([])
+      })
+    )
+    await apiFetch('/transactions', { params: { from: '2024-01-01', to: '2024-01-31' } })
+    expect(capturedUrl).toContain('from=2024-01-01')
+    expect(capturedUrl).toContain('to=2024-01-31')
+  })
+
+  it('adds Authorization header when token is present', async () => {
+    vi.mocked(getAccessToken).mockReturnValue('secret-token')
+    let capturedAuth = ''
+    server.use(
+      http.get(`${base}/auth/me`, ({ request }) => {
+        capturedAuth = request.headers.get('Authorization') ?? ''
+        return HttpResponse.json({ id: '1' })
+      })
+    )
+    await apiFetch('/auth/me')
+    expect(capturedAuth).toBe('Bearer secret-token')
+  })
+
+  it('does not add Authorization header when token is null', async () => {
+    let capturedAuth: string | null = null
+    server.use(
+      http.get(`${base}/auth/me`, ({ request }) => {
+        capturedAuth = request.headers.get('Authorization')
+        return HttpResponse.json({ id: '1' })
+      })
+    )
+    await apiFetch('/auth/me')
+    expect(capturedAuth).toBeNull()
+  })
+
+  it('throws ApiError with status and message on non-ok response', async () => {
+    server.use(
+      http.get(`${base}/error`, () =>
+        HttpResponse.json(
+          { message: 'Not found', statusCode: 404 },
+          { status: 404 }
+        )
+      )
+    )
+    await expect(apiFetch('/error')).rejects.toThrow(ApiError)
+    try {
+      await apiFetch('/error')
+    } catch (e) {
+      expect(e).toBeInstanceOf(ApiError)
+      expect((e as ApiError).status).toBe(404)
+      expect((e as ApiError).message).toBe('Not found')
+      expect((e as ApiError).body).toEqual({ message: 'Not found', statusCode: 404 })
+    }
+  })
+
+  it('uses res.statusText when response body has no message', async () => {
+    server.use(
+      http.get(`${base}/no-msg`, () =>
+        HttpResponse.json({}, { status: 500, statusText: 'Internal Server Error' })
+      )
+    )
+    await expect(apiFetch('/no-msg')).rejects.toThrow(ApiError)
+    try {
+      await apiFetch('/no-msg')
+    } catch (e) {
+      expect((e as ApiError).status).toBe(500)
+      expect((e as ApiError).message).toBe('Internal Server Error')
+    }
+  })
+
+  it('calls onError when provided and does not call default handler', async () => {
+    server.use(
+      http.get(`${base}/fail`, () =>
+        HttpResponse.json({ message: 'Server error' }, { status: 500 })
+      )
+    )
+    const onError = vi.fn()
+    await expect(apiFetch('/fail', {}, onError)).rejects.toThrow(ApiError)
+    expect(onError).toHaveBeenCalledTimes(1)
+    expect(onError).toHaveBeenCalledWith(expect.any(ApiError))
+    expect((onError.mock.calls[0][0] as ApiError).message).toBe('Server error')
+  })
+
+  it('returns parsed JSON on success', async () => {
+    const data = { id: '1', name: 'Test' }
+    server.use(
+      http.get(`${base}/data`, () => HttpResponse.json(data))
+    )
+    const result = await apiFetch<typeof data>('/data')
+    expect(result).toEqual(data)
+  })
+})

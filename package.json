@@ -78,6 +78,7 @@
     "globals": "^16.5.0",
     "jsdom": "^28.1.0",
     "openapi-typescript": "^7.10.1",
+    "msw": "^2.12.10",
     "prettier": "^3.4.2",
     "sharp": "^0.34.5",
     "storybook": "^10.2.10",

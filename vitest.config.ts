@@ -5,8 +5,15 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    env: {
+      VITE_API_BASE_URL: 'http://localhost',
+      VITE_API_VERSION: 'v1',
+    },
     setupFiles: ['./src/test-setup.ts'],
-    include: ['src/**/*.test.{ts,tsx}'],
+    include: [
+      'src/**/*.test.{ts,tsx}',
+      'src/**/*.integration.test.{ts,tsx}',
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov', 'json-summary'],

@@ -15,20 +15,22 @@ import transferReducer from './slices/transfer'
 import { timeRangeListener } from './middlewares/timeRangeListener'
 import { transactionTypeListener } from './middlewares/transactionTypeListener'
 
+const reducer = {
+  transactionType: transactionTypeReducer,
+  timeRange: timeRangeReducer,
+  user: userReducer,
+  app: appReducer,
+  category: categoryReducer,
+  tag: tagReducer,
+  account: accountReducer,
+  settings: settingsReducer,
+  transaction: transactionReducer,
+  exchangeRate: exchangeRateReducer,
+  transfer: transferReducer,
+}
+
 export const store = configureStore({
-  reducer: {
-    transactionType: transactionTypeReducer,
-    timeRange: timeRangeReducer,
-    user: userReducer,
-    app: appReducer,
-    category: categoryReducer,
-    tag: tagReducer,
-    account: accountReducer,
-    settings: settingsReducer,
-    transaction: transactionReducer,
-    exchangeRate: exchangeRateReducer,
-    transfer: transferReducer,
-  },
+  reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       transactionTypeListener.middleware,
@@ -39,3 +41,17 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>
 export type AppStore = typeof store
 export type AppDispatch = typeof store.dispatch
+
+/** Creates a store with optional preloaded state (for tests). */
+export function createStore(preloadedState?: Partial<RootState>): AppStore {
+  return configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(
+        transactionTypeListener.middleware,
+        timeRangeListener.middleware
+      ),
+    preloadedState,
+  // RTK infers stricter types when preloadedState is used; cast to match app store.
+  } as import('@reduxjs/toolkit').ConfigureStoreOptions<RootState>) as AppStore
+}

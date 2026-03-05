@@ -50,6 +50,9 @@ export function AuthProvider({ children }: Props) {
       .then((data) => {
         if (!cancelled) dispatch(setUser(data))
       })
+      .catch(() => {
+        // Session invalid or unauthenticated; leave user unset
+      })
       .finally(() => {
         if (!cancelled) setSessionLoading(false)
       })

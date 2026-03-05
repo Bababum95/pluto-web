@@ -21,7 +21,6 @@ import { BookOpenIcon } from './components/BookOpenIcon'
 import { Bus01Icon } from './components/Bus01Icon'
 import { BybitIcon } from './components/BybitIcon'
 import { Car01Icon } from './components/Car01Icon'
-import { ClothesIcon } from './components/ClothesIcon'
 import { CloudIcon } from './components/CloudIcon'
 import { SoftwareIcon } from './components/SoftwareIcon'
 import { Coffee01Icon } from './components/Coffee01Icon'
@@ -90,7 +89,6 @@ export const ICON_REGISTRY = {
   Bus01Icon,
   BybitIcon,
   Car01Icon,
-  ClothesIcon,
   Coffee01Icon,
   CreditCardIcon,
   Dollar01Icon,
@@ -155,49 +153,62 @@ export type IconCategory = {
 /** Icons grouped by category for structured display (e.g. IconPicker). */
 export const ICON_CATEGORIES: IconCategory[] = [
   {
-    name: 'Money & Banking',
+    name: 'Currencies & Crypto',
     icons: [
       'Dollar01Icon',
       'Dollar02Icon',
-      'Wallet01Icon',
-      'Wallet02Icon',
-      'Money01Icon',
-      'Money02Icon',
-      'CreditCardIcon',
-      'BankIcon',
-      'BankBuildingIcon',
-      'PiggyBankIcon',
-      'ReceiptDollarIcon',
-      'EthereumIcon',
-      'EthereumLogoIcon',
       'DongIcon',
       'BahtIcon',
+      'Yen',
       'BtcAltIcon',
       'Bitcoin1Icon',
       'BitcoinLogoIcon',
+      'EthereumIcon',
+      'EthereumLogoIcon',
+    ],
+  },
+  {
+    name: 'Wallets & Exchanges',
+    icons: [
+      'Wallet01Icon',
+      'Wallet02Icon',
+      'PiggyBankIcon',
+      'TrustWalletIcon',
+      'TonWalletIcon',
+      'TonIdIcon',
       'BinanceIcon',
       'BybitIcon',
       'BitgetIcon',
       'OkxIcon',
       'OkxCompactIcon',
-      'TrustWalletIcon',
-      'TBankIcon',
-      'TonWalletIcon',
-      'TonIdIcon',
       'KucoinIcon',
       'MexcIcon',
       'BingxIcon',
-      'GolomtIcon',
-      'Yen',
     ],
   },
   {
-    name: 'Shopping',
-    icons: ['ShoppingCart01Icon', 'ShoppingBag01Icon', 'ShoppingBasket01Icon'],
+    name: 'Banking & Payments',
+    icons: [
+      'BankIcon',
+      'BankBuildingIcon',
+      'CreditCardIcon',
+      'ReceiptDollarIcon',
+      'Money01Icon',
+      'Money02Icon',
+      'GolomtIcon',
+      'TBankIcon',
+    ],
   },
   {
-    name: 'Home & Work',
-    icons: ['HomeIcon', 'Home01Icon', 'Home02Icon', 'WorkIcon'],
+    name: 'Shopping & Retail',
+    icons: [
+      'ShoppingCart01Icon',
+      'ShoppingBag01Icon',
+      'ShoppingBasket01Icon',
+      'GraduationCapAltIcon',
+      'GraduationCapIcon',
+      'GraduationCapVariantIcon',
+    ],
   },
   {
     name: 'Food & Drinks',
@@ -209,7 +220,7 @@ export const ICON_CATEGORIES: IconCategory[] = [
     ],
   },
   {
-    name: 'Transport',
+    name: 'Transport & Travel',
     icons: [
       'Car01Icon',
       'Bus01Icon',
@@ -219,27 +230,34 @@ export const ICON_CATEGORIES: IconCategory[] = [
     ],
   },
   {
-    name: 'Lifestyle',
+    name: 'Home & Real Estate',
+    icons: ['HomeIcon', 'Home01Icon', 'Home02Icon'],
+  },
+  {
+    name: 'Work & Documents',
+    icons: ['WorkIcon', 'DocumentLinesIcon', 'CloudIcon', 'SoftwareIcon'],
+  },
+  {
+    name: 'Education',
+    icons: ['Book01Icon', 'BookIcon', 'BookOpenIcon'],
+  },
+  {
+    name: 'Health & Wellness',
     icons: [
       'HealthIcon',
       'HeartCardiogramIcon',
-      'GiftIcon',
-      'Book01Icon',
-      'BookIcon',
-      'BookOpenIcon',
+      'HeartIcon',
+      'HeartMessageIcon',
+      'AppleIcon',
+    ],
+  },
+  {
+    name: 'Entertainment & Media',
+    icons: [
       'MusicNote01Icon',
       'GameController01Icon',
       'Video01Icon',
-      'ClothesIcon',
-      'AppleIcon',
-      'DocumentLinesIcon',
-      'GraduationCapAltIcon',
-      'GraduationCapIcon',
-      'GraduationCapVariantIcon',
-      'HeartMessageIcon',
-      'HeartIcon',
-      'CloudIcon',
-      'SoftwareIcon',
+      'GiftIcon',
     ],
   },
 ]

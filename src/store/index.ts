@@ -1,3 +1,3 @@
-export { store } from './store'
+export { store, createStore } from './store'
 export { useAppDispatch, useAppSelector } from './hooks'
 export type { RootState, AppDispatch, AppStore } from './store'

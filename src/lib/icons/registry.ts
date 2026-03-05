@@ -5,6 +5,7 @@ import type { SvgIcon } from './types'
  * Add icons: create IconName.tsx in components/, then add to ICON_REGISTRY below.
  */
 import { Airplane01Icon } from './components/Airplane01Icon'
+import { AppleIcon } from './components/AppleIcon'
 import { BahtIcon } from './components/BahtIcon'
 import { BankBuildingIcon } from './components/BankBuildingIcon'
 import { BankIcon } from './components/BankIcon'
@@ -15,6 +16,8 @@ import { BitcoinLogoIcon } from './components/BitcoinLogoIcon'
 import { BitgetIcon } from './components/BitgetIcon'
 import { BtcAltIcon } from './components/BtcAltIcon'
 import { Book01Icon } from './components/Book01Icon'
+import { BookIcon } from './components/BookIcon'
+import { BookOpenIcon } from './components/BookOpenIcon'
 import { Bus01Icon } from './components/Bus01Icon'
 import { BybitIcon } from './components/BybitIcon'
 import { Car01Icon } from './components/Car01Icon'
@@ -24,9 +27,15 @@ import { CreditCardIcon } from './components/CreditCardIcon'
 import { Dollar01Icon } from './components/Dollar01Icon'
 import { Dollar02Icon } from './components/Dollar02Icon'
 import { DongIcon } from './components/DongIcon'
+import { DocumentLinesIcon } from './components/DocumentLinesIcon'
 import { EthereumIcon } from './components/EthereumIcon'
 import { EthereumLogoIcon } from './components/EthereumLogoIcon'
 import { GiftIcon } from './components/GiftIcon'
+import { GraduationCapAltIcon } from './components/GraduationCapAltIcon'
+import { GraduationCapVariantIcon } from './components/GraduationCapVariantIcon'
+import { GraduationCapIcon } from './components/GraduationCapIcon'
+import { HeartMessageIcon } from './components/HeartMessageIcon'
+import { HeartIcon } from './components/HeartIcon'
 import { GolomtIcon } from './components/GolomtIcon'
 import { GameController01Icon } from './components/GameController01Icon'
 import { HeartCardiogramIcon } from './components/HeartCardiogramIcon'
@@ -63,6 +72,7 @@ import { Yen } from './components/Yen'
 
 export const ICON_REGISTRY = {
   Airplane01Icon,
+  AppleIcon,
   BankBuildingIcon,
   BankIcon,
   BahtIcon,
@@ -73,6 +83,8 @@ export const ICON_REGISTRY = {
   BitgetIcon,
   BtcAltIcon,
   Book01Icon,
+  BookOpenIcon,
+  BookIcon,
   Bus01Icon,
   BybitIcon,
   Car01Icon,
@@ -81,12 +93,18 @@ export const ICON_REGISTRY = {
   CreditCardIcon,
   Dollar01Icon,
   Dollar02Icon,
+  DocumentLinesIcon,
   DongIcon,
   EthereumIcon,
   EthereumLogoIcon,
   GiftIcon,
   GameController01Icon,
   GolomtIcon,
+  GraduationCapAltIcon,
+  GraduationCapIcon,
+  GraduationCapVariantIcon,
+  HeartMessageIcon,
+  HeartIcon,
   HeartCardiogramIcon,
   Hamburger01Icon,
   HealthIcon,
@@ -203,10 +221,19 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'HeartCardiogramIcon',
       'GiftIcon',
       'Book01Icon',
+      'BookIcon',
+      'BookOpenIcon',
       'MusicNote01Icon',
       'GameController01Icon',
       'Video01Icon',
       'ClothesIcon',
+      'AppleIcon',
+      'DocumentLinesIcon',
+      'GraduationCapAltIcon',
+      'GraduationCapIcon',
+      'GraduationCapVariantIcon',
+      'HeartMessageIcon',
+      'HeartIcon',
     ],
   },
 ]

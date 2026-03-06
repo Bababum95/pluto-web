@@ -4,6 +4,14 @@ import { ThemeContext } from '../ThemeContext'
 import { DEFAULT_THEME, THEME_STORAGE_KEY } from '../constants'
 import type { Theme } from '../types'
 
+/** Hex colors for PWA theme-color meta (status bar, browser chrome). Must match CSS --background. */
+const THEME_COLOR_LIGHT = '#ffffff'
+const THEME_COLOR_DARK = '#1c1e26'
+
+function resolveThemeColor(isDark: boolean): string {
+  return isDark ? THEME_COLOR_DARK : THEME_COLOR_LIGHT
+}
+
 type Props = {
   children: React.ReactNode
 }
@@ -17,16 +25,18 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const root = document.documentElement
+    let resolvedDark: boolean
+
     const applyTheme = (themeValue: Theme) => {
       if (themeValue === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-          .matches
-          ? 'dark'
-          : 'light'
-        root.classList.toggle('dark', systemTheme === 'dark')
+        resolvedDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        root.classList.toggle('dark', resolvedDark)
       } else {
-        root.classList.toggle('dark', themeValue === 'dark')
+        resolvedDark = themeValue === 'dark'
+        root.classList.toggle('dark', resolvedDark)
       }
+      const meta = document.querySelector('meta[name="theme-color"]')
+      if (meta) meta.setAttribute('content', resolveThemeColor(resolvedDark))
     }
 
     applyTheme(theme)

@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockCategory } from '../data/category'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
-const BASE = `${API_BASE}/categories`
+const BASE = `${TEST_API_ROOT}categories`
 
 export const categoryHandlers = [
   http.get(BASE, () => HttpResponse.json([mockCategory])),

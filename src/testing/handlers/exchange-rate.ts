@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockExchangeRate } from '../data/exchange-rate'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
-const BASE = `${API_BASE}/rates`
+const BASE = `${TEST_API_ROOT}rates`
 
 export const exchangeRateHandlers = [
   http.get(BASE, () => HttpResponse.json([mockExchangeRate])),

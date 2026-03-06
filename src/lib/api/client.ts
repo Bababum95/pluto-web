@@ -5,7 +5,7 @@ import { getAccessToken } from '@/features/auth/utils/auth-token'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 const API_VERSION = import.meta.env.VITE_API_VERSION
-const API_ROOT = `${API_BASE_URL}/${API_VERSION}/`
+export const API_ROOT = `${API_BASE_URL}/${API_VERSION}/`
 
 function apiUrl(path: string) {
   return new URL(path.startsWith('/') ? path.slice(1) : path, API_ROOT)

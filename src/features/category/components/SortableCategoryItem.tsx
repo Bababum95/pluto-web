@@ -36,7 +36,7 @@ export const SortableCategoryItem: FC<Props> = ({
       data-dragging={isDragging}
       onClick={handleClick}
       className={cn(
-        'transition-transform duration-100',
+        'transition-transform duration-100 select-none',
         isDragging && 'scale-103 rounded-xl shadow-sm bg-card/75'
       )}
     >

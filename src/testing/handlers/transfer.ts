@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockTransfer } from '../data/transfer'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
-const BASE = `${API_BASE}/transfers`
+const BASE = `${TEST_API_ROOT}transfers`
 
 export const transferHandlers = [
   http.get(BASE, () => HttpResponse.json([mockTransfer])),

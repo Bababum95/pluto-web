@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockTag } from '../data/tag'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
-const BASE = `${API_BASE}/tags`
+const BASE = `${TEST_API_ROOT}tags`
 
 export const tagHandlers = [
   http.get(BASE, () => HttpResponse.json([mockTag])),

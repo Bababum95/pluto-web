@@ -1,15 +1,16 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockUser } from '../data/user'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
+const BASE = `${TEST_API_ROOT}auth`
 
 export const authHandlers = [
-  http.get(`${API_BASE}/auth/me`, () => HttpResponse.json(mockUser)),
-  http.post(`${API_BASE}/auth/login`, () =>
+  http.get(`${BASE}/me`, () => HttpResponse.json(mockUser)),
+  http.post(`${BASE}/login`, () =>
     HttpResponse.json({ user: mockUser, accessToken: 'test-token' })
   ),
-  http.post(`${API_BASE}/auth/register`, () =>
+  http.post(`${BASE}/register`, () =>
     HttpResponse.json({ user: mockUser, accessToken: 'test-token' })
   ),
 ]

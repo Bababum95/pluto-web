@@ -5,9 +5,9 @@ import {
   mockAccountListResponse,
   mockAccountWithSummaryResponse,
 } from '../data/account'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
-const BASE = `${API_BASE}/accounts`
+const BASE = `${TEST_API_ROOT}accounts`
 
 export const accountHandlers = [
   http.get(BASE, () => HttpResponse.json(mockAccountListResponse)),

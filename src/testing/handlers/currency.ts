@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockCurrency } from '../data/currency'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
-const BASE = `${API_BASE}/currencies`
+const BASE = `${TEST_API_ROOT}currencies`
 
 export const currencyHandlers = [
   http.get(BASE, () => HttpResponse.json([mockCurrency])),

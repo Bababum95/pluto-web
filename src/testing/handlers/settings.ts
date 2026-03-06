@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockSettings } from '../data/settings'
+import { TEST_API_ROOT } from '../constants'
 
-const API_BASE = 'http://localhost/v1'
-const BASE = `${API_BASE}/settings`
+const BASE = `${TEST_API_ROOT}settings`
 
 export const settingsHandlers = [
   http.get(BASE, () => HttpResponse.json(mockSettings)),

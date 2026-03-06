@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { http, HttpResponse } from 'msw'
 
 import { apiFetch, ApiError } from './client'
+import { TEST_API_ROOT } from '@/testing/constants'
 import { server } from '@/testing/server'
 
 vi.mock('@/features/auth/utils/auth-token', () => ({
@@ -9,8 +10,6 @@ vi.mock('@/features/auth/utils/auth-token', () => ({
 }))
 
 import { getAccessToken } from '@/features/auth/utils/auth-token'
-
-const base = 'http://localhost/v1'
 
 describe('apiFetch', () => {
   beforeEach(() => {
@@ -20,19 +19,19 @@ describe('apiFetch', () => {
   it('builds URL from path and base', async () => {
     let capturedUrl = ''
     server.use(
-      http.get(`${base}/auth/me`, ({ request }) => {
+      http.get(`${TEST_API_ROOT}auth/me`, ({ request }) => {
         capturedUrl = request.url
         return HttpResponse.json({ id: '1' })
       })
     )
     await apiFetch('/auth/me')
-    expect(capturedUrl).toBe(`${base}/auth/me`)
+    expect(capturedUrl).toBe(`${TEST_API_ROOT}auth/me`)
   })
 
   it('appends params to URL as query string', async () => {
     let capturedUrl = ''
     server.use(
-      http.get(`${base}/transactions`, ({ request }) => {
+      http.get(`${TEST_API_ROOT}transactions`, ({ request }) => {
         capturedUrl = request.url
         return HttpResponse.json([])
       })
@@ -46,7 +45,7 @@ describe('apiFetch', () => {
     vi.mocked(getAccessToken).mockReturnValue('secret-token')
     let capturedAuth = ''
     server.use(
-      http.get(`${base}/auth/me`, ({ request }) => {
+      http.get(`${TEST_API_ROOT}auth/me`, ({ request }) => {
         capturedAuth = request.headers.get('Authorization') ?? ''
         return HttpResponse.json({ id: '1' })
       })
@@ -58,7 +57,7 @@ describe('apiFetch', () => {
   it('does not add Authorization header when token is null', async () => {
     let capturedAuth: string | null = null
     server.use(
-      http.get(`${base}/auth/me`, ({ request }) => {
+      http.get(`${TEST_API_ROOT}auth/me`, ({ request }) => {
         capturedAuth = request.headers.get('Authorization')
         return HttpResponse.json({ id: '1' })
       })
@@ -69,7 +68,7 @@ describe('apiFetch', () => {
 
   it('throws ApiError with status and message on non-ok response', async () => {
     server.use(
-      http.get(`${base}/error`, () =>
+      http.get(`${TEST_API_ROOT}error`, () =>
         HttpResponse.json(
           { message: 'Not found', statusCode: 404 },
           { status: 404 }
@@ -89,7 +88,7 @@ describe('apiFetch', () => {
 
   it('uses res.statusText when response body has no message', async () => {
     server.use(
-      http.get(`${base}/no-msg`, () =>
+      http.get(`${TEST_API_ROOT}no-msg`, () =>
         HttpResponse.json({}, { status: 500, statusText: 'Internal Server Error' })
       )
     )
@@ -104,7 +103,7 @@ describe('apiFetch', () => {
 
   it('calls onError when provided and does not call default handler', async () => {
     server.use(
-      http.get(`${base}/fail`, () =>
+      http.get(`${TEST_API_ROOT}fail`, () =>
         HttpResponse.json({ message: 'Server error' }, { status: 500 })
       )
     )
@@ -118,7 +117,7 @@ describe('apiFetch', () => {
   it('returns parsed JSON on success', async () => {
     const data = { id: '1', name: 'Test' }
     server.use(
-      http.get(`${base}/data`, () => HttpResponse.json(data))
+      http.get(`${TEST_API_ROOT}data`, () => HttpResponse.json(data))
     )
     const result = await apiFetch<typeof data>('/data')
     expect(result).toEqual(data)

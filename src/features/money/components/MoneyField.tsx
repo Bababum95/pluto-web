@@ -1,9 +1,9 @@
-import type { FC } from 'react'
 import {
   Cancel01Icon,
   MultiplicationSignIcon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import type { FC } from 'react'
 
 import { selectCurrency } from '@/store/slices/settings'
 import { useAppSelector } from '@/store/hooks'
@@ -27,7 +27,7 @@ type Props = Omit<InputProps, 'onChange'> & {
   }
 }
 
-const PRESET_MULTIPLIERS = [100, 1000, 10000, 100000, 1000000]
+const PRESET_MULTIPLIERS = [1000, 10000, 100000]
 
 export const MoneyField: FC<Props> = ({
   inputProps,

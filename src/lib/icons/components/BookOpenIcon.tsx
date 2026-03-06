@@ -3,7 +3,7 @@ import type { SvgIconProps } from '../types'
 export const BookOpenIcon = ({ size = 24, className }: SvgIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="-15 10 230 230"
+    viewBox="-15 15 230 230"
     width={size}
     height={size}
     className={className}
@@ -17,12 +17,6 @@ export const BookOpenIcon = ({ size = 24, className }: SvgIconProps) => (
     />
     <path
       d="m109.2 220.7h-18.97c-3.18 0-3.91 2.54-3.91 4.09 0 2.65 2.32 3.98 3.91 3.98h18.97c2.28 0 4.13-1.8 4.13-4.03 0-2.44-1.75-4.04-4.13-4.04z"
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="4"
-    />
-    <path
-      d="m133.2 7.39c-3.93 0-4.45 2.29-4.45 3.93 0 2.85 1.73 3.56 4.45 3.56 34.46 0 64.68 30.09 64.68 66.73 0 3.15 1.55 3.88 3.97 3.88 2.96 0 3.86-2.31 3.86-3.88 0-40.35-32.17-74.22-72.51-74.22z"
       fill="currentColor"
       stroke="currentColor"
       strokeWidth="4"

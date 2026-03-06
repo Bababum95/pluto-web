@@ -7,6 +7,32 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 05.03.2026 — v0.1.9
+
+### ✨ Features
+
+- enhance authentication integration tests with registration and logout flows
+- integrate MSW for API mocking and enhance testing setup
+
+### 🧹 Chore
+
+- unit tests
+
+---
+
+## 05.03.2026 — v0.1.8
+
+### ✨ Features
+
+- add CloudIcon and SoftwareIcon to the icon registry
+- add new icons to the icon registry
+
+### ♻️ Refactoring
+
+- update SVG icons for consistent styling and improved viewBox settings
+
+---
+
 ## 01.03.2026 — v0.1.7
 
 ### ✨ Features

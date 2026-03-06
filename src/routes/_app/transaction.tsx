@@ -47,7 +47,7 @@ function TransactionPage() {
         tags: z.array(z.string()),
         date: z
           .date({ message: t('transaction.errors.date.required') })
-          .max(dayjs().toDate(), {
+          .refine((date) => !dayjs(date).isAfter(dayjs(), 'day'), {
             message: t('transaction.errors.date.inFuture'),
           }),
       }),

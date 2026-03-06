@@ -3,7 +3,7 @@ import type { SvgIconProps } from '../types'
 export const BookIcon = ({ size = 24, className }: SvgIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="-15 15 240 240"
+    viewBox="-8 10 240 240"
     width={size}
     height={size}
     className={className}

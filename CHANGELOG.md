@@ -7,6 +7,15 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 06.03.2026 — v0.1.10
+
+### ✨ Features
+
+- implement category reordering and enhance button styling
+- implement dynamic theme color support based on user preference
+
+---
+
 ## 05.03.2026 — v0.1.9
 
 ### ✨ Features

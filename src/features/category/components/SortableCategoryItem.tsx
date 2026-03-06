@@ -37,7 +37,9 @@ export const SortableCategoryItem: FC<Props> = ({
       onClick={handleClick}
       className={cn(
         'transition-transform duration-100 select-none',
-        isDragging && 'scale-103 rounded-xl shadow-sm bg-card/75'
+        isDragging
+          ? 'scale-105 rounded-xl shadow-sm bg-card/75'
+          : 'active:scale-[0.95]'
       )}
     >
       <CategoryCard category={category} />

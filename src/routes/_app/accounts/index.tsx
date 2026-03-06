@@ -103,7 +103,7 @@ function AccountsPage() {
           PointerSensor.configure({
             activationConstraints: [
               new PointerActivationConstraints.Delay({
-                value: 350,
+                value: 600,
                 tolerance: 5,
               }),
             ],

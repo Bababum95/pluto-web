@@ -54,7 +54,7 @@ const CategoriesPage = () => {
               PointerSensor.configure({
                 activationConstraints: [
                   new PointerActivationConstraints.Delay({
-                    value: 350,
+                    value: 600,
                     tolerance: 5,
                   }),
                 ],
@@ -79,14 +79,6 @@ const CategoriesPage = () => {
                   category={category}
                   onClick={handleCategoryClick}
                 />
-                // <Link
-                //   to="/categories/$categoryId"
-                //   key={category.id}
-                //   params={{ categoryId: category.id }}
-                //   viewTransition={{ types: ['slide-left'] }}
-                // >
-                //   <CategoryCard category={category} />
-                // </Link>
               ))}
             </div>
           </DragDropProvider>

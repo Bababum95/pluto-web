@@ -33,7 +33,9 @@ export const SortableAccountItem: FC<Props> = ({
       onClick={handleClick}
       className={cn(
         'transition-transform duration-100',
-        isDragging && 'scale-103 rounded-xl shadow-sm bg-card/75'
+        isDragging
+          ? 'scale-103 rounded-xl shadow-sm bg-card/75'
+          : 'active:scale-[0.98]'
       )}
     >
       <AccountItem

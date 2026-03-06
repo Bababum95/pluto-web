@@ -19,7 +19,7 @@ export const createTransaction = createAsyncThunk(
 
     return {
       ...response,
-      insert: isDateWithinBounds(data.date, bounds),
+      insert: data.date ? isDateWithinBounds(data.date, bounds) : false,
     }
   }
 )

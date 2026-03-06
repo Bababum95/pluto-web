@@ -7,6 +7,20 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 06.03.2026 — v0.1.11
+
+### 🐛 Fixes
+
+- update transaction creation logic and add order to mock category
+
+### ♻️ Refactoring
+
+- enhance drag-and-drop styling and update pointer activation delay
+- update MoneyField component and adjust preset multipliers
+- update API base URL in mock handlers and improve component styling
+
+---
+
 ## 06.03.2026 — v0.1.10
 
 ### ✨ Features

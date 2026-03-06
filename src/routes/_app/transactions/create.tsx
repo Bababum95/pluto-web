@@ -20,7 +20,7 @@ import { createTransaction } from '@/store/slices/transaction'
 import { DatePicker } from '@/components/ui/date-picker'
 import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
 
-export const Route = createFileRoute('/_app/transaction')({
+export const Route = createFileRoute('/_app/transactions/create')({
   component: TransactionPage,
 })
 

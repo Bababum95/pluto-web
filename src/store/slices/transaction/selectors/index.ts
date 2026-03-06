@@ -47,3 +47,33 @@ export const selectTransactionsByCategory = createSelector(
     return Object.values(data)
   }
 )
+
+type TransactionsByDay = {
+  date: string
+  list: Transaction[]
+}
+
+export const selectTransactionsByDay = createSelector(
+  selectTransactions,
+  (transactions): TransactionsByDay[] => {
+    const result: TransactionsByDay[] = []
+    let currentGroup: TransactionsByDay | null = null
+
+    for (const transaction of transactions) {
+      const date = new Date(transaction.date).toISOString().slice(0, 10)
+
+      if (!currentGroup || currentGroup.date !== date) {
+        currentGroup = {
+          date,
+          list: [],
+        }
+
+        result.push(currentGroup)
+      }
+
+      currentGroup.list.push(transaction)
+    }
+
+    return result
+  }
+)

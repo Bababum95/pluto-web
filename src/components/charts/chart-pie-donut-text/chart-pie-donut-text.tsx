@@ -35,7 +35,7 @@ export const ChartPieDonutText: FC<Props> = ({
   return (
     <ChartContainer
       config={chartConfig}
-      className="mx-auto aspect-square max-h-[250px] scale-125"
+      className="mx-auto aspect-square max-h-[250px]"
     >
       <PieChart>
         {!isEmpty && (

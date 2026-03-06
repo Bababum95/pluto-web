@@ -29,7 +29,7 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
-      <div className="container flex h-16 items-center px-4 gap-2 relative">
+      <div className="container flex h-16 items-center px-2 gap-2 relative">
         {showBackButton ? (
           <Button
             variant="ghost"

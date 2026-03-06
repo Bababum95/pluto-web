@@ -19,7 +19,7 @@ import { selectCurrency } from '@/store/slices/settings'
 export const HomePageContent: FC = () => {
   const summary = useAppSelector(selectTransactionsSummary)
   const currency = useAppSelector(selectCurrency)
-  const transactionsByCategory = useAppSelector(selectTransactionsByCategory)
+  const transactions = useAppSelector(selectTransactionsByCategory)
   const status = useAppSelector(selectTransactionsStatus)
 
   return (
@@ -33,14 +33,12 @@ export const HomePageContent: FC = () => {
             dataKey="total"
             nameKey="category"
             loading={status === 'pending'}
-            chartData={transactionsByCategory.map(
-              ({ category, total, scale }) => ({
-                category: category.name,
-                fill: category.color,
-                total: toDecimal(total, scale),
-              })
-            )}
-            chartConfig={transactionsByCategory.reduce(
+            chartData={transactions.map(({ category, total, scale }) => ({
+              category: category.name,
+              fill: category.color,
+              total: toDecimal(total, scale),
+            }))}
+            chartConfig={transactions.reduce(
               (acc, { category }) => ({
                 ...acc,
                 [category.name]: {
@@ -57,7 +55,7 @@ export const HomePageContent: FC = () => {
           />
         </CardContent>
         <Link
-          to="/transaction"
+          to="/transactions/create"
           className="absolute bottom-4 right-4 z-10"
           viewTransition={{ types: ['slide-left'] }}
         >
@@ -65,7 +63,7 @@ export const HomePageContent: FC = () => {
         </Link>
       </Card>
       <div className="flex flex-col gap-1">
-        {transactionsByCategory.map(({ category, total, scale }) => (
+        {transactions.map(({ category, total, scale }) => (
           <Item
             variant="outline"
             size="xs"

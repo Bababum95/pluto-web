@@ -49,6 +49,11 @@ export const updateCategory = createAsyncThunk(
   }
 )
 
+export const reorderCategories = createAsyncThunk(
+  'category/reorderCategories',
+  async (ids: string[]): Promise<void> => categoryApi.reorder({ ids })
+)
+
 // export const deleteCategory = createAsyncThunk(
 //   'category/deleteCategory',
 //   (id: string) => categoryApi.delete(id)
@@ -89,6 +94,19 @@ export const categorySlice = createSlice({
       })
       .addCase(createCategory.rejected, (state) => {
         state.status = 'failed'
+      })
+      .addCase(reorderCategories.fulfilled, (state, action) => {
+        const ids = action.meta.arg as string[]
+        const map = new Map(state.categories.map((c) => [c.id, c]))
+
+        state.categories = ids
+          .map((id, index) => {
+            const category = map.get(id)
+            if (!category) return undefined
+
+            return { ...category, order: index }
+          })
+          .filter((c): c is (typeof state.categories)[number] => Boolean(c))
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         const idx = state.categories.findIndex(

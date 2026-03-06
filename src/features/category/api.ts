@@ -18,5 +18,11 @@ export const categoryApi = {
       body: JSON.stringify(data),
     }),
 
+  reorder: (data: { ids: string[] }): Promise<void> =>
+    apiFetch(`${BASE}/reorder`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
 }

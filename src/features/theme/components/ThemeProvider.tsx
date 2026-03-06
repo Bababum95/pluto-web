@@ -1,12 +1,15 @@
 import { useEffect, useState, useCallback, type FC } from 'react'
 
 import { ThemeContext } from '../ThemeContext'
-import { DEFAULT_THEME, THEME_STORAGE_KEY } from '../constants'
+import {
+  DEFAULT_THEME,
+  THEME_STORAGE_KEY,
+  THEME_COLOR_LIGHT,
+  THEME_COLOR_DARK,
+} from '../constants'
 import type { Theme } from '../types'
 
 /** Hex colors for PWA theme-color meta (status bar, browser chrome). Must match CSS --background. */
-const THEME_COLOR_LIGHT = '#ffffff'
-const THEME_COLOR_DARK = '#1c1e26'
 
 function resolveThemeColor(isDark: boolean): string {
   return isDark ? THEME_COLOR_DARK : THEME_COLOR_LIGHT

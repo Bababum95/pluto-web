@@ -179,6 +179,7 @@ function TransactionPage() {
                 type="submit"
                 className="fixed bottom-14 left-4 right-4 mb-safe"
                 disabled={!canSubmit}
+                disabledStyle="bg-muted text-muted-foreground"
                 isLoading={isSubmitting}
               >
                 {t('transaction.add')}

@@ -1,26 +1,45 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { DragDropProvider } from '@dnd-kit/react'
+import {
+  PointerSensor,
+  KeyboardSensor,
+  PointerActivationConstraints,
+} from '@dnd-kit/dom'
+import { move } from '@dnd-kit/helpers'
 
 import { AppLayout } from '@/components/AppLayout'
 import { PlusButton } from '@/components/ui/button'
 import { TransactionTypeTabs } from '@/features/transaction-type'
-import { CategoryCard } from '@/features/category'
+import { SortableCategoryItem } from '@/features/category'
 import {
   selectCategories,
   selectCategoriesStatus,
+  reorderCategories,
 } from '@/store/slices/category'
-import { useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
 import { selectTransactionType } from '@/store/slices/transaction-type'
 
 const CategoriesPage = () => {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const router = useRouter()
   const categories = useAppSelector(selectCategories)
   const status = useAppSelector(selectCategoriesStatus)
   const transactionType = useAppSelector(selectTransactionType)
   const filteredCategories = categories.filter(
     (category) => category.type === transactionType
   )
+
+  const handleCategoryClick = (id: string) => {
+    router.navigate({
+      to: '/categories/$categoryId',
+      params: { categoryId: id },
+      viewTransition: { types: ['slide-left'] },
+    })
+  }
 
   return (
     <AppLayout title={t('common.categories')}>
@@ -30,18 +49,47 @@ const CategoriesPage = () => {
             <Spinner />
           </div>
         ) : (
-          <div className="grid grid-cols-4 gap-2">
-            {filteredCategories.map((category) => (
-              <Link
-                to="/categories/$categoryId"
-                key={category.id}
-                params={{ categoryId: category.id }}
-                viewTransition={{ types: ['slide-left'] }}
-              >
-                <CategoryCard category={category} />
-              </Link>
-            ))}
-          </div>
+          <DragDropProvider
+            sensors={[
+              PointerSensor.configure({
+                activationConstraints: [
+                  new PointerActivationConstraints.Delay({
+                    value: 350,
+                    tolerance: 5,
+                  }),
+                ],
+              }),
+              KeyboardSensor,
+            ]}
+            onDragEnd={(event) => {
+              if (event.canceled) return
+
+              const ids = move(filteredCategories, event).map(
+                (category) => category.id
+              )
+              dispatch(reorderCategories(ids))
+            }}
+          >
+            <div className="grid grid-cols-4 gap-2">
+              {filteredCategories.map((category, index) => (
+                <SortableCategoryItem
+                  key={category.id}
+                  id={category.id}
+                  index={index}
+                  category={category}
+                  onClick={handleCategoryClick}
+                />
+                // <Link
+                //   to="/categories/$categoryId"
+                //   key={category.id}
+                //   params={{ categoryId: category.id }}
+                //   viewTransition={{ types: ['slide-left'] }}
+                // >
+                //   <CategoryCard category={category} />
+                // </Link>
+              ))}
+            </div>
+          </DragDropProvider>
         )}
       </TransactionTypeTabs>
       <Link

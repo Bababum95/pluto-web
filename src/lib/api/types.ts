@@ -433,6 +433,23 @@ export interface paths {
         patch: operations["CategoryController_update"];
         trace?: never;
     };
+    "/v1/categories/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Reorder categories by providing list of category IDs (index = order) */
+        patch: operations["CategoryController_reorder"];
+        trace?: never;
+    };
     "/v1/tags": {
         parameters: {
             query?: never;
@@ -786,7 +803,7 @@ export interface components {
              * @description Transaction date (YYYY-MM-DD).
              * @example 2024-01-15
              */
-            date: string;
+            date?: string;
         };
         CategoryDto: {
             id: string;
@@ -798,6 +815,8 @@ export interface components {
             name: string;
             /** @example expense */
             type: string;
+            /** @example 1 */
+            order: number;
             /** @example 2021-01-01T10:00:00.000Z */
             createdAt: string;
             /** @example 2021-01-01T10:00:00.000Z */
@@ -866,6 +885,16 @@ export interface components {
              * @example expense
              */
             type: string;
+        };
+        ReorderCategoriesDto: {
+            /**
+             * @description Category IDs in the desired order (index = display order)
+             * @example [
+             *       "507f1f77bcf86cd799439011",
+             *       "507f1f77bcf86cd799439012"
+             *     ]
+             */
+            ids: string[];
         };
         UpdateCategoryDto: Record<string, never>;
         CreateTagDto: {
@@ -2222,6 +2251,41 @@ export interface operations {
             };
             /** @description Category name already exists. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CategoryController_reorder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReorderCategoriesDto"];
+            };
+        };
+        responses: {
+            /** @description Categories have been reordered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        status?: number;
+                        message?: string;
+                    };
+                };
+            };
+            /** @description One or more categories not found. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

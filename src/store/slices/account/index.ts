@@ -58,10 +58,6 @@ export const updateAccount = createAsyncThunk(
     accountApi.update(id, data)
 )
 
-/**
- * Reorders accounts optimistically and sends order updates to backend in background.
- * Short press = navigate (Link handles it), long press (350ms) = drag.
- */
 export const reorderAccounts = createAsyncThunk(
   'account/reorderAccounts',
   async (ids: string[]): Promise<void> => accountApi.reorder({ ids })
@@ -133,6 +129,19 @@ export const accountSlice = createSlice({
           action.payload.account,
           action.payload.summary
         )
+      })
+      .addCase(reorderAccounts.fulfilled, (state, action) => {
+        const ids = action.meta.arg as string[]
+        const map = new Map(state.accounts.map((c) => [c.id, c]))
+
+        state.accounts = ids
+          .map((id, index) => {
+            const account = map.get(id)
+            if (!account) return undefined
+
+            return { ...account, order: index }
+          })
+          .filter((c): c is (typeof state.accounts)[number] => Boolean(c))
       })
       .addCase(toggleExcluded.fulfilled, (state, action) => {
         applyAccountUpdate(

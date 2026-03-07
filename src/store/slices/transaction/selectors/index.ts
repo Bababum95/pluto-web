@@ -3,6 +3,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import type { Transaction } from '@/features/transaction/types'
 import type { Category } from '@/features/category/types'
 import type { RootState } from '@/store'
+import type { MoneyView } from '@/features/money/types'
 
 export const selectTransactions = (state: RootState) =>
   state.transaction.transactions
@@ -10,8 +11,10 @@ export const selectTransactionsStatus = (state: RootState) =>
   state.transaction.status
 export const selectTransactionsSummary = (state: RootState) =>
   state.transaction.summary
-export const selectTransactionById = (id: string) => (state: RootState) =>
-  state.transaction.transactions.find((t) => t.id === id)
+export const selectTransactionById =
+  (id: string) =>
+  (state: RootState): Transaction | undefined =>
+    state.transaction.transactions.find((t) => t.id === id)
 
 type TransactionsByCategory = {
   list: Omit<Transaction, 'category'>[]
@@ -50,6 +53,7 @@ export const selectTransactionsByCategory = createSelector(
 
 type TransactionsByDay = {
   date: string
+  total: Omit<MoneyView, 'value'>
   list: Transaction[]
 }
 
@@ -66,12 +70,18 @@ export const selectTransactionsByDay = createSelector(
         currentGroup = {
           date,
           list: [],
+          total: {
+            raw: 0,
+            scale: transaction.amount.converted.scale,
+            currency: transaction.amount.converted.currency,
+          },
         }
 
         result.push(currentGroup)
       }
 
       currentGroup.list.push(transaction)
+      currentGroup.total.raw += transaction.amount.converted.raw
     }
 
     return result

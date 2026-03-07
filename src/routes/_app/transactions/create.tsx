@@ -1,192 +1,47 @@
-import { AppLayout } from '@/components/AppLayout'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { useForm } from '@tanstack/react-form'
-import { z } from 'zod'
 import { toast } from 'sonner'
 
-import dayjs from '@/lib/dayjs'
-import { Button } from '@/components/ui/button'
-import { FormField } from '@/components/forms/form-field'
-import { SelectAccount } from '@/features/account'
-import { CategoryPicker } from '@/features/category'
-import { TagPicker } from '@/features/tag'
-import { MoneyField, parseDecimal } from '@/features/money'
+import { AppLayout } from '@/components/AppLayout'
+import { TransactionForm } from '@/features/transaction/components/TransactionForm'
+import { DEFAULT_TRANSACTION_FORM_VALUES } from '@/features/transaction/constants'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { selectAccounts } from '@/store/slices/account'
 import { selectSettings } from '@/store/slices/settings'
 import { createTransaction } from '@/store/slices/transaction'
-import { DatePicker } from '@/components/ui/date-picker'
-import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
+import type { TransactionFormType } from '@/features/transaction/types'
 
 export const Route = createFileRoute('/_app/transactions/create')({
-  component: TransactionPage,
+  component: CreateTransactionPage,
 })
 
-function TransactionPage() {
+function CreateTransactionPage() {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const settings = useAppSelector(selectSettings)
-  const accounts = useAppSelector(selectAccounts)
 
-  const form = useForm({
-    validators: {
-      onSubmit: z.object({
-        amount: z
-          .string()
-          .min(1, { message: t('transactions.create.errors.amount.required') }),
-        comment: z.string(),
-        account: z
-          .string()
-          .min(1, { message: t('transactions.create.errors.account.required') }),
-        category: z
-          .string()
-          .min(1, { message: t('transactions.create.errors.category.required') }),
-        tags: z.array(z.string()),
-        date: z
-          .date({ message: t('transactions.create.errors.date.required') })
-          .refine((date) => !dayjs(date).isAfter(dayjs(), 'day'), {
-            message: t('transactions.create.errors.date.inFuture'),
-          }),
-      }),
-    },
-    defaultValues: {
-      amount: '',
-      account: settings?.account?.id ?? '',
-      comment: '',
-      category: '',
-      tags: [] as string[],
-      date: dayjs().toDate(),
-    },
-    onSubmit: async ({ value }) => {
-      const { balance, scale } = parseDecimal(value.amount)
+  const handleSubmit = async (values: TransactionFormType) => {
+    if (!values.account) {
+      throw new Error('Account is required')
+    }
 
-      await dispatch(
-        createTransaction({
-          ...value,
-          amount: balance,
-          scale: scale,
-          date: dayjs(value.date).format('YYYY-MM-DD'),
-        })
-      ).unwrap()
-      navigate({ to: '/' })
-      toast.success(t('transactions.create.added'))
-    },
-  })
+    await dispatch(createTransaction(values)).unwrap()
+    navigate({ to: '/' })
+    toast.success(t('transactions.create.added'))
+  }
 
   return (
     <AppLayout title={t('transactions.create.title')} showBackButton>
       <TransactionTypeTabs>
-        <form
-          className="flex flex-col gap-4 pt-2 flex-1 pb-14"
-          onSubmit={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            form.handleSubmit()
+        <TransactionForm
+          defaultValues={{
+            ...DEFAULT_TRANSACTION_FORM_VALUES,
+            account: settings?.account?.id ?? '',
           }}
-        >
-          <form.Subscribe
-            selector={(state) => state.values.account}
-            children={(account) => (
-              <form.Field
-                name="amount"
-                children={(field) => (
-                  <MoneyField
-                    inputProps={{
-                      value: field.state.value,
-                      onChange: (value) => field.handleChange(value),
-                    }}
-                    isError={
-                      field.state.meta.isTouched && !field.state.meta.isValid
-                    }
-                    errorMessage={getFormFieldErrorMessage(
-                      field.state.meta.errors
-                    )}
-                    currency={
-                      accounts.find((acc) => acc.id === account)?.balance
-                        .original.currency?.code
-                    }
-                  />
-                )}
-              />
-            )}
-          />
-          <form.Field
-            name="account"
-            children={(field) => (
-              <SelectAccount
-                value={field.state.value}
-                onChange={(value) => field.handleChange(value)}
-                errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
-                isError={
-                  field.state.meta.isTouched && !field.state.meta.isValid
-                }
-              />
-            )}
-          />
-          <form.Field
-            name="category"
-            children={(field) => (
-              <CategoryPicker
-                value={field.state.value}
-                onChange={(value) => field.handleChange(value)}
-                isError={
-                  field.state.meta.isTouched && !field.state.meta.isValid
-                }
-                errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
-              />
-            )}
-          />
-          <form.Field
-            name="date"
-            children={(field) => (
-              <DatePicker
-                value={field.state.value}
-                onChange={(value) => {
-                  if (value) field.handleChange(value)
-                }}
-                isError={
-                  field.state.meta.isTouched && !field.state.meta.isValid
-                }
-                errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
-                label={t('transactions.create.date')}
-              />
-            )}
-          />
-          <form.Field
-            name="tags"
-            children={(field) => (
-              <TagPicker
-                values={field.state.value}
-                onChange={(value) => field.handleChange(value)}
-                multiple
-              />
-            )}
-          />
-
-          <form.Field
-            name="comment"
-            children={(field) => (
-              <FormField field={field} label={t('transactions.create.comment')} />
-            )}
-          />
-          <form.Subscribe
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => (
-              <Button
-                type="submit"
-                className="fixed bottom-14 left-4 right-4 mb-safe"
-                disabled={!canSubmit}
-                disabledStyle="bg-muted text-muted-foreground"
-                isLoading={isSubmitting}
-              >
-                {t('transactions.create.add')}
-              </Button>
-            )}
-          />
-        </form>
+          onSubmit={handleSubmit}
+          key="create-transaction-form"
+        />
       </TransactionTypeTabs>
     </AppLayout>
   )

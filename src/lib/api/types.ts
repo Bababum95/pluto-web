@@ -843,6 +843,8 @@ export interface components {
         };
         TransactionDto: {
             id: string;
+            /** @description Account data */
+            account: components["schemas"]["AccountDto"];
             /**
              * @example expense
              * @enum {string}

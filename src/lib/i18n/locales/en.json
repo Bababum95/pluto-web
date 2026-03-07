@@ -75,6 +75,14 @@
   },
   "transactions": {
     "title": "Transactions",
+    "edit": "Edit transaction",
+    "save": "Save",
+    "updated": "Transaction updated successfully",
+    "deleted": "Transaction deleted successfully",
+    "notFound": "Transaction not found",
+    "actions": {
+      "delete": "Delete transaction"
+    },
     "create": {
       "title": "Add transaction",
       "account": "Account",

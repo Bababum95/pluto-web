@@ -7,6 +7,18 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 07.03.2026 — v0.1.12
+
+### ✨ Features
+
+- add transaction detail route and enhance transaction form
+
+### ♻️ Refactoring
+
+- update transaction localization and form validation messages
+
+---
+
 ## 06.03.2026 — v0.1.11
 
 ### 🐛 Fixes

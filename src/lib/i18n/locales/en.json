@@ -240,5 +240,36 @@
     "label": "Select date",
     "today": "Today",
     "yesterday": "Yesterday"
+  },
+  "passkey": {
+    "loginButton": "Sign in with biometrics",
+    "deleted": "Passkey deleted successfully",
+    "prompt": {
+      "title": "Enable biometric login",
+      "description": "Sign in faster with Face ID, Touch ID, or fingerprint. No password needed next time.",
+      "enable": "Enable biometrics"
+    },
+    "registration": {
+      "success": "Biometric login enabled"
+    },
+    "errors": {
+      "registrationFailed": "Failed to enable biometric login",
+      "loginFailed": "Biometric login failed"
+    },
+    "settings": {
+      "title": "Biometric login",
+      "description": "Manage your Face ID, Touch ID, and fingerprint access",
+      "addPasskey": "Add this device",
+      "adding": "Enabling...",
+      "noPasskeys": "No devices added",
+      "noPasskeysDescription": "Add this device to sign in with biometrics",
+      "lastUsed": "Last used {{date}}",
+      "neverUsed": "Never used",
+      "deleteConfirm": {
+        "title": "Remove device",
+        "description": "You will no longer be able to use biometrics on this device to sign in.",
+        "confirm": "Remove"
+      }
+    }
   }
 }

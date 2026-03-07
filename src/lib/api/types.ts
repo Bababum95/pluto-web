@@ -524,6 +524,108 @@ export interface paths {
         patch: operations["TransferController_update"];
         trace?: never;
     };
+    "/v1/auth/webauthn/register-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Generate WebAuthn registration options for the authenticated user */
+        get: operations["PasskeyController_registerOptions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/webauthn/verify-registration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify and save WebAuthn registration credential */
+        post: operations["PasskeyController_verifyRegistration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/webauthn/login-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate WebAuthn authentication options. Omit email for conditional UI (discoverable credentials) */
+        post: operations["PasskeyController_loginOptions"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/webauthn/verify-login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify WebAuthn authentication and return JWT */
+        post: operations["PasskeyController_verifyLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/webauthn/passkeys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List all passkeys for the authenticated user */
+        get: operations["PasskeyController_listPasskeys"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/webauthn/passkeys/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a passkey by ID */
+        delete: operations["PasskeyController_deletePasskey"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -970,6 +1072,36 @@ export interface components {
             updatedAt: string;
         };
         UpdateTransferDto: Record<string, never>;
+        VerifyRegistrationDto: {
+            /** @description Stringified RegistrationResponseJSON from @simplewebauthn/browser */
+            credential: string;
+            /**
+             * @description Optional device name for display
+             * @example iPhone 15
+             */
+            deviceName?: string;
+        };
+        PasskeyItemDto: {
+            id: string;
+            deviceName: string;
+            deviceType: string;
+            createdAt: string;
+            lastUsedAt?: Record<string, never>;
+        };
+        PasskeyLoginOptionsDto: {
+            /**
+             * @description Omit for conditional UI (discoverable credentials)
+             * @example user@example.com
+             */
+            email?: string;
+        };
+        VerifyLoginDto: {
+            /** @description Stringified AuthenticationResponseJSON from @simplewebauthn/browser */
+            credential: string;
+        };
+        PasskeyListDto: {
+            passkeys: components["schemas"]["PasskeyItemDto"][];
+        };
     };
     responses: never;
     parameters: never;
@@ -2588,6 +2720,145 @@ export interface operations {
                 content?: never;
             };
             /** @description Transfer not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PasskeyController_registerOptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description PublicKeyCredentialCreationOptionsJSON */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PasskeyController_verifyRegistration: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VerifyRegistrationDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasskeyItemDto"];
+                };
+            };
+        };
+    };
+    PasskeyController_loginOptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasskeyLoginOptionsDto"];
+            };
+        };
+        responses: {
+            /** @description PublicKeyCredentialRequestOptionsJSON */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User not found or has no passkeys */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PasskeyController_verifyLogin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VerifyLoginDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResponseDto"];
+                };
+            };
+        };
+    };
+    PasskeyController_listPasskeys: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasskeyListDto"];
+                };
+            };
+        };
+    };
+    PasskeyController_deletePasskey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Passkey deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Passkey not found */
             404: {
                 headers: {
                     [name: string]: unknown;

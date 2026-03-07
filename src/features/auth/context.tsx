@@ -32,6 +32,7 @@ type MutationPayload =
 
 export function AuthProvider({ children }: Props) {
   const [sessionLoading, setSessionLoading] = useState(true)
+  const [justLoggedIn, setJustLoggedIn] = useState(false)
   const mutation = useMutation({
     mutationFn: ({ path, payload }: MutationPayload): Promise<AuthResponse> => {
       return apiFetch(`/auth/${path}`, {
@@ -67,6 +68,10 @@ export function AuthProvider({ children }: Props) {
     dispatch(clearUser())
   }, [dispatch])
 
+  const clearJustLoggedIn = useCallback(() => {
+    setJustLoggedIn(false)
+  }, [])
+
   const login = useCallback(
     async (payload: LoginParams) => {
       mutation.reset()
@@ -76,6 +81,7 @@ export function AuthProvider({ children }: Props) {
       })) as AuthResponse
       setAccessToken(data.accessToken)
       dispatch(setUser(data.user))
+      setJustLoggedIn(true)
     },
     [mutation, dispatch]
   )
@@ -102,6 +108,8 @@ export function AuthProvider({ children }: Props) {
         isAuth: !!user,
         sessionLoading,
         loading: mutation.isPending,
+        justLoggedIn,
+        clearJustLoggedIn,
       }}
     >
       {children}

@@ -5,6 +5,7 @@ import {
   Moon02Icon,
   UnfoldMoreIcon,
   Briefcase06Icon,
+  FaceIdIcon,
 } from '@hugeicons/core-free-icons'
 import { useState } from 'react'
 
@@ -27,15 +28,17 @@ import { selectDefaultAccount } from '@/store/slices/settings/selectors'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { AccountDrawer } from '@/features/account'
 import { setDefaultAccount } from '@/store/slices/settings'
+import { usePasskeySupport, PasskeyDrawer } from '@/features/passkey'
 
 export const Route = createFileRoute('/_app/settings')({
   component: SettingsPage,
 })
 
-type DrawerType = 'language' | 'theme' | 'account'
+type DrawerType = 'language' | 'theme' | 'account' | 'passkeys'
 
 function SettingsPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<DrawerType | null>(null)
+  const { platformAvailable } = usePasskeySupport()
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const defaultAccount = useAppSelector(selectDefaultAccount)
@@ -99,6 +102,25 @@ function SettingsPage() {
         </ItemGroup>
       </Card>
 
+      {platformAvailable && (
+        <Card size="sm" className="py-1!">
+          <ItemGroup>
+            <Item size="sm" onClick={() => setIsDrawerOpen('passkeys')}>
+              <ItemMedia variant="icon">
+                <HugeiconsIcon icon={FaceIdIcon} />
+              </ItemMedia>
+              <ItemContent className="gap-0">
+                <ItemTitle>{t('passkey.settings.title')}</ItemTitle>
+                <ItemDescription>{t('passkey.settings.description')}</ItemDescription>
+              </ItemContent>
+              <ItemActions>
+                <HugeiconsIcon size={20} icon={UnfoldMoreIcon} />
+              </ItemActions>
+            </Item>
+          </ItemGroup>
+        </Card>
+      )}
+
       <LanguageDrawer
         open={isDrawerOpen === 'language'}
         onClose={handleCloseDrawer}
@@ -112,6 +134,10 @@ function SettingsPage() {
         onClose={handleCloseDrawer}
         value={defaultAccount?.id}
         onChange={handleChangeAccount}
+      />
+      <PasskeyDrawer
+        open={isDrawerOpen === 'passkeys'}
+        onClose={handleCloseDrawer}
       />
     </AppLayout>
   )

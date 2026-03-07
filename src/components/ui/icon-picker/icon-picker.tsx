@@ -90,6 +90,7 @@ const IconPickerRoot: FC<IconPickerProps> = ({
           <Icon
             key={icon}
             name={icon}
+            size={32}
             className={cn({
               ['outline-2 outline-offset-2 outline-primary']: icon === value,
             })}
@@ -153,6 +154,7 @@ const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
                   <Icon
                     key={icon}
                     name={icon}
+                    size={32}
                     className={cn({
                       ['outline-2 outline-offset-2 outline-primary']:
                         icon === value,

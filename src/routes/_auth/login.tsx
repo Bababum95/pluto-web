@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
@@ -8,6 +9,12 @@ import {
   FALLBACK_URL,
   PASSWORD_MIN_LENGTH,
 } from '@/features/auth'
+import {
+  usePasskeySupport,
+  usePasskeyLogin,
+  usePasskeyAutofill,
+  PasskeyLoginButton,
+} from '@/features/passkey'
 import { FormField } from '@/components/forms/form-field'
 import { PasswordFormField } from '@/components/forms/password-form-field'
 import { Button } from '@/components/ui/button'
@@ -22,6 +29,23 @@ function LoginComponent() {
   const auth = useAuth()
   const router = useRouter()
   const search = Route.useSearch()
+  const { platformAvailable, autofillSupported } = usePasskeySupport()
+
+  const handlePasskeySuccess = useCallback(async () => {
+    await router.invalidate()
+    router.navigate({
+      to: search.redirect || FALLBACK_URL,
+      viewTransition: { types: ['slide-right'] },
+    })
+  }, [router, search.redirect])
+
+  const passkeyLogin = usePasskeyLogin({ onSuccess: handlePasskeySuccess })
+
+  usePasskeyAutofill({
+    autofillSupported,
+    onSuccess: handlePasskeySuccess,
+  })
+
   const form = useForm({
     validators: {
       onSubmit: z.object({
@@ -35,11 +59,7 @@ function LoginComponent() {
     },
     onSubmit: async ({ value }) => {
       await auth.login(value)
-      await router.invalidate()
-      router.navigate({
-        to: search.redirect || FALLBACK_URL,
-        viewTransition: { types: ['slide-right'] },
-      })
+      await handlePasskeySuccess()
     },
   })
 
@@ -62,6 +82,7 @@ function LoginComponent() {
               inputProps={{
                 type: 'email',
                 placeholder: 'my@email.com',
+                autoComplete: 'username webauthn',
               }}
             />
           )}
@@ -73,16 +94,25 @@ function LoginComponent() {
           )}
         />
         <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <Button
-              type="submit"
-              className="mt-6 w-full"
-              disabled={!canSubmit}
-              isLoading={isSubmitting}
-            >
-              {t('auth.signIn')}
-            </Button>
+          selector={(state) => [state.canSubmit, state.isSubmitting, state.values.email]}
+          children={([canSubmit, isSubmitting, email]) => (
+            <div className="mt-6 grid gap-2">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={!canSubmit}
+                isLoading={isSubmitting as boolean}
+              >
+                {t('auth.signIn')}
+              </Button>
+              {platformAvailable && (
+                <PasskeyLoginButton
+                  email={email as string}
+                  onLogin={passkeyLogin.login}
+                  isPending={passkeyLogin.isPending}
+                />
+              )}
+            </div>
           )}
         />
       </form>

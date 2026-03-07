@@ -11,4 +11,7 @@ export type AuthContext = {
   register: (params: RegisterParams) => Promise<void>
   logout: () => Promise<void>
   loading: boolean
+  /** True immediately after a successful password login — used to trigger passkey enrollment prompt */
+  justLoggedIn: boolean
+  clearJustLoggedIn: () => void
 }

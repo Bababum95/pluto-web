@@ -36,19 +36,19 @@ function TransactionPage() {
       onSubmit: z.object({
         amount: z
           .string()
-          .min(1, { message: t('transaction.errors.amount.required') }),
+          .min(1, { message: t('transactions.create.errors.amount.required') }),
         comment: z.string(),
         account: z
           .string()
-          .min(1, { message: t('transaction.errors.account.required') }),
+          .min(1, { message: t('transactions.create.errors.account.required') }),
         category: z
           .string()
-          .min(1, { message: t('transaction.errors.category.required') }),
+          .min(1, { message: t('transactions.create.errors.category.required') }),
         tags: z.array(z.string()),
         date: z
-          .date({ message: t('transaction.errors.date.required') })
+          .date({ message: t('transactions.create.errors.date.required') })
           .refine((date) => !dayjs(date).isAfter(dayjs(), 'day'), {
-            message: t('transaction.errors.date.inFuture'),
+            message: t('transactions.create.errors.date.inFuture'),
           }),
       }),
     },
@@ -72,12 +72,12 @@ function TransactionPage() {
         })
       ).unwrap()
       navigate({ to: '/' })
-      toast.success(t('transaction.added'))
+      toast.success(t('transactions.create.added'))
     },
   })
 
   return (
-    <AppLayout title={t('transaction.title')} showBackButton>
+    <AppLayout title={t('transactions.create.title')} showBackButton>
       <TransactionTypeTabs>
         <form
           className="flex flex-col gap-4 pt-2 flex-1 pb-14"
@@ -151,7 +151,7 @@ function TransactionPage() {
                   field.state.meta.isTouched && !field.state.meta.isValid
                 }
                 errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
-                label={t('transaction.date')}
+                label={t('transactions.create.date')}
               />
             )}
           />
@@ -169,7 +169,7 @@ function TransactionPage() {
           <form.Field
             name="comment"
             children={(field) => (
-              <FormField field={field} label={t('transaction.comment')} />
+              <FormField field={field} label={t('transactions.create.comment')} />
             )}
           />
           <form.Subscribe
@@ -182,7 +182,7 @@ function TransactionPage() {
                 disabledStyle="bg-muted text-muted-foreground"
                 isLoading={isSubmitting}
               >
-                {t('transaction.add')}
+                {t('transactions.create.add')}
               </Button>
             )}
           />

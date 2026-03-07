@@ -32,9 +32,11 @@ import { DocumentLinesIcon } from './components/DocumentLinesIcon'
 import { EthereumIcon } from './components/EthereumIcon'
 import { EthereumLogoIcon } from './components/EthereumLogoIcon'
 import { GiftIcon } from './components/GiftIcon'
+import { GoodsIcon } from './components/GoodsIcon'
 import { GraduationCapAltIcon } from './components/GraduationCapAltIcon'
 import { GraduationCapVariantIcon } from './components/GraduationCapVariantIcon'
 import { GraduationCapIcon } from './components/GraduationCapIcon'
+import { GroceriesIcon } from './components/GroceriesIcon'
 import { HeartMessageIcon } from './components/HeartMessageIcon'
 import { HeartIcon } from './components/HeartIcon'
 import { GolomtIcon } from './components/GolomtIcon'
@@ -98,11 +100,13 @@ export const ICON_REGISTRY = {
   EthereumIcon,
   EthereumLogoIcon,
   GiftIcon,
+  GoodsIcon,
   GameController01Icon,
   GolomtIcon,
   GraduationCapAltIcon,
   GraduationCapIcon,
   GraduationCapVariantIcon,
+  GroceriesIcon,
   HeartMessageIcon,
   HeartIcon,
   HeartCardiogramIcon,
@@ -217,6 +221,8 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'Coffee01Icon',
       'Pizza01Icon',
       'Hamburger01Icon',
+      'GoodsIcon',
+      'GroceriesIcon',
     ],
   },
   {

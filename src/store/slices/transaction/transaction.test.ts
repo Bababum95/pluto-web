@@ -173,7 +173,11 @@ describe('transaction slice', () => {
     it('fulfilled updates transaction in list by id', () => {
       let state = transactionReducer(undefined, fetchTransactions.fulfilled([tx1, tx2], 'req-1', undefined))
       const updated = createMockTransaction({ id: 'tx-1', comment: 'Updated' })
-      const action = updateTransaction.fulfilled(updated, 'req-1', { id: 'tx-1', data: {} as never })
+      const action = updateTransaction.fulfilled(
+        { ...updated, insert: true },
+        'req-1',
+        { id: 'tx-1', data: {} as never }
+      )
       state = transactionReducer(state, action)
       expect(state.transactions[0].comment).toBe('Updated')
     })

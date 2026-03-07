@@ -1,4 +1,5 @@
 import type { Transaction } from '@/features/transaction/types'
+import { mockAccount } from './account'
 import { mockCategory } from './category'
 import { mockTag } from './tag'
 import { mockCurrency } from './currency'
@@ -19,6 +20,7 @@ const moneyView = {
 
 export const mockTransaction: Transaction = {
   id: 'transaction-1',
+  account: mockAccount,
   type: 'expense',
   category: mockCategory,
   comment: 'Lunch',

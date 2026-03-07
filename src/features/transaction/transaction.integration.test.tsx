@@ -42,9 +42,8 @@ describe('Transaction flow (integration)', () => {
       createTransaction({
         account: mockAccount.id,
         category: 'category-1',
-        amount: 1000,
-        scale: 2,
-        date: today,
+        amount: '10.00',
+        date: dayjs(today).toDate(),
         comment: 'Test',
         tags: [],
       })
@@ -95,9 +94,8 @@ describe('Transaction flow (integration)', () => {
       createTransaction({
         account: mockAccount.id,
         category: 'category-1',
-        amount: 500,
-        scale: 2,
-        date: dateOutsideBounds,
+        amount: '5.00',
+        date: dayjs(dateOutsideBounds).toDate(),
         comment: 'Old',
         tags: [],
       })
@@ -132,9 +130,8 @@ describe('Transaction flow (integration)', () => {
       createTransaction({
         account: mockAccount.id,
         category: 'category-1',
-        amount: 100,
-        scale: 2,
-        date: dayjs().format('YYYY-MM-DD'),
+        amount: '1.00',
+        date: dayjs().toDate(),
         comment: '',
         tags: [],
       })

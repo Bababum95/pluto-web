@@ -148,9 +148,8 @@ describe('Account flow (integration)', () => {
       createTransaction({
         account: mockAccount.id,
         category: 'category-1',
-        amount: 5000,
-        scale: 2,
-        date: dayjs().format('YYYY-MM-DD'),
+        amount: '50.00',
+        date: dayjs().toDate(),
         comment: '',
         tags: [],
       })

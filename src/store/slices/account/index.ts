@@ -31,8 +31,8 @@ const initialState: AccountState = {
 
 function applyAccountUpdate(
   state: AccountState,
-  accounts: Account[],
-  summary: AccountSummaryDto
+  accounts: Account[] = [],
+  summary?: AccountSummaryDto | null
 ) {
   accounts.forEach((account) => {
     const idx = state.accounts.findIndex((a) => a.id === account.id)
@@ -40,7 +40,9 @@ function applyAccountUpdate(
       state.accounts[idx] = account
     }
   })
-  state.summary = summary
+  if (summary) {
+    state.summary = summary
+  }
 }
 
 export const fetchAccounts = createAsyncThunk('account/fetchAccounts', () =>
@@ -131,14 +133,14 @@ export const accountSlice = createSlice({
       .addCase(createTransaction.fulfilled, (state, action) => {
         applyAccountUpdate(
           state,
-          action.payload.accounts,
+          action.payload.accounts ?? [],
           action.payload.summary
         )
       })
       .addCase(updateTransaction.fulfilled, (state, action) => {
         applyAccountUpdate(
           state,
-          action.payload.accounts,
+          action.payload.accounts ?? [],
           action.payload.summary
         )
       })

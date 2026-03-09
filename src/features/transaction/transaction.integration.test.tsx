@@ -22,7 +22,7 @@ describe('Transaction flow (integration)', () => {
     server.use(
       http.post('http://localhost/v1/transactions', () =>
         HttpResponse.json({
-          account: updatedAccount,
+          accounts: [updatedAccount],
           summary: updatedSummary,
           transaction: createMockTransaction({ id: 'transaction-new' }),
         })
@@ -71,7 +71,7 @@ describe('Transaction flow (integration)', () => {
     server.use(
       http.post('http://localhost/v1/transactions', () =>
         HttpResponse.json({
-          account: mockAccount,
+          accounts: [mockAccount],
           summary: mockAccountSummary,
           transaction: createMockTransaction({
             id: 'transaction-outside',
@@ -109,7 +109,9 @@ describe('Transaction flow (integration)', () => {
     )
 
     const { transaction, account } = store.getState()
-    const inserted = transaction.transactions.find((t) => t.id === 'transaction-outside')
+    const inserted = transaction.transactions.find(
+      (t) => t.id === 'transaction-outside'
+    )
     expect(inserted).toBeUndefined()
     expect(account.accounts.some((a) => a.id === mockAccount.id)).toBe(true)
     expect(account.summary).toEqual(mockAccountSummary)

@@ -121,15 +121,25 @@ describe('Account flow (integration)', () => {
       id: mockAccount.id,
       name: mockAccount.name,
       balance: {
-        original: { value: 950, raw: 95000, scale: 2, currency: mockAccount.balance.original.currency },
-        converted: { value: 950, raw: 95000, scale: 2, currency: mockAccount.balance.converted.currency },
+        original: {
+          value: 950,
+          raw: 95000,
+          scale: 2,
+          currency: mockAccount.balance.original.currency,
+        },
+        converted: {
+          value: 950,
+          raw: 95000,
+          scale: 2,
+          currency: mockAccount.balance.converted.currency,
+        },
       },
     })
     const updatedSummary = { ...mockAccountSummary, total_raw: 95000 }
     server.use(
       http.post('http://localhost/v1/transactions', () =>
         HttpResponse.json({
-          account: updatedAccount,
+          accounts: [updatedAccount],
           summary: updatedSummary,
           transaction: createMockTransaction({ id: 'tx-1' }),
         })

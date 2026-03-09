@@ -105,7 +105,10 @@ describe('transaction slice', () => {
     })
 
     it('pending with clear: true clears transactions and resets summary total', () => {
-      let state = transactionReducer(undefined, fetchTransactions.fulfilled([tx1, tx2], 'req-1', undefined))
+      let state = transactionReducer(
+        undefined,
+        fetchTransactions.fulfilled([tx1, tx2], 'req-1', undefined)
+      )
       const pendingAction = fetchTransactions.pending('req-2', { clear: true })
       state = transactionReducer(state, pendingAction)
       expect(state.status).toBe('pending')
@@ -115,7 +118,11 @@ describe('transaction slice', () => {
     })
 
     it('rejected sets status to failed', () => {
-      const action = fetchTransactions.rejected(new Error('fail'), 'req-1', undefined)
+      const action = fetchTransactions.rejected(
+        new Error('fail'),
+        'req-1',
+        undefined
+      )
       const state = transactionReducer(undefined, action)
       expect(state.status).toBe('failed')
     })
@@ -123,7 +130,10 @@ describe('transaction slice', () => {
 
   describe('createTransaction', () => {
     it('fulfilled with insert: true adds transaction and recalculates summary', () => {
-      let state = transactionReducer(undefined, fetchTransactions.fulfilled([tx1], 'req-1', undefined))
+      let state = transactionReducer(
+        undefined,
+        fetchTransactions.fulfilled([tx1], 'req-1', undefined)
+      )
       const newTx = createMockTransaction({
         id: 'tx-new',
         amount: {
@@ -132,7 +142,12 @@ describe('transaction slice', () => {
         },
       })
       const action = createTransaction.fulfilled(
-        { transaction: newTx, insert: true, account: mockAccount, summary: mockAccountSummary },
+        {
+          transaction: newTx,
+          insert: true,
+          accounts: [mockAccount],
+          summary: mockAccountSummary,
+        },
         'req-1',
         {} as never
       )
@@ -144,10 +159,18 @@ describe('transaction slice', () => {
     })
 
     it('fulfilled with insert: false does not add transaction', () => {
-      let state = transactionReducer(undefined, fetchTransactions.fulfilled([tx1], 'req-1', undefined))
+      let state = transactionReducer(
+        undefined,
+        fetchTransactions.fulfilled([tx1], 'req-1', undefined)
+      )
       const newTx = createMockTransaction({ id: 'tx-new' })
       const action = createTransaction.fulfilled(
-        { transaction: newTx, insert: false, account: mockAccount, summary: mockAccountSummary },
+        {
+          transaction: newTx,
+          insert: false,
+          accounts: [mockAccount],
+          summary: mockAccountSummary,
+        },
         'req-1',
         {} as never
       )
@@ -163,7 +186,11 @@ describe('transaction slice', () => {
     })
 
     it('rejected sets status to failed', () => {
-      const action = createTransaction.rejected(new Error('fail'), 'req-1', {} as never)
+      const action = createTransaction.rejected(
+        new Error('fail'),
+        'req-1',
+        {} as never
+      )
       const state = transactionReducer(undefined, action)
       expect(state.status).toBe('failed')
     })
@@ -171,10 +198,13 @@ describe('transaction slice', () => {
 
   describe('updateTransaction', () => {
     it('fulfilled updates transaction in list by id', () => {
-      let state = transactionReducer(undefined, fetchTransactions.fulfilled([tx1, tx2], 'req-1', undefined))
+      let state = transactionReducer(
+        undefined,
+        fetchTransactions.fulfilled([tx1, tx2], 'req-1', undefined)
+      )
       const updated = createMockTransaction({ id: 'tx-1', comment: 'Updated' })
       const action = updateTransaction.fulfilled(
-        { ...updated, insert: true },
+        { transaction: updated, accounts: [], summary: mockAccountSummary },
         'req-1',
         { id: 'tx-1', data: {} as never }
       )
@@ -185,7 +215,10 @@ describe('transaction slice', () => {
 
   describe('deleteTransaction', () => {
     it('fulfilled removes transaction by meta.arg id', () => {
-      let state = transactionReducer(undefined, fetchTransactions.fulfilled([tx1, tx2], 'req-1', undefined))
+      let state = transactionReducer(
+        undefined,
+        fetchTransactions.fulfilled([tx1, tx2], 'req-1', undefined)
+      )
       const action = deleteTransaction.fulfilled(undefined, 'req-1', 'tx-1')
       state = transactionReducer(state, action)
       expect(state.transactions).toHaveLength(1)

@@ -24,7 +24,7 @@ export const HomePageContent: FC = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <Card className="flex flex-col relative" size="sm">
+      <Card className="flex flex-col relative pb-0! gap-0!" size="sm">
         <CardHeader className="items-center pb-0">
           <TimeRangeSwitcher />
         </CardHeader>

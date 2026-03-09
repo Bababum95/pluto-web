@@ -24,6 +24,8 @@ import { Car01Icon } from './components/Car01Icon'
 import { CloudIcon } from './components/CloudIcon'
 import { SoftwareIcon } from './components/SoftwareIcon'
 import { Coffee01Icon } from './components/Coffee01Icon'
+import { Compass1Icon } from './components/Compass1Icon'
+import { CompassIcon } from './components/CompassIcon'
 import { CreditCardIcon } from './components/CreditCardIcon'
 import { Dollar01Icon } from './components/Dollar01Icon'
 import { Dollar02Icon } from './components/Dollar02Icon'
@@ -31,6 +33,8 @@ import { DongIcon } from './components/DongIcon'
 import { DocumentLinesIcon } from './components/DocumentLinesIcon'
 import { EthereumIcon } from './components/EthereumIcon'
 import { EthereumLogoIcon } from './components/EthereumLogoIcon'
+import { EducationIcon } from './components/EducationIcon'
+import { EntertainmentIcon } from './components/EntertainmentIcon'
 import { GiftIcon } from './components/GiftIcon'
 import { GoodsIcon } from './components/GoodsIcon'
 import { GraduationCapAltIcon } from './components/GraduationCapAltIcon'
@@ -72,6 +76,7 @@ import { Wallet01Icon } from './components/Wallet01Icon'
 import { Wallet02Icon } from './components/Wallet02Icon'
 import { WorkIcon } from './components/WorkIcon'
 import { Yen } from './components/Yen'
+import { YouTubeIcon } from './components/YouTubeIcon'
 
 export const ICON_REGISTRY = {
   Airplane01Icon,
@@ -93,12 +98,16 @@ export const ICON_REGISTRY = {
   Car01Icon,
   Coffee01Icon,
   CreditCardIcon,
+  Compass1Icon,
+  CompassIcon,
   Dollar01Icon,
   Dollar02Icon,
   DocumentLinesIcon,
   DongIcon,
   EthereumIcon,
   EthereumLogoIcon,
+  EducationIcon,
+  EntertainmentIcon,
   GiftIcon,
   GoodsIcon,
   GameController01Icon,
@@ -142,6 +151,7 @@ export const ICON_REGISTRY = {
   Yen,
   CloudIcon,
   SoftwareIcon,
+  YouTubeIcon,
 } as const satisfies Record<string, SvgIcon>
 
 export const DEFAULT_ICON = ICON_REGISTRY.Dollar01Icon
@@ -210,7 +220,6 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'ShoppingBag01Icon',
       'ShoppingBasket01Icon',
       'GraduationCapAltIcon',
-      'GraduationCapIcon',
       'GraduationCapVariantIcon',
     ],
   },
@@ -245,7 +254,13 @@ export const ICON_CATEGORIES: IconCategory[] = [
   },
   {
     name: 'Education',
-    icons: ['Book01Icon', 'BookIcon', 'BookOpenIcon'],
+    icons: [
+      'Book01Icon',
+      'BookIcon',
+      'BookOpenIcon',
+      'EducationIcon',
+      'GraduationCapIcon',
+    ],
   },
   {
     name: 'Health & Wellness',
@@ -264,6 +279,10 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'GameController01Icon',
       'Video01Icon',
       'GiftIcon',
+      'EntertainmentIcon',
+      'Compass1Icon',
+      'CompassIcon',
+      'YouTubeIcon',
     ],
   },
 ]

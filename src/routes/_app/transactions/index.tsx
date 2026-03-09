@@ -93,11 +93,7 @@ const TransactionsPage = () => {
                       {list.map((transaction) => (
                         <Fragment key={transaction.id}>
                           <ItemSeparator />
-                          <Item
-                            className="active:scale-95 select-none touch-pan-y"
-                            size="xs"
-                            asChild
-                          >
+                          <Item size="xs" asChild>
                             <Link
                               to="/transactions/$transactionId"
                               params={{ transactionId: transaction.id }}

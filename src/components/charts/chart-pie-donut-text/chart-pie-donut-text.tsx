@@ -35,7 +35,7 @@ export const ChartPieDonutText: FC<Props> = ({
   return (
     <ChartContainer
       config={chartConfig}
-      className="mx-auto aspect-square max-h-[250px]"
+      className="mx-auto aspect-square max-h-[320px]"
     >
       <PieChart>
         {!isEmpty && (
@@ -48,7 +48,7 @@ export const ChartPieDonutText: FC<Props> = ({
           data={isEmpty ? LOADING_DATA : chartData}
           dataKey={dataKey}
           nameKey={nameKey}
-          innerRadius={64}
+          innerRadius={82}
           strokeWidth={5}
           paddingAngle={1}
           isAnimationActive={false}

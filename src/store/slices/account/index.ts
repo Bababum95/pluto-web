@@ -11,7 +11,10 @@ import type {
   CreateAccountDto,
   UpdateAccountDto,
 } from '@/features/account/types'
-import { createTransaction } from '@/store/slices/transaction'
+import {
+  createTransaction,
+  updateTransaction,
+} from '@/store/slices/transaction'
 import type { Status } from '@/lib/types'
 
 type AccountState = {
@@ -28,13 +31,15 @@ const initialState: AccountState = {
 
 function applyAccountUpdate(
   state: AccountState,
-  account: Account,
+  accounts: Account[],
   summary: AccountSummaryDto
 ) {
-  const idx = state.accounts.findIndex((a) => a.id === account.id)
-  if (idx !== -1) {
-    state.accounts[idx] = account
-  }
+  accounts.forEach((account) => {
+    const idx = state.accounts.findIndex((a) => a.id === account.id)
+    if (idx !== -1) {
+      state.accounts[idx] = account
+    }
+  })
   state.summary = summary
 }
 
@@ -119,14 +124,21 @@ export const accountSlice = createSlice({
       .addCase(updateAccount.fulfilled, (state, action) => {
         applyAccountUpdate(
           state,
-          action.payload.account,
+          [action.payload.account],
           action.payload.summary
         )
       })
       .addCase(createTransaction.fulfilled, (state, action) => {
         applyAccountUpdate(
           state,
-          action.payload.account,
+          action.payload.accounts,
+          action.payload.summary
+        )
+      })
+      .addCase(updateTransaction.fulfilled, (state, action) => {
+        applyAccountUpdate(
+          state,
+          action.payload.accounts,
           action.payload.summary
         )
       })
@@ -146,7 +158,7 @@ export const accountSlice = createSlice({
       .addCase(toggleExcluded.fulfilled, (state, action) => {
         applyAccountUpdate(
           state,
-          action.payload.account,
+          [action.payload.account],
           action.payload.summary
         )
       })

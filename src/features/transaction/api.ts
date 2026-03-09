@@ -23,7 +23,7 @@ export const transactionApi = {
     id: string,
     data: UpdateTransactionDto,
     params?: Record<string, string>
-  ): Promise<Transaction> =>
+  ): Promise<TransactionMutationResponse> =>
     apiFetch(`${BASE}/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),

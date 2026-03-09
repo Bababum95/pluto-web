@@ -35,7 +35,9 @@ import type { TransactionFormType } from '@/features/transaction/types'
 
 const EditTransactionPage = () => {
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState<'recalc' | 'skip' | false>(
+    false
+  )
   const [pendingValues, setPendingValues] =
     useState<TransactionFormType | null>(null)
   const { transactionId } = Route.useParams()
@@ -63,7 +65,7 @@ const EditTransactionPage = () => {
     recalcBalance: boolean = false
   ) => {
     if (!values) return
-    setIsSubmitting(true)
+    setIsSubmitting(recalcBalance ? 'recalc' : 'skip')
 
     await dispatch(
       updateTransaction({ id: transactionId, data: values, recalcBalance })
@@ -147,14 +149,16 @@ const EditTransactionPage = () => {
           <DialogFooter className="flex-row gap-2 flex-wrap">
             <Button
               onClick={() => handleSubmit(pendingValues, true)}
-              isLoading={isSubmitting}
+              isLoading={isSubmitting === 'recalc'}
+              disabled={!!isSubmitting}
               className="flex-1"
             >
               {t('transactions.recalculateBalance.submit')}
             </Button>
             <Button
               onClick={() => handleSubmit(pendingValues, false)}
-              isLoading={isSubmitting}
+              isLoading={isSubmitting === 'skip'}
+              disabled={!!isSubmitting}
               variant="outline"
               className="flex-1"
             >

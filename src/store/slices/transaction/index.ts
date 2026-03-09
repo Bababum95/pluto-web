@@ -108,11 +108,10 @@ export const transactionSlice = createSlice({
         state.status = 'failed'
       })
       .addCase(updateTransaction.fulfilled, (state, action) => {
-        const idx = state.transactions.findIndex(
-          (t) => t.id === action.payload.id
-        )
+        const transaction = action.payload.transaction
+        const idx = state.transactions.findIndex((t) => t.id === transaction.id)
         if (idx !== -1) {
-          state.transactions[idx] = action.payload
+          state.transactions[idx] = transaction
         }
       })
       .addCase(deleteTransaction.fulfilled, (state, action) => {

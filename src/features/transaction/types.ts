@@ -1,5 +1,5 @@
 import type { components, operations } from '@/lib/api/types'
-import type { AccountWithSummaryResponseDto } from '@/features/account/types'
+import type { Account, AccountSummaryDto } from '@/features/account/types'
 
 export type CreateTransactionDto = components['schemas']['CreateTransactionDto']
 export type UpdateTransactionDto = Partial<CreateTransactionDto>
@@ -17,6 +17,8 @@ export type TransactionFormType = Omit<
   date: Date
 }
 
-export type TransactionMutationResponse = AccountWithSummaryResponseDto & {
+export type TransactionMutationResponse = {
   transaction: Transaction
+  accounts: Account[]
+  summary: AccountSummaryDto
 }

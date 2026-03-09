@@ -1,26 +1,21 @@
 import type { FC } from 'react'
 
-import { Header } from '@/components/Header'
+import { Header, type HeaderProps } from '@/components/Header'
 import { cn } from '@/lib/utils'
 
-type Props = {
+type Props = HeaderProps & {
   children: React.ReactNode
-  title?: React.ReactNode
-  actions?: React.ReactNode
   className?: string
-  showBackButton?: boolean
 }
 
 export const AppLayout: FC<Props> = ({
   children,
   className,
-  title,
-  actions,
-  showBackButton,
+  ...headerProps
 }) => {
   return (
     <>
-      <Header title={title} actions={actions} showBackButton={showBackButton} />
+      <Header {...headerProps} />
       <main className={cn('flex flex-1 flex-col gap-2 p-4', className)}>
         {children}
       </main>

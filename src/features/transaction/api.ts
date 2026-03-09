@@ -19,10 +19,15 @@ export const transactionApi = {
   create: (data: CreateTransactionDto): Promise<TransactionMutationResponse> =>
     apiFetch(BASE, { method: 'POST', body: JSON.stringify(data) }),
 
-  update: (id: string, data: UpdateTransactionDto): Promise<Transaction> =>
+  update: (
+    id: string,
+    data: UpdateTransactionDto,
+    params?: Record<string, string>
+  ): Promise<Transaction> =>
     apiFetch(`${BASE}/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
+      params,
     }),
 
   delete: (id: string): Promise<void> =>

@@ -3,6 +3,8 @@ import type { AccountWithSummaryResponseDto } from '@/features/account/types'
 
 export type CreateTransactionDto = components['schemas']['CreateTransactionDto']
 export type UpdateTransactionDto = Partial<CreateTransactionDto>
+export type UpdateTransactionOptionsDto =
+  operations['TransactionController_update']['parameters']['query']
 export type Transaction = components['schemas']['TransactionDto']
 export type TransactionFilterDto =
   operations['TransactionController_findAll']['parameters']['query']

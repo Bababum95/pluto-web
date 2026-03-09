@@ -17,13 +17,19 @@ import { useTranslation } from '@/lib/i18n'
 import { MENU_ITEMS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
-type Props = {
+export type HeaderProps = {
   title?: React.ReactNode
   actions?: React.ReactNode
   showBackButton?: boolean
+  backPath?: string
 }
 
-export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
+export const Header: FC<HeaderProps> = ({
+  title,
+  actions,
+  showBackButton,
+  backPath,
+}) => {
   const { t } = useTranslation()
   const router = useRouter()
 
@@ -36,7 +42,12 @@ export const Header: FC<Props> = ({ title, actions, showBackButton }) => {
             size="icon"
             className="[&_svg]:size-6"
             onClick={() => {
-              if (document.startViewTransition) {
+              if (backPath) {
+                router.navigate({
+                  to: backPath,
+                  viewTransition: { types: ['slide-right'] },
+                })
+              } else if (document.startViewTransition) {
                 document.startViewTransition({
                   types: ['slide-right'],
                   update: () => router.history.back(),

@@ -2068,7 +2068,10 @@ export interface operations {
     };
     TransactionController_update: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Whether account balance should be recalculated after transaction update */
+                recalcBalance?: boolean;
+            };
             header?: never;
             path: {
                 id: string;

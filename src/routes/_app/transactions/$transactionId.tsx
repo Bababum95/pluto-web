@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Delete01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { useState } from 'react'
 
 import dayjs from '@/lib/dayjs'
 import { AppLayout } from '@/components/AppLayout'
@@ -13,31 +14,64 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
 import { TransactionForm } from '@/features/transaction/components/TransactionForm'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   deleteTransaction,
   selectTransactionById,
-  selectTransactionsStatus,
   updateTransaction,
 } from '@/store/slices/transaction'
+import { parseDecimal } from '@/features/money'
 import type { TransactionFormType } from '@/features/transaction/types'
 
 const EditTransactionPage = () => {
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [pendingValues, setPendingValues] =
+    useState<TransactionFormType | null>(null)
   const { transactionId } = Route.useParams()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const transaction = useAppSelector(selectTransactionById(transactionId))
-  const status = useAppSelector(selectTransactionsStatus)
-  const isLoading = status === 'pending'
 
-  const handleSubmit = async (values: TransactionFormType) => {
+  const confirmBalanceChange = async (values: TransactionFormType) => {
+    const { balance, scale } = parseDecimal(values.amount)
+    if (
+      values.account !== transaction?.account.id ||
+      scale !== transaction?.amount.original.scale ||
+      balance !== transaction?.amount.original.value
+    ) {
+      setPendingValues(values)
+      setIsOpenConfirmModal(true)
+    } else {
+      await handleSubmit(values)
+    }
+  }
+
+  const handleSubmit = async (
+    values: TransactionFormType | null,
+    recalcBalance: boolean = false
+  ) => {
+    if (!values) return
+    setIsSubmitting(true)
+
     await dispatch(
-      updateTransaction({ id: transactionId, data: values })
+      updateTransaction({ id: transactionId, data: values, recalcBalance })
     ).unwrap()
 
+    if (pendingValues) setPendingValues(null)
+    setIsSubmitting(false)
+    setIsOpenConfirmModal(false)
     navigate({ to: '/transactions' })
     toast.success(t('transactions.updated'))
   }
@@ -48,12 +82,12 @@ const EditTransactionPage = () => {
     toast.success(t('transactions.deleted'))
   }
 
-  if (isLoading || !transaction) {
+  if (!transaction) {
     return (
       <AppLayout title={t('transactions.edit')} showBackButton>
         <TransactionTypeTabs>
           <div className="flex flex-1 items-center justify-center py-8">
-            {isLoading ? t('common.loading') : t('transactions.notFound')}
+            {t('transactions.notFound')}
           </div>
         </TransactionTypeTabs>
       </AppLayout>
@@ -92,10 +126,43 @@ const EditTransactionPage = () => {
           }}
           amountCurrency={transaction.amount.original.currency.code}
           submitLabel={t('transactions.save')}
-          onSubmit={handleSubmit}
+          onSubmit={confirmBalanceChange}
           key={`edit-transaction-form-${transaction.id}`}
         />
       </TransactionTypeTabs>
+      <Dialog
+        modal
+        open={isOpenConfirmModal}
+        onOpenChange={setIsOpenConfirmModal}
+      >
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>
+              {t('transactions.recalculateBalance.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('transactions.recalculateBalance.description')}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-row gap-2 flex-wrap">
+            <Button
+              onClick={() => handleSubmit(pendingValues, true)}
+              isLoading={isSubmitting}
+              className="flex-1"
+            >
+              {t('transactions.recalculateBalance.submit')}
+            </Button>
+            <Button
+              onClick={() => handleSubmit(pendingValues, false)}
+              isLoading={isSubmitting}
+              variant="outline"
+              className="flex-1"
+            >
+              {t('transactions.recalculateBalance.saveWithoutRecalculation')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   )
 }

@@ -7,6 +7,19 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 09.03.2026 — v0.1.13
+
+### ✨ Features
+
+- enhance transaction editing with balance recalculation option
+- add new icons to the registry
+
+### ♻️ Refactoring
+
+- update transaction amount format and date handling in tests
+
+---
+
 ## 07.03.2026 — v0.1.12
 
 ### ✨ Features

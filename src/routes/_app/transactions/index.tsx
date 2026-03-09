@@ -2,7 +2,7 @@ import { i18n, useTranslation } from '@/lib/i18n'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Fragment } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Invoice01Icon } from '@hugeicons/core-free-icons'
+import { Invoice01Icon, PlusSignIcon } from '@hugeicons/core-free-icons'
 
 import dayjs from '@/lib/dayjs'
 import { AppLayout } from '@/components/AppLayout'
@@ -51,9 +51,18 @@ const TransactionsPage = () => {
   return (
     <AppLayout
       title={t('transactions.title')}
-      className="px-2"
       backPath="/"
       showBackButton
+      actions={
+        <Button variant="ghost" size="icon" asChild>
+          <Link
+            to="/transactions/create"
+            viewTransition={{ types: ['slide-left'] }}
+          >
+            <HugeiconsIcon icon={PlusSignIcon} />
+          </Link>
+        </Button>
+      }
     >
       <TransactionTypeTabs>
         <Card className="flex flex-col relative" size="sm">

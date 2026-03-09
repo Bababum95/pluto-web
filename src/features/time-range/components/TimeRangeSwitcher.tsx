@@ -19,6 +19,7 @@ import {
   decreaseTimeRangeIndex,
   increaseTimeRangeIndex,
   setTimeRange,
+  setTimeRangeIndex,
 } from '@/store/slices/time-range'
 import { cn } from '@/lib/utils'
 
@@ -34,6 +35,7 @@ export const TimeRangeSwitcher: FC = () => {
 
   const actions = {
     set: (value: TimeRangeType) => dispatch(setTimeRange(value)),
+    setIndex: (value: number) => dispatch(setTimeRangeIndex(value)),
     next: () => dispatch(increaseTimeRangeIndex()),
     prev: () => dispatch(decreaseTimeRangeIndex()),
   }
@@ -85,7 +87,7 @@ export const TimeRangeSwitcher: FC = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={actions.prev}
+                onClick={() => actions.setIndex(0)}
                 className={cn(
                   '[&_svg]:size-5',
                   !canDecrease && 'opacity-0 pointer-events-none'

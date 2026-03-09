@@ -113,6 +113,16 @@ export function TransactionForm({
         )}
       />
       <form.Field
+        name="tags"
+        children={(field) => (
+          <TagPicker
+            values={field.state.value}
+            onChange={(value) => field.handleChange(value)}
+            multiple
+          />
+        )}
+      />
+      <form.Field
         name="date"
         children={(field) => (
           <DatePicker
@@ -123,16 +133,6 @@ export function TransactionForm({
             isError={field.state.meta.isTouched && !field.state.meta.isValid}
             errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
             label={t('transactions.create.date')}
-          />
-        )}
-      />
-      <form.Field
-        name="tags"
-        children={(field) => (
-          <TagPicker
-            values={field.state.value}
-            onChange={(value) => field.handleChange(value)}
-            multiple
           />
         )}
       />

@@ -63,7 +63,7 @@ export const DatePicker: FC<DatePickerProps> = ({
             variant="secondary"
             aria-label={t('datePicker.label')}
             className={cn(
-              'justify-between',
+              'justify-between active:scale-100',
               isError ? 'border-destructive text-destructive' : ''
             )}
           >

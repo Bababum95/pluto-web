@@ -7,11 +7,6 @@ import {
 import type { FC } from 'react'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-import { TIME_RANGES } from '../constants'
-import type { TimeRangeType } from '../types'
-
-import { TimeRangeDateLabel } from './TimeRangeDateLabel'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/lib/i18n'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -22,6 +17,11 @@ import {
   setTimeRangeIndex,
 } from '@/store/slices/time-range'
 import { cn } from '@/lib/utils'
+
+import { TIME_RANGES } from '../constants'
+import type { TimeRangeType } from '../types'
+
+import { TimeRangeDateLabel } from './TimeRangeDateLabel'
 
 export const TimeRangeSwitcher: FC = () => {
   const { t } = useTranslation()

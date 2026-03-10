@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import type { FC } from 'react'
 
-import { FieldGroup, FieldSet, Field, FieldLabel } from '@/components/ui/field'
 import { Button } from '@/components/ui/button'
+import { ButtonGroup } from '@/components/ui/button-group'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { FieldGroup, FieldSet, Field, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -17,13 +18,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { ButtonGroup } from '@/components/ui/button-group'
 import { SelectAccount } from '@/features/account'
-import { MoneyField, DEFAULT_CURRENCY } from '@/features/money'
+import { MoneyField, DEFAULT_CURRENCY, sanitizeDecimal } from '@/features/money'
+import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
 import { useAppSelector } from '@/store'
 import { selectAccounts } from '@/store/slices/account'
-import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
 import { selectExchangeRates } from '@/store/slices/exchange-rate'
+import type { Account } from '@/features/account/types'
 
 import {
   calculateTransferRate,
@@ -34,10 +35,19 @@ import {
 } from '../lib'
 import type { CreateTransferDto, FeeType, TransferFormValues } from '../types'
 
+import { RateField } from './RateField'
+
 type Props = {
   defaultValues: TransferFormValues
   onSubmit: (values: CreateTransferDto) => Promise<void>
   submitLabel?: string
+}
+
+const getCurrencyCode = (accounts: Account[], account: string): string => {
+  return (
+    accounts.find((acc) => acc.id === account)?.balance.original.currency
+      ?.code ?? DEFAULT_CURRENCY.code
+  )
 }
 
 export const TransferForm: FC<Props> = ({
@@ -48,13 +58,6 @@ export const TransferForm: FC<Props> = ({
   const { t } = useTranslation()
   const accounts = useAppSelector(selectAccounts)
   const rates = useAppSelector(selectExchangeRates)
-
-  const getCurrencyCode = (account: string): string => {
-    return (
-      accounts.find((acc) => acc.id === account)?.balance.original.currency
-        ?.code ?? DEFAULT_CURRENCY.code
-    )
-  }
 
   const form = useForm({
     validators: {
@@ -90,11 +93,11 @@ export const TransferForm: FC<Props> = ({
             fee: { value: feeDecimal, type: value.feeType },
             from: {
               value: fromDecimal,
-              code: getCurrencyCode(value.fromAccount),
+              code: getCurrencyCode(accounts, value.fromAccount),
             },
             to: {
               value: toDecimal,
-              code: getCurrencyCode(value.toAccount),
+              code: getCurrencyCode(accounts, value.toAccount),
             },
           })
 
@@ -205,25 +208,31 @@ export const TransferForm: FC<Props> = ({
           </CardContent>
         </Card>
 
-        {/* Rate & Fee section */}
         <FieldGroup className="flex-row gap-3">
-          <Field>
-            <FieldLabel>{t('transfers.rate')}</FieldLabel>
-            <form.Field
-              name="rate"
-              children={(field) => (
-                <Input
-                  type="text"
-                  inputMode="decimal"
-                  placeholder="1"
-                  size="sm"
-                  value={field.state.value ?? ''}
-                  onChange={(evt) => field.handleChange(evt.target.value)}
-                  onBlur={field.handleBlur}
-                />
-              )}
-            />
-          </Field>
+          <form.Subscribe
+            selector={(state) => ({
+              fromAmount: state.values.fromAmount,
+              toAmount: state.values.toAmount,
+              fee: state.values.fee,
+              feeType: state.values.feeType,
+              fromAccount: state.values.fromAccount,
+              toAccount: state.values.toAccount,
+            })}
+          >
+            {(values) => (
+              <form.Field name="rate">
+                {(field) => (
+                  <RateField
+                    label={t('transfers.rate')}
+                    value={field.state.value ?? ''}
+                    onChange={field.handleChange}
+                    onBlur={field.handleBlur}
+                    {...values}
+                  />
+                )}
+              </form.Field>
+            )}
+          </form.Subscribe>
 
           <Field>
             <FieldLabel>{t('transfers.fee')}</FieldLabel>
@@ -237,7 +246,9 @@ export const TransferForm: FC<Props> = ({
                     placeholder="0"
                     size="sm"
                     value={field.state.value ?? ''}
-                    onChange={(evt) => field.handleChange(evt.target.value)}
+                    onChange={(evt) =>
+                      field.handleChange(sanitizeDecimal(evt.target.value))
+                    }
                     className="flex-1"
                     onBlur={field.handleBlur}
                   />
@@ -252,8 +263,8 @@ export const TransferForm: FC<Props> = ({
                   <form.Field
                     name="feeType"
                     children={(field) => {
-                      const fromCode = getCurrencyCode(from)
-                      const toCode = getCurrencyCode(to)
+                      const fromCode = getCurrencyCode(accounts, from)
+                      const toCode = getCurrencyCode(accounts, to)
 
                       return (
                         <Select

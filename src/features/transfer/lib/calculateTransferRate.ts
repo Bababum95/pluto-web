@@ -1,5 +1,6 @@
 import Decimal from 'decimal.js'
 
+import { stringIsValid } from '@/lib/utils'
 import { calculateBaseRate } from '@/features/money'
 import type { ExchangeRate } from '@/features/exchange-rate'
 
@@ -27,7 +28,10 @@ export function calculateTransferRate({
   fee,
   rates,
 }: Params): Decimal | null {
-  // If one of amounts is missing — fallback to base exchange rate
+  if (!stringIsValid(from.code) || !stringIsValid(to.code)) {
+    return new Decimal(1)
+  }
+
   if (!from.value || !to.value) {
     const baseRate = calculateBaseRate(rates, from.code, to.code)
     return baseRate ? new Decimal(baseRate) : null

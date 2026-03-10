@@ -69,7 +69,9 @@ export const RateField: FC<Props> = ({
       },
     })
 
-    return rate?.toString() ?? '1'
+    if (!rate) return '1'
+
+    return rate.toString().slice(0, 12)
   }, [
     value,
     fee,

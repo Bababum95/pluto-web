@@ -45,6 +45,8 @@ import { HeartMessageIcon } from './components/HeartMessageIcon'
 import { HeartIcon } from './components/HeartIcon'
 import { GolomtIcon } from './components/GolomtIcon'
 import { GameController01Icon } from './components/GameController01Icon'
+import { GroomingIcon } from './components/GroomingIcon'
+import { NailIcon } from './components/NailIcon'
 import { HeartCardiogramIcon } from './components/HeartCardiogramIcon'
 import { Hamburger01Icon } from './components/Hamburger01Icon'
 import { HealthIcon } from './components/HealthIcon'
@@ -152,6 +154,8 @@ export const ICON_REGISTRY = {
   CloudIcon,
   SoftwareIcon,
   YouTubeIcon,
+  GroomingIcon,
+  NailIcon,
 } as const satisfies Record<string, SvgIcon>
 
 export const DEFAULT_ICON = ICON_REGISTRY.Dollar01Icon
@@ -263,13 +267,15 @@ export const ICON_CATEGORIES: IconCategory[] = [
     ],
   },
   {
-    name: 'Health & Wellness',
+    name: 'Personal Care',
     icons: [
       'HealthIcon',
       'HeartCardiogramIcon',
       'HeartIcon',
       'HeartMessageIcon',
       'AppleIcon',
+      'GroomingIcon',
+      'NailIcon',
     ],
   },
   {

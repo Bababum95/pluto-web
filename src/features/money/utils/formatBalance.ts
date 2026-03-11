@@ -7,7 +7,7 @@ export function formatBalance({
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
     currency: currency.code,
-    minimumFractionDigits: 0,
+    minimumFractionDigits: balance < 100 ? 2 : 0,
     maximumFractionDigits: currency.decimal_digits,
   }).format(balance)
 }

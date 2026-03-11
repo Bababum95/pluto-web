@@ -138,8 +138,8 @@ const TransactionsPage = () => {
                                   })}
                                 </span>
                               </ItemActions>
-                              <div className="w-full">
-                                <div className="flex gap-1 flex-wrap">
+                              {transaction.tags.length > 0 && (
+                                <div className="flex gap-1 flex-wrap w-full">
                                   {transaction.tags.map((tag) => (
                                     <Badge
                                       key={tag.id}
@@ -151,10 +151,12 @@ const TransactionsPage = () => {
                                     </Badge>
                                   ))}
                                 </div>
-                                <p className="text-xs text-muted-foreground mt-1">
+                              )}
+                              {transaction.comment.trim().length > 0 && (
+                                <p className="text-xs text-muted-foreground w-full">
                                   {transaction.comment}
                                 </p>
-                              </div>
+                              )}
                             </Link>
                           </Item>
                         </Fragment>

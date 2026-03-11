@@ -7,6 +7,41 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 11.03.2026 — v0.1.15
+
+### ✨ Features
+
+- add new icons and update existing icon components for improved visuals
+- enhance date-picker and time-range components for improved functionality
+- enhance chart and icon components for improved visuals
+
+### 🐛 Fixes
+
+- adjust chart dimensions and balance formatting for improved display
+- improve rate handling in RateField component
+
+### ♻️ Refactoring
+
+- reorganize imports and enhance TransferForm functionality
+
+---
+
+## 09.03.2026 — v0.1.14
+
+### ✨ Features
+
+- update transaction handling and types for improved account management
+
+### 🐛 Fixes
+
+- update item class for touch support in transactions page
+
+### ♻️ Refactoring
+
+- update account and transaction handling for consistency
+
+---
+
 ## 09.03.2026 — v0.1.13
 
 ### ✨ Features

@@ -1,7 +1,4 @@
-import {
-  Cancel01Icon,
-  MultiplicationSignIcon,
-} from '@hugeicons/core-free-icons'
+import { MultiplicationSignIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import type { FC } from 'react'
 
@@ -9,7 +6,6 @@ import { selectCurrency } from '@/store/slices/settings'
 import { useAppSelector } from '@/store/hooks'
 import { cn } from '@/lib/utils'
 import { FieldError, Field, FieldLabel } from '@/components/ui/field'
-import { ButtonGroup } from '@/components/ui/button-group'
 import { Button } from '@/components/ui/button'
 import type { InputProps } from '@/components/ui/input'
 
@@ -50,24 +46,25 @@ export const MoneyField: FC<Props> = ({
   return (
     <Field className={cn('flex flex-col gap-2', className)}>
       {label && <FieldLabel>{label}</FieldLabel>}
-      <ButtonGroup className="w-full">
+      <div className="relative">
         <MoneyInput {...inputProps} isError={isError} />
-        <Button
-          variant="secondary"
-          type="button"
-          className={cn('', isError && 'border-destructive')}
-          onClick={() => inputProps.onChange('')}
-        >
-          <HugeiconsIcon icon={Cancel01Icon} size={20} />
-        </Button>
-        <Button
-          variant="secondary"
-          type="button"
-          className={cn('min-w-24', isError && 'border-destructive')}
-        >
-          {currency ?? defaultCurrency.code}
-        </Button>
-      </ButtonGroup>
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1">
+          {inputProps.value.length > 0 && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className=" text-destructive"
+              onClick={() => inputProps.onChange('')}
+            >
+              <HugeiconsIcon icon={MultiplicationSignIcon} size={20} />
+            </Button>
+          )}
+          <p className="text-primary text-lg">
+            {currency ?? defaultCurrency.code}
+          </p>
+        </div>
+      </div>
       <div className="flex flex-wrap gap-1">
         <span className="text-muted-foreground h-7 flex items-center mr-2">
           <HugeiconsIcon icon={MultiplicationSignIcon} size={16} />

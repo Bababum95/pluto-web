@@ -1,6 +1,6 @@
 import { MultiplicationSignIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import type { FC } from 'react'
+import { type FC, useRef } from 'react'
 
 import { selectCurrency } from '@/store/slices/settings'
 import { useAppSelector } from '@/store/hooks'
@@ -33,6 +33,7 @@ export const MoneyField: FC<Props> = ({
   className,
   label,
 }) => {
+  const ref = useRef<HTMLInputElement>(null)
   const defaultCurrency = useAppSelector(selectCurrency)
   const handleMultiply = (multiplier: number) => {
     let currentValue = parseFloat(inputProps.value)
@@ -41,13 +42,19 @@ export const MoneyField: FC<Props> = ({
     }
 
     inputProps.onChange((currentValue * multiplier).toString())
+    ref.current?.focus()
+  }
+
+  const handleClear = () => {
+    inputProps.onChange('')
+    ref.current?.focus()
   }
 
   return (
     <Field className={cn('flex flex-col gap-2', className)}>
       {label && <FieldLabel>{label}</FieldLabel>}
       <div className="relative">
-        <MoneyInput {...inputProps} isError={isError} />
+        <MoneyInput {...inputProps} isError={isError} ref={ref} />
         <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1">
           {inputProps.value.length > 0 && (
             <Button
@@ -55,7 +62,7 @@ export const MoneyField: FC<Props> = ({
               variant="ghost"
               size="icon"
               className=" text-destructive"
-              onClick={() => inputProps.onChange('')}
+              onClick={handleClear}
             >
               <HugeiconsIcon icon={MultiplicationSignIcon} size={20} />
             </Button>

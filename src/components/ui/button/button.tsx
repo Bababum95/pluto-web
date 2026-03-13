@@ -4,7 +4,6 @@ import { forwardRef } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { PlusSignIcon } from '@hugeicons/core-free-icons'
 
-import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
@@ -66,20 +65,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         className={cn(
           buttonVariants({ variant, size, className }),
-          disabled && disabledStyle
+          disabled && !isLoading && disabledStyle,
+          isLoading && 'loading-stripes'
         )}
         ref={ref}
         disabled={disabled || isLoading}
         {...props}
       >
-        {asChild ? (
-          props.children
-        ) : (
-          <>
-            {isLoading && <Spinner />}
-            {props.children}
-          </>
-        )}
+        {props.children}
       </Comp>
     )
   }

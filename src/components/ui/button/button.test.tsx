@@ -50,9 +50,11 @@ describe('Button', () => {
     expect(screen.getByRole('button')).toHaveClass('test-class')
   })
 
-  it('shows spinner when loading', () => {
+  it('shows loading state when loading', () => {
     render(<Button isLoading>Load</Button>)
-    expect(screen.getByRole('status')).toBeInTheDocument()
+    const loadingButton = screen.getByRole('button', { name: 'Load' })
+    expect(loadingButton).toHaveClass('loading-stripes')
+    expect(loadingButton).toHaveAttribute('aria-busy', 'true')
   })
 
   it('forwards ref', () => {

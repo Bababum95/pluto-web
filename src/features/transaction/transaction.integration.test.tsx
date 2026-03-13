@@ -8,6 +8,7 @@ import {
   createTransaction,
   deleteTransaction,
   updateTransaction,
+  fetchTransactions,
 } from '@/store/slices/transaction'
 import {
   mockTransaction,
@@ -17,6 +18,80 @@ import { mockAccount, mockAccountSummary } from '@/testing/data/account'
 import dayjs from '@/lib/dayjs'
 
 describe('Transaction flow (integration)', () => {
+  it('fetchTransactions: GET /transactions with type, from, to query params from store', async () => {
+    let capturedUrl = ''
+    server.use(
+      http.get('http://localhost/v1/transactions', ({ request }) => {
+        capturedUrl = request.url
+        return HttpResponse.json([mockTransaction])
+      })
+    )
+    const store = createStore({
+      timeRange: { timeRange: 'month', timeRangeIndex: 0 },
+      transactionType: { transactionType: 'expense' },
+    })
+    store.dispatch(fetchTransactions())
+    await waitFor(
+      () => {
+        expect(store.getState().transaction.status).toBe('success')
+      },
+      { timeout: 3000 }
+    )
+    const url = new URL(capturedUrl)
+    expect(url.searchParams.get('type')).toBe('expense')
+    expect(url.searchParams.get('from')).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(url.searchParams.get('to')).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  })
+
+  it('createTransaction: POST /transactions body has account, category, amount, date, type, scale', async () => {
+    const newTx = createMockTransaction({ id: 'tx-from-body-test' })
+    let capturedBody: Record<string, unknown> = {}
+    server.use(
+      http.post('http://localhost/v1/transactions', async ({ request }) => {
+        capturedBody = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json({
+          accounts: [mockAccount],
+          summary: mockAccountSummary,
+          transaction: newTx,
+        })
+      })
+    )
+    const store = createStore({
+      account: {
+        accounts: [mockAccount],
+        summary: mockAccountSummary,
+        status: 'success',
+      },
+    })
+    const today = dayjs().format('YYYY-MM-DD')
+    store.dispatch(
+      createTransaction({
+        account: mockAccount.id,
+        category: 'cat-1',
+        amount: '25.50',
+        date: dayjs(today).toDate(),
+        comment: 'Comment',
+        tags: ['tag1'],
+      })
+    )
+    await waitFor(
+      () => {
+        expect(store.getState().transaction.status).toBe('success')
+      },
+      { timeout: 3000 }
+    )
+    expect(capturedBody).toMatchObject({
+      account: mockAccount.id,
+      category: 'cat-1',
+      amount: 2550,
+      date: today,
+      type: 'expense',
+      scale: 2,
+      comment: 'Comment',
+      tags: ['tag1'],
+    })
+  })
+
   it('createTransaction: API call, store transaction list and summary updated, account updated', async () => {
     const updatedAccount = { ...mockAccount, name: 'Updated Wallet' }
     const updatedSummary = { ...mockAccountSummary, total_raw: 99000 }

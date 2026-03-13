@@ -58,6 +58,36 @@ describe('Transfer flow (integration)', () => {
     )
   })
 
+  it('createTransfer: POST /transfers body has from, to, rate', async () => {
+    const newTransfer = createMockTransfer({ id: 'transfer-created' })
+    let capturedBody: Record<string, unknown> = {}
+    server.use(
+      http.post('http://localhost/v1/transfers', async ({ request }) => {
+        capturedBody = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json(newTransfer, { status: 201 })
+      })
+    )
+    const store = createStore()
+    store.dispatch(
+      createTransfer({
+        from: { account: 'acc-from', value: 5000, scale: 2 },
+        to: { account: 'acc-to', value: 4500, scale: 2 },
+        rate: 0.9,
+      })
+    )
+    await waitFor(
+      () => {
+        expect(store.getState().transfer.status).toBe('success')
+      },
+      { timeout: 3000 }
+    )
+    expect(capturedBody).toMatchObject({
+      from: { account: 'acc-from', value: 5000, scale: 2 },
+      to: { account: 'acc-to', value: 4500, scale: 2 },
+      rate: 0.9,
+    })
+  })
+
   it('deleteTransfer: API call, transfer removed from store', async () => {
     const store = createStore({
       transfer: {

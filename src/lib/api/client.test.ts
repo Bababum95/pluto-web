@@ -1,13 +1,22 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { http, HttpResponse } from 'msw'
+import { createElement, useEffect } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { render, waitFor } from '@testing-library/react'
 
-import { apiFetch, ApiError } from './client'
+import { apiFetch, ApiError, queryClient } from './client'
 import { TEST_API_ROOT } from '@/testing/constants'
 import { server } from '@/testing/server'
 
 vi.mock('@/features/auth/utils/auth-token', () => ({
   getAccessToken: vi.fn(),
 }))
+
+vi.mock('sonner', () => ({
+  toast: { error: vi.fn() },
+}))
+import { toast } from 'sonner'
 
 import { getAccessToken } from '@/features/auth/utils/auth-token'
 
@@ -36,7 +45,9 @@ describe('apiFetch', () => {
         return HttpResponse.json([])
       })
     )
-    await apiFetch('/transactions', { params: { from: '2024-01-01', to: '2024-01-31' } })
+    await apiFetch('/transactions', {
+      params: { from: '2024-01-01', to: '2024-01-31' },
+    })
     expect(capturedUrl).toContain('from=2024-01-01')
     expect(capturedUrl).toContain('to=2024-01-31')
   })
@@ -82,14 +93,20 @@ describe('apiFetch', () => {
       expect(e).toBeInstanceOf(ApiError)
       expect((e as ApiError).status).toBe(404)
       expect((e as ApiError).message).toBe('Not found')
-      expect((e as ApiError).body).toEqual({ message: 'Not found', statusCode: 404 })
+      expect((e as ApiError).body).toEqual({
+        message: 'Not found',
+        statusCode: 404,
+      })
     }
   })
 
   it('uses res.statusText when response body has no message', async () => {
     server.use(
       http.get(`${TEST_API_ROOT}no-msg`, () =>
-        HttpResponse.json({}, { status: 500, statusText: 'Internal Server Error' })
+        HttpResponse.json(
+          {},
+          { status: 500, statusText: 'Internal Server Error' }
+        )
       )
     )
     await expect(apiFetch('/no-msg')).rejects.toThrow(ApiError)
@@ -116,10 +133,74 @@ describe('apiFetch', () => {
 
   it('returns parsed JSON on success', async () => {
     const data = { id: '1', name: 'Test' }
-    server.use(
-      http.get(`${TEST_API_ROOT}data`, () => HttpResponse.json(data))
-    )
+    server.use(http.get(`${TEST_API_ROOT}data`, () => HttpResponse.json(data)))
     const result = await apiFetch<typeof data>('/data')
     expect(result).toEqual(data)
+  })
+})
+
+describe('queryClient global error handling (handleApiError)', () => {
+  let consoleErrorSpy: ReturnType<typeof vi.spyOn>
+
+  beforeEach(() => {
+    vi.mocked(toast.error).mockClear()
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore()
+  })
+
+  it('calls toast.error and console.error when a query fails', async () => {
+    await expect(
+      queryClient.fetchQuery({
+        queryKey: ['global-err-query'],
+        queryFn: async () => {
+          throw new Error('Query failed')
+        },
+      })
+    ).rejects.toThrow('Query failed')
+
+    expect(toast.error).toHaveBeenCalledTimes(1)
+    expect(toast.error).toHaveBeenCalledWith('Query failed')
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'API error:',
+      expect.any(Error)
+    )
+  })
+
+  it('calls toast.error and console.error when a mutation fails', async () => {
+    const mutationErrorMessage = 'Mutation failed'
+
+    function FailingMutationRunner() {
+      const mutation = useMutation({
+        mutationFn: async () => {
+          throw new Error(mutationErrorMessage)
+        },
+      })
+      useEffect(() => {
+        mutation.mutate()
+        // Run once on mount; adding mutation to deps would re-run every render
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [])
+      return null
+    }
+
+    render(
+      createElement(
+        QueryClientProvider,
+        { client: queryClient },
+        createElement(FailingMutationRunner)
+      )
+    )
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledTimes(1)
+      expect(toast.error).toHaveBeenCalledWith(mutationErrorMessage)
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'API error:',
+        expect.any(Error)
+      )
+    })
   })
 })

@@ -7,6 +7,7 @@ import { createStore } from '@/store'
 import {
   createTransaction,
   deleteTransaction,
+  updateTransaction,
 } from '@/store/slices/transaction'
 import {
   mockTransaction,
@@ -174,6 +175,142 @@ describe('Transaction flow (integration)', () => {
     expect(store.getState().transaction.transactions).toHaveLength(1)
     expect(store.getState().transaction.transactions[0].id).toBe(
       mockTransaction.id
+    )
+  })
+
+  it('updateTransaction: PATCH body (amount, date, type), store transaction and account updated', async () => {
+    const transactionId = mockTransaction.id
+    const updatedAccount = { ...mockAccount, name: 'Wallet After Edit' }
+    const updatedSummary = { ...mockAccountSummary, total_raw: 88000 }
+    const updatedTransaction = createMockTransaction({
+      id: transactionId,
+      comment: 'Updated comment',
+      amount: {
+        original: {
+          value: -25,
+          raw: -2500,
+          scale: 2,
+          currency: mockTransaction.amount.original.currency,
+        },
+        converted: {
+          value: -25,
+          raw: -2500,
+          scale: 2,
+          currency: mockTransaction.amount.converted.currency,
+        },
+      },
+      date: '2024-02-20',
+    })
+
+    let capturedBody: Record<string, unknown> = {}
+    const capturedParams: Record<string, string> = {}
+    server.use(
+      http.patch(
+        `http://localhost/v1/transactions/${transactionId}`,
+        async ({ request }) => {
+          capturedBody = (await request.json()) as Record<string, unknown>
+          const url = new URL(request.url)
+          url.searchParams.forEach((v, k) => {
+            capturedParams[k] = v
+          })
+          return HttpResponse.json({
+            transaction: updatedTransaction,
+            accounts: [updatedAccount],
+            summary: updatedSummary,
+          })
+        }
+      )
+    )
+
+    const store = createStore({
+      transaction: {
+        transactions: [mockTransaction],
+        summary: null,
+        status: 'idle',
+      },
+      account: {
+        accounts: [mockAccount],
+        summary: mockAccountSummary,
+        status: 'success',
+      },
+      transactionType: { transactionType: 'expense' },
+    })
+
+    const newAmount = '25.00'
+    const newDate = dayjs('2024-02-20').toDate()
+    const result = await store.dispatch(
+      updateTransaction({
+        id: transactionId,
+        data: {
+          account: mockAccount.id,
+          category: mockTransaction.category.id,
+          amount: newAmount,
+          date: newDate,
+          comment: 'Updated comment',
+          tags: [],
+        },
+        recalcBalance: true,
+      })
+    )
+
+    expect(result.type).toBe(updateTransaction.fulfilled.type)
+
+    expect(capturedBody).toMatchObject({
+      amount: 2500,
+      scale: 2,
+      date: '2024-02-20',
+      type: 'expense',
+      comment: 'Updated comment',
+    })
+    expect(capturedParams).toEqual({ recalcBalance: 'true' })
+
+    const { transaction, account } = store.getState()
+    const updated = transaction.transactions.find((t) => t.id === transactionId)
+    expect(updated).toEqual(updatedTransaction)
+    expect(account.accounts).toContainEqual(
+      expect.objectContaining({ id: mockAccount.id, name: 'Wallet After Edit' })
+    )
+    expect(account.summary).toEqual(updatedSummary)
+  })
+
+  it('updateTransaction API error: rejected, store unchanged', async () => {
+    const transactionId = mockTransaction.id
+    server.use(
+      http.patch(`http://localhost/v1/transactions/${transactionId}`, () =>
+        HttpResponse.json(
+          { message: 'Conflict', statusCode: 409 },
+          { status: 409 }
+        )
+      )
+    )
+
+    const store = createStore({
+      transaction: {
+        transactions: [mockTransaction],
+        summary: null,
+        status: 'idle',
+      },
+      transactionType: { transactionType: 'expense' },
+    })
+
+    const result = await store.dispatch(
+      updateTransaction({
+        id: transactionId,
+        data: {
+          account: mockAccount.id,
+          category: mockTransaction.category.id,
+          amount: '10.00',
+          date: dayjs().toDate(),
+          comment: '',
+          tags: [],
+        },
+      })
+    )
+
+    expect(result.type).toBe(updateTransaction.rejected.type)
+    expect(store.getState().transaction.transactions).toHaveLength(1)
+    expect(store.getState().transaction.transactions[0]).toEqual(
+      mockTransaction
     )
   })
 })

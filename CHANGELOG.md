@@ -7,6 +7,18 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 13.03.2026 — v0.1.16
+
+### ✨ Features
+
+- add loading stripes animation to button component and enhance MoneyField functionality
+
+### ♻️ Refactoring
+
+- simplify MoneyField component layout and improve button functionality
+
+---
+
 ## 11.03.2026 — v0.1.15
 
 ### ✨ Features

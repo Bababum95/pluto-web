@@ -1,10 +1,9 @@
-import dayjs from 'dayjs'
 import { Link, useRouter } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu01Icon, ArrowLeft02Icon } from '@hugeicons/core-free-icons'
 import type { FC } from 'react'
 
-import Logo from '@/assets/logo.svg?react'
+import dayjs from '@/lib/dayjs'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -13,6 +12,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
+import { Separator } from '@/components/ui/separator'
+import { NavUser } from '@/features/user'
 import { useTranslation } from '@/lib/i18n'
 import { MENU_ITEMS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -72,12 +73,14 @@ export const Header: FC<HeaderProps> = ({
               side="left"
               onOpenAutoFocus={(e) => e.preventDefault()}
               aria-describedby={undefined}
+              closable={false}
             >
-              <SheetHeader>
+              <SheetHeader className="pb-1">
                 <SheetTitle>
-                  <Logo className="h-6 w-auto" />
+                  <NavUser />
                 </SheetTitle>
               </SheetHeader>
+              <Separator />
               <nav className="flex flex-col h-full pb-safe">
                 {MENU_ITEMS.map(({ label, to, icon }) => (
                   <Link

@@ -7,6 +7,20 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## Unreleased
+
+### ✨ Features
+
+- add integration tests for transaction and transfer functionalities
+- add Codecov integration for coverage reporting
+- enhance theme support in Storybook and add transaction update functionality
+
+### 🐛 Fixes
+
+- enhance button loading state handling
+
+---
+
 ## 13.03.2026 — v0.1.16
 
 ### ✨ Features

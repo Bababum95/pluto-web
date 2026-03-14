@@ -10,7 +10,6 @@ import { useState } from 'react'
 
 import { Card } from '@/components/ui/card'
 import { AppLayout } from '@/components/AppLayout'
-import { useTranslation } from '@/lib/i18n'
 import {
   Item,
   ItemActions,
@@ -21,11 +20,12 @@ import {
   ItemSeparator,
   ItemTitle,
 } from '@/components/ui/item'
-import { ThemeDrawer, useTheme } from '@/features/theme'
 import { LanguageDrawer } from '@/components/LanguageDrawer'
+import { ThemeDrawer, useTheme } from '@/features/theme'
+import { AccountDrawer } from '@/features/account'
+import { useTranslation } from '@/lib/i18n'
 import { selectDefaultAccount } from '@/store/slices/settings/selectors'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { AccountDrawer } from '@/features/account'
 import { setDefaultAccount } from '@/store/slices/settings'
 
 export const Route = createFileRoute('/_app/settings')({

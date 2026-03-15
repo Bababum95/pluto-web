@@ -7,16 +7,19 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
-## Unreleased
+## 15.03.2026 — v0.1.17
 
 ### ✨ Features
 
+- add 'createdAt' field to transaction details and improve UI layout
+- enhance routing and UI components
 - add integration tests for transaction and transfer functionalities
 - add Codecov integration for coverage reporting
 - enhance theme support in Storybook and add transaction update functionality
 
 ### 🐛 Fixes
 
+- update Codecov badge link in README for accurate coverage reporting
 - enhance button loading state handling
 
 ---

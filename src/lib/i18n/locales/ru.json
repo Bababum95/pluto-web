@@ -26,7 +26,8 @@
       "comment": "Комментарий",
       "tags": "Теги",
       "account": "Счёт",
-      "category": "Категория"
+      "category": "Категория",
+      "createdAt": "Создано"
     },
     "entities": {
       "accounts": "Счета",

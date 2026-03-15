@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, type FC, type PropsWithChildren } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -14,7 +14,7 @@ import dayjs from '@/lib/dayjs'
 import { AppLayout } from '@/components/AppLayout'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +22,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Icon } from '@/components/ui/icon'
 import { Spinner } from '@/components/ui/spinner'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { formatBalance } from '@/features/money'
@@ -32,6 +31,15 @@ import {
   selectCurrentTransaction,
   setCurrent,
 } from '@/store/slices/transaction'
+import { Separator } from '@/components/ui/separator'
+
+const Row: FC<PropsWithChildren> = ({ children }) => (
+  <div className="flex justify-between text-base gap-2">{children}</div>
+)
+
+const Label: FC<PropsWithChildren> = ({ children }) => (
+  <span className="text-muted-foreground">{children}</span>
+)
 
 const ShowTransactionPage = () => {
   const { transactionId } = Route.useParams()
@@ -62,7 +70,8 @@ const ShowTransactionPage = () => {
     )
   }
 
-  const { amount, account, category, date, comment, tags } = transaction
+  const { amount, account, category, date, comment, tags, createdAt } =
+    transaction
   const hasConverted =
     amount.converted.currency.code !== amount.original.currency.code
 
@@ -98,99 +107,88 @@ const ShowTransactionPage = () => {
       }
     >
       <TransactionTypeTabs>
-        <Card size="sm" className="flex flex-1 flex-col">
-          <CardHeader className="pb-2">
-            <div className="flex items-center gap-3">
-              <Icon
-                name={category.icon}
-                color={category.color}
-                size={40}
-                className="shrink-0"
-              />
-              <div className="min-w-0 flex-1">
-                <CardTitle className="text-lg">{category.name}</CardTitle>
-                <p className="text-muted-foreground text-sm">
-                  {dayjs(date).locale(i18n.language).format('DD MMMM YYYY')}
-                </p>
-              </div>
-            </div>
-          </CardHeader>
+        <Card size="sm" className="flex flex-col">
           <CardContent className="flex flex-col gap-6">
-            <div className="flex flex-col gap-1">
-              <span className="text-muted-foreground text-sm">
-                {t('common.fields.amount')}
-              </span>
-              <p className="text-xl font-semibold tabular-nums">
-                {formatBalance({
-                  currency: amount.original.currency,
-                  balance: amount.original.value,
-                })}
-              </p>
-              {hasConverted && (
-                <p className="text-muted-foreground text-sm tabular-nums">
-                  {formatBalance({
-                    currency: amount.converted.currency,
-                    balance: amount.converted.value,
-                  })}
-                </p>
-              )}
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="flex flex-col gap-1">
-                <span className="text-muted-foreground text-sm">
-                  {t('common.fields.account')}
-                </span>
-                <div className="flex items-center gap-2">
-                  <Icon
-                    name={account.icon}
-                    color={account.color}
-                    size={24}
-                    className="shrink-0"
-                  />
-                  <span className="font-medium">{account.name}</span>
+            <div className="flex flex-col gap-2">
+              <Row>
+                <Label>{t('common.fields.amount')}</Label>
+                <div className="flex flex-col items-end">
+                  <span>
+                    {formatBalance({
+                      currency: amount.original.currency,
+                      balance: amount.original.value,
+                    })}
+                  </span>
+                  {hasConverted && (
+                    <span className="text-muted-foreground">
+                      {formatBalance({
+                        currency: amount.converted.currency,
+                        balance: amount.converted.value,
+                      })}
+                    </span>
+                  )}
                 </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-muted-foreground text-sm">
-                  {t('common.fields.date')}
-                </span>
+              </Row>
+              <Separator />
+              <Row>
+                <Label>{t('common.fields.category')}</Label>
+                <span>{category.name}</span>
+              </Row>
+              <Separator />
+              <Row>
+                <Label>{t('common.fields.account')}</Label>
+                <span>{account.name}</span>
+              </Row>
+              <Separator />
+              <Row>
+                <Label>{t('common.fields.date')}</Label>
                 <span>
                   {dayjs(date).locale(i18n.language).format('DD MMMM YYYY')}
                 </span>
-              </div>
+              </Row>
+              <Separator />
+              {tags.length > 0 && (
+                <>
+                  <Row>
+                    <Label>{t('common.fields.tags')}</Label>
+                    <div className="flex flex-wrap gap-1.5">
+                      {tags.map((tag) => (
+                        <Badge
+                          key={tag.id}
+                          variant="default"
+                          color={tag.color}
+                          size="xs"
+                        >
+                          {tag.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </Row>
+                  <Separator />
+                </>
+              )}
+              {comment.trim().length > 0 && (
+                <>
+                  <Row>
+                    <span className="text-muted-foreground text-sm">
+                      {t('common.fields.comment')}
+                    </span>
+                    <p className="whitespace-pre-wrap wrap-break-word text-sm">
+                      {comment}
+                    </p>
+                  </Row>
+                  <Separator />
+                </>
+              )}
+              <Row>
+                <Label>{t('common.fields.createdAt')}</Label>
+                <span>
+                  {dayjs(createdAt)
+                    .locale(i18n.language)
+                    .format('DD.MM.YYYY HH:mm')}
+                </span>
+              </Row>
             </div>
-
-            {tags.length > 0 && (
-              <div className="flex flex-col gap-2">
-                <span className="text-muted-foreground text-sm">
-                  {t('common.fields.tags')}
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {tags.map((tag) => (
-                    <Badge
-                      key={tag.id}
-                      variant="default"
-                      color={tag.color}
-                      size="xs"
-                    >
-                      {tag.name}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {comment.trim().length > 0 && (
-              <div className="flex flex-col gap-1">
-                <span className="text-muted-foreground text-sm">
-                  {t('common.fields.comment')}
-                </span>
-                <p className="whitespace-pre-wrap wrap-break-word text-sm">
-                  {comment}
-                </p>
-              </div>
-            )}
           </CardContent>
         </Card>
       </TransactionTypeTabs>

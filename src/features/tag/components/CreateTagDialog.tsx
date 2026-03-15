@@ -20,6 +20,8 @@ import { createTag } from '@/store/slices/tag'
 
 import type { Tag } from '../types'
 
+const MAX_LENGTH = 20
+
 type Props = {
   onSuccess?: (tag: Tag) => void
 }
@@ -33,8 +35,10 @@ export const CreateTagDialog: FC<Props> = ({ onSuccess }) => {
       onSubmit: z.object({
         name: z
           .string()
-          .min(1, { message: t('tags.create.errors.name.required') })
-          .max(20, { message: t('tags.create.errors.name.maxLength') }),
+          .min(1, { message: t('forms.validation.required') })
+          .max(20, {
+            message: t('forms.validation.maxLength', { maxLength: MAX_LENGTH }),
+          }),
       }),
     },
     defaultValues: {
@@ -77,7 +81,7 @@ export const CreateTagDialog: FC<Props> = ({ onSuccess }) => {
                   placeholder: t('tags.create.placeholder'),
                   autoFocus: true,
                   autoComplete: 'off',
-                  maxLength: 20,
+                  maxLength: MAX_LENGTH,
                 }}
               />
             )}
@@ -92,7 +96,7 @@ export const CreateTagDialog: FC<Props> = ({ onSuccess }) => {
                   disabled={!canSubmit}
                   isLoading={isSubmitting}
                 >
-                  {t('common.save')}
+                  {t('common.actions.save')}
                 </Button>
               )}
             />

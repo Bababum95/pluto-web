@@ -27,6 +27,7 @@ import { useTranslation } from '@/lib/i18n'
 import { selectDefaultAccount } from '@/store/slices/settings/selectors'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { setDefaultAccount } from '@/store/slices/settings'
+import type { SupportedLanguages } from '@/lib/i18n/types'
 
 export const Route = createFileRoute('/_app/settings')({
   component: SettingsPage,
@@ -57,7 +58,7 @@ function SettingsPage() {
             <ItemContent className="gap-0">
               <ItemTitle>{t('settings.language.title')}</ItemTitle>
               <ItemDescription className="text-primary">
-                {t(`language.${i18n.language}`)}
+                {t(`language.${i18n.language as SupportedLanguages}`)}
               </ItemDescription>
             </ItemContent>
             <ItemActions>

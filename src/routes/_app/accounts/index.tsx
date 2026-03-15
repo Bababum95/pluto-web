@@ -52,7 +52,7 @@ const actions = [
     icon: Clock04Icon,
     to: '/transfers',
   },
-]
+] as const
 
 function AccountsPage() {
   const { t } = useTranslation()
@@ -71,7 +71,7 @@ function AccountsPage() {
 
   return (
     <AppLayout
-      title={t('common.accounts')}
+      title={t('accounts.title')}
       actions={
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

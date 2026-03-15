@@ -20,11 +20,11 @@ const ProfilePage = () => {
   }
 
   return (
-    <AppLayout title={t('common.profile')}>
+    <AppLayout title={t('common.entities.profile')}>
       <p>{user?.name}</p>
       <p>{user?.email}</p>
       <p>{user?.id}</p>
-      <Button onClick={handleLogout}>{t('common.logout')}</Button>
+      <Button onClick={handleLogout}>{t('auth.logout')}</Button>
     </AppLayout>
   )
 }

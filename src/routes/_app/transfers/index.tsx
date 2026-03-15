@@ -63,14 +63,14 @@ function TransfersPage() {
         </div>
       ) : transfers.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-4 py-8 text-muted-foreground">
-          <p>{t('transfers.empty')}</p>
+          <p>{t('transfers.messages.empty')}</p>
           <Button asChild>
             <Link
               to="/transfers/create"
               viewTransition={{ types: ['slide-left'] }}
             >
               <HugeiconsIcon icon={PlusSignIcon} />
-              {t('transfers.create')}
+              {t('transfers.actions.create')}
             </Link>
           </Button>
         </div>

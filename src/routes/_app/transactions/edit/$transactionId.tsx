@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Delete01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import dayjs from '@/lib/dayjs'
 import { AppLayout } from '@/components/AppLayout'
@@ -27,7 +27,8 @@ import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   deleteTransaction,
-  selectTransactionById,
+  selectCurrentTransaction,
+  setCurrent,
   updateTransaction,
 } from '@/store/slices/transaction'
 import { parseDecimal } from '@/features/money'
@@ -44,7 +45,7 @@ const EditTransactionPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const transaction = useAppSelector(selectTransactionById(transactionId))
+  const transaction = useAppSelector(selectCurrentTransaction)
 
   const confirmBalanceChange = async (values: TransactionFormType) => {
     const { balance, scale } = parseDecimal(values.amount)
@@ -75,21 +76,25 @@ const EditTransactionPage = () => {
     setIsSubmitting(false)
     setIsOpenConfirmModal(false)
     navigate({ to: '/transactions' })
-    toast.success(t('transactions.updated'))
+    toast.success(t('transactions.messages.updated'))
   }
 
   const handleDelete = async () => {
     await dispatch(deleteTransaction(transactionId)).unwrap()
     navigate({ to: '/transactions' })
-    toast.success(t('transactions.deleted'))
+    toast.success(t('transactions.messages.deleted'))
   }
+
+  useEffect(() => {
+    dispatch(setCurrent(transactionId))
+  }, [dispatch, transactionId])
 
   if (!transaction) {
     return (
-      <AppLayout title={t('transactions.edit')} showBackButton>
+      <AppLayout title={t('transactions.actions.edit')} showBackButton>
         <TransactionTypeTabs>
           <div className="flex flex-1 items-center justify-center py-8">
-            {t('transactions.notFound')}
+            {t('transactions.messages.notFound')}
           </div>
         </TransactionTypeTabs>
       </AppLayout>
@@ -98,7 +103,7 @@ const EditTransactionPage = () => {
 
   return (
     <AppLayout
-      title={t('transactions.edit')}
+      title={t('transactions.actions.edit')}
       showBackButton
       actions={
         <DropdownMenu>
@@ -127,7 +132,7 @@ const EditTransactionPage = () => {
             date: dayjs(transaction.date).toDate(),
           }}
           amountCurrency={transaction.amount.original.currency.code}
-          submitLabel={t('transactions.save')}
+          submitLabel={t('transactions.actions.save')}
           onSubmit={confirmBalanceChange}
           key={`edit-transaction-form-${transaction.id}`}
         />
@@ -162,7 +167,7 @@ const EditTransactionPage = () => {
               variant="outline"
               className="flex-1"
             >
-              {t('transactions.recalculateBalance.saveWithoutRecalculation')}
+              {t('transactions.recalculateBalance.skip')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -171,6 +176,6 @@ const EditTransactionPage = () => {
   )
 }
 
-export const Route = createFileRoute('/_app/transactions/$transactionId')({
+export const Route = createFileRoute('/_app/transactions/edit/$transactionId')({
   component: EditTransactionPage,
 })

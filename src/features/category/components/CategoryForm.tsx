@@ -26,15 +26,9 @@ export const CategoryForm: FC<Props> = ({
   const form = useForm({
     validators: {
       onSubmit: z.object({
-        name: z
-          .string()
-          .min(1, { message: t('categories.errors.name.required') }),
-        color: z
-          .string()
-          .min(1, { message: t('categories.errors.color.required') }),
-        icon: z
-          .string()
-          .min(1, { message: t('categories.errors.icon.required') }),
+        name: z.string().min(1, { message: t('forms.validation.required') }),
+        color: z.string().min(1, { message: t('forms.validation.required') }),
+        icon: z.string().min(1, { message: t('forms.validation.required') }),
       }),
     },
     defaultValues: defaultValues,
@@ -58,7 +52,7 @@ export const CategoryForm: FC<Props> = ({
           children={(field) => (
             <FormField
               field={field}
-              label={t('categories.name')}
+              label={t('categories.fields.name')}
               inputProps={{ autoFocus: true }}
             />
           )}
@@ -72,7 +66,7 @@ export const CategoryForm: FC<Props> = ({
                 <IconPicker
                   value={field.state.value as string}
                   onChange={(value) => field.handleChange(value)}
-                  label={t('categories.icon')}
+                  label={t('common.fields.icon')}
                   iconColor={color}
                 />
               )}
@@ -85,7 +79,7 @@ export const CategoryForm: FC<Props> = ({
             <ColorPicker
               value={field.state.value as string}
               onChange={(value) => field.handleChange(value)}
-              label={t('categories.color')}
+              label={t('common.fields.color')}
             />
           )}
         />
@@ -99,7 +93,7 @@ export const CategoryForm: FC<Props> = ({
             disabled={!canSubmit}
             isLoading={isSubmitting}
           >
-            {submitLabel ?? t('categories.submit')}
+            {submitLabel ?? t('categories.actions.create')}
           </Button>
         )}
       />

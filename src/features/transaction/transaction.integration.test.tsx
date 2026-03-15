@@ -234,6 +234,7 @@ describe('Transaction flow (integration)', () => {
         ],
         summary: null,
         status: 'idle',
+        current: null,
       },
     })
 
@@ -302,6 +303,7 @@ describe('Transaction flow (integration)', () => {
         transactions: [mockTransaction],
         summary: null,
         status: 'idle',
+        current: null,
       },
       account: {
         accounts: [mockAccount],
@@ -364,6 +366,7 @@ describe('Transaction flow (integration)', () => {
         transactions: [mockTransaction],
         summary: null,
         status: 'idle',
+        current: null,
       },
       transactionType: { transactionType: 'expense' },
     })

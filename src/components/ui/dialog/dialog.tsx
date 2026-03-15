@@ -75,7 +75,7 @@ function DialogContent({
               size="icon"
             >
               <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
-              <span className="sr-only">{t('common.close')}</span>
+              <span className="sr-only">{t('common.actions.close')}</span>
             </Button>
           </DialogPrimitive.Close>
         )}
@@ -102,7 +102,7 @@ function DialogFooter({
 }: React.ComponentProps<'div'> & {
   showCloseButton?: boolean
 }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('translation')
   return (
     <div
       data-slot="dialog-footer"
@@ -113,7 +113,7 @@ function DialogFooter({
       {showCloseButton && (
         <DialogPrimitive.Close asChild>
           <Button variant="outline" className="flex-1">
-            {t('common.cancel')}
+            {t('common.actions.cancel')}
           </Button>
         </DialogPrimitive.Close>
       )}

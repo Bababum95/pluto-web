@@ -31,14 +31,14 @@ const TransferDetailPage = () => {
     await dispatch(deleteTransfer(transferId)).unwrap()
     await dispatch(fetchAccounts())
     navigate({ to: '/transfers' })
-    toast.success(t('transfers.deleted'))
+    toast.success(t('transfers.messages.deleted'))
   }
 
   if (isLoading || !transfer) {
     return (
-      <AppLayout title={t('transfers.detail')} showBackButton>
+      <AppLayout title={t('transfers.title')} showBackButton>
         <div className="flex flex-1 items-center justify-center py-8">
-          {isLoading ? t('common.loading') : t('transfers.notFound')}
+          {isLoading ? t('common.loading') : t('transfers.messages.notFound')}
         </div>
       </AppLayout>
     )
@@ -46,7 +46,7 @@ const TransferDetailPage = () => {
 
   return (
     <AppLayout
-      title={t('transfers.detail')}
+      title={t('transfers.title')}
       showBackButton
       actions={
         <DropdownMenu>

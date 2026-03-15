@@ -4,6 +4,7 @@ import type { Status } from '@/lib/types'
 export type TransactionState = {
   transactions: Transaction[]
   status: Status
+  current: Transaction | null
   summary: {
     total: number
     total_raw: number

@@ -65,10 +65,10 @@ export const TransferForm: FC<Props> = ({
         .object({
           fromAccount: z
             .string()
-            .min(1, { message: t('transfers.errors.fromAccount.required') }),
+            .min(1, { message: t('forms.validation.required') }),
           toAccount: z
             .string()
-            .min(1, { message: t('transfers.errors.toAccount.required') }),
+            .min(1, { message: t('forms.validation.required') }),
           fromAmount: z.string().nullable().optional(),
           toAmount: z.string().nullable().optional(),
           rate: z.string().nullable().optional(),
@@ -76,7 +76,7 @@ export const TransferForm: FC<Props> = ({
           feeType: z.enum(['percent', 'from_currency', 'to_currency']),
         })
         .refine((data) => !!data.fromAmount || !!data.toAmount, {
-          message: t('transfers.errors.amount.required'),
+          message: t('forms.validation.required'),
           path: ['fromAmount'],
         }),
     },
@@ -162,7 +162,7 @@ export const TransferForm: FC<Props> = ({
       <FieldSet disabled={form.state.isSubmitting}>
         <Card size="sm">
           <CardHeader>
-            <CardTitle>{t('transfers.from')}</CardTitle>
+            <CardTitle>{t('transfers.fields.from')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <form.Field
@@ -174,7 +174,7 @@ export const TransferForm: FC<Props> = ({
                   isError={
                     field.state.meta.isTouched && !field.state.meta.isValid
                   }
-                  errorMessage={t('transfers.errors.fromAccount.required')}
+                  errorMessage={t('forms.validation.required')}
                 />
               )}
             />
@@ -185,7 +185,7 @@ export const TransferForm: FC<Props> = ({
                   name="fromAmount"
                   children={(field) => (
                     <MoneyField
-                      label={t('transfers.fromAmount')}
+                      label={t('common.fields.amount')}
                       inputProps={{
                         value: field.state.value ?? '',
                         onChange: (value) => field.handleChange(value),
@@ -223,7 +223,7 @@ export const TransferForm: FC<Props> = ({
               <form.Field name="rate">
                 {(field) => (
                   <RateField
-                    label={t('transfers.rate')}
+                    label={t('transfers.fields.rate')}
                     value={field.state.value ?? ''}
                     onChange={field.handleChange}
                     onBlur={field.handleBlur}
@@ -235,7 +235,7 @@ export const TransferForm: FC<Props> = ({
           </form.Subscribe>
 
           <Field>
-            <FieldLabel>{t('transfers.fee')}</FieldLabel>
+            <FieldLabel>{t('transfers.fields.fee')}</FieldLabel>
             <ButtonGroup className="w-full">
               <form.Field
                 name="fee"
@@ -304,7 +304,7 @@ export const TransferForm: FC<Props> = ({
 
         <Card size="sm">
           <CardHeader>
-            <CardTitle>{t('transfers.to')}</CardTitle>
+            <CardTitle>{t('transfers.fields.to')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <form.Field
@@ -316,7 +316,7 @@ export const TransferForm: FC<Props> = ({
                   isError={
                     field.state.meta.isTouched && !field.state.meta.isValid
                   }
-                  errorMessage={t('transfers.errors.toAccount.required')}
+                  errorMessage={t('forms.validation.required')}
                 />
               )}
             />
@@ -327,7 +327,7 @@ export const TransferForm: FC<Props> = ({
                   name="toAmount"
                   children={(field) => (
                     <MoneyField
-                      label={t('transfers.toAmount')}
+                      label={t('common.fields.amount')}
                       inputProps={{
                         value: field.state.value ?? '',
                         onChange: (value) => field.handleChange(value),
@@ -360,7 +360,7 @@ export const TransferForm: FC<Props> = ({
             disabled={!canSubmit}
             isLoading={isSubmitting as boolean}
           >
-            {submitLabel ?? t('transfers.submit')}
+            {submitLabel ?? t('transfers.actions.submit')}
           </Button>
         )}
       />

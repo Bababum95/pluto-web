@@ -49,7 +49,7 @@ describe('CategoryForm (integration)', () => {
     )
 
     await user.type(getByLabelText('Category name'), 'Transport')
-    await user.click(getByRole('button', { name: 'Create' }))
+    await user.click(getByRole('button', { name: 'Create category' }))
 
     await waitFor(
       () => {
@@ -96,7 +96,7 @@ describe('CategoryForm (integration)', () => {
     )
 
     await user.type(getByLabelText('Category name'), 'Fail')
-    await user.click(getByRole('button', { name: 'Create' }))
+    await user.click(getByRole('button', { name: 'Create category' }))
 
     await waitFor(() => {
       expect(store.getState().category.categories).toHaveLength(1)

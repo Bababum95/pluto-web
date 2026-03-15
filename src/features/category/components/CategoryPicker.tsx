@@ -86,7 +86,7 @@ const CategoryPickerRoot: FC<CategoryPickerProps> = ({
 
   return (
     <Field className={className}>
-      <FieldLabel>{t('categories.select')}</FieldLabel>
+      <FieldLabel>{t('common.fields.category')}</FieldLabel>
       <div className="grid grid-cols-4 gap-2">
         {visibleCategories.map((category) => (
           <CategoryCard
@@ -153,7 +153,7 @@ const CategoryDrawer: FC<CategoryDrawerProps> = ({
           aria-describedby={undefined}
         >
           <DrawerHeader>
-            <DrawerTitle>{t('categories.select')}</DrawerTitle>
+            <DrawerTitle>{t('categories.select.title')}</DrawerTitle>
           </DrawerHeader>
           <div className="px-4 overflow-y-auto py-2">
             <div className="grid grid-cols-4 gap-2 pb-safe">

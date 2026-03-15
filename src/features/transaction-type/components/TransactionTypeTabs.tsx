@@ -59,7 +59,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
       <TabsList className="w-full h-12 rounded-none border-0 bg-background fixed bottom-safe left-0 right-0 z-50 border-t">
         {TABS.map((tab) => (
           <TabsTrigger key={tab} value={tab} className="flex-1 text-base">
-            {t(`transactionType.${tab}`)}
+            {t(`transactions.types.${tab}`)}
           </TabsTrigger>
         ))}
       </TabsList>

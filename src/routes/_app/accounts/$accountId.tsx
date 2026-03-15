@@ -43,28 +43,30 @@ const EditAccountPage = () => {
     await dispatch(updateAccount({ id: accountId, data: values })).unwrap()
 
     navigate({ to: '/accounts' })
-    toast.success(t('accounts.updated'))
+    toast.success(t('accounts.messages.updated'))
   }
 
   const handleDelete = async () => {
     await dispatch(deleteAccount(accountId)).unwrap()
     navigate({ to: '/accounts' })
-    toast.success(t('accounts.deleted'))
+    toast.success(t('accounts.messages.deleted'))
   }
 
   const handleToggleExcluded = async () => {
     const result = await dispatch(toggleExcluded(accountId)).unwrap()
 
     toast.success(
-      result.account.excluded ? t('accounts.shown') : t('accounts.hidden')
+      result.account.excluded
+        ? t('accounts.messages.shown')
+        : t('accounts.messages.hidden')
     )
   }
 
   if (isLoading || !account) {
     return (
-      <AppLayout title={t('accounts.edit')} showBackButton>
+      <AppLayout title={t('accounts.actions.edit')} showBackButton>
         <div className="flex flex-1 items-center justify-center py-8">
-          {isLoading ? t('common.loading') : t('accounts.notFound')}
+          {isLoading ? t('common.loading') : t('accounts.messages.notFound')}
         </div>
       </AppLayout>
     )
@@ -72,7 +74,7 @@ const EditAccountPage = () => {
 
   return (
     <AppLayout
-      title={t('accounts.edit')}
+      title={t('accounts.actions.edit')}
       showBackButton
       actions={
         <DropdownMenu>
@@ -114,7 +116,7 @@ const EditAccountPage = () => {
           balance: account.balance.original.value.toString(),
           description: account.description,
         }}
-        submitLabel={t('accounts.save')}
+        submitLabel={t('accounts.actions.save')}
         onSubmit={handleSubmit}
       />
     </AppLayout>

@@ -12,13 +12,7 @@ import {
   selectTransactionsByDay,
   selectTransactionsStatus,
 } from '@/store/slices/transaction'
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { TimeRangeSwitcher } from '@/features/time-range/components/TimeRangeSwitcher'
 import {
   Item,
@@ -65,7 +59,7 @@ const TransactionsPage = () => {
       }
     >
       <TransactionTypeTabs>
-        <Card className="flex flex-col relative" size="sm">
+        <Card className="flex flex-col relative h-full flex-1" size="sm">
           <CardHeader className="items-center pb-0">
             <TimeRangeSwitcher />
           </CardHeader>
@@ -75,94 +69,94 @@ const TransactionsPage = () => {
                 <Spinner size={32} />
               </div>
             ) : transactions.length > 0 ? (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-6">
                 {transactions.map(({ date, list, total }) => (
-                  <Card
-                    key={date}
-                    size="sm"
-                    className="bg-muted/50 rounded-md pb-0!"
-                  >
-                    <CardHeader>
-                      <CardTitle className="text-lg!">
+                  <div key={date}>
+                    <div className="flex items-center justify-between px-2 mb-1 text-muted-foreground text-base">
+                      <span>
                         {dayjs(date)
                           .locale(i18n.language)
                           .format('DD MMMM YYYY')}
-                      </CardTitle>
-                      <CardAction>
-                        <span className="font-medium text-lg">
-                          {formatBalance({
-                            currency: total.currency,
-                            balance: toDecimal(total.raw, total.scale),
-                          })}
-                        </span>
-                      </CardAction>
-                    </CardHeader>
+                      </span>
 
-                    <ItemGroup>
-                      {list.map((transaction) => (
-                        <Fragment key={transaction.id}>
-                          <ItemSeparator />
-                          <Item size="xs" asChild>
-                            <Link
-                              to="/transactions/$transactionId"
-                              params={{ transactionId: transaction.id }}
-                              viewTransition={{ types: ['slide-left'] }}
-                            >
-                              <Icon
-                                name={transaction.category.icon}
-                                data-slot="item-media"
-                                color={transaction.category.color}
-                                size={24}
-                              />
-                              <ItemContent className="gap-0">
-                                <ItemTitle>
-                                  {transaction.category.name}
-                                </ItemTitle>
-                                <ItemDescription>
-                                  {transaction.account.name}
-                                </ItemDescription>
-                              </ItemContent>
-                              <ItemActions className="flex flex-col items-end gap-0">
-                                <span className="font-medium">
-                                  {formatBalance({
-                                    currency:
-                                      transaction.amount.converted.currency,
-                                    balance: transaction.amount.converted.value,
-                                  })}
-                                </span>
-                                <span className="text-muted-foreground">
-                                  {formatBalance({
-                                    currency:
-                                      transaction.amount.original.currency,
-                                    balance: transaction.amount.original.value,
-                                  })}
-                                </span>
-                              </ItemActions>
-                              {transaction.tags.length > 0 && (
-                                <div className="flex gap-1 flex-wrap w-full">
-                                  {transaction.tags.map((tag) => (
-                                    <Badge
-                                      key={tag.id}
-                                      variant="default"
-                                      color={tag.color}
-                                      size="xs"
-                                    >
-                                      {tag.name}
-                                    </Badge>
-                                  ))}
-                                </div>
-                              )}
-                              {transaction.comment.trim().length > 0 && (
-                                <p className="text-xs text-muted-foreground w-full">
-                                  {transaction.comment}
-                                </p>
-                              )}
-                            </Link>
-                          </Item>
-                        </Fragment>
-                      ))}
-                    </ItemGroup>
-                  </Card>
+                      <span>
+                        {formatBalance({
+                          currency: total.currency,
+                          balance: toDecimal(total.raw, total.scale),
+                        })}
+                      </span>
+                    </div>
+                    <Card size="sm" className="bg-muted/50 rounded-md py-0!">
+                      <ItemGroup>
+                        {list.map((transaction, index) => (
+                          <Fragment key={transaction.id}>
+                            {index > 0 && (
+                              <ItemSeparator className="bg-muted-foreground/15" />
+                            )}
+                            <Item size="xs" asChild>
+                              <Link
+                                to="/transactions/show/$transactionId"
+                                params={{ transactionId: transaction.id }}
+                                viewTransition={{ types: ['slide-left'] }}
+                              >
+                                <Icon
+                                  name={transaction.category.icon}
+                                  data-slot="item-media"
+                                  color={transaction.category.color}
+                                  size={24}
+                                />
+                                <ItemContent className="gap-0">
+                                  <ItemTitle>
+                                    {transaction.category.name}
+                                  </ItemTitle>
+                                  <ItemDescription>
+                                    {transaction.account.name}
+                                  </ItemDescription>
+                                </ItemContent>
+                                <ItemActions className="flex flex-col items-end gap-0">
+                                  <span className="font-medium">
+                                    {formatBalance({
+                                      currency:
+                                        transaction.amount.converted.currency,
+                                      balance:
+                                        transaction.amount.converted.value,
+                                    })}
+                                  </span>
+                                  <span className="text-muted-foreground">
+                                    {formatBalance({
+                                      currency:
+                                        transaction.amount.original.currency,
+                                      balance:
+                                        transaction.amount.original.value,
+                                    })}
+                                  </span>
+                                </ItemActions>
+                                {transaction.tags.length > 0 && (
+                                  <div className="flex gap-1 flex-wrap w-full">
+                                    {transaction.tags.map((tag) => (
+                                      <Badge
+                                        key={tag.id}
+                                        variant="default"
+                                        color={tag.color}
+                                        size="xs"
+                                      >
+                                        {tag.name}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                )}
+                                {transaction.comment.trim().length > 0 && (
+                                  <p className="text-xs text-muted-foreground w-full">
+                                    {transaction.comment}
+                                  </p>
+                                )}
+                              </Link>
+                            </Item>
+                          </Fragment>
+                        ))}
+                      </ItemGroup>
+                    </Card>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -182,7 +176,7 @@ const TransactionsPage = () => {
                       to="/transactions/create"
                       viewTransition={{ types: ['slide-left'] }}
                     >
-                      {t('transactions.empty.createTransaction')}
+                      {t('transactions.create')}
                     </Link>
                   </Button>
                 </EmptyContent>

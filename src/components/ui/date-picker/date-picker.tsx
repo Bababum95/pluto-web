@@ -20,7 +20,7 @@ const DATE_FORMAT = 'DD.MM.YYYY'
 const PRESET_DAYS = [
   { label: 'yesterday', value: 1 },
   { label: 'today', value: 0 },
-]
+] as const
 
 type DatePickerProps = {
   value?: Date

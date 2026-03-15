@@ -30,18 +30,12 @@ export const AccountForm: FC<Props> = ({
   const form = useForm({
     validators: {
       onSubmit: z.object({
-        name: z
-          .string()
-          .min(1, { message: t('accounts.errors.name.required') }),
-        color: z
-          .string()
-          .min(1, { message: t('accounts.errors.color.required') }),
-        icon: z
-          .string()
-          .min(1, { message: t('accounts.errors.icon.required') }),
+        name: z.string().min(1, { message: t('forms.validation.required') }),
+        color: z.string().min(1, { message: t('forms.validation.required') }),
+        icon: z.string().min(1, { message: t('forms.validation.required') }),
         currency: z
           .string()
-          .min(1, { message: t('accounts.errors.currency.required') }),
+          .min(1, { message: t('forms.validation.required') }),
         balance: z.string(),
       }),
     },
@@ -88,7 +82,7 @@ export const AccountForm: FC<Props> = ({
           <form.Field
             name="name"
             children={(field) => (
-              <FormField field={field} label={t('accounts.name')} />
+              <FormField field={field} label={t('accounts.fields.name')} />
             )}
           />
           <form.Subscribe
@@ -100,7 +94,7 @@ export const AccountForm: FC<Props> = ({
                   <IconPicker
                     value={field.state.value as string}
                     onChange={(value) => field.handleChange(value)}
-                    label={t('accounts.icon')}
+                    label={t('common.fields.icon')}
                     iconColor={color}
                   />
                 )}
@@ -113,14 +107,17 @@ export const AccountForm: FC<Props> = ({
               <ColorPicker
                 value={field.state.value as string}
                 onChange={(value) => field.handleChange(value)}
-                label={t('accounts.color')}
+                label={t('common.fields.color')}
               />
             )}
           />
           <form.Field
             name="description"
             children={(field) => (
-              <FormField field={field} label={t('accounts.description')} />
+              <FormField
+                field={field}
+                label={t('accounts.fields.description')}
+              />
             )}
           />
         </FieldSet>
@@ -134,7 +131,7 @@ export const AccountForm: FC<Props> = ({
             disabled={!canSubmit}
             isLoading={isSubmitting}
           >
-            {submitLabel ?? t('accounts.submit')}
+            {submitLabel ?? t('accounts.actions.create')}
           </Button>
         )}
       />

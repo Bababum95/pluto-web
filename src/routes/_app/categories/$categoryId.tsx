@@ -26,15 +26,17 @@ const EditCategoryPage = () => {
   const handleSubmit = async (values: CategoryFormValues) => {
     await dispatch(updateCategory({ id: categoryId, data: values }))
     navigate({ to: '/categories' })
-    toast.success(t('categories.updated'))
+    toast.success(t('categories.messages.updated'))
   }
 
   if (isLoading || !category) {
     return (
-      <AppLayout title={t('categories.edit')} showBackButton>
+      <AppLayout title={t('categories.actions.edit')} showBackButton>
         <TransactionTypeTabs>
           <div className="flex flex-1 items-center justify-center py-8">
-            {isLoading ? t('common.loading') : t('categories.notFound')}
+            {isLoading
+              ? t('common.loading')
+              : t('categories.messages.notFound')}
           </div>
         </TransactionTypeTabs>
       </AppLayout>
@@ -42,11 +44,11 @@ const EditCategoryPage = () => {
   }
 
   return (
-    <AppLayout title={t('categories.edit')} showBackButton>
+    <AppLayout title={t('categories.actions.edit')} showBackButton>
       <TransactionTypeTabs>
         <CategoryForm
           defaultValues={category}
-          submitLabel={t('categories.save')}
+          submitLabel={t('categories.actions.save')}
           onSubmit={handleSubmit}
           key="edit-category-form"
         />

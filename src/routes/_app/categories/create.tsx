@@ -17,11 +17,11 @@ const CreateCategoryPage = () => {
   const handleSubmit = async (values: CategoryFormValues) => {
     await dispatch(createCategory(values))
     navigate({ to: '/categories' })
-    toast.success(t('categories.created'))
+    toast.success(t('categories.messages.created'))
   }
 
   return (
-    <AppLayout title={t('categories.create')} showBackButton>
+    <AppLayout title={t('categories.actions.create')} showBackButton>
       <TransactionTypeTabs>
         <CategoryForm
           defaultValues={DEFAULT_CATEGORY_FORM_VALUES}

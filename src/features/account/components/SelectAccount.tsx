@@ -36,7 +36,7 @@ export const SelectAccount: FC<Props> = ({
 
   return (
     <Field className="flex flex-col gap-2">
-      <FieldLabel>{t('transactions.create.account')}</FieldLabel>
+      <FieldLabel>{t('common.fields.account')}</FieldLabel>
 
       {account ? (
         <AccountCard

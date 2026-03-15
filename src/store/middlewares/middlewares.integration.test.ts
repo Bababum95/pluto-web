@@ -24,7 +24,9 @@ describe('Middlewares (integration)', () => {
     )
 
     expect(store.getState().transaction.transactions).toHaveLength(1)
-    expect(store.getState().transaction.transactions[0].id).toBe(mockTransaction.id)
+    expect(store.getState().transaction.transactions[0].id).toBe(
+      mockTransaction.id
+    )
   })
 
   it('setTransactionType triggers fetchTransactions with clear', async () => {
@@ -33,6 +35,7 @@ describe('Middlewares (integration)', () => {
         transactions: [mockTransaction],
         summary: null,
         status: 'success',
+        current: null,
       },
     })
 
@@ -46,7 +49,9 @@ describe('Middlewares (integration)', () => {
     )
 
     expect(store.getState().transaction.transactions).toHaveLength(1)
-    expect(store.getState().transaction.transactions[0].id).toBe(mockTransaction.id)
+    expect(store.getState().transaction.transactions[0].id).toBe(
+      mockTransaction.id
+    )
   })
 
   it('increaseTimeRangeIndex triggers fetchTransactions', async () => {

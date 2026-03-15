@@ -18,11 +18,11 @@ const CreateAccountPage = () => {
   const handleSubmit = async (values: CreateAccountDto) => {
     await dispatch(createAccount(values)).unwrap()
     navigate({ to: '/accounts' })
-    toast.success(t('accounts.created'))
+    toast.success(t('accounts.messages.created'))
   }
 
   return (
-    <AppLayout title={t('accounts.create')} showBackButton>
+    <AppLayout title={t('accounts.actions.create')} showBackButton>
       <AccountForm
         onSubmit={handleSubmit}
         defaultValues={{

@@ -42,7 +42,7 @@ const CategoriesPage = () => {
   }
 
   return (
-    <AppLayout title={t('common.categories')} className="px-2">
+    <AppLayout title={t('categories.title')} className="px-2">
       <TransactionTypeTabs>
         {status === 'pending' ? (
           <div className="flex flex-1 items-center justify-center py-8">

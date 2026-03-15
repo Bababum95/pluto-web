@@ -55,7 +55,7 @@ describe('AccountForm (integration)', () => {
     )
 
     await user.type(getByLabelText('Account name'), 'Savings')
-    await user.click(getByRole('button', { name: 'Create' }))
+    await user.click(getByRole('button', { name: 'Create account' }))
 
     await waitFor(
       () => {
@@ -109,7 +109,7 @@ describe('AccountForm (integration)', () => {
     )
 
     await user.type(getByLabelText('Account name'), 'Fail')
-    await user.click(getByRole('button', { name: 'Create' }))
+    await user.click(getByRole('button', { name: 'Create account' }))
 
     await waitFor(() => {
       expect(store.getState().account.accounts).toHaveLength(1)

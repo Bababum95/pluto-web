@@ -8,11 +8,13 @@ import {
   deleteTransaction,
   fetchTransactions,
   updateTransaction,
+  setCurrent,
 } from './async-thunks'
 import type { TransactionState } from './types'
 
 const initialState: TransactionState = {
   transactions: [],
+  current: null,
   summary: null,
   status: 'idle',
 }
@@ -118,6 +120,16 @@ export const transactionSlice = createSlice({
         state.transactions = state.transactions.filter(
           (t) => t.id !== action.meta.arg
         )
+      })
+      .addCase(setCurrent.pending, (state, action) => {
+        if (action.meta.arg !== state.current?.id) {
+          state.current = null
+        }
+      })
+      .addCase(setCurrent.fulfilled, (state, action) => {
+        if (action.meta.arg !== state.current?.id) {
+          state.current = action.payload
+        }
       })
   },
 })

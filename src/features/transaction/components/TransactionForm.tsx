@@ -35,21 +35,19 @@ export function TransactionForm({
   const form = useForm({
     validators: {
       onSubmit: z.object({
-        amount: z
-          .string()
-          .min(1, { message: t('transactions.create.errors.amount.required') }),
+        amount: z.string().min(1, { message: t('forms.validation.required') }),
         comment: z.string(),
         account: z.string().min(1, {
-          message: t('transactions.create.errors.account.required'),
+          message: t('forms.validation.required'),
         }),
         category: z.string().min(1, {
-          message: t('transactions.create.errors.category.required'),
+          message: t('forms.validation.required'),
         }),
         tags: z.array(z.string()),
         date: z
-          .date({ message: t('transactions.create.errors.date.required') })
+          .date({ message: t('forms.validation.date.required') })
           .refine((date) => !dayjs(date).isAfter(dayjs(), 'day'), {
-            message: t('transactions.create.errors.date.inFuture'),
+            message: t('forms.validation.date.inFuture'),
           }),
       }),
     },
@@ -132,14 +130,14 @@ export function TransactionForm({
             }}
             isError={field.state.meta.isTouched && !field.state.meta.isValid}
             errorMessage={getFormFieldErrorMessage(field.state.meta.errors)}
-            label={t('transactions.create.date')}
+            label={t('common.fields.date')}
           />
         )}
       />
       <form.Field
         name="comment"
         children={(field) => (
-          <FormField field={field} label={t('transactions.create.comment')} />
+          <FormField field={field} label={t('common.fields.comment')} />
         )}
       />
       <form.Subscribe
@@ -152,7 +150,7 @@ export function TransactionForm({
             disabledStyle="bg-muted text-muted-foreground"
             isLoading={isSubmitting}
           >
-            {submitLabel ?? t('transactions.create.add')}
+            {submitLabel ?? t('transactions.create')}
           </Button>
         )}
       />

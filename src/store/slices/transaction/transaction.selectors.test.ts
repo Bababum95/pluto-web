@@ -27,6 +27,7 @@ function makeTransactionState(
     transactions,
     summary: null,
     status: 'idle',
+    current: null,
   }
 }
 

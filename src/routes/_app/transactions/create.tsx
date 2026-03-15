@@ -28,11 +28,11 @@ function CreateTransactionPage() {
 
     await dispatch(createTransaction(values)).unwrap()
     navigate({ to: '/' })
-    toast.success(t('transactions.create.added'))
+    toast.success(t('transactions.messages.added'))
   }
 
   return (
-    <AppLayout title={t('transactions.create.title')} showBackButton>
+    <AppLayout title={t('transactions.create')} showBackButton>
       <TransactionTypeTabs>
         <TransactionForm
           defaultValues={{

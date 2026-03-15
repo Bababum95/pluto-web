@@ -15,6 +15,9 @@ export const selectTransactionById =
   (id: string) =>
   (state: RootState): Transaction | undefined =>
     state.transaction.transactions.find((t) => t.id === id)
+export const selectCurrentTransaction = (
+  state: RootState
+): Transaction | null => state.transaction.current
 
 type TransactionsByCategory = {
   list: Omit<Transaction, 'category'>[]

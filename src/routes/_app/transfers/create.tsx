@@ -18,11 +18,11 @@ const CreateTransferPage = () => {
     await dispatch(createTransfer(values)).unwrap()
     await dispatch(fetchAccounts())
     navigate({ to: '/accounts' })
-    toast.success(t('transfers.created'))
+    toast.success(t('transfers.messages.created'))
   }
 
   return (
-    <AppLayout title={t('transfers.create')} showBackButton>
+    <AppLayout title={t('transfers.actions.create')} showBackButton>
       <TransferForm
         onSubmit={handleSubmit}
         defaultValues={DEFAULT_TRANSFER_FORM_VALUES}

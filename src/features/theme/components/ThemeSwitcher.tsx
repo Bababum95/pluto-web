@@ -37,7 +37,7 @@ export function ThemeSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="[&_svg]:size-5">
           <HugeiconsIcon icon={CurrentIcon} />
-          <span className="sr-only">{t('settings.theme.changeTheme')}</span>
+          <span className="sr-only">{t('settings.theme.change')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-42">

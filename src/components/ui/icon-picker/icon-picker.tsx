@@ -140,7 +140,7 @@ const IconDrawer: FC<IconDrawerProps> = ({ value, onChange, iconColor }) => {
       </DrawerTrigger>
       <DrawerContent aria-describedby={undefined}>
         <DrawerHeader>
-          <DrawerTitle>{t('common.selectIcon')}</DrawerTitle>
+          <DrawerTitle>{`${t('forms.select')} ${t('common.fields.icon')}`}</DrawerTitle>
         </DrawerHeader>
         <div className="px-4 overflow-y-auto py-2">
           {ICON_CATEGORIES.map((category) => (

@@ -69,7 +69,7 @@ describe('TransactionForm (integration)', () => {
 
     const amountInput = getByPlaceholderText('0')
     await user.type(amountInput, '25.50')
-    await user.click(getByRole('button', { name: 'Add transaction' }))
+    await user.click(getByRole('button', { name: 'Create Transaction' }))
 
     await waitFor(
       () => {
@@ -127,7 +127,7 @@ describe('TransactionForm (integration)', () => {
     )
 
     await user.type(getByPlaceholderText('0'), '10')
-    await user.click(getByRole('button', { name: 'Add transaction' }))
+    await user.click(getByRole('button', { name: 'Create Transaction' }))
 
     await waitFor(() => {
       expect(store.getState().transaction.transactions).toHaveLength(0)

@@ -24,11 +24,12 @@ import { Route as AppAccountsIndexRouteImport } from './routes/_app/accounts/ind
 import { Route as AppTransfersCreateRouteImport } from './routes/_app/transfers/create'
 import { Route as AppTransfersTransferIdRouteImport } from './routes/_app/transfers/$transferId'
 import { Route as AppTransactionsCreateRouteImport } from './routes/_app/transactions/create'
-import { Route as AppTransactionsTransactionIdRouteImport } from './routes/_app/transactions/$transactionId'
 import { Route as AppCategoriesCreateRouteImport } from './routes/_app/categories/create'
 import { Route as AppCategoriesCategoryIdRouteImport } from './routes/_app/categories/$categoryId'
 import { Route as AppAccountsCreateRouteImport } from './routes/_app/accounts/create'
 import { Route as AppAccountsAccountIdRouteImport } from './routes/_app/accounts/$accountId'
+import { Route as AppTransactionsShowTransactionIdRouteImport } from './routes/_app/transactions/show/$transactionId'
+import { Route as AppTransactionsEditTransactionIdRouteImport } from './routes/_app/transactions/edit/$transactionId'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -103,12 +104,6 @@ const AppTransactionsCreateRoute = AppTransactionsCreateRouteImport.update({
   path: '/transactions/create',
   getParentRoute: () => AppRoute,
 } as any)
-const AppTransactionsTransactionIdRoute =
-  AppTransactionsTransactionIdRouteImport.update({
-    id: '/transactions/$transactionId',
-    path: '/transactions/$transactionId',
-    getParentRoute: () => AppRoute,
-  } as any)
 const AppCategoriesCreateRoute = AppCategoriesCreateRouteImport.update({
   id: '/categories/create',
   path: '/categories/create',
@@ -129,6 +124,18 @@ const AppAccountsAccountIdRoute = AppAccountsAccountIdRouteImport.update({
   path: '/accounts/$accountId',
   getParentRoute: () => AppRoute,
 } as any)
+const AppTransactionsShowTransactionIdRoute =
+  AppTransactionsShowTransactionIdRouteImport.update({
+    id: '/transactions/show/$transactionId',
+    path: '/transactions/show/$transactionId',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppTransactionsEditTransactionIdRoute =
+  AppTransactionsEditTransactionIdRouteImport.update({
+    id: '/transactions/edit/$transactionId',
+    path: '/transactions/edit/$transactionId',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/exchange-rates': typeof AppExchangeRatesRoute
@@ -141,7 +148,6 @@ export interface FileRoutesByFullPath {
   '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/categories/create': typeof AppCategoriesCreateRoute
-  '/transactions/$transactionId': typeof AppTransactionsTransactionIdRoute
   '/transactions/create': typeof AppTransactionsCreateRoute
   '/transfers/$transferId': typeof AppTransfersTransferIdRoute
   '/transfers/create': typeof AppTransfersCreateRoute
@@ -149,6 +155,8 @@ export interface FileRoutesByFullPath {
   '/categories': typeof AppCategoriesIndexRoute
   '/transactions': typeof AppTransactionsIndexRoute
   '/transfers': typeof AppTransfersIndexRoute
+  '/transactions/edit/$transactionId': typeof AppTransactionsEditTransactionIdRoute
+  '/transactions/show/$transactionId': typeof AppTransactionsShowTransactionIdRoute
 }
 export interface FileRoutesByTo {
   '/exchange-rates': typeof AppExchangeRatesRoute
@@ -161,7 +169,6 @@ export interface FileRoutesByTo {
   '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/categories/create': typeof AppCategoriesCreateRoute
-  '/transactions/$transactionId': typeof AppTransactionsTransactionIdRoute
   '/transactions/create': typeof AppTransactionsCreateRoute
   '/transfers/$transferId': typeof AppTransfersTransferIdRoute
   '/transfers/create': typeof AppTransfersCreateRoute
@@ -169,6 +176,8 @@ export interface FileRoutesByTo {
   '/categories': typeof AppCategoriesIndexRoute
   '/transactions': typeof AppTransactionsIndexRoute
   '/transfers': typeof AppTransfersIndexRoute
+  '/transactions/edit/$transactionId': typeof AppTransactionsEditTransactionIdRoute
+  '/transactions/show/$transactionId': typeof AppTransactionsShowTransactionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -184,7 +193,6 @@ export interface FileRoutesById {
   '/_app/accounts/create': typeof AppAccountsCreateRoute
   '/_app/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
   '/_app/categories/create': typeof AppCategoriesCreateRoute
-  '/_app/transactions/$transactionId': typeof AppTransactionsTransactionIdRoute
   '/_app/transactions/create': typeof AppTransactionsCreateRoute
   '/_app/transfers/$transferId': typeof AppTransfersTransferIdRoute
   '/_app/transfers/create': typeof AppTransfersCreateRoute
@@ -192,6 +200,8 @@ export interface FileRoutesById {
   '/_app/categories/': typeof AppCategoriesIndexRoute
   '/_app/transactions/': typeof AppTransactionsIndexRoute
   '/_app/transfers/': typeof AppTransfersIndexRoute
+  '/_app/transactions/edit/$transactionId': typeof AppTransactionsEditTransactionIdRoute
+  '/_app/transactions/show/$transactionId': typeof AppTransactionsShowTransactionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -206,7 +216,6 @@ export interface FileRouteTypes {
     | '/accounts/create'
     | '/categories/$categoryId'
     | '/categories/create'
-    | '/transactions/$transactionId'
     | '/transactions/create'
     | '/transfers/$transferId'
     | '/transfers/create'
@@ -214,6 +223,8 @@ export interface FileRouteTypes {
     | '/categories'
     | '/transactions'
     | '/transfers'
+    | '/transactions/edit/$transactionId'
+    | '/transactions/show/$transactionId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/exchange-rates'
@@ -226,7 +237,6 @@ export interface FileRouteTypes {
     | '/accounts/create'
     | '/categories/$categoryId'
     | '/categories/create'
-    | '/transactions/$transactionId'
     | '/transactions/create'
     | '/transfers/$transferId'
     | '/transfers/create'
@@ -234,6 +244,8 @@ export interface FileRouteTypes {
     | '/categories'
     | '/transactions'
     | '/transfers'
+    | '/transactions/edit/$transactionId'
+    | '/transactions/show/$transactionId'
   id:
     | '__root__'
     | '/_app'
@@ -248,7 +260,6 @@ export interface FileRouteTypes {
     | '/_app/accounts/create'
     | '/_app/categories/$categoryId'
     | '/_app/categories/create'
-    | '/_app/transactions/$transactionId'
     | '/_app/transactions/create'
     | '/_app/transfers/$transferId'
     | '/_app/transfers/create'
@@ -256,6 +267,8 @@ export interface FileRouteTypes {
     | '/_app/categories/'
     | '/_app/transactions/'
     | '/_app/transfers/'
+    | '/_app/transactions/edit/$transactionId'
+    | '/_app/transactions/show/$transactionId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -370,13 +383,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTransactionsCreateRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/transactions/$transactionId': {
-      id: '/_app/transactions/$transactionId'
-      path: '/transactions/$transactionId'
-      fullPath: '/transactions/$transactionId'
-      preLoaderRoute: typeof AppTransactionsTransactionIdRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/categories/create': {
       id: '/_app/categories/create'
       path: '/categories/create'
@@ -405,6 +411,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAccountsAccountIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/transactions/show/$transactionId': {
+      id: '/_app/transactions/show/$transactionId'
+      path: '/transactions/show/$transactionId'
+      fullPath: '/transactions/show/$transactionId'
+      preLoaderRoute: typeof AppTransactionsShowTransactionIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/transactions/edit/$transactionId': {
+      id: '/_app/transactions/edit/$transactionId'
+      path: '/transactions/edit/$transactionId'
+      fullPath: '/transactions/edit/$transactionId'
+      preLoaderRoute: typeof AppTransactionsEditTransactionIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -417,7 +437,6 @@ interface AppRouteChildren {
   AppAccountsCreateRoute: typeof AppAccountsCreateRoute
   AppCategoriesCategoryIdRoute: typeof AppCategoriesCategoryIdRoute
   AppCategoriesCreateRoute: typeof AppCategoriesCreateRoute
-  AppTransactionsTransactionIdRoute: typeof AppTransactionsTransactionIdRoute
   AppTransactionsCreateRoute: typeof AppTransactionsCreateRoute
   AppTransfersTransferIdRoute: typeof AppTransfersTransferIdRoute
   AppTransfersCreateRoute: typeof AppTransfersCreateRoute
@@ -425,6 +444,8 @@ interface AppRouteChildren {
   AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
   AppTransactionsIndexRoute: typeof AppTransactionsIndexRoute
   AppTransfersIndexRoute: typeof AppTransfersIndexRoute
+  AppTransactionsEditTransactionIdRoute: typeof AppTransactionsEditTransactionIdRoute
+  AppTransactionsShowTransactionIdRoute: typeof AppTransactionsShowTransactionIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -436,7 +457,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppAccountsCreateRoute: AppAccountsCreateRoute,
   AppCategoriesCategoryIdRoute: AppCategoriesCategoryIdRoute,
   AppCategoriesCreateRoute: AppCategoriesCreateRoute,
-  AppTransactionsTransactionIdRoute: AppTransactionsTransactionIdRoute,
   AppTransactionsCreateRoute: AppTransactionsCreateRoute,
   AppTransfersTransferIdRoute: AppTransfersTransferIdRoute,
   AppTransfersCreateRoute: AppTransfersCreateRoute,
@@ -444,6 +464,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppCategoriesIndexRoute: AppCategoriesIndexRoute,
   AppTransactionsIndexRoute: AppTransactionsIndexRoute,
   AppTransfersIndexRoute: AppTransfersIndexRoute,
+  AppTransactionsEditTransactionIdRoute: AppTransactionsEditTransactionIdRoute,
+  AppTransactionsShowTransactionIdRoute: AppTransactionsShowTransactionIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

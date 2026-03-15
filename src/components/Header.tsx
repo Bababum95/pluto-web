@@ -59,14 +59,16 @@ export const Header: FC<HeaderProps> = ({
             }}
           >
             <HugeiconsIcon icon={ArrowLeft02Icon} />
-            <span className="sr-only">{t('common.back')}</span>
+            <span className="sr-only">{t('common.navigation.back')}</span>
           </Button>
         ) : (
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="[&_svg]:size-6">
                 <HugeiconsIcon icon={Menu01Icon} />
-                <span className="sr-only">{t('common.toggleMenu')}</span>
+                <span className="sr-only">
+                  {t('common.navigation.toggleMenu')}
+                </span>
               </Button>
             </SheetTrigger>
             <SheetContent

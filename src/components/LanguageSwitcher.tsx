@@ -21,9 +21,7 @@ export function LanguageSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="[&_svg]:size-5">
           <HugeiconsIcon icon={Globe02Icon} />
-          <span className="sr-only">
-            {t('settings.language.changeLanguage')}
-          </span>
+          <span className="sr-only">{t('settings.language.change')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

@@ -1,61 +1,54 @@
 {
   "common": {
-    "loading": "Loading...",
-    "toggleMenu": "Toggle menu",
-    "back": "Back",
-    "home": "Home",
-    "accounts": "Accounts",
-    "settings": "Settings",
-    "categories": "Categories",
-    "exchangeRates": "Exchange rates",
+    "loading": "Loading",
     "total": "Total",
-    "profile": "Profile",
-    "cancel": "Cancel",
-    "save": "Save",
-    "close": "Close",
-    "openColorPicker": "Open color picker",
-    "selectIcon": "Select Icon",
-    "chooseIcon": "Choose an icon",
-    "logout": "Logout"
+    "navigation": {
+      "back": "Back",
+      "home": "Home",
+      "toggleMenu": "Toggle menu"
+    },
+    "actions": {
+      "create": "Create",
+      "add": "Add",
+      "edit": "Edit",
+      "save": "Save",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "close": "Close"
+    },
+    "fields": {
+      "name": "Name",
+      "color": "Color",
+      "icon": "Icon",
+      "description": "Description",
+      "date": "Date",
+      "amount": "Amount",
+      "comment": "Comment",
+      "tags": "Tags",
+      "account": "Account",
+      "category": "Category"
+    },
+    "entities": {
+      "accounts": "Accounts",
+      "categories": "Categories",
+      "settings": "Settings",
+      "profile": "Profile",
+      "exchangeRates": "Exchange rates"
+    }
   },
   "auth": {
     "signIn": "Sign in",
     "signUp": "Sign up",
     "login": "Login",
+    "logout": "Logout",
     "password": "Password",
+    "confirmPassword": "Confirm password",
     "register": "Register",
+    "name": "Name",
     "description": "Enter your email below to login to your account",
     "registerDescription": "Create a new account by entering your information below",
     "noAccount": "Don't have an account?",
-    "haveAccount": "Already have an account?",
-    "confirmPassword": "Confirm password",
-    "name": "Name"
-  },
-  "categories": {
-    "create": "Create category",
-    "edit": "Edit category",
-    "name": "Category name",
-    "icon": "Icon",
-    "color": "Color",
-    "submit": "Create",
-    "save": "Save",
-    "select": "Select category",
-    "selectDescription": "Choose a category for the transaction",
-    "notFound": "Category not found",
-    "created": "Category created successfully",
-    "updated": "Category updated successfully",
-    "deleted": "Category deleted successfully",
-    "errors": {
-      "name": {
-        "required": "Category name is required"
-      },
-      "color": {
-        "required": "Color is required"
-      },
-      "icon": {
-        "required": "Icon is required"
-      }
-    }
+    "haveAccount": "Already have an account?"
   },
   "timeRanges": {
     "day": "Day",
@@ -68,98 +61,88 @@
     "en": "English",
     "ru": "Русский"
   },
-  "home": {},
-  "transactionType": {
-    "expense": "Expenses",
-    "income": "Income"
-  },
   "transactions": {
     "title": "Transactions",
+    "create": "Create Transaction",
     "empty": {
       "title": "No Transactions Yet",
-      "description": "There are no transactions in the selected time range.",
-      "createTransaction": "Create Transaction"
+      "description": "There are no transactions in the selected time range."
     },
-    "edit": "Edit transaction",
-    "save": "Save",
-    "updated": "Transaction updated successfully",
-    "deleted": "Transaction deleted successfully",
-    "notFound": "Transaction not found",
+    "types": {
+      "expense": "Expense",
+      "income": "Income"
+    },
     "actions": {
-      "delete": "Delete transaction"
+      "edit": "Edit transaction",
+      "delete": "Delete transaction",
+      "show": "Show transaction",
+      "save": "Save transaction"
+    },
+    "messages": {
+      "added": "Transaction added successfully",
+      "updated": "Transaction updated successfully",
+      "deleted": "Transaction deleted successfully",
+      "notFound": "Transaction not found"
     },
     "recalculateBalance": {
       "title": "Recalculate account balance?",
       "description": "The changes you made affect the transaction amount or account. The account balance needs to be recalculated.",
       "submit": "Recalculate balance",
-      "saveWithoutRecalculation": "Save without recalculation"
+      "skip": "Save without recalculation"
     },
-    "create": {
-      "title": "Add transaction",
-      "account": "Account",
-      "accountRequired": "Account is required",
-      "comment": "Comment",
-      "add": "Add transaction",
-      "added": "Transaction added successfully",
-      "date": "Select date",
-      "errors": {
-        "amount": {
-          "required": "Amount is required"
-        },
-        "account": {
-          "required": "Account is required"
-        },
-        "category": {
-          "required": "Category is required"
-        },
-        "date": {
-          "required": "Date is required",
-          "notValid": "Invalid date",
-          "inFuture": "Date cannot be in the future"
-        }
+    "errors": {
+      "date": {
+        "required": "Date is required",
+        "notValid": "Invalid date",
+        "inFuture": "Date cannot be in the future"
       }
     }
   },
-  "accounts": {
-    "create": "Create account",
-    "edit": "Edit account",
-    "name": "Account name",
-    "description": "Account description",
-    "icon": "Icon",
-    "color": "Color",
-    "currency": "Currency",
-    "selectCurrency": "Select currency",
-    "balance": "Balance",
-    "scale": "Decimal places",
-    "submit": "Create",
-    "save": "Save",
-    "notFound": "Account not found",
-    "created": "Account created successfully",
-    "updated": "Account updated successfully",
-    "deleted": "Account deleted successfully",
-    "shown": "Account shown successfully",
-    "hidden": "Account hidden successfully",
+  "categories": {
+    "title": "Categories",
+    "fields": {
+      "name": "Category name"
+    },
     "actions": {
+      "create": "Create category",
+      "edit": "Edit category",
+      "save": "Save category"
+    },
+    "messages": {
+      "created": "Category created successfully",
+      "updated": "Category updated successfully",
+      "deleted": "Category deleted successfully",
+      "notFound": "Category not found"
+    },
+    "select": {
+      "title": "Select category",
+      "description": "Choose a category for the transaction"
+    }
+  },
+  "accounts": {
+    "title": "Accounts",
+    "fields": {
+      "name": "Account name",
+      "description": "Account description"
+    },
+    "actions": {
+      "create": "Create account",
+      "edit": "Edit account",
       "add": "Add account",
-      "newTransfer": "New transfer",
-      "transferHistory": "Transfer history",
       "delete": "Delete account",
       "hide": "Exclude from total",
-      "show": "Include in total"
+      "show": "Include in total",
+      "newTransfer": "New transfer",
+      "transferHistory": "Transfer history",
+      "save": "Save account"
     },
-    "errors": {
-      "name": {
-        "required": "Account name is required"
-      },
-      "color": {
-        "required": "Color is required"
-      },
-      "icon": {
-        "required": "Icon is required"
-      },
-      "currency": {
-        "required": "Currency is required"
-      }
+    "messages": {
+      "created": "Account created successfully",
+      "updated": "Account updated successfully",
+      "deleted": "Account deleted successfully",
+      "shown": "Account shown successfully",
+      "hidden": "Account hidden successfully",
+      "notFound": "Account not found"
     },
     "select": {
       "title": "Select account",
@@ -172,7 +155,7 @@
     "language": {
       "title": "Language",
       "description": "Choose your preferred language",
-      "changeLanguage": "Change language"
+      "change": "Change language"
     },
     "theme": {
       "title": "Theme",
@@ -180,12 +163,12 @@
       "light": "Light",
       "dark": "Dark",
       "system": "System",
-      "changeTheme": "Change theme"
+      "change": "Change theme"
     },
     "account": {
       "title": "Default account",
       "description": "Select the account that will be used as default",
-      "changeAccount": "Change account",
+      "change": "Change account",
       "none": "Not set"
     }
   },
@@ -208,32 +191,22 @@
   },
   "transfers": {
     "title": "Transfers",
-    "create": "New transfer",
-    "detail": "Transfer details",
-    "from": "From",
-    "to": "To",
-    "fromAmount": "Amount",
-    "toAmount": "Amount",
-    "rate": "Exchange rate",
-    "fee": "Fee",
-    "submit": "Create transfer",
-    "empty": "No transfers yet",
-    "notFound": "Transfer not found",
-    "created": "Transfer created successfully",
-    "deleted": "Transfer deleted successfully",
+    "fields": {
+      "from": "From",
+      "to": "To",
+      "rate": "Exchange rate",
+      "fee": "Fee"
+    },
     "actions": {
+      "create": "New transfer",
+      "submit": "Create transfer",
       "delete": "Delete transfer"
     },
-    "errors": {
-      "fromAccount": {
-        "required": "Source account is required"
-      },
-      "toAccount": {
-        "required": "Destination account is required"
-      },
-      "amount": {
-        "required": "Amount is required"
-      }
+    "messages": {
+      "created": "Transfer created successfully",
+      "deleted": "Transfer deleted successfully",
+      "notFound": "Transfer not found",
+      "empty": "No transfers yet"
     }
   },
   "tags": {
@@ -251,5 +224,20 @@
     "label": "Select date",
     "today": "Today",
     "yesterday": "Yesterday"
+  },
+  "forms": {
+    "enter": "Enter",
+    "select": "Select",
+    "search": "Search",
+    "validation": {
+      "required": "This field is required",
+      "invalidNumber": "Invalid number",
+      "maxLength": "Maximum length is {{maxLength}} characters",
+      "date": {
+        "required": "Date is required",
+        "notValid": "Invalid date",
+        "inFuture": "Date cannot be in the future"
+      }
+    }
   }
 }

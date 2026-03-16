@@ -5,7 +5,7 @@ import { DEFAULT_ICON, getIconByName } from '@/lib/icons'
 
 export type IconProps = React.ComponentProps<'div'> & {
   /** Icon name from the registry (e.g. "Dollar01Icon"). */
-  name: string
+  name?: string
   /** Optional size in pixels. */
   size?: number
   /** Optional className for the svg wrapper. */

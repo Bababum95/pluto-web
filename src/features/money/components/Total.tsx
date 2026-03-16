@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { FC } from 'react'
 
+import { cn } from '@/lib/utils'
 import {
   selectAccountsStatus,
   selectAccountsSummary,
@@ -52,7 +53,10 @@ export const Total: FC<Props> = ({ size, className }) => {
         loading={status === 'pending'}
         balance={summary?.total}
         currency={summary?.currency}
-        className={balanceVariants({ size })}
+        className={cn(
+          balanceVariants({ size }),
+          'overflow-x-auto overflow-y-hidden'
+        )}
       />
     </div>
   )

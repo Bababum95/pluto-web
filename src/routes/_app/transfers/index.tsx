@@ -3,6 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Invoice01Icon, PlusSignIcon } from '@hugeicons/core-free-icons'
 import { useTranslation } from 'react-i18next'
 
+import dayjs from '@/lib/dayjs'
 import { AppLayout } from '@/components/AppLayout'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
@@ -18,7 +19,10 @@ import { ItemGroup } from '@/components/ui/item'
 import { Spinner } from '@/components/ui/spinner'
 import { TimeRangeSwitcher } from '@/features/time-range/components/TimeRangeSwitcher'
 import { useAppSelector } from '@/store'
-import { selectTransfers, selectTransfersStatus } from '@/store/slices/transfer'
+import {
+  selectTransfersByDay,
+  selectTransfersStatus,
+} from '@/store/slices/transfer'
 import { TransferItem } from '@/features/transfer'
 
 export const Route = createFileRoute('/_app/transfers/')({
@@ -26,8 +30,8 @@ export const Route = createFileRoute('/_app/transfers/')({
 })
 
 function TransfersPage() {
-  const { t } = useTranslation()
-  const transfers = useAppSelector(selectTransfers)
+  const { t, i18n } = useTranslation()
+  const transfers = useAppSelector(selectTransfersByDay)
   const status = useAppSelector(selectTransfersStatus)
   const router = useRouter()
 
@@ -86,18 +90,29 @@ function TransfersPage() {
               </EmptyContent>
             </Empty>
           ) : (
-            <Card size="sm" className="py-1!">
-              <ItemGroup>
-                {transfers.map((transfer, index) => (
-                  <TransferItem
-                    key={transfer.id}
-                    {...transfer}
-                    separator={index !== transfers.length - 1}
-                    onClick={() => handleTransferClick(transfer.id)}
-                  />
-                ))}
-              </ItemGroup>
-            </Card>
+            <div className="flex flex-col gap-6">
+              {transfers.map(({ date, list }) => (
+                <div key={date}>
+                  <div className="px-2 mb-1">
+                    <span className="text-muted-foreground text-base">
+                      {dayjs(date).locale(i18n.language).format('DD MMMM YYYY')}
+                    </span>
+                  </div>
+                  <Card size="sm" className="bg-muted/50 rounded-md py-0!">
+                    <ItemGroup>
+                      {list.map((transfer, index) => (
+                        <TransferItem
+                          key={transfer.id}
+                          {...transfer}
+                          separator={index !== list.length - 1}
+                          onClick={() => handleTransferClick(transfer.id)}
+                        />
+                      ))}
+                    </ItemGroup>
+                  </Card>
+                </div>
+              ))}
+            </div>
           )}
         </CardContent>
       </Card>

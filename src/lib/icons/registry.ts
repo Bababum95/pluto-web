@@ -311,7 +311,8 @@ export const POPULAR_ICONS: IconName[] = [
 /**
  * Returns the icon component by name, or undefined if not found.
  */
-export function getIconByName(name: string): SvgIcon | undefined {
+export function getIconByName(name?: string): SvgIcon | undefined {
+  if (!name) return
   return ICON_REGISTRY[name as IconName]
 }
 

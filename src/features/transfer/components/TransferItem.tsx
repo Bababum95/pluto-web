@@ -1,19 +1,12 @@
 import type { FC } from 'react'
-import { ArrowRight01Icon } from '@hugeicons/core-free-icons'
+import { ArrowDown02Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-  ItemSeparator,
-} from '@/components/ui/item'
+import { Icon } from '@/components/ui/icon'
+import { Separator } from '@/components/ui/separator'
 import { useAppSelector } from '@/store'
 import { selectAccountById } from '@/store/slices/account'
-import { toDecimalString } from '@/features/money'
+import { Balance, toDecimal } from '@/features/money'
 
 import type { Transfer } from '../types'
 
@@ -22,11 +15,23 @@ type Props = Transfer & {
   separator?: boolean
 }
 
+type AccountProps = {
+  icon?: string
+  color?: string
+  name: string
+}
+
+const Account: FC<AccountProps> = ({ icon, color, name }) => (
+  <div className="flex items-center gap-2">
+    <Icon name={icon} color={color} size={16} className="p-1" />
+    <span>{name}</span>
+  </div>
+)
+
 export const TransferItem: FC<Props> = ({
   from,
   to,
   rate,
-  createdAt,
   onClick,
   separator = false,
 }) => {
@@ -37,54 +42,47 @@ export const TransferItem: FC<Props> = ({
     selectAccountById(state, to.account)
   )
 
-  const fromValue = toDecimalString(from.value, from.scale)
-  const toValue = toDecimalString(to.value, to.scale)
-
   const fromName = fromAccount?.name ?? from.account
   const toName = toAccount?.name ?? to.account
 
-  const fromCurrency = fromAccount?.balance.original.currency.code ?? ''
-  const toCurrency = toAccount?.balance.original.currency.code ?? ''
+  const fromCurrency = fromAccount?.balance.original.currency
+  const toCurrency = toAccount?.balance.original.currency
 
   return (
     <>
-      <Item size="sm" onClick={onClick}>
-        <ItemMedia
-          variant="icon"
-          style={{
-            backgroundColor: fromAccount?.color ?? '#6b7280',
-            color: '#FFFFFF',
-          }}
-        >
-          <HugeiconsIcon icon={ArrowRight01Icon} size={20} />
-        </ItemMedia>
-        <ItemContent className="gap-0">
-          <ItemTitle className="flex items-center gap-1">
-            <span>{fromName}</span>
-            <HugeiconsIcon
-              icon={ArrowRight01Icon}
-              size={14}
-              className="text-muted-foreground shrink-0"
-            />
-            <span>{toName}</span>
-          </ItemTitle>
-          <ItemDescription className="text-xs">
-            {new Date(createdAt).toLocaleDateString()}
-            {rate !== 1 && ` · rate: ${rate}`}
-          </ItemDescription>
-        </ItemContent>
-        <ItemActions>
-          <div className="flex flex-col items-end text-sm">
-            <span className="text-destructive font-medium">
-              -{fromValue} {fromCurrency}
-            </span>
-            <span className="text-emerald-600 text-xs font-medium">
-              +{toValue} {toCurrency}
-            </span>
-          </div>
-        </ItemActions>
-      </Item>
-      {separator && <ItemSeparator />}
+      <div className="flex items-center gap-2 p-2 pr-3 pl-1" onClick={onClick}>
+        <HugeiconsIcon icon={ArrowDown02Icon} size={24} />
+        <div className="flex flex-col gap-3">
+          <Account
+            icon={fromAccount?.icon}
+            color={fromAccount?.color}
+            name={fromName}
+          />
+          <Account
+            icon={toAccount?.icon}
+            color={toAccount?.color}
+            name={toName}
+          />
+        </div>
+        <div className="flex flex-col gap-1 ml-auto items-end">
+          <Balance
+            balance={toDecimal(from.value, from.scale)}
+            currency={fromCurrency}
+          />
+          <span className="text-xs text-muted-foreground">
+            {'1 X '}
+            {new Intl.NumberFormat('ru-RU', {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: rate > 1 ? (rate > 100 ? 0 : 2) : 8,
+            }).format(rate)}
+          </span>
+          <Balance
+            balance={toDecimal(to.value, to.scale)}
+            currency={toCurrency}
+          />
+        </div>
+      </div>
+      {separator && <Separator />}
     </>
   )
 }

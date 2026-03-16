@@ -7,6 +7,15 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## Unreleased
+
+### ✨ Features
+
+- improve icon handling and transfer display
+- enhance transfer functionality and UI
+
+---
+
 ## 15.03.2026 — v0.1.17
 
 ### ✨ Features

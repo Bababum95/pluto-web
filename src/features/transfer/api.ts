@@ -1,11 +1,17 @@
 import { apiFetch, queryClient } from '@/lib/api'
-import type { CreateTransferDto, Transfer, UpdateTransferDto } from './types'
+import type {
+  CreateTransferDto,
+  Transfer,
+  TransferFilterDto,
+  UpdateTransferDto,
+} from './types'
 
 const BASE = 'transfers'
 const QUERY_KEY = ['transfers'] as const
 
 export const transferApi = {
-  list: (): Promise<Transfer[]> => apiFetch(BASE),
+  list: (filters?: TransferFilterDto): Promise<Transfer[]> =>
+    apiFetch(BASE, { params: filters }),
 
   getById: (id: string): Promise<Transfer> => apiFetch(`${BASE}/${id}`),
 

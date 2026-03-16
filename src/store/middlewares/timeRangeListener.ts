@@ -7,32 +7,36 @@ import {
   increaseTimeRangeIndex,
 } from '../slices/time-range'
 import { fetchTransactions } from '../slices/transaction'
+import { fetchTransfers } from '../slices/transfer'
 
 export const timeRangeListener = createListenerMiddleware()
 
-const refetchTransactions = async (
+const refetchData = async (
   _: unknown,
   api: { dispatch: (action: unknown) => unknown }
 ) => {
-  await api.dispatch(fetchTransactions())
+  await Promise.all([
+    api.dispatch(fetchTransactions()),
+    api.dispatch(fetchTransfers()),
+  ])
 }
 
 timeRangeListener.startListening({
   actionCreator: setTimeRange,
-  effect: refetchTransactions,
+  effect: refetchData,
 })
 
 timeRangeListener.startListening({
   actionCreator: setTimeRangeIndex,
-  effect: refetchTransactions,
+  effect: refetchData,
 })
 
 timeRangeListener.startListening({
   actionCreator: decreaseTimeRangeIndex,
-  effect: refetchTransactions,
+  effect: refetchData,
 })
 
 timeRangeListener.startListening({
   actionCreator: increaseTimeRangeIndex,
-  effect: refetchTransactions,
+  effect: refetchData,
 })

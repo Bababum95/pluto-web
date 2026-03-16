@@ -1,20 +1,24 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { PlusSignIcon } from '@hugeicons/core-free-icons'
+import { Invoice01Icon, PlusSignIcon } from '@hugeicons/core-free-icons'
 import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
 
-import { ItemGroup } from '@/components/ui/item'
-import { Card } from '@/components/ui/card'
 import { AppLayout } from '@/components/AppLayout'
 import { Button } from '@/components/ui/button'
-import { Spinner } from '@/components/ui/spinner'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import {
-  fetchTransfers,
-  selectTransfers,
-  selectTransfersStatus,
-} from '@/store/slices/transfer'
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty'
+import { ItemGroup } from '@/components/ui/item'
+import { Spinner } from '@/components/ui/spinner'
+import { TimeRangeSwitcher } from '@/features/time-range/components/TimeRangeSwitcher'
+import { useAppSelector } from '@/store'
+import { selectTransfers, selectTransfersStatus } from '@/store/slices/transfer'
 import { TransferItem } from '@/features/transfer'
 
 export const Route = createFileRoute('/_app/transfers/')({
@@ -25,14 +29,7 @@ function TransfersPage() {
   const { t } = useTranslation()
   const transfers = useAppSelector(selectTransfers)
   const status = useAppSelector(selectTransfersStatus)
-  const dispatch = useAppDispatch()
   const router = useRouter()
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchTransfers())
-    }
-  }, [status, dispatch])
 
   const handleTransferClick = (id: string) => {
     router.navigate({
@@ -57,37 +54,53 @@ function TransfersPage() {
         </Button>
       }
     >
-      {status === 'pending' ? (
-        <div className="flex flex-1 items-center justify-center py-8">
-          <Spinner />
-        </div>
-      ) : transfers.length === 0 ? (
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 py-8 text-muted-foreground">
-          <p>{t('transfers.messages.empty')}</p>
-          <Button asChild>
-            <Link
-              to="/transfers/create"
-              viewTransition={{ types: ['slide-left'] }}
-            >
-              <HugeiconsIcon icon={PlusSignIcon} />
-              {t('transfers.actions.create')}
-            </Link>
-          </Button>
-        </div>
-      ) : (
-        <Card size="sm" className="py-1!">
-          <ItemGroup>
-            {transfers.map((transfer, index) => (
-              <TransferItem
-                key={transfer.id}
-                {...transfer}
-                separator={index !== transfers.length - 1}
-                onClick={() => handleTransferClick(transfer.id)}
-              />
-            ))}
-          </ItemGroup>
-        </Card>
-      )}
+      <Card className="flex flex-col relative h-full flex-1" size="sm">
+        <CardHeader className="items-center pb-0">
+          <TimeRangeSwitcher />
+        </CardHeader>
+        <CardContent>
+          {status === 'pending' ? (
+            <div className="flex items-center justify-center py-8">
+              <Spinner size={32} />
+            </div>
+          ) : transfers.length === 0 ? (
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <HugeiconsIcon icon={Invoice01Icon} />
+                </EmptyMedia>
+                <EmptyTitle>{t('transfers.empty.title')}</EmptyTitle>
+                <EmptyDescription>
+                  {t('transfers.empty.description')}
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent className="flex-row justify-center">
+                <Button>
+                  <Link
+                    to="/transfers/create"
+                    viewTransition={{ types: ['slide-left'] }}
+                  >
+                    {t('transfers.actions.create')}
+                  </Link>
+                </Button>
+              </EmptyContent>
+            </Empty>
+          ) : (
+            <Card size="sm" className="py-1!">
+              <ItemGroup>
+                {transfers.map((transfer, index) => (
+                  <TransferItem
+                    key={transfer.id}
+                    {...transfer}
+                    separator={index !== transfers.length - 1}
+                    onClick={() => handleTransferClick(transfer.id)}
+                  />
+                ))}
+              </ItemGroup>
+            </Card>
+          )}
+        </CardContent>
+      </Card>
     </AppLayout>
   )
 }

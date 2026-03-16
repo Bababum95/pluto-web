@@ -203,11 +203,14 @@
       "submit": "Create transfer",
       "delete": "Delete transfer"
     },
+    "empty": {
+      "title": "No Transfers Yet",
+      "description": "There are no transfers in the selected time range."
+    },
     "messages": {
       "created": "Transfer created successfully",
       "deleted": "Transfer deleted successfully",
-      "notFound": "Transfer not found",
-      "empty": "No transfers yet"
+      "notFound": "Transfer not found"
     }
   },
   "tags": {

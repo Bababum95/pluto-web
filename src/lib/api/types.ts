@@ -487,6 +487,43 @@ export interface paths {
         patch: operations["TagController_update"];
         trace?: never;
     };
+    "/v1/regular-payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all regular payments for the current user */
+        get: operations["RegularPaymentController_findAll"];
+        put?: never;
+        /** Create a new regular payment template */
+        post: operations["RegularPaymentController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/regular-payments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a regular payment by ID */
+        get: operations["RegularPaymentController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a regular payment by ID */
+        delete: operations["RegularPaymentController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a regular payment by ID */
+        patch: operations["RegularPaymentController_update"];
+        trace?: never;
+    };
     "/v1/transfers": {
         parameters: {
             query?: never;
@@ -914,6 +951,72 @@ export interface components {
             icon?: string;
         };
         UpdateTagDto: Record<string, never>;
+        CreateRegularPaymentDto: {
+            /**
+             * @example expense
+             * @enum {string}
+             */
+            type: "expense" | "income";
+            /**
+             * @description Category ID
+             * @example 507f1f77bcf86cd799439011
+             */
+            category: string;
+            /** @example Monthly rent */
+            comment?: string;
+            /**
+             * @description Account ID
+             * @example 507f1f77bcf86cd799439012
+             */
+            account: string;
+            /**
+             * @description Amount (decimal). Negative for expense, positive for income.
+             * @example -1500.5
+             */
+            amount: number;
+            /**
+             * @description Decimal places (scale)
+             * @example 2
+             */
+            scale: number;
+            /**
+             * @description Tag IDs
+             * @example [
+             *       "507f1f77bcf86cd799439011",
+             *       "507f1f77bcf86cd799439012"
+             *     ]
+             */
+            tags?: string[];
+        };
+        RegularPaymentAmountViewDto: {
+            /** @description Amount in account currency */
+            original: components["schemas"]["MoneyViewDto"];
+            /** @description Amount in converted (e.g. base) currency */
+            converted: components["schemas"]["MoneyViewDto"];
+        };
+        RegularPaymentDto: {
+            id: string;
+            /** @description Account data */
+            account: components["schemas"]["AccountDto"];
+            /**
+             * @example expense
+             * @enum {string}
+             */
+            type: "expense" | "income";
+            /** @description Category data */
+            category: components["schemas"]["CategoryDto"];
+            /** @example Monthly rent */
+            comment: string;
+            /** @description Amount: original (account currency) and converted */
+            amount: components["schemas"]["RegularPaymentAmountViewDto"];
+            /** @description Tag entities attached to the regular payment */
+            tags: components["schemas"]["TagDto"][];
+            /** @example 2021-01-01T10:00:00.000Z */
+            createdAt: string;
+            /** @example 2021-01-01T10:00:00.000Z */
+            updatedAt: string;
+        };
+        UpdateRegularPaymentDto: Record<string, never>;
         TransferSideDto: {
             /**
              * @description Account ID
@@ -2452,9 +2555,161 @@ export interface operations {
             };
         };
     };
-    TransferController_findAll: {
+    RegularPaymentController_findAll: {
         parameters: {
             query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of all regular payment templates. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegularPaymentDto"][];
+                };
+            };
+        };
+    };
+    RegularPaymentController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRegularPaymentDto"];
+            };
+        };
+        responses: {
+            /** @description The regular payment has been successfully created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegularPaymentDto"];
+                };
+            };
+            /** @description Bad request. Category or account not found. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RegularPaymentController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The regular payment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegularPaymentDto"];
+                };
+            };
+            /** @description Regular payment not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RegularPaymentController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The regular payment has been successfully deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Regular payment not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RegularPaymentController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateRegularPaymentDto"];
+            };
+        };
+        responses: {
+            /** @description The regular payment has been successfully updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegularPaymentDto"];
+                };
+            };
+            /** @description Category or account not found. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Regular payment not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TransferController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Start of period by transfer date (inclusive). ISO date or datetime. */
+                createdFrom?: string;
+                /** @description End of period by transfer date (inclusive). ISO date or datetime. */
+                createdTo?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;

@@ -6,6 +6,7 @@ import { fetchAccounts } from '@/store/slices/account'
 import { fetchSettings } from '@/store/slices/settings'
 import { fetchTransactions } from '@/store/slices/transaction'
 import { fetchExchangeRates } from '@/store/slices/exchange-rate'
+import { fetchTransfers } from '@/store/slices/transfer'
 import type { RootState } from '@/store'
 import type { Status } from '@/lib/types'
 
@@ -18,7 +19,7 @@ const initialState: AppState = {
 }
 
 export const initApp = createAsyncThunk('app/init', async (_, { dispatch }) => {
-  Promise.all([dispatch(fetchExchangeRates())])
+  Promise.all([dispatch(fetchExchangeRates()), dispatch(fetchTransfers())])
 
   await Promise.all([
     dispatch(fetchCategories()),

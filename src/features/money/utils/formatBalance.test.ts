@@ -3,6 +3,24 @@ import { describe, it, expect } from 'vitest'
 import { formatBalance } from './formatBalance'
 
 describe('formatBalance', () => {
+  it('formats crypto code with decimal fallback', () => {
+    const result = formatBalance({
+      balance: 1234.56789,
+      currency: { code: 'USDT', decimal_digits: 5 },
+    })
+    expect(result).toContain('USDT')
+    expect(result).toMatch(/\d/)
+  })
+
+  it('formats ISO currency with native formatter', () => {
+    const result = formatBalance({
+      balance: 1234.56,
+      currency: { code: 'USD', decimal_digits: 2 },
+    })
+    expect(result).not.toContain('USD')
+    expect(result).toMatch(/\$/)
+  })
+
   it('formats USD with 2 decimal digits', () => {
     const result = formatBalance({
       balance: 1234.56,

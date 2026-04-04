@@ -6,7 +6,7 @@ import { useTranslation } from '@/lib/i18n'
 import type { TimeRangeType } from '../types'
 
 type Props = {
-  timeRange: Exclude<TimeRangeType, 'period'>
+  timeRange: TimeRangeType
   timeRangeIndex: number
 }
 
@@ -15,6 +15,10 @@ export const TimeRangeDateLabel: FC<Props> = ({
   timeRangeIndex,
 }) => {
   const { i18n } = useTranslation()
+
+  if (timeRange === 'period') {
+    return null
+  }
 
   if (timeRange === 'week') {
     const start = dayjs().subtract(timeRangeIndex, 'week').startOf('isoWeek')

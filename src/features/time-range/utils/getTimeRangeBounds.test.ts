@@ -14,11 +14,6 @@ describe('getTimeRangeBounds', () => {
     vi.useRealTimers()
   })
 
-  it('returns empty object for period', () => {
-    expect(getTimeRangeBounds('period', 0)).toEqual({})
-    expect(getTimeRangeBounds('period', 1)).toEqual({})
-  })
-
   it('returns from and to in YYYY-MM-DD format for day', () => {
     const result = getTimeRangeBounds('day', 0)
     expect(result).toHaveProperty('from')

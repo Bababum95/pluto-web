@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 
+import dayjs from '@/lib/dayjs'
 import { server } from '@/testing/server'
 import { createStore } from '@/store'
 import {
@@ -15,7 +16,7 @@ import {
   createMockTransaction,
 } from '@/testing/data/transaction'
 import { mockAccount, mockAccountSummary } from '@/testing/data/account'
-import dayjs from '@/lib/dayjs'
+import { getTimeRangeBounds } from '@/features/time-range'
 
 describe('Transaction flow (integration)', () => {
   it('fetchTransactions: GET /transactions with type, from, to query params from store', async () => {
@@ -27,7 +28,11 @@ describe('Transaction flow (integration)', () => {
       })
     )
     const store = createStore({
-      timeRange: { timeRange: 'month', timeRangeIndex: 0 },
+      timeRange: {
+        type: 'month',
+        index: 0,
+        range: getTimeRangeBounds('month', 0),
+      },
       transactionType: { transactionType: 'expense' },
     })
     store.dispatch(fetchTransactions())

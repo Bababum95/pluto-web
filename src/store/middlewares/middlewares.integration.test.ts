@@ -9,12 +9,13 @@ import {
 } from '@/store/slices/time-range'
 import { setTransactionType } from '@/store/slices/transaction-type'
 import { mockTransaction } from '@/testing/data/transaction'
+import { getTimeRangeBounds } from '@/features/time-range'
 
 describe('Middlewares (integration)', () => {
   it('setTimeRange triggers fetchTransactions', async () => {
     const store = createStore()
 
-    store.dispatch(setTimeRange('week'))
+    store.dispatch(setTimeRange({ type: 'week' }))
 
     await waitFor(
       () => {
@@ -72,8 +73,9 @@ describe('Middlewares (integration)', () => {
   it('decreaseTimeRangeIndex triggers fetchTransactions', async () => {
     const store = createStore({
       timeRange: {
-        timeRange: 'day',
-        timeRangeIndex: 2,
+        type: 'day',
+        index: 2,
+        range: getTimeRangeBounds('day', 2),
       },
     })
 

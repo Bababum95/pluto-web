@@ -5,7 +5,9 @@ import {
   ArrowRightDoubleIcon,
 } from '@hugeicons/core-free-icons'
 import type { FC } from 'react'
+import type { DateRange } from 'react-day-picker'
 
+import dayjs from '@/lib/dayjs'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/lib/i18n'
@@ -15,10 +17,13 @@ import {
   increaseTimeRangeIndex,
   setTimeRange,
   setTimeRangeIndex,
+  selectTimeRangeState,
+  type TimeRangeState,
 } from '@/store/slices/time-range'
 import { cn } from '@/lib/utils'
+import { DatePickerRange } from '@/components/ui/date-picker-range'
 
-import { TIME_RANGES } from '../constants'
+import { DATE_FORMAT, TIME_RANGES } from '../constants'
 import type { TimeRangeType } from '../types'
 
 import { TimeRangeDateLabel } from './TimeRangeDateLabel'
@@ -26,45 +31,47 @@ import { TimeRangeDateLabel } from './TimeRangeDateLabel'
 export const TimeRangeSwitcher: FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { timeRange, timeRangeIndex } = useAppSelector(
-    (state) => state.timeRange
-  )
+  const timeRange = useAppSelector(selectTimeRangeState)
 
-  const isPeriod = timeRange === 'period'
-  const canDecrease = timeRangeIndex > 0
+  const isPeriod = timeRange.type === 'period'
+  const canDecrease = timeRange.index > 0
 
   const actions = {
-    set: (value: TimeRangeType) => dispatch(setTimeRange(value)),
+    set: (value: Partial<TimeRangeState>) => dispatch(setTimeRange(value)),
     setIndex: (value: number) => dispatch(setTimeRangeIndex(value)),
     next: () => dispatch(increaseTimeRangeIndex()),
     prev: () => dispatch(decreaseTimeRangeIndex()),
   }
 
-  const handleTimeRangeChange = (value: TimeRangeType) => {
-    actions.set(value)
+  const handleTimeRangeTypeChange = (value: string) => {
+    actions.set({ type: value as TimeRangeType })
+  }
+
+  const handleSetRange = (range: DateRange) => {
+    actions.set({
+      range: {
+        from: dayjs(range.from).format(DATE_FORMAT),
+        to: dayjs(range.to).format(DATE_FORMAT),
+      },
+    })
   }
 
   return (
     <div className="relative z-45 -mb-2">
       <Tabs
-        value={timeRange}
-        onValueChange={(value) => handleTimeRangeChange(value as TimeRangeType)}
+        value={timeRange.type}
+        onValueChange={handleTimeRangeTypeChange}
         className="items-center w-full"
       >
         <TabsList className="w-full">
           {TIME_RANGES.map((range) => (
-            <TabsTrigger
-              key={range}
-              value={range}
-              className="flex-1"
-              disabled={range === 'period'}
-            >
+            <TabsTrigger key={range} value={range} className="flex-1">
               {t(`timeRanges.${range}`)}
             </TabsTrigger>
           ))}
         </TabsList>
       </Tabs>
-      <div className="flex gap-2 items-center justify-between mt-2">
+      <div className="flex gap-2 items-center justify-between mt-2 w-full">
         {!isPeriod ? (
           <>
             <div className="w-18">
@@ -79,8 +86,8 @@ export const TimeRangeSwitcher: FC = () => {
             </div>
 
             <TimeRangeDateLabel
-              timeRange={timeRange}
-              timeRangeIndex={timeRangeIndex}
+              timeRange={timeRange.type}
+              timeRangeIndex={timeRange.index}
             />
 
             <div className="flex items-center w-18">
@@ -107,9 +114,13 @@ export const TimeRangeSwitcher: FC = () => {
             </div>
           </>
         ) : (
-          <span className="text-sm font-medium">
-            {t(`timeRanges.${timeRange}`)}
-          </span>
+          <DatePickerRange
+            onChange={handleSetRange}
+            value={{
+              from: dayjs(timeRange.range.from).toDate(),
+              to: dayjs(timeRange.range.to).toDate(),
+            }}
+          />
         )}
       </div>
     </div>

@@ -5,21 +5,19 @@ import type { TimeRangeType } from '../types'
 
 /**
  * Computes inclusive date bounds [from, to] for the given time range and index.
- * Used for API filters and consistent with TimeRangeDateLabel display logic.
- * For 'period' returns no bounds (caller may omit from/to or use custom range later).
  * Bounds are returned as ISO date strings (YYYY-MM-DD) without time and without timezone.
  */
 export function getTimeRangeBounds(
-  timeRange: TimeRangeType,
+  timeRange: Exclude<TimeRangeType, 'period'>,
   timeRangeIndex: number
-): { from: string; to: string } | { from?: undefined; to?: undefined } {
-  const toDateBounds = (start: dayjs.Dayjs, end: dayjs.Dayjs) => ({
-    from: start.format(DATE_FORMAT),
-    to: end.format(DATE_FORMAT),
-  })
+): { from: string; to: string } {
+  const toDateBounds = (start: dayjs.Dayjs, end: dayjs.Dayjs) => {
+    const bounds = {
+      from: start.format(DATE_FORMAT),
+      to: end.format(DATE_FORMAT),
+    }
 
-  if (timeRange === 'period') {
-    return {}
+    return bounds
   }
 
   if (timeRange === 'week') {

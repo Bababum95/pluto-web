@@ -4,30 +4,42 @@ import { waitFor } from '@testing-library/react'
 import { createStore } from '@/store'
 import {
   setTimeRange,
+  setTimeRangeIndex,
   increaseTimeRangeIndex,
   decreaseTimeRangeIndex,
 } from '@/store/slices/time-range'
 import { setTransactionType } from '@/store/slices/transaction-type'
 import { mockTransaction } from '@/testing/data/transaction'
+import { mockTransfer } from '@/testing/data/transfer'
 import { getTimeRangeBounds } from '@/features/time-range'
 
+async function waitForTransactionsAndTransfersRefetch(store: ReturnType<
+  typeof createStore
+>): Promise<void> {
+  await waitFor(
+    () => {
+      const { transaction, transfer } = store.getState()
+      expect(transaction.status).toBe('success')
+      expect(transfer.status).toBe('success')
+    },
+    { timeout: 3000 }
+  )
+}
+
 describe('Middlewares (integration)', () => {
-  it('setTimeRange triggers fetchTransactions', async () => {
+  it('setTimeRange triggers fetchTransactions and fetchTransfers', async () => {
     const store = createStore()
 
     store.dispatch(setTimeRange({ type: 'week' }))
 
-    await waitFor(
-      () => {
-        expect(store.getState().transaction.status).toBe('success')
-      },
-      { timeout: 3000 }
-    )
+    await waitForTransactionsAndTransfersRefetch(store)
 
     expect(store.getState().transaction.transactions).toHaveLength(1)
     expect(store.getState().transaction.transactions[0].id).toBe(
       mockTransaction.id
     )
+    expect(store.getState().transfer.transfers).toHaveLength(1)
+    expect(store.getState().transfer.transfers[0].id).toBe(mockTransfer.id)
   })
 
   it('setTransactionType triggers fetchTransactions with clear', async () => {
@@ -55,22 +67,31 @@ describe('Middlewares (integration)', () => {
     )
   })
 
-  it('increaseTimeRangeIndex triggers fetchTransactions', async () => {
+  it('increaseTimeRangeIndex triggers fetchTransactions and fetchTransfers', async () => {
     const store = createStore()
 
     store.dispatch(increaseTimeRangeIndex())
 
-    await waitFor(
-      () => {
-        expect(store.getState().transaction.status).toBe('success')
-      },
-      { timeout: 3000 }
-    )
+    await waitForTransactionsAndTransfersRefetch(store)
 
     expect(store.getState().transaction.transactions).toHaveLength(1)
+    expect(store.getState().transfer.transfers).toHaveLength(1)
+    expect(store.getState().transfer.transfers[0].id).toBe(mockTransfer.id)
   })
 
-  it('decreaseTimeRangeIndex triggers fetchTransactions', async () => {
+  it('setTimeRangeIndex triggers fetchTransactions and fetchTransfers', async () => {
+    const store = createStore()
+
+    store.dispatch(setTimeRangeIndex(2))
+
+    await waitForTransactionsAndTransfersRefetch(store)
+
+    expect(store.getState().transaction.transactions).toHaveLength(1)
+    expect(store.getState().transfer.transfers).toHaveLength(1)
+    expect(store.getState().transfer.transfers[0].id).toBe(mockTransfer.id)
+  })
+
+  it('decreaseTimeRangeIndex triggers fetchTransactions and fetchTransfers', async () => {
     const store = createStore({
       timeRange: {
         type: 'day',
@@ -81,13 +102,10 @@ describe('Middlewares (integration)', () => {
 
     store.dispatch(decreaseTimeRangeIndex())
 
-    await waitFor(
-      () => {
-        expect(store.getState().transaction.status).toBe('success')
-      },
-      { timeout: 3000 }
-    )
+    await waitForTransactionsAndTransfersRefetch(store)
 
     expect(store.getState().transaction.transactions).toHaveLength(1)
+    expect(store.getState().transfer.transfers).toHaveLength(1)
+    expect(store.getState().transfer.transfers[0].id).toBe(mockTransfer.id)
   })
 })

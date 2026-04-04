@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Invoice01Icon } from '@hugeicons/core-free-icons'
+import { TransactionHistoryIcon } from '@hugeicons/core-free-icons'
 
 import { AppLayout } from '@/components/AppLayout'
 import { HomePageContent } from '@/features/home'
@@ -24,7 +24,7 @@ function HomePage() {
       actions={
         <Button variant="ghost" size="icon" asChild>
           <Link to="/transactions" viewTransition={{ types: ['slide-left'] }}>
-            <HugeiconsIcon icon={Invoice01Icon} />
+            <HugeiconsIcon icon={TransactionHistoryIcon} />
           </Link>
         </Button>
       }

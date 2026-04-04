@@ -7,7 +7,17 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
-## Unreleased
+## 04.04.2026 — v0.1.19
+
+### ✨ Features
+
+- refactor time range management and UI components
+- enhance formatBalance function with fallback for crypto currencies
+- fetch transfers on app initialization
+
+---
+
+## 16.03.2026 — v0.1.18
 
 ### ✨ Features
 

@@ -7,6 +7,25 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 10.04.2026 — v0.1.20
+
+### ✨ Features
+
+- enhance profile page with user details and localization support
+- add excluded field to AccountForm and enhance MoneyInput component
+
+### 🐛 Fixes
+
+- update icon for transaction link in HomePage component
+
+### 🧹 Chore
+
+- add playwright e2e auth smoke coverage
+- raise vitest coverage with core suite
+- enhance middlewares integration tests to include transfer fetching
+
+---
+
 ## 04.04.2026 — v0.1.19
 
 ### ✨ Features

@@ -115,6 +115,7 @@ const EditAccountPage = () => {
           currency: account.balance.original.currency.id,
           balance: account.balance.original.value.toString(),
           description: account.description,
+          excluded: account.excluded ?? false,
         }}
         submitLabel={t('accounts.actions.save')}
         onSubmit={handleSubmit}

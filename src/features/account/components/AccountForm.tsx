@@ -13,6 +13,7 @@ import { SelectCurrency } from '@/features/currency'
 import { MoneyInput, parseDecimal } from '@/features/money'
 
 import type { CreateAccountDto, AccountFormValues } from '../types'
+import { SwitchFormField } from '@/components/forms/switch-form-field'
 
 type Props = {
   defaultValues?: AccountFormValues
@@ -37,6 +38,7 @@ export const AccountForm: FC<Props> = ({
           .string()
           .min(1, { message: t('forms.validation.required') }),
         balance: z.string(),
+        excluded: z.boolean().optional(),
       }),
     },
     defaultValues: defaultValues,
@@ -108,6 +110,16 @@ export const AccountForm: FC<Props> = ({
                 value={field.state.value as string}
                 onChange={(value) => field.handleChange(value)}
                 label={t('common.fields.color')}
+              />
+            )}
+          />
+          <form.Field
+            name="excluded"
+            children={(field) => (
+              <SwitchFormField
+                field={field}
+                title={t('accounts.fields.excluded.title')}
+                description={t('accounts.fields.excluded.description')}
               />
             )}
           />

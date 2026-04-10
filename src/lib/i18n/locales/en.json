@@ -177,6 +177,15 @@
       "none": "Not set"
     }
   },
+  "profile": {
+    "fields": {
+      "email": "Email",
+      "id": "User ID",
+      "unknownUser": "Unknown user",
+      "noEmail": "Email not specified",
+      "noId": "ID not available"
+    }
+  },
   "currency": {
     "select": {
       "title": "Currencies",

@@ -7,6 +7,14 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 12.04.2026 — v0.1.21
+
+### ✨ Features
+
+- enhance header and profile components with new features and localization
+
+---
+
 ## 10.04.2026 — v0.1.20
 
 ### ✨ Features

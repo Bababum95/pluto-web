@@ -183,7 +183,29 @@
       "id": "User ID",
       "unknownUser": "Unknown user",
       "noEmail": "Email not specified",
-      "noId": "ID not available"
+      "noId": "ID not available",
+      "memberSince": "Member since"
+    },
+    "sections": {
+      "info": "Account info",
+      "security": "Security"
+    },
+    "actions": {
+      "changePassword": "Change password",
+      "copyId": "Copy ID",
+      "copied": "Copied"
+    },
+    "changePassword": {
+      "title": "Change password",
+      "description": "Enter your current password and choose a new one",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "submit": "Save new password",
+      "success": "Password changed successfully",
+      "errors": {
+        "passwordMismatch": "Passwords do not match"
+      }
     }
   },
   "currency": {
@@ -201,7 +223,13 @@
     "noResults": "No rates found",
     "empty": "No exchange rates available",
     "error": "Failed to load exchange rates",
-    "updatedAt": "Updated"
+    "updatedAt": "Updated",
+    "calculator": {
+      "title": "Calculator",
+      "fromAmount": "Amount to convert",
+      "toAmount": "Converted amount",
+      "swap": "Swap currencies"
+    }
   },
   "transfers": {
     "title": "Transfers",

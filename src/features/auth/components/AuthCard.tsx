@@ -15,11 +15,13 @@ type Props = {
 }
 
 export const AuthCard: FC<Props> = ({ title, description, children }) => (
-  <Card className="mx-auto w-full max-w-md">
-    <CardHeader>
-      <CardTitle className="text-2xl">{title}</CardTitle>
-      <CardDescription>{description}</CardDescription>
-    </CardHeader>
-    <CardContent>{children}</CardContent>
-  </Card>
+  <div className="flex flex-col items-center gap-8 w-full max-w-md">
+    <Card className="mx-auto w-full shadow-xl shadow-foreground/5 border-border/60">
+      <CardHeader>
+        <CardTitle className="text-xl">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>{children}</CardContent>
+    </Card>
+  </div>
 )

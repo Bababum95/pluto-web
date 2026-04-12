@@ -35,8 +35,8 @@ export const Header: FC<HeaderProps> = ({
   const router = useRouter()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
-      <div className="container flex h-16 items-center px-2 gap-2 relative">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/90 backdrop-blur-md supports-backdrop-filter:bg-background/80">
+      <div className="container flex h-14 items-center px-2 gap-2 relative">
         {showBackButton ? (
           <Button
             variant="ghost"

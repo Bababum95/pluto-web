@@ -56,14 +56,14 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
         </AnimatePresence>
       </motion.div>
 
-      <TabsList className="w-full h-12 rounded-none border-0 bg-background fixed bottom-safe left-0 right-0 z-50 border-t">
+      <TabsList className="w-full h-12 rounded-none border-0 fixed bottom-safe left-0 right-0 z-50 border-t border-border/60 backdrop-blur-lg bg-transparent">
         {TABS.map((tab) => (
           <TabsTrigger key={tab} value={tab} className="flex-1 text-base">
             {t(`transactions.types.${tab}`)}
           </TabsTrigger>
         ))}
       </TabsList>
-      <div className="w-full pb-safe bg-background fixed left-0 right-0 bottom-0 z-49" />
+      <div className="w-full pb-safe fixed left-0 right-0 bottom-0 z-49 backdrop-blur-md" />
     </Tabs>
   )
 }

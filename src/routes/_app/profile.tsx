@@ -244,7 +244,7 @@ function ChangePasswordSheet({
 
   return (
     <Drawer open={open} onOpenChange={handleOpenChange}>
-      <DrawerContent>
+      <DrawerContent className="pb-safe">
         <DrawerHeader>
           <DrawerTitle>{t('profile.changePassword.title')}</DrawerTitle>
           <DrawerDescription>

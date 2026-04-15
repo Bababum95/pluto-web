@@ -1,11 +1,18 @@
-import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import { describe, expect, it, vi } from "vitest"
+import userEvent from '@testing-library/user-event'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
-import { ToggleGroup, ToggleGroupItem } from "./toggle-group"
+import { ToggleGroup, ToggleGroupItem } from './toggle-group'
 
-describe("ToggleGroup", () => {
-  const renderGroup = (props?: React.ComponentProps<typeof ToggleGroup>) =>
+type ToggleGroupSingleProps = Extract<
+  React.ComponentProps<typeof ToggleGroup>,
+  { type: 'single' }
+>
+
+describe('ToggleGroup', () => {
+  const renderGroup = (
+    props?: Omit<ToggleGroupSingleProps, 'children' | 'type' | 'defaultValue'>
+  ) =>
     render(
       <ToggleGroup type="single" defaultValue="income" {...props}>
         <ToggleGroupItem value="income">Income</ToggleGroupItem>
@@ -13,30 +20,33 @@ describe("ToggleGroup", () => {
       </ToggleGroup>
     )
 
-  it("renders toggle group root", () => {
+  it('renders toggle group root', () => {
     renderGroup()
 
-    expect(screen.getByRole("group")).toBeInTheDocument()
+    expect(screen.getByRole('group')).toBeInTheDocument()
   })
 
-  it("renders toggle group items", () => {
+  it('renders toggle group items', () => {
     renderGroup()
 
-    expect(screen.getByRole("radio", { name: "Income" })).toBeInTheDocument()
-    expect(screen.getByRole("radio", { name: "Expense" })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: 'Income' })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: 'Expense' })).toBeInTheDocument()
   })
 
-  it("applies data-slot attributes", () => {
+  it('applies data-slot attributes', () => {
     renderGroup()
 
-    expect(screen.getByRole("group")).toHaveAttribute("data-slot", "toggle-group")
-    expect(screen.getByRole("radio", { name: "Income" })).toHaveAttribute(
-      "data-slot",
-      "toggle-group-item"
+    expect(screen.getByRole('group')).toHaveAttribute(
+      'data-slot',
+      'toggle-group'
+    )
+    expect(screen.getByRole('radio', { name: 'Income' })).toHaveAttribute(
+      'data-slot',
+      'toggle-group-item'
     )
   })
 
-  it("supports controlled value changes", async () => {
+  it('supports controlled value changes', async () => {
     const onValueChange = vi.fn()
     const user = userEvent.setup()
 
@@ -47,16 +57,16 @@ describe("ToggleGroup", () => {
       </ToggleGroup>
     )
 
-    await user.click(screen.getByRole("radio", { name: "Expense" }))
+    await user.click(screen.getByRole('radio', { name: 'Expense' }))
 
-    expect(onValueChange).toHaveBeenCalledWith("expense")
+    expect(onValueChange).toHaveBeenCalledWith('expense')
   })
 
-  it("inherits variant and size from group", () => {
-    renderGroup({ variant: "outline", size: "sm" })
+  it('inherits variant and size from group', () => {
+    renderGroup({ variant: 'outline', size: 'sm' })
 
-    const item = screen.getByRole("radio", { name: "Income" })
-    expect(item).toHaveAttribute("data-variant", "outline")
-    expect(item).toHaveAttribute("data-size", "sm")
+    const item = screen.getByRole('radio', { name: 'Income' })
+    expect(item).toHaveAttribute('data-variant', 'outline')
+    expect(item).toHaveAttribute('data-size', 'sm')
   })
 })

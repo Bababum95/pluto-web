@@ -9,7 +9,7 @@ import {
   selectTransactionType,
 } from '@/store/slices/transaction-type'
 
-import { TABS } from '../constants'
+import { TRANSACTION_TYPES } from '../constants'
 
 type Props = {
   children: ReactNode
@@ -36,7 +36,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
         className="pb-12 flex flex-col flex-1"
       >
         <AnimatePresence mode="wait" initial={false}>
-          {TABS.map((tab) => {
+          {TRANSACTION_TYPES.map((tab) => {
             if (transactionType !== tab) return null
 
             return (
@@ -57,7 +57,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
       </motion.div>
 
       <TabsList className="w-full h-12 rounded-none border-0 fixed bottom-safe left-0 right-0 z-50 border-t border-border/60 backdrop-blur-lg bg-transparent">
-        {TABS.map((tab) => (
+        {TRANSACTION_TYPES.map((tab) => (
           <TabsTrigger key={tab} value={tab} className="flex-1 text-base">
             {t(`transactions.types.${tab}`)}
           </TabsTrigger>

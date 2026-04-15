@@ -1,2 +1,2 @@
-export const TABS = ['expense', 'income'] as const
-export const DEFAULT_TAB = 'expense'
+export const TRANSACTION_TYPES = ['expense', 'income'] as const
+export const DEFAULT_TRANSACTION_TYPE = 'expense'

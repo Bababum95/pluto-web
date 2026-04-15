@@ -34,7 +34,8 @@
       "categories": "Categories",
       "settings": "Settings",
       "profile": "Profile",
-      "exchangeRates": "Exchange rates"
+      "exchangeRates": "Exchange rates",
+      "regularPayments": "Regular payments"
     }
   },
   "auth": {
@@ -70,6 +71,7 @@
       "description": "There are no transactions in the selected time range."
     },
     "types": {
+      "label": "Transaction type",
       "expense": "Expense",
       "income": "Income"
     },
@@ -269,6 +271,34 @@
     "label": "Select date",
     "today": "Today",
     "yesterday": "Yesterday"
+  },
+  "regularPayments": {
+    "title": "Regular payments",
+    "create": "New template",
+    "edit": "Edit template",
+    "empty": {
+      "title": "No templates yet",
+      "description": "Create a template to quickly add recurring transactions."
+    },
+    "actions": {
+      "save": "Save template",
+      "delete": "Delete template",
+      "createTransaction": "Create transaction from template"
+    },
+    "messages": {
+      "added": "Template added successfully",
+      "updated": "Template updated successfully",
+      "deleted": "Template deleted successfully"
+    },
+    "reminder": {
+      "title": "Reminder",
+      "description": "Notify me on a specific day each month",
+      "day": "Day of month",
+      "dayShort": "{{day}}th",
+      "time": "Time",
+      "dayValidation": "Day must be between 1 and 28",
+      "timeValidation": "Time must be in HH:mm format"
+    }
   },
   "forms": {
     "enter": "Enter",

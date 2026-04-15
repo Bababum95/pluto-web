@@ -5,12 +5,12 @@ import transactionTypeReducer, {
   selectTransactionType,
 } from './index'
 import type { RootState } from '@/store'
-import { DEFAULT_TAB } from '@/features/transaction-type/constants'
+import { DEFAULT_TRANSACTION_TYPE } from '@/features/transaction-type/constants'
 
 describe('transactionType slice', () => {
-  it('initial state uses DEFAULT_TAB', () => {
+  it('initial state uses DEFAULT_TRANSACTION_TYPE', () => {
     const state = transactionTypeReducer(undefined, { type: '@@INIT' })
-    expect(state.transactionType).toBe(DEFAULT_TAB)
+    expect(state.transactionType).toBe(DEFAULT_TRANSACTION_TYPE)
   })
 
   it('setTransactionType updates when value is a valid tab', () => {
@@ -25,7 +25,7 @@ describe('transactionType slice', () => {
       undefined,
       setTransactionType('not-a-valid-tab')
     )
-    expect(state.transactionType).toBe(DEFAULT_TAB)
+    expect(state.transactionType).toBe(DEFAULT_TRANSACTION_TYPE)
   })
 })
 

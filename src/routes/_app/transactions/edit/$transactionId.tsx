@@ -23,7 +23,6 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 import { TransactionForm } from '@/features/transaction/components/TransactionForm'
-import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   deleteTransaction,
@@ -92,11 +91,9 @@ const EditTransactionPage = () => {
   if (!transaction) {
     return (
       <AppLayout title={t('transactions.actions.edit')} showBackButton>
-        <TransactionTypeTabs>
-          <div className="flex flex-1 items-center justify-center py-8">
-            {t('transactions.messages.notFound')}
-          </div>
-        </TransactionTypeTabs>
+        <div className="flex flex-1 items-center justify-center py-8">
+          {t('transactions.messages.notFound')}
+        </div>
       </AppLayout>
     )
   }
@@ -121,22 +118,20 @@ const EditTransactionPage = () => {
         </DropdownMenu>
       }
     >
-      <TransactionTypeTabs>
-        <TransactionForm
-          defaultValues={{
-            amount: transaction.amount.original.value.toString(),
-            account: transaction.account.id,
-            comment: transaction.comment ?? '',
-            category: transaction.category.id,
-            tags: transaction.tags.map((tag) => tag.id),
-            date: dayjs(transaction.date).toDate(),
-          }}
-          amountCurrency={transaction.amount.original.currency.code}
-          submitLabel={t('transactions.actions.save')}
-          onSubmit={confirmBalanceChange}
-          key={`edit-transaction-form-${transaction.id}`}
-        />
-      </TransactionTypeTabs>
+      <TransactionForm
+        defaultValues={{
+          amount: transaction.amount.original.value.toString(),
+          account: transaction.account.id,
+          comment: transaction.comment ?? '',
+          category: transaction.category.id,
+          tags: transaction.tags.map((tag) => tag.id),
+          date: dayjs(transaction.date).toDate(),
+        }}
+        amountCurrency={transaction.amount.original.currency.code}
+        submitLabel={t('transactions.actions.save')}
+        onSubmit={confirmBalanceChange}
+        key={`edit-transaction-form-${transaction.id}`}
+      />
       <Dialog
         modal
         open={isOpenConfirmModal}

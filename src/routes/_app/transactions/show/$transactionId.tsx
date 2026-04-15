@@ -23,7 +23,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Spinner } from '@/components/ui/spinner'
-import { TransactionTypeTabs } from '@/features/transaction-type'
 import { formatBalance } from '@/features/money'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
@@ -61,11 +60,9 @@ const ShowTransactionPage = () => {
   if (!transaction) {
     return (
       <AppLayout title={t('transactions.title')} showBackButton>
-        <TransactionTypeTabs>
-          <div className="flex flex-1 items-center justify-center py-8">
-            <Spinner size={32} />
-          </div>
-        </TransactionTypeTabs>
+        <div className="flex flex-1 items-center justify-center py-8">
+          <Spinner size={32} />
+        </div>
       </AppLayout>
     )
   }
@@ -106,92 +103,90 @@ const ShowTransactionPage = () => {
         </DropdownMenu>
       }
     >
-      <TransactionTypeTabs>
-        <Card size="sm" className="flex flex-col">
-          <CardContent className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <Row>
-                <Label>{t('common.fields.amount')}</Label>
-                <div className="flex flex-col items-end">
-                  <span>
+      <Card size="sm" className="flex flex-col">
+        <CardContent className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <Row>
+              <Label>{t('common.fields.amount')}</Label>
+              <div className="flex flex-col items-end">
+                <span>
+                  {formatBalance({
+                    currency: amount.original.currency,
+                    balance: amount.original.value,
+                  })}
+                </span>
+                {hasConverted && (
+                  <span className="text-muted-foreground">
                     {formatBalance({
-                      currency: amount.original.currency,
-                      balance: amount.original.value,
+                      currency: amount.converted.currency,
+                      balance: amount.converted.value,
                     })}
                   </span>
-                  {hasConverted && (
-                    <span className="text-muted-foreground">
-                      {formatBalance({
-                        currency: amount.converted.currency,
-                        balance: amount.converted.value,
-                      })}
-                    </span>
-                  )}
-                </div>
-              </Row>
-              <Separator />
-              <Row>
-                <Label>{t('common.fields.category')}</Label>
-                <span>{category.name}</span>
-              </Row>
-              <Separator />
-              <Row>
-                <Label>{t('common.fields.account')}</Label>
-                <span>{account.name}</span>
-              </Row>
-              <Separator />
-              <Row>
-                <Label>{t('common.fields.date')}</Label>
-                <span>
-                  {dayjs(date).locale(i18n.language).format('DD MMMM YYYY')}
-                </span>
-              </Row>
-              <Separator />
-              {tags.length > 0 && (
-                <>
-                  <Row>
-                    <Label>{t('common.fields.tags')}</Label>
-                    <div className="flex flex-wrap gap-1.5">
-                      {tags.map((tag) => (
-                        <Badge
-                          key={tag.id}
-                          variant="default"
-                          color={tag.color}
-                          size="xs"
-                        >
-                          {tag.name}
-                        </Badge>
-                      ))}
-                    </div>
-                  </Row>
-                  <Separator />
-                </>
-              )}
-              {comment.trim().length > 0 && (
-                <>
-                  <Row>
-                    <span className="text-muted-foreground text-sm">
-                      {t('common.fields.comment')}
-                    </span>
-                    <p className="whitespace-pre-wrap wrap-break-word text-sm">
-                      {comment}
-                    </p>
-                  </Row>
-                  <Separator />
-                </>
-              )}
-              <Row>
-                <Label>{t('common.fields.createdAt')}</Label>
-                <span>
-                  {dayjs(createdAt)
-                    .locale(i18n.language)
-                    .format('DD.MM.YYYY HH:mm')}
-                </span>
-              </Row>
-            </div>
-          </CardContent>
-        </Card>
-      </TransactionTypeTabs>
+                )}
+              </div>
+            </Row>
+            <Separator />
+            <Row>
+              <Label>{t('common.fields.category')}</Label>
+              <span>{category.name}</span>
+            </Row>
+            <Separator />
+            <Row>
+              <Label>{t('common.fields.account')}</Label>
+              <span>{account.name}</span>
+            </Row>
+            <Separator />
+            <Row>
+              <Label>{t('common.fields.date')}</Label>
+              <span>
+                {dayjs(date).locale(i18n.language).format('DD MMMM YYYY')}
+              </span>
+            </Row>
+            <Separator />
+            {tags.length > 0 && (
+              <>
+                <Row>
+                  <Label>{t('common.fields.tags')}</Label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tags.map((tag) => (
+                      <Badge
+                        key={tag.id}
+                        variant="default"
+                        color={tag.color}
+                        size="xs"
+                      >
+                        {tag.name}
+                      </Badge>
+                    ))}
+                  </div>
+                </Row>
+                <Separator />
+              </>
+            )}
+            {comment.trim().length > 0 && (
+              <>
+                <Row>
+                  <span className="text-muted-foreground text-sm">
+                    {t('common.fields.comment')}
+                  </span>
+                  <p className="whitespace-pre-wrap wrap-break-word text-sm">
+                    {comment}
+                  </p>
+                </Row>
+                <Separator />
+              </>
+            )}
+            <Row>
+              <Label>{t('common.fields.createdAt')}</Label>
+              <span>
+                {dayjs(createdAt)
+                  .locale(i18n.language)
+                  .format('DD.MM.YYYY HH:mm')}
+              </span>
+            </Row>
+          </div>
+        </CardContent>
+      </Card>
     </AppLayout>
   )
 }

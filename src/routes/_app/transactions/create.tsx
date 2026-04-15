@@ -5,7 +5,6 @@ import { toast } from 'sonner'
 import { AppLayout } from '@/components/AppLayout'
 import { TransactionForm } from '@/features/transaction/components/TransactionForm'
 import { DEFAULT_TRANSACTION_FORM_VALUES } from '@/features/transaction/constants'
-import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectSettings } from '@/store/slices/settings'
 import { createTransaction } from '@/store/slices/transaction'
@@ -33,16 +32,14 @@ function CreateTransactionPage() {
 
   return (
     <AppLayout title={t('transactions.create')} showBackButton>
-      <TransactionTypeTabs>
-        <TransactionForm
-          defaultValues={{
-            ...DEFAULT_TRANSACTION_FORM_VALUES,
-            account: settings?.account?.id ?? '',
-          }}
-          onSubmit={handleSubmit}
-          key="create-transaction-form"
-        />
-      </TransactionTypeTabs>
+      <TransactionForm
+        defaultValues={{
+          ...DEFAULT_TRANSACTION_FORM_VALUES,
+          account: settings?.account?.id ?? '',
+        }}
+        onSubmit={handleSubmit}
+        key="create-transaction-form"
+      />
     </AppLayout>
   )
 }

@@ -5,11 +5,13 @@ import { z } from 'zod'
 import dayjs from '@/lib/dayjs'
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/forms/form-field'
+import { FieldLabel, Field } from '@/components/ui/field'
 import { SelectAccount } from '@/features/account/components/SelectAccount'
 import { CategoryPicker } from '@/features/category'
 import { TagPicker } from '@/features/tag'
 import { DatePicker } from '@/components/ui/date-picker'
 import { MoneyField } from '@/features/money/components/MoneyField'
+import { TransactionTypeToggle } from '@/features/transaction-type'
 import { useAppSelector } from '@/store/hooks'
 import { selectAccounts } from '@/store/slices/account'
 import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
@@ -99,6 +101,10 @@ export function TransactionForm({
           />
         )}
       />
+      <Field>
+        <FieldLabel>{t('transactions.types.label')}</FieldLabel>
+        <TransactionTypeToggle />
+      </Field>
       <form.Field
         name="category"
         children={(field) => (
@@ -145,7 +151,7 @@ export function TransactionForm({
         children={([canSubmit, isSubmitting]) => (
           <Button
             type="submit"
-            className="fixed bottom-14 left-4 right-4 mb-safe"
+            className="fixed bottom-4 left-4 right-4 mb-safe"
             disabled={!canSubmit}
             disabledStyle="bg-muted text-muted-foreground"
             isLoading={isSubmitting}

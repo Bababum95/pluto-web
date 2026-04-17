@@ -20,7 +20,7 @@ import {
   ItemSeparator,
   ItemTitle,
 } from '@/components/ui/item'
-import { LanguageDrawer } from '@/components/LanguageDrawer'
+import { LanguageDrawer } from '@/features/settings'
 import { ThemeDrawer, useTheme } from '@/features/theme'
 import { AccountDrawer } from '@/features/account'
 import { useTranslation } from '@/lib/i18n'

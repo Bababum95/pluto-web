@@ -7,6 +7,23 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## 17.04.2026 — v0.1.22
+
+### ✨ Features
+
+- introduce Toggle and ToggleGroup components with stories and tests
+
+### ♻️ Refactoring
+
+- remove LanguageDrawer and LanguageSwitcher components
+
+### 🧹 Chore
+
+- refactor ToggleGroup tests for consistency and clarity
+- enhance Header and TransactionTypeTabs components with improved styling
+
+---
+
 ## 12.04.2026 — v0.1.21
 
 ### ✨ Features

@@ -1,4 +1,11 @@
-import { useCallback, useMemo, useState, type FC } from 'react'
+import {
+  startTransition,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type FC,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAppSelector } from '@/store/hooks'
@@ -75,11 +82,17 @@ export const CategoryPicker: FC<CategoryPickerProps> = ({
     [isControlled, onChange]
   )
 
+  const [hasSurfaceMounted, setHasSurfaceMounted] = useState(false)
+  useEffect(() => {
+    startTransition(() => setHasSurfaceMounted(true))
+  }, [])
+
   return (
     <Field className={className}>
       <FieldLabel>{t('common.fields.category')}</FieldLabel>
       <CategoriesList
         key={transactionType}
+        skipEntranceAnimation={!hasSurfaceMounted}
         categories={visibleCategories}
         onCategryCkick={handleSelect}
         selectedCategoryId={value}

@@ -1,21 +1,14 @@
 import { motion, AnimatePresence, type Variants } from 'motion/react'
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 
 import type { Category } from '../types'
 
 import { CategoryCard } from './CategoryCard'
 
 const containerVariants: Variants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: {},
   show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.3,
-      ease: 'easeOut',
-      staggerChildren: 0.06,
-      delayChildren: 0.05,
-    },
+    transition: { staggerChildren: 0.05 },
   },
 }
 
@@ -34,6 +27,8 @@ type Props = {
   selectedCategoryId?: string
   onCategryCkick: (categoryId: string) => void
   children?: React.ReactNode
+  /** When true, render at `animate` state without entrance motion (motion.dev: initial={false}). */
+  skipEntranceAnimation?: boolean
 }
 
 export const CategoriesList: FC<Props> = ({
@@ -41,36 +36,41 @@ export const CategoriesList: FC<Props> = ({
   onCategryCkick,
   selectedCategoryId,
   children,
-}) => (
-  <motion.div
-    className="grid grid-cols-4 gap-2 pb-safe"
-    initial="hidden"
-    animate="show"
-    variants={containerVariants}
-  >
-    <AnimatePresence>
-      {categories.map((category) => (
-        <motion.div
-          key={category.id}
-          variants={itemVariants}
-          onClick={() => onCategryCkick(category.id)}
-        >
-          <CategoryCard
-            category={category}
-            style={{
-              backgroundColor:
-                category.id === selectedCategoryId
-                  ? category.color
-                  : 'transparent',
-            }}
-          />
-        </motion.div>
-      ))}
-      {children && (
-        <motion.div variants={itemVariants} className="w-full flex">
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </motion.div>
-)
+  skipEntranceAnimation = false,
+}) => {
+  const [skipEntranceOnThisInstance] = useState(() => skipEntranceAnimation)
+
+  return (
+    <motion.div
+      className="grid grid-cols-4 gap-2 pb-safe"
+      initial={skipEntranceOnThisInstance ? false : 'hidden'}
+      animate="show"
+      variants={containerVariants}
+    >
+      <AnimatePresence initial={!skipEntranceOnThisInstance}>
+        {categories.map((category) => (
+          <motion.div
+            key={category.id}
+            variants={itemVariants}
+            onClick={() => onCategryCkick(category.id)}
+          >
+            <CategoryCard
+              category={category}
+              style={{
+                backgroundColor:
+                  category.id === selectedCategoryId
+                    ? category.color
+                    : 'transparent',
+              }}
+            />
+          </motion.div>
+        ))}
+        {children && (
+          <motion.div variants={itemVariants} className="w-full flex">
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )
+}

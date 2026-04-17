@@ -57,6 +57,7 @@ export const CategoryDrawer: FC<Props> = ({ categories, value, onChange }) => {
               categories={categories}
               onCategryCkick={handleSelect}
               selectedCategoryId={value}
+              skipEntranceAnimation={true}
             />
           </div>
         </DrawerContent>

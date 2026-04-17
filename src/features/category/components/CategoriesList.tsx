@@ -6,9 +6,13 @@ import type { Category } from '../types'
 import { CategoryCard } from './CategoryCard'
 
 const containerVariants: Variants = {
-  hidden: {},
+  hidden: { opacity: 0, y: 8 },
   show: {
+    opacity: 1,
+    y: 0,
     transition: {
+      duration: 0.3,
+      ease: 'easeOut',
       staggerChildren: 0.06,
       delayChildren: 0.05,
     },

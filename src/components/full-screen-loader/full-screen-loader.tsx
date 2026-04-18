@@ -12,7 +12,7 @@ export const FullScreenLoader: FC<Props> = ({ isVisible }) => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="flex min-h-dvh items-center justify-center bg-background fixed inset-0 z-100"
+          className="flex min-h-vh items-center justify-center bg-background fixed inset-0 z-100"
           transition={{ duration: 0.5, ease: 'easeIn' }}
           initial={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}

@@ -60,7 +60,11 @@ export const CreateTagDialog: FC<Props> = ({ onSuccess }) => {
           {t('tags.create.add')}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-sm" aria-describedby={undefined}>
+      <DialogContent
+        className="sm:max-w-sm"
+        aria-describedby={undefined}
+        variant="liquid"
+      >
         <form
           className="grid gap-6"
           onSubmit={(e) => {

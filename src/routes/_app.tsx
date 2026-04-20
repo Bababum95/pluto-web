@@ -4,7 +4,7 @@ import { initApp } from '@/store/slices/app'
 
 const AppLayout = () => {
   return (
-    <div className="flex flex-col min-h-dvh [view-transition-name:main-content] pb-safe relative">
+    <div className="flex flex-col min-h-dvh [view-transition-name:main-content] pb-safe relative overflow-x-hidden">
       <Outlet />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-12 -left-24 h-96 w-96 rounded-full bg-primary/12 blur-3xl" />

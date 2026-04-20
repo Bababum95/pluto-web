@@ -30,7 +30,7 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
-## 20.04.2026 — v0.1.23
+## 19.04.2026 — v0.1.23
 
 ### ✨ Features
 

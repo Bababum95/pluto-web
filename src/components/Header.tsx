@@ -83,7 +83,7 @@ export const Header: FC<HeaderProps> = ({
                   <NavUser />
                 </SheetTitle>
               </SheetHeader>
-              <Separator />
+              <Separator className="bg-white/20 dark:bg-white/10" />
               <nav className="flex flex-col h-full">
                 {MENU_ITEMS.map(({ label, to, icon }) => (
                   <Link

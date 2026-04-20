@@ -5,6 +5,10 @@ export function formatBalance({
   currency,
 }: FormatBalanceParams): string {
   const minFraction = balance < 100 ? 2 : 0
+  const maxFraction = Math.max(
+    Math.max(currency.decimal_digits ?? 0, minFraction),
+    20
+  )
 
   try {
     // Try native currency formatting (ISO 4217 only)
@@ -12,7 +16,7 @@ export function formatBalance({
       style: 'currency',
       currency: currency.code,
       minimumFractionDigits: minFraction,
-      maximumFractionDigits: currency.decimal_digits,
+      maximumFractionDigits: maxFraction,
     }).format(balance)
   } catch {
     // Fallback for crypto or unsupported currency codes (e.g. USDT, BTC)
@@ -20,7 +24,7 @@ export function formatBalance({
       new Intl.NumberFormat('ru-RU', {
         style: 'decimal',
         minimumFractionDigits: minFraction,
-        maximumFractionDigits: currency.decimal_digits,
+        maximumFractionDigits: maxFraction,
       }).format(balance) + ` ${currency.code}`
     )
   }

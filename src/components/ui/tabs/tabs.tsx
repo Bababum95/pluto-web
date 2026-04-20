@@ -16,7 +16,7 @@ import { AnimatePresence, motion } from 'motion/react'
 
 import { cn } from '@/lib/utils'
 
-const SWIPE_OFFSET = 400
+const SWIPE_OFFSET = 200
 
 type TabsContextValue = {
   activeValue: string
@@ -90,7 +90,7 @@ const TabsList: FC<ComponentProps<typeof TabsPrimitive.List>> = ({
   <TabsPrimitive.List
     data-slot="tabs-list"
     className={cn(
-      'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]',
+      'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[2px]',
       className
     )}
     {...props}
@@ -159,7 +159,7 @@ const TabsContent: FC<ComponentProps<typeof TabsPrimitive.Content>> = ({
             initial={{ opacity: 0, x: direction * SWIPE_OFFSET }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: direction * SWIPE_OFFSET }}
-            transition={{ duration: 0.22, ease: 'linear' }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
           >
             {children}
           </motion.div>

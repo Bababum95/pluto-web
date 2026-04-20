@@ -35,7 +35,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
         </TabsContent>
       ))}
 
-      <TabsList className="w-[calc(100%-16px)] h-12 fixed bottom-2 left-2 right-2 z-50 border border-border/60 backdrop-blur-lg bg-transparent">
+      <TabsList className="w-[calc(100%-32px)] h-12 fixed bottom-4 left-4 right-4 z-50 border border-border/60 backdrop-blur-lg bg-transparent">
         {TRANSACTION_TYPES.map((tab) => (
           <TabsTrigger key={tab} value={tab} className="flex-1 text-base">
             {t(`transactions.types.${tab}`)}

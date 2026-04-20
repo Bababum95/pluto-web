@@ -37,6 +37,7 @@
   --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
   --sidebar-border: oklch(0.928 0.006 264.531);
   --sidebar-ring: oklch(0.707 0.022 261.325);
+  --liquid: oklch(1 0 0 / 40%);
 }
 
 .dark {
@@ -71,6 +72,7 @@
   --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+  --liquid: oklch(1 0 0 / 5%);
 }
 
 @layer utilities {
@@ -132,6 +134,7 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --color-liquid: var(--liquid);
 }
 
 @layer base {
@@ -216,6 +219,12 @@ html:active-view-transition-type(slide-right) {
     );
     background-size: 80px 80px;
     animation: loading 1.5s linear infinite;
+  }
+
+  @supports (backdrop-filter: blur(0)) {
+    .bg-liquid {
+      @apply backdrop-blur-lg backdrop-saturate-150;
+    }
   }
 
   @keyframes loading {

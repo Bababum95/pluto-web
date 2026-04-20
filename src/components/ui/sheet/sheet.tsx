@@ -52,7 +52,7 @@ const sheetContentVariants = cva(
       variant: {
         legacy: 'bg-background',
         liquid:
-          'bg-white/30 dark:bg-white/5 supports-[backdrop-filter]:backdrop-blur-lg supports-[backdrop-filter]:backdrop-saturate-150 border border-white/20 dark:border-white/10 rounded-3xl',
+          'bg-liquid border border-white/20 dark:border-white/10 rounded-3xl',
       },
     },
     compoundVariants: [
@@ -97,7 +97,7 @@ const SheetContent: FC<SheetContentProps> = ({
   className,
   children,
   side = 'right',
-  variant = 'legacy',
+  variant = 'liquid',
   closable = true,
   ...props
 }) => {

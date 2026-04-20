@@ -6,6 +6,7 @@ import * as DialogStories from './dialog/dialog.stories'
 import * as DrawerStories from './drawer/drawer.stories'
 import * as SheetStories from './sheet/sheet.stories'
 import PasswordMeta, * as PasswordStories from './password-input/password-input.stories'
+import * as ExchangeRateCalculatorStories from '@/features/exchange-rate/components/ExchangeRateCalculator.stories'
 
 beforeAll(() => {
   if (typeof window.matchMedia === 'function') return
@@ -66,4 +67,16 @@ describe('storybook stories smoke', () => {
     await user.click(screen.getByRole('button', { name: 'Show password' }))
     expect(input).toHaveAttribute('type', 'text')
   })
+
+  it('renders exchange rate calculator feature story', () => {
+    render(ExchangeRateCalculatorStories.Default.render?.({}, {} as never) ?? null)
+
+    expect(
+      screen.getByRole('textbox', { name: 'Amount to convert' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('textbox', { name: 'Converted amount' })
+    ).toHaveValue('0.50')
+  })
+
 })

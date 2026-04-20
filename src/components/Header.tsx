@@ -73,6 +73,7 @@ export const Header: FC<HeaderProps> = ({
             </SheetTrigger>
             <SheetContent
               side="left"
+              variant="liquid"
               onOpenAutoFocus={(e) => e.preventDefault()}
               aria-describedby={undefined}
               closable={false}
@@ -83,7 +84,7 @@ export const Header: FC<HeaderProps> = ({
                 </SheetTitle>
               </SheetHeader>
               <Separator />
-              <nav className="flex flex-col h-full pb-safe">
+              <nav className="flex flex-col h-full">
                 {MENU_ITEMS.map(({ label, to, icon }) => (
                   <Link
                     to={to}
@@ -91,7 +92,7 @@ export const Header: FC<HeaderProps> = ({
                     viewTransition={{ types: ['slide-left'] }}
                     className={cn(
                       'flex items-center gap-3 px-4 py-2 text-base transition-colors',
-                      'data-[status=active]:text-primary data-[status=active]:bg-muted'
+                      'data-[status=active]:text-primary'
                     )}
                   >
                     <HugeiconsIcon icon={icon ?? Menu01Icon} size={20} />

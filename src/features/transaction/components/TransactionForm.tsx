@@ -151,7 +151,7 @@ export function TransactionForm({
         children={([canSubmit, isSubmitting]) => (
           <Button
             type="submit"
-            className="fixed bottom-4 left-4 right-4 mb-safe"
+            className="fixed bottom-4 left-4 right-4 rounded-3xl"
             disabled={!canSubmit}
             disabledStyle="bg-muted text-muted-foreground"
             isLoading={isSubmitting}

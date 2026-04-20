@@ -24,13 +24,13 @@ export const TransactionTypeToggle: FC = () => {
       type="single"
       value={transactionType}
       spacing={1}
-      className="w-full border-border border p-0.5"
+      className="w-full border-border border p-0.5 rounded-3xl"
     >
       {TRANSACTION_TYPES.map((item) => (
         <ToggleGroupItem
           key={item}
           value={item}
-          className="flex-1 text-base"
+          className="flex-1 text-base rounded-2xl"
           onClick={() => handleChange(item)}
         >
           {t(`transactions.types.${item}`)}

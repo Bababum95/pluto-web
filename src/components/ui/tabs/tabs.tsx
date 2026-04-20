@@ -16,7 +16,7 @@ import { AnimatePresence, motion } from 'motion/react'
 
 import { cn } from '@/lib/utils'
 
-const SWIPE_OFFSET = 200
+const SWIPE_OFFSET = 300
 
 type TabsContextValue = {
   activeValue: string

@@ -73,7 +73,6 @@ export const Header: FC<HeaderProps> = ({
             </SheetTrigger>
             <SheetContent
               side="left"
-              variant="liquid"
               onOpenAutoFocus={(e) => e.preventDefault()}
               aria-describedby={undefined}
               closable={false}

@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from 'motion/react'
 import type { FC, ReactNode } from 'react'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -30,40 +29,19 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
       onValueChange={handleTabChange}
       className="flex-1"
     >
-      <motion.div
-        layout
-        layoutDependency={transactionType}
-        className="pb-12 flex flex-col flex-1"
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          {TRANSACTION_TYPES.map((tab) => {
-            if (transactionType !== tab) return null
+      {TRANSACTION_TYPES.map((tab) => (
+        <TabsContent key={tab} value={tab}>
+          {children}
+        </TabsContent>
+      ))}
 
-            return (
-              <TabsContent key={tab} value={tab} asChild forceMount>
-                <motion.div
-                  className="flex-1 flex flex-col"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.2, ease: 'easeInOut' }}
-                >
-                  {children}
-                </motion.div>
-              </TabsContent>
-            )
-          })}
-        </AnimatePresence>
-      </motion.div>
-
-      <TabsList className="w-full h-12 rounded-none border-0 fixed bottom-safe left-0 right-0 z-50 border-t border-border/60 backdrop-blur-lg bg-transparent">
+      <TabsList className="w-[calc(100%-16px)] h-12 fixed bottom-2 left-2 right-2 z-50 border border-border/60 backdrop-blur-lg bg-transparent">
         {TRANSACTION_TYPES.map((tab) => (
           <TabsTrigger key={tab} value={tab} className="flex-1 text-base">
             {t(`transactions.types.${tab}`)}
           </TabsTrigger>
         ))}
       </TabsList>
-      <div className="w-full pb-safe fixed left-0 right-0 bottom-0 z-49 backdrop-blur-md" />
     </Tabs>
   )
 }

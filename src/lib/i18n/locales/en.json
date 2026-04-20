@@ -172,6 +172,13 @@
       "system": "System",
       "change": "Change theme"
     },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Choose the component display style",
+      "classic": "Classic",
+      "liquid": "Liquid",
+      "change": "Change appearance"
+    },
     "account": {
       "title": "Default account",
       "description": "Select the account that will be used as default",

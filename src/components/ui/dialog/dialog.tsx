@@ -6,19 +6,17 @@ import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useAppearance } from '@/features/appearance'
 
 const dialogContentVariants = cva(
   'data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 grid max-w-[calc(100%-2rem)] gap-6 p-6 text-sm duration-100 sm:max-w-md fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2 outline-none',
   {
     variants: {
       variant: {
-        legacy: 'bg-background ring-foreground/10 ring-1 rounded-xl',
+        classic: 'bg-background ring-foreground/10 ring-1 rounded-xl',
         liquid:
           'bg-liquid border border-white/20 dark:border-white/10 rounded-3xl',
       },
-    },
-    defaultVariants: {
-      variant: 'liquid',
     },
   }
 )
@@ -74,12 +72,14 @@ function DialogContent({
     showCloseButton?: boolean
   }) {
   const { t } = useTranslation()
+  const appearance = useAppearance()
+  const resolved = variant ?? appearance
   return (
     <DialogPortal>
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
-        className={cn(dialogContentVariants({ variant }), className)}
+        className={cn(dialogContentVariants({ variant: resolved }), className)}
         {...props}
       >
         {children}

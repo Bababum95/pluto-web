@@ -6,6 +6,7 @@ import { Cancel01Icon } from '@hugeicons/core-free-icons'
 import type { ComponentProps, FC } from 'react'
 
 import { cn } from '@/lib/utils'
+import { useAppearance } from '@/features/appearance'
 
 const Sheet: FC<ComponentProps<typeof SheetPrimitive.Root>> = ({
   ...props
@@ -50,16 +51,16 @@ const sheetContentVariants = cva(
           'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto',
       },
       variant: {
-        legacy: 'bg-background',
+        classic: 'bg-background',
         liquid:
           'bg-liquid border border-white/20 dark:border-white/10 rounded-3xl',
       },
     },
     compoundVariants: [
-      { side: 'right', variant: 'legacy', class: 'border-l' },
-      { side: 'left', variant: 'legacy', class: 'border-r' },
-      { side: 'top', variant: 'legacy', class: 'border-b' },
-      { side: 'bottom', variant: 'legacy', class: 'border-t' },
+      { side: 'right', variant: 'classic', class: 'border-l' },
+      { side: 'left', variant: 'classic', class: 'border-r' },
+      { side: 'top', variant: 'classic', class: 'border-b' },
+      { side: 'bottom', variant: 'classic', class: 'border-t' },
       {
         side: 'right',
         variant: 'liquid',
@@ -83,7 +84,6 @@ const sheetContentVariants = cva(
     ],
     defaultVariants: {
       side: 'right',
-      variant: 'legacy',
     },
   }
 )
@@ -97,18 +97,20 @@ const SheetContent: FC<SheetContentProps> = ({
   className,
   children,
   side = 'right',
-  variant = 'liquid',
+  variant,
   closable = true,
   ...props
 }) => {
   const { t } = useTranslation()
+  const appearance = useAppearance()
+  const resolved = variant ?? appearance
 
   return (
     <SheetPortal>
       <SheetOverlay />
       <SheetPrimitive.Content
         data-slot="sheet-content"
-        className={cn(sheetContentVariants({ side, variant }), className)}
+        className={cn(sheetContentVariants({ side, variant: resolved }), className)}
         {...props}
       >
         {children}

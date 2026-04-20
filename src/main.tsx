@@ -6,6 +6,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 
 import { AuthProvider, useAuth } from '@/features/auth'
 import { ThemeProvider } from '@/features/theme'
+import { AppearanceProvider } from '@/features/appearance'
 import { store, useAppSelector } from '@/store'
 import { selectAppInitStatus } from '@/store/slices/app'
 import { queryClient } from '@/lib/api'
@@ -60,7 +61,9 @@ if (!rootElement.innerHTML) {
         <Provider store={store}>
           <AuthProvider>
             <ThemeProvider>
-              <App />
+              <AppearanceProvider>
+                <App />
+              </AppearanceProvider>
             </ThemeProvider>
           </AuthProvider>
         </Provider>

@@ -5,6 +5,7 @@ import {
   Moon02Icon,
   UnfoldMoreIcon,
   Briefcase06Icon,
+  AiMagicIcon,
 } from '@hugeicons/core-free-icons'
 import { useState } from 'react'
 
@@ -22,6 +23,7 @@ import {
 } from '@/components/ui/item'
 import { LanguageDrawer } from '@/features/settings'
 import { ThemeDrawer, useTheme } from '@/features/theme'
+import { AppearanceDrawer, useAppearance } from '@/features/appearance'
 import { AccountDrawer } from '@/features/account'
 import { useTranslation } from '@/lib/i18n'
 import { selectDefaultAccount } from '@/store/slices/settings/selectors'
@@ -33,12 +35,13 @@ export const Route = createFileRoute('/_app/settings')({
   component: SettingsPage,
 })
 
-type DrawerType = 'language' | 'theme' | 'account'
+type DrawerType = 'language' | 'theme' | 'appearance' | 'account'
 
 function SettingsPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<DrawerType | null>(null)
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
+  const appearance = useAppearance()
   const defaultAccount = useAppSelector(selectDefaultAccount)
   const dispatch = useAppDispatch()
   const handleCloseDrawer = () => {
@@ -81,6 +84,21 @@ function SettingsPage() {
             </ItemActions>
           </Item>
           <ItemSeparator />
+          <Item size="sm" onClick={() => setIsDrawerOpen('appearance')}>
+            <ItemMedia variant="icon">
+              <HugeiconsIcon icon={AiMagicIcon} />
+            </ItemMedia>
+            <ItemContent className="gap-0">
+              <ItemTitle>{t('settings.appearance.title')}</ItemTitle>
+              <ItemDescription className="text-primary">
+                {t(`settings.appearance.${appearance}`)}
+              </ItemDescription>
+            </ItemContent>
+            <ItemActions>
+              <HugeiconsIcon size={20} icon={UnfoldMoreIcon} />
+            </ItemActions>
+          </Item>
+          <ItemSeparator />
           <Item size="sm" onClick={() => setIsDrawerOpen('account')}>
             <ItemMedia variant="icon">
               <HugeiconsIcon icon={Briefcase06Icon} />
@@ -106,6 +124,10 @@ function SettingsPage() {
       />
       <ThemeDrawer
         open={isDrawerOpen === 'theme'}
+        onClose={handleCloseDrawer}
+      />
+      <AppearanceDrawer
+        open={isDrawerOpen === 'appearance'}
         onClose={handleCloseDrawer}
       />
       <AccountDrawer

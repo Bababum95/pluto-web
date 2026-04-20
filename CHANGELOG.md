@@ -7,6 +7,44 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## Unreleased
+
+### ♻️ Refactoring
+
+- integrate AppearanceProvider and update component variants
+- implement 'liquid' variant for Dialog and Drawer components
+- enhance styling with 'liquid' theme integration
+
+---
+
+## 20.04.2026 — v0.1.24
+
+### ♻️ Refactoring
+
+- enhance Sheet component structure and styling
+- update Header and Sheet components for improved styling and functionality
+- enhance TabsTrigger and TransactionTypeTabs styling
+- improve styling of Header, Sheet, and TransactionTypeTabs components
+- update FullScreenLoader class name for improved responsiveness
+- increase SWIPE_OFFSET in Tabs for enhanced swipe transitions
+
+---
+
+## 20.04.2026 — v0.1.23
+
+### ✨ Features
+
+- add transaction type label to Russian localization
+- enhance CategoriesList and CategoryPicker with entrance animation control
+
+### ♻️ Refactoring
+
+- enhance Tabs and ToggleGroup components with context and animations
+- update Tabs and formatBalance for improved functionality and styling
+- update header positioning and layout adjustments in AppLayout
+
+---
+
 ## 17.04.2026 — v0.1.22
 
 ### ✨ Features

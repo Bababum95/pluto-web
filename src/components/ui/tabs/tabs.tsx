@@ -123,7 +123,10 @@ const TabsTrigger: FC<ComponentProps<typeof TabsPrimitive.Trigger>> = ({
       {isActive && (
         <motion.span
           layoutId={layoutId}
-          className="absolute inset-0 rounded-md bg-background dark:bg-input/30 shadow-sm dark:border dark:border-input"
+          className={cn(
+            'absolute inset-0 rounded-md bg-background dark:bg-input/30 shadow-sm dark:border dark:border-input',
+            className
+          )}
           transition={{ type: 'spring', stiffness: 500, damping: 38 }}
         />
       )}

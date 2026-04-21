@@ -124,7 +124,7 @@ const TabsTrigger: FC<ComponentProps<typeof TabsPrimitive.Trigger>> = ({
         <motion.span
           layoutId={layoutId}
           id={layoutId}
-          style={{ willChange: 'transform' }}
+          style={{ willChange: 'transform', transform: 'translateZ(0)' }}
           transition={{ type: 'spring', stiffness: 500, damping: 40 }}
           className={cn(
             'absolute inset-0 rounded-md bg-background dark:bg-input/30 shadow-sm dark:border dark:border-input',

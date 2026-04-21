@@ -3,7 +3,6 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import {
   createContext,
-  useId,
   useState,
   useContext,
   useCallback,
@@ -21,15 +20,15 @@ const SWIPE_OFFSET = 300
 type TabsContextValue = {
   activeValue: string
   direction: number
-  layoutId: string
   registerTab: (value: string) => void
+  tabElementsRef: { current: Map<string, HTMLElement> }
 }
 
 const TabsContext = createContext<TabsContextValue>({
   activeValue: '',
   direction: 0,
-  layoutId: 'tab-indicator',
   registerTab: () => {},
+  tabElementsRef: { current: new Map() },
 })
 
 const Tabs: FC<ComponentProps<typeof TabsPrimitive.Root>> = ({
@@ -39,10 +38,10 @@ const Tabs: FC<ComponentProps<typeof TabsPrimitive.Root>> = ({
   onValueChange,
   ...props
 }) => {
-  const id = useId()
   const [localValue, setLocalValue] = useState(defaultValue ?? '')
   const [direction, setDirection] = useState(0)
   const tabsOrderRef = useRef<string[]>([])
+  const tabElementsRef = useRef<Map<string, HTMLElement>>(new Map())
 
   const activeValue = value ?? localValue
 
@@ -67,8 +66,8 @@ const Tabs: FC<ComponentProps<typeof TabsPrimitive.Root>> = ({
       value={{
         activeValue,
         direction,
-        layoutId: `tab-indicator-${id}`,
         registerTab,
+        tabElementsRef,
       }}
     >
       <TabsPrimitive.Root
@@ -83,19 +82,58 @@ const Tabs: FC<ComponentProps<typeof TabsPrimitive.Root>> = ({
   )
 }
 
+type IndicatorState = { left: number; width: number } | null
+
 const TabsList: FC<ComponentProps<typeof TabsPrimitive.List>> = ({
   className,
+  children,
   ...props
-}) => (
-  <TabsPrimitive.List
-    data-slot="tabs-list"
-    className={cn(
-      'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[2px]',
-      className
-    )}
-    {...props}
-  />
-)
+}) => {
+  const { activeValue, tabElementsRef } = useContext(TabsContext)
+  const listRef = useRef<HTMLDivElement>(null)
+  const [indicator, setIndicator] = useState<IndicatorState>(null)
+
+  useEffect(() => {
+    const el = tabElementsRef.current.get(activeValue)
+    const list = listRef.current
+    if (!el || !list) return
+
+    const listRect = list.getBoundingClientRect()
+    const elRect = el.getBoundingClientRect()
+
+    setIndicator({
+      left: elRect.left - listRect.left,
+      width: elRect.width,
+    })
+  }, [activeValue, tabElementsRef])
+
+  return (
+    <TabsPrimitive.List
+      ref={listRef}
+      data-slot="tabs-list"
+      className={cn(
+        'bg-muted text-muted-foreground relative inline-flex h-9 w-fit items-center justify-center rounded-lg p-[2px]',
+        className
+      )}
+      {...props}
+    >
+      <motion.span
+        className="pointer-events-none absolute top-[2px] bottom-[2px] rounded-md bg-background shadow-sm dark:bg-input/30 dark:border dark:border-input"
+        animate={{
+          left: indicator?.left ?? 0,
+          width: indicator?.width ?? 0,
+          opacity: indicator ? 1 : 0,
+        }}
+        transition={{
+          left: { type: 'spring', stiffness: 500, damping: 38 },
+          width: { type: 'spring', stiffness: 500, damping: 38 },
+          opacity: { duration: 0 },
+        }}
+      />
+      {children}
+    </TabsPrimitive.List>
+  )
+}
 
 const TabsTrigger: FC<ComponentProps<typeof TabsPrimitive.Trigger>> = ({
   className,
@@ -103,15 +141,24 @@ const TabsTrigger: FC<ComponentProps<typeof TabsPrimitive.Trigger>> = ({
   children,
   ...props
 }) => {
-  const { activeValue, layoutId, registerTab } = useContext(TabsContext)
-  const isActive = activeValue === value
+  const { registerTab, tabElementsRef } = useContext(TabsContext)
 
   useEffect(() => {
     if (value) registerTab(value)
   }, [value, registerTab])
 
+  const handleRef = useCallback(
+    (el: HTMLButtonElement | null) => {
+      if (value && el) {
+        tabElementsRef.current.set(value, el)
+      }
+    },
+    [value, tabElementsRef]
+  )
+
   return (
     <TabsPrimitive.Trigger
+      ref={handleRef}
       data-slot="tabs-trigger"
       value={value}
       className={cn(
@@ -120,16 +167,6 @@ const TabsTrigger: FC<ComponentProps<typeof TabsPrimitive.Trigger>> = ({
       )}
       {...props}
     >
-      {isActive && (
-        <motion.span
-          layoutId={layoutId}
-          className={cn(
-            'absolute inset-0 rounded-md bg-background dark:bg-input/30 shadow-sm dark:border dark:border-input',
-            className
-          )}
-          transition={{ type: 'spring', stiffness: 500, damping: 38 }}
-        />
-      )}
       <span className="relative z-10 flex items-center gap-1.5">
         {children}
       </span>

@@ -42,12 +42,12 @@ function App() {
   const status = useAppSelector(selectAppInitStatus)
 
   return (
-    <div>
+    <>
       <FullScreenLoader isVisible={sessionLoading || status === 'pending'} />
       {!sessionLoading && (
         <RouterProvider router={router} context={{ isAuth }} />
       )}
-    </div>
+    </>
   )
 }
 

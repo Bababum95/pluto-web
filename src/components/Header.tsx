@@ -35,79 +35,82 @@ export const Header: FC<HeaderProps> = ({
   const router = useRouter()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur-lg">
-      <div className="container flex h-14 items-center px-2 gap-2 relative">
-        {showBackButton ? (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="[&_svg]:size-6"
-            onClick={() => {
-              if (backPath) {
-                router.navigate({
-                  to: backPath,
-                  viewTransition: { types: ['slide-right'] },
-                })
-              } else if (document.startViewTransition) {
-                document.startViewTransition({
-                  types: ['slide-right'],
-                  update: () => router.history.back(),
-                })
-              } else {
-                router.history.back()
-              }
-            }}
-          >
-            <HugeiconsIcon icon={ArrowLeft02Icon} />
-            <span className="sr-only">{t('common.navigation.back')}</span>
-          </Button>
-        ) : (
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="[&_svg]:size-6">
-                <HugeiconsIcon icon={Menu01Icon} />
-                <span className="sr-only">
-                  {t('common.navigation.toggleMenu')}
-                </span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent
-              side="left"
-              onOpenAutoFocus={(e) => e.preventDefault()}
-              aria-describedby={undefined}
-              closable={false}
+    <>
+      <header className="fixed top-0 z-50 w-full border-b border-border/60 backdrop-blur-lg">
+        <div className="container flex h-14 items-center px-2 gap-2 relative">
+          {showBackButton ? (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="[&_svg]:size-6"
+              onClick={() => {
+                if (backPath) {
+                  router.navigate({
+                    to: backPath,
+                    viewTransition: { types: ['slide-right'] },
+                  })
+                } else if (document.startViewTransition) {
+                  document.startViewTransition({
+                    types: ['slide-right'],
+                    update: () => router.history.back(),
+                  })
+                } else {
+                  router.history.back()
+                }
+              }}
             >
-              <SheetHeader className="pb-1">
-                <SheetTitle>
-                  <NavUser />
-                </SheetTitle>
-              </SheetHeader>
-              <Separator className="bg-white/20 dark:bg-white/10" />
-              <nav className="flex flex-col h-full">
-                {MENU_ITEMS.map(({ label, to, icon }) => (
-                  <Link
-                    to={to}
-                    key={to}
-                    viewTransition={{ types: ['slide-left'] }}
-                    className={cn(
-                      'flex items-center gap-3 px-4 py-2 text-base transition-colors',
-                      'data-[status=active]:text-primary'
-                    )}
-                  >
-                    <HugeiconsIcon icon={icon ?? Menu01Icon} size={20} />
-                    {t(label)}
-                  </Link>
-                ))}
-                <div className="mt-auto text-xs text-muted-foreground px-4 pb-4">
-                  {`v ${__APP_VERSION__} · ${dayjs(__BUILD_DATE__).format('DD.MM.YYYY')}`}
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
-        )}
-        <div className="absolute left-1/2 -translate-x-1/2">{title}</div>
-        <div className="ml-auto">{actions}</div>
-      </div>
-    </header>
+              <HugeiconsIcon icon={ArrowLeft02Icon} />
+              <span className="sr-only">{t('common.navigation.back')}</span>
+            </Button>
+          ) : (
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="[&_svg]:size-6">
+                  <HugeiconsIcon icon={Menu01Icon} />
+                  <span className="sr-only">
+                    {t('common.navigation.toggleMenu')}
+                  </span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="left"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+                aria-describedby={undefined}
+                closable={false}
+              >
+                <SheetHeader className="pb-1">
+                  <SheetTitle>
+                    <NavUser />
+                  </SheetTitle>
+                </SheetHeader>
+                <Separator className="bg-white/20 dark:bg-white/10" />
+                <nav className="flex flex-col h-full">
+                  {MENU_ITEMS.map(({ label, to, icon }) => (
+                    <Link
+                      to={to}
+                      key={to}
+                      viewTransition={{ types: ['slide-left'] }}
+                      className={cn(
+                        'flex items-center gap-3 px-4 py-2 text-base transition-colors',
+                        'data-[status=active]:text-primary'
+                      )}
+                    >
+                      <HugeiconsIcon icon={icon ?? Menu01Icon} size={20} />
+                      {t(label)}
+                    </Link>
+                  ))}
+                  <div className="mt-auto text-xs text-muted-foreground px-4 pb-4">
+                    {`v ${__APP_VERSION__} · ${dayjs(__BUILD_DATE__).format('DD.MM.YYYY')}`}
+                  </div>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          )}
+          <div className="absolute left-1/2 -translate-x-1/2">{title}</div>
+          <div className="ml-auto">{actions}</div>
+        </div>
+      </header>
+      <div className="h-14 bg-background/80" />
+    </>
   )
 }

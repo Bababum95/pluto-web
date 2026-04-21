@@ -42,7 +42,7 @@ export const CategoriesList: FC<Props> = ({
 
   return (
     <motion.div
-      className="grid grid-cols-4 gap-2 pb-safe"
+      className="grid grid-cols-4 gap-2"
       initial={skipEntranceOnThisInstance ? false : 'hidden'}
       animate="show"
       variants={containerVariants}

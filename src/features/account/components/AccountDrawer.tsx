@@ -47,7 +47,7 @@ export const AccountDrawer: FC<Props> = ({
 
   return (
     <Drawer open={open} onOpenChange={handleOpenChange} modal={true}>
-      <DrawerContent className="pb-safe" aria-describedby={undefined}>
+      <DrawerContent aria-describedby={undefined}>
         <DrawerHeader>
           <DrawerTitle>{t('accounts.select.title')}</DrawerTitle>
         </DrawerHeader>

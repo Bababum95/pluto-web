@@ -27,7 +27,7 @@ export const TransactionTypeTabs: FC<Props> = ({ children }) => {
     <Tabs
       value={transactionType}
       onValueChange={handleTabChange}
-      className="flex-1"
+      className="flex-1 pb-16"
     >
       {TRANSACTION_TYPES.map((tab) => (
         <TabsContent key={tab} value={tab}>

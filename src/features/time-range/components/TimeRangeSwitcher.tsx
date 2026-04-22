@@ -8,7 +8,10 @@ import type { FC } from 'react'
 import type { DateRange } from 'react-day-picker'
 
 import dayjs from '@/lib/dayjs'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from '@/components/ui/toggle-group/toggle-group'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/lib/i18n'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -58,19 +61,23 @@ export const TimeRangeSwitcher: FC = () => {
 
   return (
     <div className="relative z-45 -mb-2">
-      <Tabs
+      <ToggleGroup
+        type="single"
         value={timeRange.type}
-        onValueChange={handleTimeRangeTypeChange}
-        className="items-center w-full"
+        onValueChange={(v) => v && handleTimeRangeTypeChange(v)}
+        spacing={1}
+        className="w-full border-border border p-0.5 rounded-3xl"
       >
-        <TabsList className="w-full">
-          {TIME_RANGES.map((range) => (
-            <TabsTrigger key={range} value={range} className="flex-1">
-              {t(`timeRanges.${range}`)}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+        {TIME_RANGES.map((range) => (
+          <ToggleGroupItem
+            key={range}
+            value={range}
+            className="flex-1 text-base rounded-2xl"
+          >
+            {t(`timeRanges.${range}`)}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
       <div className="flex gap-2 items-center justify-between mt-2 w-full">
         {!isPeriod ? (
           <>

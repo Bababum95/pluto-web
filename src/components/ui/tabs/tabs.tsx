@@ -127,10 +127,7 @@ const TabsTrigger: FC<ComponentProps<typeof TabsPrimitive.Trigger>> = ({
           id={layoutId}
           style={{ willChange: 'transform', transform: 'translateZ(0)' }}
           transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-          className={cn(
-            'absolute inset-0 rounded-md bg-background dark:bg-input/30 shadow-sm dark:border dark:border-input',
-            className
-          )}
+          className="absolute inset-0 rounded-[inherit] bg-liquid shadow-sm dark:border dark:border-input"
         />
       )}
       <span className="relative z-10 flex items-center gap-1.5">

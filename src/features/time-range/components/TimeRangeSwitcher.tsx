@@ -65,14 +65,14 @@ export const TimeRangeSwitcher: FC = () => {
         type="single"
         value={timeRange.type}
         onValueChange={(v) => v && handleTimeRangeTypeChange(v)}
-        spacing={1}
-        className="w-full border-border border p-0.5 rounded-3xl"
+        className="w-full rounded-xl"
       >
         {TIME_RANGES.map((range) => (
           <ToggleGroupItem
             key={range}
             value={range}
-            className="flex-1 text-base rounded-2xl"
+            className="rounded-lg"
+            size="sm"
           >
             {t(`timeRanges.${range}`)}
           </ToggleGroupItem>

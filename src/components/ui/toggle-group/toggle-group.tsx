@@ -87,7 +87,7 @@ const ToggleGroup: FC<ToggleGroupProps> = ({
       data-orientation={orientation}
       style={{ '--gap': spacing } as React.CSSProperties}
       className={cn(
-        'group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=0]:data-[variant=outline]:shadow-xs data-vertical:flex-col data-vertical:items-stretch',
+        'group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=0]:data-[variant=outline]:shadow-xs data-vertical:flex-col data-vertical:items-stretch border-border border p-0.5',
         className
       )}
       {...(props as ComponentProps<typeof ToggleGroupPrimitive.Root>)}
@@ -135,7 +135,7 @@ const ToggleGroupItem: FC<ToggleGroupItemProps> = ({
       data-spacing={context.spacing}
       value={value}
       className={cn(
-        'relative shrink-0 group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-2 group-data-[spacing=0]/toggle-group:shadow-none focus:z-10 focus-visible:z-10 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-end]:pr-1.5 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:pl-1.5 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-l-md group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-md group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-r-md group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-md group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-l-0 group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:border-t-0 group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-l group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-t',
+        'relative shrink-0 focus:z-10 focus-visible:z-10 flex-1',
         toggleVariants({
           variant: context.variant || variant,
           size: context.size || size,
@@ -147,7 +147,7 @@ const ToggleGroupItem: FC<ToggleGroupItemProps> = ({
       {isActive && (
         <motion.span
           layoutId={itemLayoutId}
-          className="absolute inset-0 rounded-[inherit] bg-muted"
+          className="absolute inset-0 rounded-[inherit] bg-liquid shadow-sm dark:border dark:border-input"
           transition={{ type: 'spring', stiffness: 500, damping: 38 }}
         />
       )}

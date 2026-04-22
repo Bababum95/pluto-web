@@ -1,6 +1,7 @@
 'use client'
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
+import * as motion from 'motion/react-client'
 import {
   createContext,
   useId,
@@ -12,7 +13,7 @@ import {
   type FC,
   type ComponentProps,
 } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence } from 'motion/react'
 
 import { cn } from '@/lib/utils'
 
@@ -126,7 +127,10 @@ const TabsTrigger: FC<ComponentProps<typeof TabsPrimitive.Trigger>> = ({
           id={layoutId}
           style={{ willChange: 'transform', transform: 'translateZ(0)' }}
           transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-          className="absolute inset-0 rounded-md bg-background dark:bg-input/30 shadow-sm dark:border dark:border-input"
+          className={cn(
+            'absolute inset-0 rounded-md bg-background dark:bg-input/30 shadow-sm dark:border dark:border-input',
+            className
+          )}
         />
       )}
       <span className="relative z-10 flex items-center gap-1.5">

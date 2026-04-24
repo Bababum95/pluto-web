@@ -11,7 +11,7 @@ describe('TimeRangeSwitcher (integration)', () => {
     const user = userEvent.setup()
     const { store } = renderWithProviders(<TimeRangeSwitcher />)
 
-    await user.click(screen.getByRole('tab', { name: 'Week' }))
+    await user.click(screen.getByRole('radio', { name: 'Week' }))
 
     expect(store.getState().timeRange.type).toBe('week')
     const navigationButtons = screen.getAllByRole('button')

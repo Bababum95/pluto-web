@@ -9,9 +9,11 @@ import type {
 const BASE = 'transfers'
 const QUERY_KEY = ['transfers'] as const
 
+type ListOptions = { signal?: AbortSignal }
+
 export const transferApi = {
-  list: (filters?: TransferFilterDto): Promise<Transfer[]> =>
-    apiFetch(BASE, { params: filters }),
+  list: (filters?: TransferFilterDto, options?: ListOptions): Promise<Transfer[]> =>
+    apiFetch(BASE, { params: filters, ...options }),
 
   getById: (id: string): Promise<Transfer> => apiFetch(`${BASE}/${id}`),
 

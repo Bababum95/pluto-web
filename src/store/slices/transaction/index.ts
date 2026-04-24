@@ -76,7 +76,10 @@ export const transactionSlice = createSlice({
           currency: data?.currency,
         }
       })
-      .addCase(fetchTransactions.rejected, (state) => {
+      .addCase(fetchTransactions.rejected, (state, action) => {
+        if (action.error.name === 'AbortError') {
+          return
+        }
         state.status = 'failed'
       })
       .addCase(createTransaction.pending, (state) => {

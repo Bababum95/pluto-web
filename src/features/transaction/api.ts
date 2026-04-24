@@ -10,9 +10,13 @@ import type {
 const BASE = 'transactions'
 const QUERY_KEY = ['transactions'] as const
 
+type ListOptions = { signal?: AbortSignal }
+
 export const transactionApi = {
-  list: (filters?: TransactionFilterDto): Promise<Transaction[]> =>
-    apiFetch(BASE, { params: filters }),
+  list: (
+    filters?: TransactionFilterDto,
+    options?: ListOptions
+  ): Promise<Transaction[]> => apiFetch(BASE, { params: filters, ...options }),
 
   getById: (id: string): Promise<Transaction> => apiFetch(`${BASE}/${id}`),
 

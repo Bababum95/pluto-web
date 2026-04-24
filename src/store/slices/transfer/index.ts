@@ -36,7 +36,8 @@ export const transferSlice = createSlice({
         state.status = 'success'
         state.transfers = action.payload
       })
-      .addCase(fetchTransfers.rejected, (state) => {
+      .addCase(fetchTransfers.rejected, (state, action) => {
+        if (action.error.name === 'AbortError') return
         state.status = 'failed'
       })
       .addCase(createTransfer.pending, (state) => {

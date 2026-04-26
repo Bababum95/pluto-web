@@ -59,7 +59,7 @@ const ToggleGroup: FC<ToggleGroupProps> = ({
     type?: 'single' | 'multiple'
     value?: string | string[]
     defaultValue?: string | string[]
-    onValueChange?: (v: string & string[]) => void
+    onValueChange?: (v: string | string[]) => void
   }
 
   const isSingle = rawProps.type !== 'multiple'
@@ -87,7 +87,7 @@ const ToggleGroup: FC<ToggleGroupProps> = ({
       data-orientation={orientation}
       style={{ '--gap': spacing } as React.CSSProperties}
       className={cn(
-        'group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=0]:data-[variant=outline]:shadow-xs data-vertical:flex-col data-vertical:items-stretch border-border border p-0.5',
+        'relative group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=0]:data-[variant=outline]:shadow-xs data-vertical:flex-col data-vertical:items-stretch border-border border p-0.5',
         className
       )}
       {...(props as ComponentProps<typeof ToggleGroupPrimitive.Root>)}
@@ -147,8 +147,7 @@ const ToggleGroupItem: FC<ToggleGroupItemProps> = ({
       {isActive && (
         <motion.span
           layoutId={itemLayoutId}
-          className="absolute inset-0 rounded-[inherit] bg-liquid shadow-sm dark:border dark:border-input"
-          transition={{ type: 'spring', stiffness: 500, damping: 38 }}
+          className="pointer-events-none absolute inset-0 rounded-[inherit] bg-liquid shadow-sm dark:border dark:border-input"
         />
       )}
       <span className="relative z-10 flex items-center gap-1">{children}</span>

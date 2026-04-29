@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import Axios from 'axios'
 import { http, HttpResponse } from 'msw'
 import { createElement, useEffect } from 'react'
 import {
@@ -128,6 +129,53 @@ describe('customInstance (Orval + axios)', () => {
         message: 'Not found',
         statusCode: 404,
       })
+    }
+  })
+
+  it('uses first message when error body.message is an array', async () => {
+    server.use(
+      http.get(`${TEST_API_ROOT}array-error`, () =>
+        HttpResponse.json(
+          { message: ['First', 'Second'], statusCode: 400 },
+          { status: 400 }
+        )
+      )
+    )
+
+    try {
+      await customInstance({ url: '/v1/array-error', method: 'GET' })
+    } catch (e) {
+      expect(e).toBeInstanceOf(ApiError)
+      expect((e as ApiError).status).toBe(400)
+      expect((e as ApiError).message).toBe('First')
+      expect((e as ApiError).body).toEqual({
+        message: ['First', 'Second'],
+        statusCode: 400,
+      })
+    }
+  })
+
+  it('rethrows original Axios error when Axios.isAxiosError returns false', async () => {
+    const isAxiosErrorSpy = vi
+      .spyOn(Axios, 'isAxiosError')
+      .mockImplementation(() => false)
+
+    server.use(
+      http.get(`${TEST_API_ROOT}non-api-error`, () =>
+        HttpResponse.json(
+          { message: 'Boom', statusCode: 500 },
+          { status: 500 }
+        )
+      )
+    )
+
+    try {
+      await customInstance({ url: '/v1/non-api-error', method: 'GET' })
+    } catch (e) {
+      expect(e).not.toBeInstanceOf(ApiError)
+      expect(e).toBeInstanceOf(Error)
+    } finally {
+      isAxiosErrorSpy.mockRestore()
     }
   })
 

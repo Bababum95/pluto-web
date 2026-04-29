@@ -2,10 +2,13 @@ import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
 
 import * as Accounts from '@/lib/api/generated/accounts/accounts'
 import * as Categories from '@/lib/api/generated/categories/categories'
+import * as Currencies from '@/lib/api/generated/currencies/currencies'
 import * as Rates from '@/lib/api/generated/rates/rates'
+import * as Settings from '@/lib/api/generated/settings/settings'
 import * as Tags from '@/lib/api/generated/tags/tags'
 import * as Transactions from '@/lib/api/generated/transactions/transactions'
 import * as Transfers from '@/lib/api/generated/transfers/transfers'
+import * as Users from '@/lib/api/generated/users/users'
 import { queryClient } from '@/lib/api'
 import {
   mockAccount,
@@ -13,13 +16,19 @@ import {
   mockAccountSummary,
   mockAccountWithSummaryResponse,
 } from '@/testing/data/account'
+import { mockCurrency } from '@/testing/data/currency'
+import { mockSettings } from '@/testing/data/settings'
+import { mockUser } from '@/testing/data/user'
 
 import { accountApi } from './account/api'
 import { categoryApi } from './category/api'
+import { currencyApi } from './currency/api'
 import { exchangeRateApi } from './exchange-rate/api'
+import { settingsApi } from './settings/api'
 import { tagApi } from './tag/api'
 import { transactionApi } from './transaction/api'
 import { transferApi } from './transfer/api'
+import { userApi } from './user/api'
 
 describe('feature api clients (Orval-generated)', () => {
   beforeEach(() => {
@@ -106,6 +115,24 @@ describe('feature api clients (Orval-generated)', () => {
     vi.spyOn(Rates, 'rateControllerFindByCode').mockResolvedValue({} as never)
     vi.spyOn(Rates, 'rateControllerFindOne').mockResolvedValue({} as never)
 
+    vi.spyOn(Currencies, 'currencyControllerFindAll').mockResolvedValue(
+      [mockCurrency] as never
+    )
+    vi.spyOn(Currencies, 'currencyControllerFindOne').mockResolvedValue(
+      mockCurrency as never
+    )
+
+    vi.spyOn(Settings, 'settingsControllerFindOne').mockResolvedValue(
+      mockSettings as never
+    )
+    vi.spyOn(Settings, 'settingsControllerUpdate').mockResolvedValue(
+      mockSettings as never
+    )
+
+    vi.spyOn(Users, 'usersControllerChangePassword').mockResolvedValue(
+      mockUser as never
+    )
+
     vi.spyOn(queryClient, 'invalidateQueries').mockResolvedValue(
       undefined as never
     )
@@ -144,6 +171,26 @@ describe('feature api clients (Orval-generated)', () => {
     })
   })
 
+  it('throws when account wrapper validations fail', async () => {
+    vi.mocked(Accounts.accountControllerFindAll).mockResolvedValue({
+      list: null,
+      summary: null,
+    } as never)
+
+    await expect(accountApi.list()).rejects.toThrow(
+      'Accounts response is missing required fields'
+    )
+
+    vi.mocked(Accounts.accountControllerCreate).mockResolvedValue({
+      account: null,
+      summary: null,
+    } as never)
+
+    await expect(
+      accountApi.create({ name: 'Main' } as never)
+    ).rejects.toThrow('Account response is missing required fields')
+  })
+
   it('calls category controllers and invalidation', async () => {
     await categoryApi.list()
     await categoryApi.getById('cat-1')
@@ -160,6 +207,33 @@ describe('feature api clients (Orval-generated)', () => {
     expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
       queryKey: ['categories'],
     })
+  })
+
+  it('calls currency/settings/user controllers', async () => {
+    await currencyApi.list()
+    await currencyApi.getById('currency-1')
+
+    await settingsApi.get()
+    await settingsApi.update({ account: 'account-1' })
+
+    await userApi.changePassword('user-1', {
+      currentPassword: 'old-password',
+      newPassword: 'new-password',
+    })
+
+    expect(Currencies.currencyControllerFindAll).toHaveBeenCalledTimes(1)
+    expect(Currencies.currencyControllerFindOne).toHaveBeenCalledWith(
+      'currency-1'
+    )
+    expect(Settings.settingsControllerFindOne).toHaveBeenCalledTimes(1)
+    expect(Settings.settingsControllerUpdate).toHaveBeenCalledTimes(1)
+    expect(Users.usersControllerChangePassword).toHaveBeenCalledWith(
+      'user-1',
+      expect.objectContaining({
+        currentPassword: 'old-password',
+        newPassword: 'new-password',
+      })
+    )
   })
 
   it('calls transaction controllers and passes list params', async () => {

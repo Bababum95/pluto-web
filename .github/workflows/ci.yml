@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  ORVAL_INPUT_TARGET: ${{ vars.ORVAL_INPUT_TARGET }}
+  ORVAL_INPUT_TARGET: ${{ secrets.ORVAL_INPUT_TARGET }}
 
 jobs:
   lint:

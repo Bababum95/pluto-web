@@ -1,6 +1,6 @@
-import { apiFetch } from '@/lib/api'
+import { usersControllerChangePassword } from '@/lib/api/generated/users/users'
 
-import type { User } from './types'
+import type { UserDto } from './types'
 
 type ChangePasswordParams = {
   currentPassword: string
@@ -8,9 +8,8 @@ type ChangePasswordParams = {
 }
 
 export const userApi = {
-  changePassword: (userId: string, data: ChangePasswordParams): Promise<User> =>
-    apiFetch(`/users/${userId}/password`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    }),
+  changePassword: (
+    userId: string,
+    data: ChangePasswordParams
+  ): Promise<UserDto> => usersControllerChangePassword(userId, data),
 }

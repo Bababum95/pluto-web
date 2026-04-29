@@ -1,13 +1,13 @@
 import { Decimal } from 'decimal.js'
 
-import type { ExchangeRate } from '@/features/exchange-rate/types'
+import type { RateDto } from '@/features/exchange-rate/types'
 
 /**
  * Calculate exchange rate between two currencies.
  * All rates must be relative to USD.
  */
 export function calculateBaseRate(
-  rates: ExchangeRate[],
+  rates: RateDto[],
   from: string,
   to: string
 ): number | null {

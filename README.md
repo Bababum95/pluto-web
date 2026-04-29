@@ -45,7 +45,7 @@ pnpm install
 | `pnpm test:coverage`   | Run tests with coverage report                                                   |
 | `pnpm storybook`       | Start Storybook dev server (port 6006)                                           |
 | `pnpm build-storybook` | Build Storybook for static export                                                |
-| `pnpm generate:api`    | Generate API types from OpenAPI (API must be running at `http://localhost:3000`) |
+| `pnpm generate:api`    | Generate API client/types with Orval (`ORVAL_INPUT_TARGET` or local `http://localhost:3000/api-docs-json`) |
 | `pnpm icons:generate`  | Generate icon components from SVG registry                                       |
 | `pnpm patch`           | Bump patch version                                                               |
 
@@ -56,12 +56,13 @@ pnpm install
 - `src/components/` — shared UI components and Storybook stories
 - `src/store/` — Redux slices and async thunks
 - `src/lib/` — API client, i18n, icons, utilities
-- `src/lib/api/types.ts` — generated OpenAPI types (run `generate:api` when API schema changes)
+- `src/lib/api/generated/` — generated Orval client, hooks, and models
 - `scripts/` — build scripts (e.g. icon component generation)
 
 ## Environment
 
-The app expects the backend API to be available. Configure the API base URL as needed (e.g. via env or app config). The OpenAPI schema is fetched from `http://localhost:3000/api-docs-json` when running `pnpm generate:api`.
+The app expects the backend API to be available. Configure the API base URL as needed (e.g. via env or app config).  
+For codegen, set `ORVAL_INPUT_TARGET` (used in CI) or run local API at `http://localhost:3000/api-docs-json`.
 
 ## Version
 

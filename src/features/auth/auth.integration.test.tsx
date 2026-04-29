@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { waitFor } from '@testing-library/react'
+import { useState } from 'react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 
@@ -43,6 +44,34 @@ function RegisterTestHelper() {
             password: 'password123',
           })
         }
+      >
+        Register
+      </button>
+    </div>
+  )
+}
+
+function RegisterFailureTestHelper() {
+  const { register } = useAuth()
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+
+  return (
+    <div>
+      {errorMsg && <span data-testid="error-msg">{errorMsg}</span>}
+      <button
+        type="button"
+        onClick={async () => {
+          setErrorMsg(null)
+          try {
+            await register({
+              name: 'New User',
+              email: 'new@example.com',
+              password: 'password123',
+            })
+          } catch (e) {
+            setErrorMsg((e as Error).message)
+          }
+        }}
       >
         Register
       </button>
@@ -187,5 +216,40 @@ describe('Auth (integration)', () => {
 
     expect(getByTestId('auth-status')).toHaveTextContent('authenticated')
     expect(store.getState().user.user?.email).toBe(mockUser.email)
+  })
+
+  it('register error: empty response throws "Register returned empty response"', async () => {
+    server.use(
+      http.get('http://localhost/v1/auth/me', () =>
+        HttpResponse.json(
+          { message: 'Unauthorized', statusCode: 401 },
+          { status: 401 }
+        )
+      )
+    )
+
+    server.use(
+      http.post('http://localhost/v1/auth/register', () =>
+        HttpResponse.json(null)
+      )
+    )
+
+    const { getByRole, getByTestId } = renderWithProviders(
+      <AuthProvider>
+        <RegisterFailureTestHelper />
+      </AuthProvider>,
+      { withAuth: false }
+    )
+
+    getByRole('button', { name: 'Register' }).click()
+
+    await waitFor(
+      () => {
+        expect(getByTestId('error-msg')).toHaveTextContent(
+          'Register returned empty response'
+        )
+      },
+      { timeout: 3000 }
+    )
   })
 })

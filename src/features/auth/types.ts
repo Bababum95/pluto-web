@@ -1,14 +1,16 @@
-import type { components } from '@/lib/api/types'
-
-export type LoginParams = components['schemas']['LoginDto']
-export type RegisterParams = components['schemas']['RegisterDto']
-export type AuthResponse = components['schemas']['AuthResponseDto']
+import type {
+  AuthResponseDto,
+  LoginDto,
+  RegisterDto,
+} from '@/lib/api/generated/model'
 
 export type AuthContext = {
   isAuth: boolean
   sessionLoading: boolean
-  login: (params: LoginParams) => Promise<void>
-  register: (params: RegisterParams) => Promise<void>
+  login: (params: LoginDto) => Promise<void>
+  register: (params: RegisterDto) => Promise<void>
   logout: () => Promise<void>
   loading: boolean
 }
+
+export type { LoginDto, RegisterDto, AuthResponseDto }

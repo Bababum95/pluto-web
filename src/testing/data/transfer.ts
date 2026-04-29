@@ -1,6 +1,6 @@
-import type { Transfer } from '@/features/transfer/types'
+import type { TransferDto } from '@/features/transfer/types'
 
-export const mockTransfer: Transfer = {
+export const mockTransfer: TransferDto = {
   id: 'transfer-1',
   from: {
     account: 'account-1',
@@ -19,7 +19,7 @@ export const mockTransfer: Transfer = {
 }
 
 export function createMockTransfer(
-  overrides?: Partial<Transfer>
-): Transfer {
+  overrides?: Partial<TransferDto>
+): TransferDto {
   return { ...mockTransfer, ...overrides }
 }

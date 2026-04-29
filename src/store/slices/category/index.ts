@@ -4,12 +4,12 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 
-import { categoryApi } from '@/features/category'
-import type { Category, CategoryFormValues } from '@/features/category/types'
+import { categoryApi } from '@/features/category/api'
+import type { CategoryDto, CategoryFormValues } from '@/features/category/types'
 import type { RootState } from '@/store'
 
 type CategoryState = {
-  categories: Category[]
+  categories: CategoryDto[]
   status: 'idle' | 'pending' | 'success' | 'failed'
 }
 
@@ -51,7 +51,7 @@ export const updateCategory = createAsyncThunk(
 
 export const reorderCategories = createAsyncThunk(
   'category/reorderCategories',
-  async (ids: string[]): Promise<void> => categoryApi.reorder({ ids })
+  async (ids: string[]): Promise<unknown> => categoryApi.reorder({ ids })
 )
 
 // export const deleteCategory = createAsyncThunk(
@@ -63,10 +63,10 @@ export const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    setCategories: (state, action: PayloadAction<Category[]>) => {
+    setCategories: (state, action: PayloadAction<CategoryDto[]>) => {
       state.categories = action.payload
     },
-    addCategory: (state, action: PayloadAction<Category>) => {
+    addCategory: (state, action: PayloadAction<CategoryDto>) => {
       state.categories.push(action.payload)
     },
     removeCategory: (state, action: PayloadAction<string>) => {

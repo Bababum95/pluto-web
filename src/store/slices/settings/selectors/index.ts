@@ -1,8 +1,8 @@
 import { DEFAULT_CURRENCY } from '@/features/money/constants'
 import type { RootState } from '@/store'
-import type { Settings } from '@/features/settings/types'
+import type { SettingsDto } from '@/features/settings/types'
 
-export const selectSettings = (state: RootState): Settings | null =>
+export const selectSettings = (state: RootState): SettingsDto | null =>
   state.settings.settings
 
 export const selectSettingsStatus = (state: RootState) => state.settings.status

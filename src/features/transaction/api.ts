@@ -1,41 +1,48 @@
-import { apiFetch, queryClient } from '@/lib/api'
+import { queryClient } from '@/lib/api'
+import {
+  transactionControllerCreate,
+  transactionControllerFindAll,
+  transactionControllerFindOne,
+  transactionControllerRemove,
+  transactionControllerUpdate,
+} from '@/lib/api/generated/transactions/transactions'
 import type {
   CreateTransactionDto,
-  Transaction,
+  TransactionDto,
   TransactionMutationResponse,
   UpdateTransactionDto,
-  TransactionFilterDto,
+  TransactionControllerFindAllParams,
 } from './types'
 
-const BASE = 'transactions'
 const QUERY_KEY = ['transactions'] as const
 
 type ListOptions = { signal?: AbortSignal }
 
 export const transactionApi = {
   list: (
-    filters?: TransactionFilterDto,
+    filters?: TransactionControllerFindAllParams,
     options?: ListOptions
-  ): Promise<Transaction[]> => apiFetch(BASE, { params: filters, ...options }),
+  ): Promise<TransactionDto[]> =>
+    transactionControllerFindAll(filters, undefined, options?.signal),
 
-  getById: (id: string): Promise<Transaction> => apiFetch(`${BASE}/${id}`),
+  getById: (id: string): Promise<TransactionDto> =>
+    transactionControllerFindOne(id),
 
   create: (data: CreateTransactionDto): Promise<TransactionMutationResponse> =>
-    apiFetch(BASE, { method: 'POST', body: JSON.stringify(data) }),
+    transactionControllerCreate(data).then(
+      (response) => response as unknown as TransactionMutationResponse
+    ),
 
   update: (
     id: string,
     data: UpdateTransactionDto,
     params?: Record<string, string>
   ): Promise<TransactionMutationResponse> =>
-    apiFetch(`${BASE}/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-      params,
-    }),
+    transactionControllerUpdate(id, data, params).then(
+      (response) => response as unknown as TransactionMutationResponse
+    ),
 
-  delete: (id: string): Promise<void> =>
-    apiFetch(`${BASE}/${id}`, { method: 'DELETE' }),
+  delete: (id: string): Promise<void> => transactionControllerRemove(id),
 
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
 }

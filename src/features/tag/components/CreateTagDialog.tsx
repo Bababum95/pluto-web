@@ -18,12 +18,12 @@ import { FormField } from '@/components/forms/form-field'
 import { useAppDispatch } from '@/store'
 import { createTag } from '@/store/slices/tag'
 
-import type { Tag } from '../types'
+import type { TagDto } from '../types'
 
 const MAX_LENGTH = 20
 
 type Props = {
-  onSuccess?: (tag: Tag) => void
+  onSuccess?: (tag: TagDto) => void
 }
 
 export const CreateTagDialog: FC<Props> = ({ onSuccess }) => {

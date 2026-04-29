@@ -1,10 +1,10 @@
-import type { Transaction } from '@/features/transaction/types'
+import type { TransactionDto } from '@/features/transaction/types'
 import type { Status } from '@/lib/types'
 
 export type TransactionState = {
-  transactions: Transaction[]
+  transactions: TransactionDto[]
   status: Status
-  current: Transaction | null
+  current: TransactionDto | null
   summary: {
     total: number
     total_raw: number

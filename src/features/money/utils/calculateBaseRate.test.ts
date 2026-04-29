@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 
 import { calculateBaseRate } from './calculateBaseRate'
-import type { ExchangeRate } from '@/features/exchange-rate/types'
+import type { RateDto } from '@/features/exchange-rate/types'
 
 const ts = '2021-01-01T10:00:00.000Z'
-const rates: ExchangeRate[] = [
+const rates: RateDto[] = [
   { id: 'rate-usd', code: 'USD', value: 1, createdAt: ts, updatedAt: ts },
   { id: 'rate-eur', code: 'EUR', value: 0.92, createdAt: ts, updatedAt: ts },
   { id: 'rate-gbp', code: 'GBP', value: 0.79, createdAt: ts, updatedAt: ts },

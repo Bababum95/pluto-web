@@ -3,12 +3,12 @@ import type { FC } from 'react'
 
 import { cn } from '@/lib/utils'
 
-import type { Category } from '../types'
+import type { CategoryDto } from '../types'
 
 import { CategoryCard } from './CategoryCard'
 
 type Props = {
-  category: Category
+  category: CategoryDto
   id: string
   index: number
   onClick?: (id: string) => void

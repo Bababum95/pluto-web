@@ -1,3 +1,1 @@
-import type { components } from '@/lib/api/types'
-
-export type User = components['schemas']['UserDto']
+export type { UserDto } from '@/lib/api/generated/model'

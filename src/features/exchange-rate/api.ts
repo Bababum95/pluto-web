@@ -1,13 +1,14 @@
-import { apiFetch } from '@/lib/api'
-import type { ExchangeRate, ExchangeRateListResponse } from './types'
-
-const BASE = 'rates'
+import {
+  rateControllerFindAll,
+  rateControllerFindByCode,
+  rateControllerFindOne,
+} from '@/lib/api/generated/rates/rates'
+import type { RateDto } from './types'
 
 export const exchangeRateApi = {
-  list: (): Promise<ExchangeRateListResponse> => apiFetch(BASE),
+  list: (): Promise<RateDto[]> => rateControllerFindAll(),
 
-  getByCode: (code: string): Promise<ExchangeRate> =>
-    apiFetch(`${BASE}/code/${code}`),
+  getByCode: (code: string): Promise<RateDto> => rateControllerFindByCode(code),
 
-  getById: (id: string): Promise<ExchangeRate> => apiFetch(`${BASE}/${id}`),
+  getById: (id: string): Promise<RateDto> => rateControllerFindOne(id),
 }

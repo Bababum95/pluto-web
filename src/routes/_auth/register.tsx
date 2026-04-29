@@ -39,7 +39,8 @@ function RegisterComponent() {
       confirmPassword: '',
     },
     onSubmit: async ({ value }) => {
-      register(value)
+      const { confirmPassword: _confirmPassword, ...registerPayload } = value
+      await register(registerPayload)
       await router.invalidate()
       router.navigate({
         to: search.redirect || FALLBACK_URL,

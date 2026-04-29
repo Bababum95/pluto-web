@@ -1,7 +1,7 @@
-import type { components } from '@/lib/api/types'
-
-export type MoneyView = components['schemas']['MoneyViewDto']
-export type MoneyViewCurrency = components['schemas']['MoneyViewCurrencyDto']
+export type {
+  MoneyViewCurrencyDto,
+  MoneyViewDto,
+} from '@/lib/api/generated/model'
 
 export type FormatBalanceParams = {
   balance: number

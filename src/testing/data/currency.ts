@@ -1,6 +1,6 @@
-import type { Currency } from '@/features/currency/types'
+import type { CurrencyDto } from '@/features/currency/types'
 
-export const mockCurrency: Currency = {
+export const mockCurrency: CurrencyDto = {
   id: 'currency-1',
   code: 'USD',
   symbol: '$',
@@ -12,6 +12,8 @@ export const mockCurrency: Currency = {
   type: 'fiat',
 }
 
-export function createMockCurrency(overrides?: Partial<Currency>): Currency {
+export function createMockCurrency(
+  overrides?: Partial<CurrencyDto>
+): CurrencyDto {
   return { ...mockCurrency, ...overrides }
 }

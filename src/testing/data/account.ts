@@ -1,5 +1,5 @@
 import type {
-  Account,
+  AccountDto,
   AccountListResponseDto,
   AccountSummaryDto,
   AccountWithSummaryResponseDto,
@@ -20,7 +20,7 @@ const moneyView = {
   currency: moneyViewCurrency,
 }
 
-export const mockAccount: Account = {
+export const mockAccount: AccountDto = {
   id: 'account-1',
   color: '#3B82F6',
   icon: 'wallet',
@@ -53,8 +53,6 @@ export const mockAccountWithSummaryResponse: AccountWithSummaryResponseDto = {
   summary: mockAccountSummary,
 }
 
-export function createMockAccount(
-  overrides?: Partial<Account>
-): Account {
+export function createMockAccount(overrides?: Partial<AccountDto>): AccountDto {
   return { ...mockAccount, ...overrides }
 }

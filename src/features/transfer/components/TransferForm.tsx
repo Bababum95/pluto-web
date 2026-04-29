@@ -24,7 +24,7 @@ import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
 import { useAppSelector } from '@/store'
 import { selectAccounts } from '@/store/slices/account'
 import { selectExchangeRates } from '@/store/slices/exchange-rate'
-import type { Account } from '@/features/account/types'
+import type { AccountDto } from '@/features/account/types'
 
 import {
   calculateTransferRate,
@@ -43,7 +43,7 @@ type Props = {
   submitLabel?: string
 }
 
-const getCurrencyCode = (accounts: Account[], account: string): string => {
+const getCurrencyCode = (accounts: AccountDto[], account: string): string => {
   return (
     accounts.find((acc) => acc.id === account)?.balance.original.currency
       ?.code ?? DEFAULT_CURRENCY.code

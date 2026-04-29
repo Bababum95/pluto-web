@@ -1,12 +1,11 @@
-import type { components, operations } from '@/lib/api/types'
-
-export type TransferSideDto = components['schemas']['TransferSideDto']
-export type CreateTransferDto = components['schemas']['CreateTransferDto']
-export type UpdateTransferDto = components['schemas']['UpdateTransferDto']
-export type Transfer = components['schemas']['TransferDto']
-export type FeeDto = components['schemas']['FeeDto']
-export type TransferFilterDto =
-  operations['TransferController_findAll']['parameters']['query']
+export type {
+  CreateTransferDto,
+  FeeDto,
+  TransferControllerFindAllParams,
+  TransferDto,
+  TransferSideDto,
+  UpdateTransferDto,
+} from '@/lib/api/generated/model'
 
 export type FeeType = 'percent' | 'from_currency' | 'to_currency'
 

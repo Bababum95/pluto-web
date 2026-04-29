@@ -6,7 +6,7 @@ import {
 
 import { accountApi } from '@/features/account'
 import type {
-  Account,
+  AccountDto,
   AccountSummaryDto,
   CreateAccountDto,
   UpdateAccountDto,
@@ -18,7 +18,7 @@ import {
 import type { Status } from '@/lib/types'
 
 type AccountState = {
-  accounts: Account[]
+  accounts: AccountDto[]
   summary: AccountSummaryDto | null
   status: Status
 }
@@ -31,7 +31,7 @@ const initialState: AccountState = {
 
 function applyAccountUpdate(
   state: AccountState,
-  accounts: Account[] = [],
+  accounts: AccountDto[] = [],
   summary?: AccountSummaryDto | null
 ) {
   accounts.forEach((account) => {
@@ -79,13 +79,13 @@ export const accountSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {
-    setAccounts: (state, action: PayloadAction<Account[]>) => {
+    setAccounts: (state, action: PayloadAction<AccountDto[]>) => {
       state.accounts = action.payload
     },
-    addAccount: (state, action: PayloadAction<Account>) => {
+    addAccount: (state, action: PayloadAction<AccountDto>) => {
       state.accounts.push(action.payload)
     },
-    updateAccount: (state, action: PayloadAction<Account>) => {
+    updateAccount: (state, action: PayloadAction<AccountDto>) => {
       const idx = state.accounts.findIndex((a) => a.id === action.payload.id)
       if (idx !== -1) {
         state.accounts[idx] = action.payload

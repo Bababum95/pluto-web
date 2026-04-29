@@ -2,9 +2,9 @@ import { Card } from '@/components/ui/card'
 import type { FC } from 'react'
 
 import { AccountItem } from './AccountItem'
-import type { Account } from '../types'
+import type { AccountDto } from '../types'
 
-type AccountCardProps = Account & {
+type AccountCardProps = AccountDto & {
   onClick?: () => void
   actions?: React.ReactNode
 }

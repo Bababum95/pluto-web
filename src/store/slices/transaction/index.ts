@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 import { toDecimal } from '@/features/money/utils/toDecimal'
-import type { Transaction } from '@/features/transaction/types'
+import type { TransactionDto } from '@/features/transaction/types'
 
 import {
   createTransaction,
@@ -19,7 +19,7 @@ const initialState: TransactionState = {
   status: 'idle',
 }
 
-const countTotal = (transactions: Transaction[]) => {
+const countTotal = (transactions: TransactionDto[]) => {
   return transactions.reduce((acc, t) => acc + t.amount.converted.raw, 0)
 }
 
@@ -27,13 +27,13 @@ export const transactionSlice = createSlice({
   name: 'transaction',
   initialState,
   reducers: {
-    setTransactions: (state, action: PayloadAction<Transaction[]>) => {
+    setTransactions: (state, action: PayloadAction<TransactionDto[]>) => {
       state.transactions = action.payload
     },
-    addTransaction: (state, action: PayloadAction<Transaction>) => {
+    addTransaction: (state, action: PayloadAction<TransactionDto>) => {
       state.transactions.push(action.payload)
     },
-    updateTransactionLocal: (state, action: PayloadAction<Transaction>) => {
+    updateTransactionLocal: (state, action: PayloadAction<TransactionDto>) => {
       const idx = state.transactions.findIndex(
         (t) => t.id === action.payload.id
       )

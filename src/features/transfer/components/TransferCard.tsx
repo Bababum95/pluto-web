@@ -2,10 +2,11 @@ import type { FC } from 'react'
 
 import { Card } from '@/components/ui/card'
 
-import { TransferItem } from './TransferItem'
-import type { Transfer } from '../types'
+import type { TransferDto } from '../types'
 
-type Props = Transfer & {
+import { TransferItem } from './TransferItem'
+
+type Props = TransferDto & {
   onClick?: () => void
 }
 

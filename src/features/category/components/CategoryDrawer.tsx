@@ -11,11 +11,11 @@ import {
   DrawerTitle,
 } from '@/components/ui/drawer'
 
-import type { Category } from '../types'
+import type { CategoryDto } from '../types'
 import { CategoriesList } from './CategoriesList'
 
 type Props = {
-  categories: Category[]
+  categories: CategoryDto[]
   value?: string
   onChange: (categoryId: string) => void
 }

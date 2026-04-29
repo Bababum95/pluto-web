@@ -1,4 +1,5 @@
-import type { Transaction } from '@/features/transaction/types'
+import type { TransactionDto } from '@/features/transaction/types'
+
 import { mockAccount } from './account'
 import { mockCategory } from './category'
 import { mockTag } from './tag'
@@ -18,7 +19,7 @@ const moneyView = {
   currency: moneyViewCurrency,
 }
 
-export const mockTransaction: Transaction = {
+export const mockTransaction: TransactionDto = {
   id: 'transaction-1',
   account: mockAccount,
   type: 'expense',
@@ -35,7 +36,7 @@ export const mockTransaction: Transaction = {
 }
 
 export function createMockTransaction(
-  overrides?: Partial<Transaction>
-): Transaction {
+  overrides?: Partial<TransactionDto>
+): TransactionDto {
   return { ...mockTransaction, ...overrides }
 }

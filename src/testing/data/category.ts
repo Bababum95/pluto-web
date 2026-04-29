@@ -1,6 +1,6 @@
-import type { Category } from '@/features/category/types'
+import type { CategoryDto } from '@/features/category/types'
 
-export const mockCategory: Category = {
+export const mockCategory: CategoryDto = {
   id: 'category-1',
   color: '#FF5733',
   icon: 'wallet',
@@ -12,7 +12,7 @@ export const mockCategory: Category = {
 }
 
 export function createMockCategory(
-  overrides?: Partial<Category>
-): Category {
+  overrides?: Partial<CategoryDto>
+): CategoryDto {
   return { ...mockCategory, ...overrides }
 }

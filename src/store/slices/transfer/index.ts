@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { Transfer } from '@/features/transfer/types'
+import type { TransferDto } from '@/features/transfer/types'
 
 import { createTransfer, deleteTransfer, fetchTransfers } from './async-thunks'
 import type { TransferState } from './types'
@@ -14,10 +14,10 @@ export const transferSlice = createSlice({
   name: 'transfer',
   initialState,
   reducers: {
-    setTransfers: (state, action: PayloadAction<Transfer[]>) => {
+    setTransfers: (state, action: PayloadAction<TransferDto[]>) => {
       state.transfers = action.payload
     },
-    addTransfer: (state, action: PayloadAction<Transfer>) => {
+    addTransfer: (state, action: PayloadAction<TransferDto>) => {
       state.transfers.push(action.payload)
     },
     removeTransfer: (state, action: PayloadAction<string>) => {

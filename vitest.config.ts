@@ -31,6 +31,12 @@ export default defineConfig({
         'src/**/*.d.ts',
         'src/routeTree.gen.ts',
         'src/vite-env.d.ts',
+        // Barrel and type-only modules: no runtime logic to exercise in unit tests.
+        'src/{features,store,lib}/**/index.ts',
+        'src/{features,store}/**/types.ts',
+        'src/lib/types/**',
+        // Orval-generated HTTP clients (exercised indirectly via MSW integration tests).
+        'src/lib/api/generated/**',
       ],
     },
   },

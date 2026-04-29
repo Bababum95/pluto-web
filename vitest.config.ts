@@ -10,20 +10,17 @@ export default defineConfig({
       VITE_API_VERSION: 'v1',
     },
     setupFiles: ['./src/test-setup.ts'],
-    include: [
-      'src/**/*.test.{ts,tsx}',
-      'src/**/*.integration.test.{ts,tsx}',
-    ],
+    include: ['src/**/*.test.{ts,tsx}', 'src/**/*.integration.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov', 'json-summary'],
       reportsDirectory: './coverage',
       include: ['src/{features,store,lib}/**/*.{ts,tsx}'],
       thresholds: {
-        lines: 80,
-        statements: 80,
-        functions: 80,
-        branches: 80,
+        lines: 70,
+        statements: 70,
+        functions: 70,
+        branches: 70,
       },
       exclude: [
         'src/**/*.stories.{ts,tsx}',

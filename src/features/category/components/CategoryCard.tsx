@@ -3,10 +3,10 @@ import { type FC, createElement } from 'react'
 import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 
-import type { Category } from '../types'
+import type { CategoryDto } from '../types'
 
 type Props = React.ComponentProps<'div'> & {
-  category: Category
+  category: CategoryDto
   asChild?: boolean
   className?: string
 }

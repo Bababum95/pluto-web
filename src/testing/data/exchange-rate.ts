@@ -1,6 +1,6 @@
-import type { ExchangeRate } from '@/features/exchange-rate/types'
+import type { RateDto } from '@/features/exchange-rate/types'
 
-export const mockExchangeRate: ExchangeRate = {
+export const mockExchangeRate: RateDto = {
   id: 'rate-1',
   code: 'USD',
   value: 1,
@@ -8,8 +8,6 @@ export const mockExchangeRate: ExchangeRate = {
   updatedAt: '2024-01-01T00:00:00.000Z',
 }
 
-export function createMockExchangeRate(
-  overrides?: Partial<ExchangeRate>
-): ExchangeRate {
+export function createMockExchangeRate(overrides?: Partial<RateDto>): RateDto {
   return { ...mockExchangeRate, ...overrides }
 }

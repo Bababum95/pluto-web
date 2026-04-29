@@ -1,33 +1,37 @@
-import { apiFetch, queryClient } from '@/lib/api'
+import { queryClient } from '@/lib/api'
+import {
+  transferControllerCreate,
+  transferControllerFindAll,
+  transferControllerFindOne,
+  transferControllerRemove,
+  transferControllerUpdate,
+} from '@/lib/api/generated/transfers/transfers'
 import type {
   CreateTransferDto,
-  Transfer,
-  TransferFilterDto,
+  TransferDto,
+  TransferControllerFindAllParams,
   UpdateTransferDto,
 } from './types'
 
-const BASE = 'transfers'
+type ListOptions = { signal?: AbortSignal }
 const QUERY_KEY = ['transfers'] as const
 
-type ListOptions = { signal?: AbortSignal }
-
 export const transferApi = {
-  list: (filters?: TransferFilterDto, options?: ListOptions): Promise<Transfer[]> =>
-    apiFetch(BASE, { params: filters, ...options }),
+  list: (
+    filters?: TransferControllerFindAllParams,
+    options?: ListOptions
+  ): Promise<TransferDto[]> =>
+    transferControllerFindAll(filters, undefined, options?.signal),
 
-  getById: (id: string): Promise<Transfer> => apiFetch(`${BASE}/${id}`),
+  getById: (id: string): Promise<TransferDto> => transferControllerFindOne(id),
 
-  create: (data: CreateTransferDto): Promise<Transfer> =>
-    apiFetch(BASE, { method: 'POST', body: JSON.stringify(data) }),
+  create: (data: CreateTransferDto): Promise<TransferDto> =>
+    transferControllerCreate(data),
 
-  update: (id: string, data: UpdateTransferDto): Promise<Transfer> =>
-    apiFetch(`${BASE}/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    }),
+  update: (id: string, data: UpdateTransferDto): Promise<TransferDto> =>
+    transferControllerUpdate(id, data),
 
-  delete: (id: string): Promise<void> =>
-    apiFetch(`${BASE}/${id}`, { method: 'DELETE' }),
+  delete: (id: string): Promise<void> => transferControllerRemove(id),
 
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
 }

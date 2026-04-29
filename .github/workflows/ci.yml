@@ -5,6 +5,9 @@ on:
     branches: [main, develop]
   pull_request:
 
+env:
+  ORVAL_INPUT_TARGET: ${{ vars.ORVAL_INPUT_TARGET }}
+
 jobs:
   lint:
     name: Lint
@@ -26,6 +29,15 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Ensure ORVAL_INPUT_TARGET configured
+        run: test -n "$ORVAL_INPUT_TARGET"
+
+      - name: Generate API client
+        run: pnpm generate:api
+
+      - name: Verify generated API is committed
+        run: git diff --exit-code
 
       - name: Run lint
         run: pnpm lint
@@ -50,6 +62,15 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Ensure ORVAL_INPUT_TARGET configured
+        run: test -n "$ORVAL_INPUT_TARGET"
+
+      - name: Generate API client
+        run: pnpm generate:api
+
+      - name: Verify generated API is committed
+        run: git diff --exit-code
 
       - name: Run tests with coverage
         run: pnpm test:coverage
@@ -86,6 +107,15 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Ensure ORVAL_INPUT_TARGET configured
+        run: test -n "$ORVAL_INPUT_TARGET"
+
+      - name: Generate API client
+        run: pnpm generate:api
+
+      - name: Verify generated API is committed
+        run: git diff --exit-code
 
       - name: Build project
         run: pnpm build

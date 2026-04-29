@@ -3,14 +3,17 @@ import { useMutation } from '@tanstack/react-query'
 
 import { clearUser, selectUser, setUser } from '@/store/slices/user'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { apiFetch } from '@/lib/api'
-import type { User } from '@/features/user/types'
+import {
+  authControllerGetProfile,
+  authControllerLogin,
+  authControllerRegister,
+} from '@/lib/api/generated/auth/auth'
 
 import type {
   AuthContext as AuthContextType,
-  AuthResponse,
-  LoginParams,
-  RegisterParams,
+  AuthResponseDto,
+  LoginDto,
+  RegisterDto,
 } from './types'
 import { setAccessToken, removeAccessToken } from './utils/auth-token'
 
@@ -21,23 +24,24 @@ type Props = {
 }
 
 type MutationPayload =
-  | {
-      path: 'register'
-      payload: RegisterParams
-    }
-  | {
-      path: 'login'
-      payload: LoginParams
-    }
+  | { path: 'register'; payload: RegisterDto }
+  | { path: 'login'; payload: LoginDto }
 
 export function AuthProvider({ children }: Props) {
   const [sessionLoading, setSessionLoading] = useState(true)
   const mutation = useMutation({
-    mutationFn: ({ path, payload }: MutationPayload): Promise<AuthResponse> => {
-      return apiFetch(`/auth/${path}`, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      })
+    mutationFn: async ({
+      path,
+      payload,
+    }: MutationPayload): Promise<AuthResponseDto> => {
+      if (path === 'login') {
+        return authControllerLogin(payload)
+      }
+      const registered = await authControllerRegister(payload)
+      if (!registered) {
+        throw new Error('Register returned empty response')
+      }
+      return registered
     },
   })
   const user = useAppSelector(selectUser)
@@ -46,7 +50,7 @@ export function AuthProvider({ children }: Props) {
   useEffect(() => {
     let cancelled = false
 
-    apiFetch<User>('/auth/me')
+    authControllerGetProfile()
       .then((data) => {
         if (!cancelled) dispatch(setUser(data))
       })
@@ -68,12 +72,12 @@ export function AuthProvider({ children }: Props) {
   }, [dispatch])
 
   const login = useCallback(
-    async (payload: LoginParams) => {
+    async (payload: LoginDto) => {
       mutation.reset()
       const data = (await mutation.mutateAsync({
         path: 'login',
         payload,
-      })) as AuthResponse
+      })) as AuthResponseDto
       setAccessToken(data.accessToken)
       dispatch(setUser(data.user))
     },
@@ -81,12 +85,12 @@ export function AuthProvider({ children }: Props) {
   )
 
   const register = useCallback(
-    async (payload: RegisterParams) => {
+    async (payload: RegisterDto) => {
       mutation.reset()
       const data = (await mutation.mutateAsync({
         path: 'register',
         payload,
-      })) as AuthResponse
+      })) as AuthResponseDto
       setAccessToken(data.accessToken)
       dispatch(setUser(data.user))
     },

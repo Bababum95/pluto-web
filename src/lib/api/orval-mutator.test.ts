@@ -1,18 +1,23 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { createElement, useEffect } from 'react'
-import { useMutation } from '@tanstack/react-query'
-import { QueryClientProvider } from '@tanstack/react-query'
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+  useMutation,
+} from '@tanstack/react-query'
 import { render, waitFor } from '@testing-library/react'
 
-import { apiFetch, ApiError, queryClient } from './client'
+import { ApiError } from './client'
+import { customInstance } from './orval-mutator'
 import { TEST_API_ROOT } from '@/testing/constants'
 import { server } from '@/testing/server'
 
 vi.mock('@/features/auth/utils/auth-token', () => ({
   getAccessToken: vi.fn(),
 }))
-
 vi.mock('sonner', () => ({
   toast: { error: vi.fn() },
 }))
@@ -20,12 +25,35 @@ import { toast } from 'sonner'
 
 import { getAccessToken } from '@/features/auth/utils/auth-token'
 
-describe('apiFetch', () => {
+const createTestQueryClient = (): QueryClient => {
+  const handleQueryError = (error: unknown): void => {
+    if (error instanceof Error) {
+      toast.error(error.message)
+    }
+
+    console.error('API error:', error)
+  }
+
+  return new QueryClient({
+    queryCache: new QueryCache({
+      onError: handleQueryError,
+    }),
+    mutationCache: new MutationCache({
+      onError: handleQueryError,
+    }),
+    defaultOptions: {
+      queries: { retry: false },
+      mutations: { retry: false },
+    },
+  })
+}
+
+describe('customInstance (Orval + axios)', () => {
   beforeEach(() => {
     vi.mocked(getAccessToken).mockReturnValue(null)
   })
 
-  it('builds URL from path and base', async () => {
+  it('requests OpenAPI path under base URL', async () => {
     let capturedUrl = ''
     server.use(
       http.get(`${TEST_API_ROOT}auth/me`, ({ request }) => {
@@ -33,11 +61,11 @@ describe('apiFetch', () => {
         return HttpResponse.json({ id: '1' })
       })
     )
-    await apiFetch('/auth/me')
+    await customInstance({ url: '/v1/auth/me', method: 'GET' })
     expect(capturedUrl).toBe(`${TEST_API_ROOT}auth/me`)
   })
 
-  it('appends params to URL as query string', async () => {
+  it('passes query params on GET', async () => {
     let capturedUrl = ''
     server.use(
       http.get(`${TEST_API_ROOT}transactions`, ({ request }) => {
@@ -45,11 +73,12 @@ describe('apiFetch', () => {
         return HttpResponse.json([])
       })
     )
-    await apiFetch('/transactions', {
-      params: { from: '2024-01-01', to: '2024-01-31' },
+    await customInstance({
+      url: '/v1/transactions',
+      method: 'GET',
+      params: { account: 'acc-1' },
     })
-    expect(capturedUrl).toContain('from=2024-01-01')
-    expect(capturedUrl).toContain('to=2024-01-31')
+    expect(capturedUrl).toContain('account=acc-1')
   })
 
   it('adds Authorization header when token is present', async () => {
@@ -61,7 +90,7 @@ describe('apiFetch', () => {
         return HttpResponse.json({ id: '1' })
       })
     )
-    await apiFetch('/auth/me')
+    await customInstance({ url: '/v1/auth/me', method: 'GET' })
     expect(capturedAuth).toBe('Bearer secret-token')
   })
 
@@ -73,11 +102,11 @@ describe('apiFetch', () => {
         return HttpResponse.json({ id: '1' })
       })
     )
-    await apiFetch('/auth/me')
+    await customInstance({ url: '/v1/auth/me', method: 'GET' })
     expect(capturedAuth).toBeNull()
   })
 
-  it('throws ApiError with status and message on non-ok response', async () => {
+  it('throws ApiError with status and message on error response', async () => {
     server.use(
       http.get(`${TEST_API_ROOT}error`, () =>
         HttpResponse.json(
@@ -86,9 +115,11 @@ describe('apiFetch', () => {
         )
       )
     )
-    await expect(apiFetch('/error')).rejects.toThrow(ApiError)
+    await expect(
+      customInstance({ url: '/v1/error', method: 'GET' })
+    ).rejects.toThrow(ApiError)
     try {
-      await apiFetch('/error')
+      await customInstance({ url: '/v1/error', method: 'GET' })
     } catch (e) {
       expect(e).toBeInstanceOf(ApiError)
       expect((e as ApiError).status).toBe(404)
@@ -100,54 +131,29 @@ describe('apiFetch', () => {
     }
   })
 
-  it('uses res.statusText when response body has no message', async () => {
-    server.use(
-      http.get(`${TEST_API_ROOT}no-msg`, () =>
-        HttpResponse.json(
-          {},
-          { status: 500, statusText: 'Internal Server Error' }
-        )
-      )
-    )
-    await expect(apiFetch('/no-msg')).rejects.toThrow(ApiError)
-    try {
-      await apiFetch('/no-msg')
-    } catch (e) {
-      expect((e as ApiError).status).toBe(500)
-      expect((e as ApiError).message).toBe('Internal Server Error')
-    }
-  })
-
-  it('calls onError when provided and does not call default handler', async () => {
-    server.use(
-      http.get(`${TEST_API_ROOT}fail`, () =>
-        HttpResponse.json({ message: 'Server error' }, { status: 500 })
-      )
-    )
-    const onError = vi.fn()
-    await expect(apiFetch('/fail', {}, onError)).rejects.toThrow(ApiError)
-    expect(onError).toHaveBeenCalledTimes(1)
-    expect(onError).toHaveBeenCalledWith(expect.any(ApiError))
-    expect((onError.mock.calls[0][0] as ApiError).message).toBe('Server error')
-  })
-
   it('returns parsed JSON on success', async () => {
     const data = { id: '1', name: 'Test' }
     server.use(http.get(`${TEST_API_ROOT}data`, () => HttpResponse.json(data)))
-    const result = await apiFetch<typeof data>('/data')
+    const result = await customInstance<{ id: string; name: string }>({
+      url: '/v1/data',
+      method: 'GET',
+    })
     expect(result).toEqual(data)
   })
 })
 
 describe('queryClient global error handling (handleApiError)', () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>
+  let queryClient: QueryClient
 
   beforeEach(() => {
     vi.mocked(toast.error).mockClear()
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    queryClient = createTestQueryClient()
   })
 
   afterEach(() => {
+    queryClient.clear()
     consoleErrorSpy.mockRestore()
   })
 
@@ -180,7 +186,6 @@ describe('queryClient global error handling (handleApiError)', () => {
       })
       useEffect(() => {
         mutation.mutate()
-        // Run once on mount; adding mutation to deps would re-run every render
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
       return null

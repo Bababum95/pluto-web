@@ -5,12 +5,12 @@ import {
 } from '@reduxjs/toolkit'
 
 import { tagApi } from '@/features/tag'
-import type { Tag, TagFormValues } from '@/features/tag'
+import type { TagDto, TagFormValues } from '@/features/tag/types'
 import type { RootState } from '@/store'
 import type { Status } from '@/lib/types'
 
 type TagState = {
-  tags: Tag[]
+  tags: TagDto[]
   status: Status
 }
 
@@ -39,10 +39,10 @@ export const tagSlice = createSlice({
   name: 'tag',
   initialState,
   reducers: {
-    setTags: (state, action: PayloadAction<Tag[]>) => {
+    setTags: (state, action: PayloadAction<TagDto[]>) => {
       state.tags = action.payload
     },
-    addTag: (state, action: PayloadAction<Tag>) => {
+    addTag: (state, action: PayloadAction<TagDto>) => {
       state.tags.push(action.payload)
     },
     removeTag: (state, action: PayloadAction<string>) => {

@@ -1,12 +1,12 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { Settings } from '@/features/settings/types'
-import type { Account } from '@/features/account/types'
+import type { SettingsDto } from '@/features/settings/types'
+import type { AccountDto } from '@/features/account/types'
 
 import { setDefaultAccount, fetchSettings } from './async-thunks'
 
 type SettingsState = {
-  settings: Settings | null
+  settings: SettingsDto | null
   status: 'idle' | 'pending' | 'success' | 'failed'
 }
 
@@ -19,7 +19,7 @@ export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    setAccount: (state, action: PayloadAction<Account>) => {
+    setAccount: (state, action: PayloadAction<AccountDto>) => {
       if (!state.settings) return
       state.settings.account = action.payload
     },

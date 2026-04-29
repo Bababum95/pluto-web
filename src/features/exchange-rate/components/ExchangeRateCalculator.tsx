@@ -20,10 +20,10 @@ import {
 } from '@/store/slices/exchange-rate'
 import { selectCurrency } from '@/store/slices/settings'
 
-import type { ExchangeRate } from '../types'
+import type { RateDto } from '../types'
 
 function getRateValue(
-  rates: ExchangeRate[],
+  rates: RateDto[],
   baseCurrencyCode: string,
   code: string
 ): number {
@@ -36,7 +36,7 @@ function convert(
   amount: number,
   fromCode: string,
   toCode: string,
-  rates: ExchangeRate[],
+  rates: RateDto[],
   baseCurrencyCode: string
 ): number {
   if (fromCode === toCode) return amount

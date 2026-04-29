@@ -1,3 +1,1 @@
-import type { components } from '@/lib/api/types'
-
-export type Currency = components['schemas']['CurrencyDto']
+export type { CurrencyDto } from '@/lib/api/generated/model'

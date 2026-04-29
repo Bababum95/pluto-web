@@ -30,7 +30,6 @@ export default defineConfig({
         'src/**/*.test.{ts,tsx}',
         'src/**/*.d.ts',
         'src/routeTree.gen.ts',
-        'src/lib/api/types.ts',
         'src/vite-env.d.ts',
       ],
     },

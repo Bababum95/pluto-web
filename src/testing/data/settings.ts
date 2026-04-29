@@ -1,8 +1,8 @@
-import type { Settings } from '@/features/settings/types'
+import type { SettingsDto } from '@/features/settings/types'
 import { mockAccount } from './account'
 import { mockCurrency } from './currency'
 
-export const mockSettings: Settings = {
+export const mockSettings: SettingsDto = {
   id: 'settings-1',
   currency: mockCurrency,
   account: mockAccount,
@@ -11,7 +11,7 @@ export const mockSettings: Settings = {
 }
 
 export function createMockSettings(
-  overrides?: Partial<Settings>
-): Settings {
+  overrides?: Partial<SettingsDto>
+): SettingsDto {
   return { ...mockSettings, ...overrides }
 }

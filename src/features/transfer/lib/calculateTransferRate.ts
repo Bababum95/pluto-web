@@ -2,7 +2,7 @@ import Decimal from 'decimal.js'
 
 import { stringIsValid } from '@/lib/utils'
 import { calculateBaseRate } from '@/features/money'
-import type { ExchangeRate } from '@/features/exchange-rate'
+import type { RateDto } from '@/features/exchange-rate/types'
 
 import type { FeeType } from '../types'
 
@@ -19,7 +19,7 @@ type Params = {
     value?: Value
     type: FeeType
   }
-  rates: ExchangeRate[]
+  rates: RateDto[]
 }
 
 export function calculateTransferRate({

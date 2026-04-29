@@ -21,14 +21,14 @@ import {
 import { cn } from '@/lib/utils'
 
 import { currencyApi } from '../api'
-import type { Currency } from '../types'
+import type { CurrencyDto } from '../types'
 
 type Props = {
   value?: string
   onChange?: (value: string) => void
 }
 
-const matchCurrency = (currency: Currency, query: string): boolean => {
+const matchCurrency = (currency: CurrencyDto, query: string): boolean => {
   if (!query.trim()) return true
   const q = query.trim().toLowerCase()
   return (
@@ -41,7 +41,7 @@ export const SelectCurrency: FC<Props> = ({ value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const { t } = useTranslation()
-  const { data = [] } = useQuery<Currency[]>({
+  const { data = [] } = useQuery<CurrencyDto[]>({
     queryKey: ['currencies'],
     queryFn: currencyApi.list,
   })

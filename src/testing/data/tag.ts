@@ -1,6 +1,6 @@
-import type { Tag } from '@/features/tag/types'
+import type { TagDto } from '@/features/tag/types'
 
-export const mockTag: Tag = {
+export const mockTag: TagDto = {
   id: 'tag-1',
   name: 'food',
   color: '#6B7280',
@@ -9,6 +9,6 @@ export const mockTag: Tag = {
   updatedAt: '2024-01-01T00:00:00.000Z',
 }
 
-export function createMockTag(overrides?: Partial<Tag>): Tag {
+export function createMockTag(overrides?: Partial<TagDto>): TagDto {
   return { ...mockTag, ...overrides }
 }

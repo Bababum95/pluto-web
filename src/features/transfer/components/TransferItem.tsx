@@ -8,9 +8,9 @@ import { useAppSelector } from '@/store'
 import { selectAccountById } from '@/store/slices/account'
 import { Balance, toDecimal } from '@/features/money'
 
-import type { Transfer } from '../types'
+import type { TransferDto } from '../types'
 
-type Props = Transfer & {
+type Props = TransferDto & {
   onClick?: () => void
   separator?: boolean
 }

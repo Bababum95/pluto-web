@@ -1,6 +1,16 @@
-import { apiFetch, queryClient } from '@/lib/api'
+import { queryClient } from '@/lib/api'
+import {
+  accountControllerCreate,
+  accountControllerFindAll,
+  accountControllerFindOne,
+  accountControllerGetSummary,
+  accountControllerReorder,
+  accountControllerRemove,
+  accountControllerToggleExcluded,
+  accountControllerUpdate,
+} from '@/lib/api/generated/accounts/accounts'
 import type {
-  Account,
+  AccountDto,
   AccountListResponseDto,
   AccountSummaryDto,
   AccountWithSummaryResponseDto,
@@ -8,37 +18,57 @@ import type {
   UpdateAccountDto,
 } from './types'
 
-const BASE = 'accounts'
 const QUERY_KEY = ['accounts'] as const
 
-export const accountApi = {
-  list: (): Promise<AccountListResponseDto> => apiFetch(BASE),
-  summary: (): Promise<AccountSummaryDto> => apiFetch(`${BASE}/summary`),
+const ensureAccountWithSummary = (
+  payload: Partial<AccountWithSummaryResponseDto>
+): AccountWithSummaryResponseDto => {
+  if (!payload.account || !payload.summary) {
+    throw new Error('Account response is missing required fields')
+  }
 
-  getById: (id: string): Promise<Account> => apiFetch(`${BASE}/${id}`),
+  return {
+    account: payload.account,
+    summary: payload.summary,
+  }
+}
+
+const ensureAccountListResponse = (
+  payload: Partial<AccountListResponseDto>
+): AccountListResponseDto => {
+  if (!payload.list || !payload.summary) {
+    throw new Error('Accounts response is missing required fields')
+  }
+
+  return {
+    list: payload.list,
+    summary: payload.summary,
+  }
+}
+
+export const accountApi = {
+  list: (): Promise<AccountListResponseDto> =>
+    accountControllerFindAll().then(ensureAccountListResponse),
+  summary: (): Promise<AccountSummaryDto> => accountControllerGetSummary(),
+
+  getById: (id: string): Promise<AccountDto> => accountControllerFindOne(id),
 
   create: (data: CreateAccountDto): Promise<AccountWithSummaryResponseDto> =>
-    apiFetch(BASE, { method: 'POST', body: JSON.stringify(data) }),
+    accountControllerCreate(data).then(ensureAccountWithSummary),
 
   update: (
     id: string,
     data: UpdateAccountDto
   ): Promise<AccountWithSummaryResponseDto> =>
-    apiFetch(`${BASE}/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    }),
+    accountControllerUpdate(id, data).then(ensureAccountWithSummary),
 
   toggleExcluded: (id: string): Promise<AccountWithSummaryResponseDto> =>
-    apiFetch(`${BASE}/excluded/${id}`, { method: 'PATCH' }),
+    accountControllerToggleExcluded(id).then(ensureAccountWithSummary),
 
   reorder: (data: { ids: string[] }): Promise<void> =>
-    apiFetch(`${BASE}/reorder`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    }),
+    accountControllerReorder(data).then(() => undefined),
 
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
   delete: (id: string): Promise<AccountSummaryDto> =>
-    apiFetch(`${BASE}/${id}`, { method: 'DELETE' }),
+    accountControllerRemove(id),
 }

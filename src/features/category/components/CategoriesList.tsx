@@ -1,7 +1,7 @@
 import { motion, AnimatePresence, type Variants } from 'motion/react'
 import { useState, type FC } from 'react'
 
-import type { Category } from '../types'
+import type { CategoryDto } from '../types'
 
 import { CategoryCard } from './CategoryCard'
 
@@ -23,7 +23,7 @@ const itemVariants: Variants = {
 }
 
 type Props = {
-  categories: Category[]
+  categories: CategoryDto[]
   selectedCategoryId?: string
   onCategryCkick: (categoryId: string) => void
   children?: React.ReactNode

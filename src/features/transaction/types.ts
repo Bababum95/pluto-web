@@ -1,13 +1,13 @@
-import type { components, operations } from '@/lib/api/types'
-import type { Account, AccountSummaryDto } from '@/features/account/types'
+import type {
+  CreateTransactionDto,
+  TransactionControllerFindAllParams,
+  TransactionControllerUpdateParams,
+  TransactionDto,
+} from '@/lib/api/generated/model'
+import type { AccountDto, AccountSummaryDto } from '@/features/account/types'
 
-export type CreateTransactionDto = components['schemas']['CreateTransactionDto']
 export type UpdateTransactionDto = Partial<CreateTransactionDto>
-export type UpdateTransactionOptionsDto =
-  operations['TransactionController_update']['parameters']['query']
-export type Transaction = components['schemas']['TransactionDto']
-export type TransactionFilterDto =
-  operations['TransactionController_findAll']['parameters']['query']
+export type UpdateTransactionOptionsDto = TransactionControllerUpdateParams
 
 export type TransactionFormType = Omit<
   CreateTransactionDto,
@@ -18,7 +18,13 @@ export type TransactionFormType = Omit<
 }
 
 export type TransactionMutationResponse = {
-  transaction: Transaction
-  accounts: Account[]
+  transaction: TransactionDto
+  accounts: AccountDto[]
   summary: AccountSummaryDto
+}
+
+export type {
+  CreateTransactionDto,
+  TransactionControllerFindAllParams,
+  TransactionDto,
 }

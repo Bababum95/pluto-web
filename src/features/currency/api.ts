@@ -1,10 +1,11 @@
-import { apiFetch } from '@/lib/api'
-import type { Currency } from './types'
-
-const BASE = 'currencies'
+import {
+  currencyControllerFindAll,
+  currencyControllerFindOne,
+} from '@/lib/api/generated/currencies/currencies'
+import type { CurrencyDto } from './types'
 
 export const currencyApi = {
-  list: (): Promise<Currency[]> => apiFetch(BASE),
+  list: (): Promise<CurrencyDto[]> => currencyControllerFindAll(),
 
-  getById: (id: string): Promise<Currency> => apiFetch(`${BASE}/${id}`),
+  getById: (id: string): Promise<CurrencyDto> => currencyControllerFindOne(id),
 }

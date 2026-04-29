@@ -14,9 +14,9 @@ import {
 import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
 import { Balance } from '@/features/money'
 
-import type { Account } from '../types'
+import type { AccountDto } from '../types'
 
-type Props = Account & {
+type Props = AccountDto & {
   onClick?: (evt: React.MouseEvent) => void
   actions?: React.ReactNode
   separator?: boolean

@@ -27,7 +27,7 @@ import {
 } from '@/store/slices/exchange-rate'
 import { selectCurrency } from '@/store/slices/settings'
 
-import type { ExchangeRate } from '../types'
+import type { RateDto } from '../types'
 
 function formatRate(rate: number | undefined | null): string {
   if (rate == null || typeof rate !== 'number' || Number.isNaN(rate)) {
@@ -45,7 +45,7 @@ function formatRate(rate: number | undefined | null): string {
   })
 }
 
-function matchRate(item: ExchangeRate, query: string): boolean {
+function matchRate(item: RateDto, query: string): boolean {
   if (!query.trim()) return true
   const q = query.trim().toLowerCase()
   return item.code.toLowerCase().includes(q)

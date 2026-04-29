@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { exchangeRateApi } from '@/features/exchange-rate/api'
-import type { ExchangeRate } from '@/features/exchange-rate/types'
+import type { RateDto } from '@/features/exchange-rate/types'
 import type { Status } from '@/lib/types'
 
 type ExchangeRateState = {
-  rates: ExchangeRate[]
+  rates: RateDto[]
   status: Status
 }
 

@@ -8,7 +8,7 @@ import { stringIsValid } from '@/lib/utils'
 import { selectAccounts } from '@/store/slices/account'
 import { selectExchangeRates } from '@/store/slices/exchange-rate'
 import { useAppSelector } from '@/store/hooks'
-import type { Account } from '@/features/account/types'
+import type { AccountDto } from '@/features/account/types'
 
 import { calculateTransferRate } from '../lib/calculateTransferRate'
 import type { FeeType } from '../types'
@@ -24,7 +24,7 @@ type Props = Omit<InputProps, 'onChange'> & {
   toAccount: string
 }
 
-const getCurrencyCode = (accounts: Account[], account: string): string => {
+const getCurrencyCode = (accounts: AccountDto[], account: string): string => {
   return (
     accounts.find((acc) => acc.id === account)?.balance.original.currency
       ?.code ?? DEFAULT_CURRENCY.code

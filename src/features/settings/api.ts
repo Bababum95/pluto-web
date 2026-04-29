@@ -1,11 +1,12 @@
-import { apiFetch } from '@/lib/api'
+import {
+  settingsControllerFindOne,
+  settingsControllerUpdate,
+} from '@/lib/api/generated/settings/settings'
 
-import type { Settings, UpdateSettingsDto } from './types'
-
-const BASE = 'settings'
+import type { SettingsDto, UpdateSettingsDto } from './types'
 
 export const settingsApi = {
-  get: (): Promise<Settings> => apiFetch(BASE),
-  update: (data: UpdateSettingsDto): Promise<Settings> =>
-    apiFetch(BASE, { method: 'PATCH', body: JSON.stringify(data) }),
+  get: (): Promise<SettingsDto> => settingsControllerFindOne(),
+  update: (data: UpdateSettingsDto): Promise<SettingsDto> =>
+    settingsControllerUpdate(data as never),
 }

@@ -1,28 +1,27 @@
-import { apiFetch, queryClient } from '@/lib/api'
-import type { Category, CreateCategoryDto, UpdateCategoryDto } from './types'
+import { queryClient } from '@/lib/api'
+import {
+  categoryControllerCreate,
+  categoryControllerFindAll,
+  categoryControllerFindOne,
+  categoryControllerReorder,
+  categoryControllerUpdate,
+} from '@/lib/api/generated/categories/categories'
+import type { CategoryDto, CreateCategoryDto, UpdateCategoryDto } from './types'
 
-const BASE = 'categories'
 const QUERY_KEY = ['categories'] as const
 
 export const categoryApi = {
-  list: (): Promise<Category[]> => apiFetch(BASE),
+  list: (): Promise<CategoryDto[]> => categoryControllerFindAll(),
 
-  getById: (id: string): Promise<Category> => apiFetch(`${BASE}/${id}`),
+  getById: (id: string): Promise<CategoryDto> => categoryControllerFindOne(id),
 
-  create: (data: CreateCategoryDto): Promise<Category> =>
-    apiFetch(BASE, { method: 'POST', body: JSON.stringify(data) }),
+  create: (data: CreateCategoryDto): Promise<CategoryDto> =>
+    categoryControllerCreate(data),
 
-  update: (id: string, data: UpdateCategoryDto): Promise<Category> =>
-    apiFetch(`${BASE}/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    }),
+  update: (id: string, data: UpdateCategoryDto): Promise<CategoryDto> =>
+    categoryControllerUpdate(id, data),
 
-  reorder: (data: { ids: string[] }): Promise<void> =>
-    apiFetch(`${BASE}/reorder`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    }),
-
+  reorder: (data: { ids: string[] }): Promise<unknown> =>
+    categoryControllerReorder(data),
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
 }

@@ -1,6 +1,10 @@
 import { syncCoordinator } from './sync-coordinator'
 import { userRepository } from '@/entities/user'
+import { settingsRepository } from '@/entities/settings/local/repository'
+import { tagRepository } from '@/entities/tag/local/repository'
 import { authControllerGetProfile } from '@/lib/api/generated/auth/auth'
+import { settingsControllerFindOne } from '@/lib/api/generated/settings/settings'
+import { tagControllerFindAll } from '@/lib/api/generated/tags/tags'
 
 let isRegistered = false
 
@@ -20,6 +24,28 @@ export function registerSyncEntities(): void {
       await userRepository.syncFromApi(apiUser)
     } catch (error) {
       console.error('User sync failed:', error)
+      throw error
+    }
+  })
+
+  // Settings entity sync
+  syncCoordinator.registerEntity('settings', async () => {
+    try {
+      const apiSettings = await settingsControllerFindOne()
+      await settingsRepository.syncFromApi(apiSettings)
+    } catch (error) {
+      console.error('Settings sync failed:', error)
+      throw error
+    }
+  })
+
+  // Tag entity sync
+  syncCoordinator.registerEntity('tag', async () => {
+    try {
+      const apiTags = await tagControllerFindAll()
+      await tagRepository.syncFromApi(apiTags)
+    } catch (error) {
+      console.error('Tag sync failed:', error)
       throw error
     }
   })

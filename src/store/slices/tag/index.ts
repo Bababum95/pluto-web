@@ -5,6 +5,8 @@ import {
 } from '@reduxjs/toolkit'
 
 import { tagApi } from '@/features/tag'
+import { tagRepository } from '@/entities/tag/local/repository'
+import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import type { TagDto, TagFormValues } from '@/features/tag/types'
 import type { RootState } from '@/store'
 import type { Status } from '@/lib/types'
@@ -19,7 +21,24 @@ const initialState: TagState = {
   status: 'idle',
 }
 
-export const fetchTags = createAsyncThunk('tag/fetchTags', () => tagApi.list())
+export const fetchTags = createAsyncThunk('tag/fetchTags', async () => {
+  if (LOCAL_DATA_MODE === 'dexie') {
+    // Load from local DB
+    const localTags = await tagRepository.getAll()
+
+    if (localTags.length > 0) {
+      return localTags
+    }
+
+    // Fallback to API if empty
+    const apiTags = await tagApi.list()
+    await tagRepository.saveMany(apiTags)
+    return apiTags
+  } else {
+    // api-only mode
+    return tagApi.list()
+  }
+})
 
 export const createTag = createAsyncThunk(
   'tag/createTag',

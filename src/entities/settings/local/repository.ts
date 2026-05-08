@@ -1,7 +1,7 @@
 import { db } from '@/lib/local/db'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 
-import type { SettingsDto } from '@/features/settings/types'
+import type { SettingsDto } from '@/entities/settings'
 import { settingsRowFromDto, settingsDtoFromRow } from './schema'
 
 export const settingsRepository = {

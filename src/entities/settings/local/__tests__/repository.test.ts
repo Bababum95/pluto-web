@@ -1,11 +1,24 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { settingsRepository } from '../repository'
 import { db } from '@/lib/local/db'
-import type { SettingsDto } from '@/features/settings/types'
+import type { SettingsDto } from '@/entities/settings'
+import type { CurrencyDto } from '@/lib/api/generated/model'
 
 vi.mock('@/lib/local/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
+
+const createMockCurrency = (code: string, symbol: string): CurrencyDto => ({
+  id: `currency-${code}`,
+  code,
+  symbol,
+  name: code,
+  symbol_native: symbol,
+  decimal_digits: 2,
+  rounding: 0,
+  name_plural: `${code}s`,
+  type: 'fiat',
+})
 
 describe('settingsRepository', () => {
   beforeEach(async () => {
@@ -22,6 +35,7 @@ describe('settingsRepository', () => {
       const mockSettings: SettingsDto = {
         id: 'settings-1',
         account: null,
+        currency: createMockCurrency('USD', '$'),
         createdAt: '2024-01-01T00:00:00.000Z',
         updatedAt: '2024-01-01T00:00:00.000Z',
       }
@@ -38,6 +52,7 @@ describe('settingsRepository', () => {
       const mockSettings: SettingsDto = {
         id: 'settings-1',
         account: null,
+        currency: createMockCurrency('USD', '$'),
         createdAt: '2024-01-01T00:00:00.000Z',
         updatedAt: '2024-01-01T00:00:00.000Z',
       }
@@ -54,6 +69,7 @@ describe('settingsRepository', () => {
       const mockSettings1: SettingsDto = {
         id: 'settings-1',
         account: null,
+        currency: createMockCurrency('USD', '$'),
         createdAt: '2024-01-01T00:00:00.000Z',
         updatedAt: '2024-01-01T00:00:00.000Z',
       }
@@ -61,6 +77,7 @@ describe('settingsRepository', () => {
       const mockSettings2: SettingsDto = {
         id: 'settings-2',
         account: { id: 'acc-1', name: 'Account 1' } as SettingsDto['account'],
+        currency: createMockCurrency('EUR', '€'),
         createdAt: '2024-01-02T00:00:00.000Z',
         updatedAt: '2024-01-02T00:00:00.000Z',
       }
@@ -81,6 +98,7 @@ describe('settingsRepository', () => {
       const mockSettings: SettingsDto = {
         id: 'settings-1',
         account: null,
+        currency: createMockCurrency('USD', '$'),
         createdAt: '2024-01-01T00:00:00.000Z',
         updatedAt: '2024-01-01T00:00:00.000Z',
       }
@@ -97,6 +115,7 @@ describe('settingsRepository', () => {
       const mockSettings: SettingsDto = {
         id: 'settings-1',
         account: null,
+        currency: createMockCurrency('USD', '$'),
         createdAt: '2024-01-01T00:00:00.000Z',
         updatedAt: '2024-01-01T00:00:00.000Z',
       }

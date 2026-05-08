@@ -103,6 +103,17 @@ describe('registerSyncEntities', () => {
     const mockSettings = {
       id: 'settings-1',
       account: null,
+      currency: {
+        id: 'currency-USD',
+        code: 'USD',
+        symbol: '$',
+        name: 'USD',
+        symbol_native: '$',
+        decimal_digits: 2,
+        rounding: 0,
+        name_plural: 'USDs',
+        type: 'fiat' as const,
+      },
       createdAt: '2024-01-01T00:00:00.000Z',
       updatedAt: '2024-01-01T00:00:00.000Z',
     }

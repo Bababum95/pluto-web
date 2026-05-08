@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { settingsApi } from '@/features/settings'
+import { settingsApi } from '@/entities/settings'
 import { selectAccountById } from '@/store/slices/account'
 import type { RootState } from '@/store'
 

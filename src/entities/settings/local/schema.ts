@@ -1,4 +1,4 @@
-import type { SettingsDto } from '@/features/settings/types'
+import type { SettingsDto } from '@/entities/settings'
 
 export type SettingsRow = {
   id: string // всегда 'current' (singleton)

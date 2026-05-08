@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { settingsApi } from '@/features/settings'
-import { settingsRepository } from '@/entities/settings/local/repository'
+import { settingsApi } from '@/entities/settings'
+import { settingsRepository } from '@/entities/settings'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 
 export const fetchSettings = createAsyncThunk(

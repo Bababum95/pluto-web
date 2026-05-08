@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { SettingsDto } from '@/features/settings/types'
+import type { SettingsDto } from '@/entities/settings'
 import type { AccountDto } from '@/features/account/types'
 
 import { setDefaultAccount, fetchSettings } from './async-thunks'

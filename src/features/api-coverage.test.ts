@@ -9,6 +9,7 @@ import * as Tags from '@/lib/api/generated/tags/tags'
 import * as Transactions from '@/lib/api/generated/transactions/transactions'
 import * as Transfers from '@/lib/api/generated/transfers/transfers'
 import * as Users from '@/lib/api/generated/users/users'
+import { userApi } from '@/entities/user'
 import { queryClient } from '@/lib/api'
 import {
   mockAccount,
@@ -28,7 +29,6 @@ import { settingsApi } from './settings/api'
 import { tagApi } from './tag/api'
 import { transactionApi } from './transaction/api'
 import { transferApi } from './transfer/api'
-import { userApi } from './user/api'
 
 describe('feature api clients (Orval-generated)', () => {
   beforeEach(() => {
@@ -115,9 +115,9 @@ describe('feature api clients (Orval-generated)', () => {
     vi.spyOn(Rates, 'rateControllerFindByCode').mockResolvedValue({} as never)
     vi.spyOn(Rates, 'rateControllerFindOne').mockResolvedValue({} as never)
 
-    vi.spyOn(Currencies, 'currencyControllerFindAll').mockResolvedValue(
-      [mockCurrency] as never
-    )
+    vi.spyOn(Currencies, 'currencyControllerFindAll').mockResolvedValue([
+      mockCurrency,
+    ] as never)
     vi.spyOn(Currencies, 'currencyControllerFindOne').mockResolvedValue(
       mockCurrency as never
     )
@@ -186,9 +186,9 @@ describe('feature api clients (Orval-generated)', () => {
       summary: null,
     } as never)
 
-    await expect(
-      accountApi.create({ name: 'Main' } as never)
-    ).rejects.toThrow('Account response is missing required fields')
+    await expect(accountApi.create({ name: 'Main' } as never)).rejects.toThrow(
+      'Account response is missing required fields'
+    )
   })
 
   it('calls category controllers and invalidation', async () => {

@@ -7,7 +7,45 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
-## Unreleased
+## 30.04.2026 — v0.1.27
+
+### 🐛 Fixes
+
+- correct type definition and improve ToggleGroup styling
+- update TimeRangeSwitcher test to use radio role for tab selection
+
+### ♻️ Refactoring
+
+- migrate API client generation to Orval and update configuration
+- add abort signal support for transaction and transfer API requests
+- clean up categories API imports and formatting
+
+### 🧹 Chore
+
+- increase API test coverage and update Vitest coverage thresholds
+
+---
+
+## 22.04.2026 — v0.1.26
+
+### 🐛 Fixes
+
+- refine TabsTrigger spring transition parameters for smoother animations
+
+### ♻️ Refactoring
+
+- replace Tabs with ToggleGroup in TimeRangeSwitcher and simplify Tabs internals
+- improve TabsTrigger className and transform handling for animation performance
+- update App/Header layout and remove redundant Drawer/Sheet classes
+- refresh Toggle and Button styling for consistent visuals
+
+### 🧹 Chore
+
+- raise frontend coverage above 80%
+
+---
+
+## 20.04.2026 — v0.1.25
 
 ### ♻️ Refactoring
 

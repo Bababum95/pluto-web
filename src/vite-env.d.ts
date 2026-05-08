@@ -7,6 +7,8 @@ declare const __BUILD_DATE__: string
 interface ImportMetaEnv {
   readonly VITE_API_URL: string
   readonly VITE_SHOW_DEVTOOLS: string
+  /** `light` | `dexie` | `api-only` — local-first persistence policy */
+  readonly VITE_LOCAL_DATA_MODE: string
 }
 
 interface ImportMeta {

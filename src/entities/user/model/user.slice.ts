@@ -1,11 +1,12 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { UserDto } from '@/features/user/types'
-import type { RootState } from '@/store'
+import type { Status } from '@/lib/types'
+
+import type { UserDto } from './types'
 
 type UserState = {
   user: UserDto | null
-  status: 'idle' | 'pending' | 'success' | 'failed'
+  status: Status
 }
 
 const initialState: UserState = {
@@ -27,7 +28,4 @@ export const userSlice = createSlice({
 })
 
 export const { setUser, clearUser } = userSlice.actions
-
-export const selectUser = (state: RootState) => state.user.user
-
 export default userSlice.reducer

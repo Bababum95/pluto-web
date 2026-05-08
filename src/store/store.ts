@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { userReducer } from '@/entities/user'
+
 import transactionTypeReducer from './slices/transaction-type'
 import timeRangeReducer from './slices/time-range'
-import userReducer from './slices/user'
 import appReducer from './slices/app'
 import categoryReducer from './slices/category'
 import tagReducer from './slices/tag'
@@ -52,6 +53,6 @@ export function createStore(preloadedState?: Partial<RootState>): AppStore {
         timeRangeListener.middleware
       ),
     preloadedState,
-  // RTK infers stricter types when preloadedState is used; cast to match app store.
+    // RTK infers stricter types when preloadedState is used; cast to match app store.
   } as import('@reduxjs/toolkit').ConfigureStoreOptions<RootState>) as AppStore
 }

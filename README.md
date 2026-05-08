@@ -34,20 +34,20 @@ pnpm install
 
 ## Scripts
 
-| Command                | Description                                                                      |
-| ---------------------- | -------------------------------------------------------------------------------- |
-| `pnpm dev`             | Start dev server (Vite)                                                          |
-| `pnpm build`           | Type-check and production build                                                  |
-| `pnpm preview`         | Serve production build locally                                                   |
-| `pnpm lint`            | Run ESLint                                                                       |
-| `pnpm test`            | Run tests (Vitest)                                                               |
-| `pnpm test:watch`      | Run tests in watch mode                                                          |
-| `pnpm test:coverage`   | Run tests with coverage report                                                   |
-| `pnpm storybook`       | Start Storybook dev server (port 6006)                                           |
-| `pnpm build-storybook` | Build Storybook for static export                                                |
+| Command                | Description                                                                                                |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`             | Start dev server (Vite)                                                                                    |
+| `pnpm build`           | Type-check and production build                                                                            |
+| `pnpm preview`         | Serve production build locally                                                                             |
+| `pnpm lint`            | Run ESLint                                                                                                 |
+| `pnpm test`            | Run tests (Vitest)                                                                                         |
+| `pnpm test:watch`      | Run tests in watch mode                                                                                    |
+| `pnpm test:coverage`   | Run tests with coverage report                                                                             |
+| `pnpm storybook`       | Start Storybook dev server (port 6006)                                                                     |
+| `pnpm build-storybook` | Build Storybook for static export                                                                          |
 | `pnpm generate:api`    | Generate API client/types with Orval (`ORVAL_INPUT_TARGET` or local `http://localhost:3000/api-docs-json`) |
-| `pnpm icons:generate`  | Generate icon components from SVG registry                                       |
-| `pnpm patch`           | Bump patch version                                                               |
+| `pnpm icons:generate`  | Generate icon components from SVG registry                                                                 |
+| `pnpm patch`           | Bump patch version                                                                                         |
 
 ## Project structure
 

@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client'
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
@@ -11,6 +11,8 @@ import { store, useAppSelector } from '@/store'
 import { selectAppInitStatus } from '@/store/slices/app'
 import { queryClient } from '@/lib/api'
 import { FullScreenLoader } from '@/components/full-screen-loader'
+import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { syncCoordinator } from '@/lib/local/sync-coordinator'
 import '@/lib/i18n/config'
 
 // Import the generated route tree
@@ -40,6 +42,13 @@ declare module '@tanstack/react-router' {
 function App() {
   const { isAuth, sessionLoading } = useAuth()
   const status = useAppSelector(selectAppInitStatus)
+
+  useEffect(() => {
+    if (LOCAL_DATA_MODE === 'dexie' && isAuth) {
+      syncCoordinator.start()
+      return () => syncCoordinator.stop()
+    }
+  }, [isAuth])
 
   return (
     <>

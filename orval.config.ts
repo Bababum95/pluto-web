@@ -1,13 +1,11 @@
 import { defineConfig } from 'orval'
 
-const orvalInputTarget =
-  (globalThis as { process?: { env?: Record<string, string | undefined> } })
-    .process?.env?.ORVAL_INPUT_TARGET ?? 'http://localhost:3000/api-docs-json'
-
 export default defineConfig({
   pluto: {
     input: {
-      target: orvalInputTarget,
+      target:
+        process?.env?.ORVAL_INPUT_TARGET ??
+        'http://localhost:3000/api-docs-json',
     },
     output: {
       target: 'src/lib/api/generated/endpoints.ts',

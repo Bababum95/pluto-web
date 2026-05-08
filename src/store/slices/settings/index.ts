@@ -1,9 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
+import { fetchSettings } from '@/entities/settings'
 import type { SettingsDto } from '@/entities/settings'
 import type { AccountDto } from '@/features/account/types'
 
-import { setDefaultAccount, fetchSettings } from './async-thunks'
+import { setDefaultAccount } from './async-thunks'
 
 type SettingsState = {
   settings: SettingsDto | null

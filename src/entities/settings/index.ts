@@ -1,3 +1,5 @@
 export { settingsApi } from './model/api'
 export { settingsRepository } from './local/repository'
+export { fetchSettings } from './model/fetch-settings'
+export { updateDefaultAccount } from './model/update-default-account'
 export type { SettingsDto, UpdateSettingsDto } from './model/types'

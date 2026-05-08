@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { settingsApi } from '@/entities/settings'
+import { updateDefaultAccount } from '@/entities/settings'
 import { selectAccountById } from '@/store/slices/account'
 import type { RootState } from '@/store'
 
@@ -13,6 +13,6 @@ export const setDefaultAccount = createAsyncThunk(
     const account = selectAccountById(state, id)
     if (account) dispatch(setAccount(account))
 
-    return await settingsApi.update({ account: id })
+    return await updateDefaultAccount(id)
   }
 )

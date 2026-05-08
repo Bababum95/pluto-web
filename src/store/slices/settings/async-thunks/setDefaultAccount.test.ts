@@ -2,19 +2,18 @@ import { describe, expect, it, vi, beforeEach } from 'vitest'
 
 import { setDefaultAccount } from './setDefaultAccount'
 
-const { updateMock, selectAccountByIdMock, setAccountMock } = vi.hoisted(() => ({
-  updateMock: vi.fn(),
-  selectAccountByIdMock: vi.fn(),
-  setAccountMock: vi.fn((account: unknown) => ({
-    type: 'settings/setAccount',
-    payload: account,
-  })),
-}))
+const { updateDefaultAccountMock, selectAccountByIdMock, setAccountMock } =
+  vi.hoisted(() => ({
+    updateDefaultAccountMock: vi.fn(),
+    selectAccountByIdMock: vi.fn(),
+    setAccountMock: vi.fn((account: unknown) => ({
+      type: 'settings/setAccount',
+      payload: account,
+    })),
+  }))
 
-vi.mock('@/features/settings', () => ({
-  settingsApi: {
-    update: updateMock,
-  },
+vi.mock('@/entities/settings', () => ({
+  updateDefaultAccount: updateDefaultAccountMock,
 }))
 
 vi.mock('@/store/slices/account', () => ({
@@ -27,7 +26,7 @@ vi.mock('../index', () => ({
 
 describe('setDefaultAccount thunk', () => {
   beforeEach(() => {
-    updateMock.mockReset()
+    updateDefaultAccountMock.mockClear()
     selectAccountByIdMock.mockReset()
     setAccountMock.mockClear()
   })
@@ -39,7 +38,7 @@ describe('setDefaultAccount thunk', () => {
     const dispatch = vi.fn((action) => action)
 
     selectAccountByIdMock.mockReturnValue(account)
-    updateMock.mockResolvedValue(updatedSettings)
+    updateDefaultAccountMock.mockResolvedValue(updatedSettings)
 
     const result = await setDefaultAccount('acc-1')(
       dispatch,
@@ -53,7 +52,7 @@ describe('setDefaultAccount thunk', () => {
       type: 'settings/setAccount',
       payload: account,
     })
-    expect(updateMock).toHaveBeenCalledWith({ account: 'acc-1' })
+    expect(updateDefaultAccountMock).toHaveBeenCalledWith('acc-1')
     expect(result.payload).toEqual(updatedSettings)
   })
 
@@ -62,7 +61,7 @@ describe('setDefaultAccount thunk', () => {
     const state = { account: { accounts: [] } }
 
     selectAccountByIdMock.mockReturnValue(null)
-    updateMock.mockResolvedValue({ account: { id: 'acc-2' } })
+    updateDefaultAccountMock.mockResolvedValue({ account: { id: 'acc-2' } })
 
     await setDefaultAccount('acc-2')(dispatch, () => state, undefined)
 
@@ -70,6 +69,6 @@ describe('setDefaultAccount thunk', () => {
     expect(dispatch).not.toHaveBeenCalledWith(
       expect.objectContaining({ type: 'settings/setAccount' })
     )
-    expect(updateMock).toHaveBeenCalledWith({ account: 'acc-2' })
+    expect(updateDefaultAccountMock).toHaveBeenCalledWith('acc-2')
   })
 })

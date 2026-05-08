@@ -1,24 +1,22 @@
 import { describe, it, expect, vi } from 'vitest'
 
-vi.mock('@/store', () => ({
-  createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
-}))
+import { fetchSettings } from '@/entities/settings'
+import type { RootState } from '@/store'
+import { mockSettings, createMockSettings } from '@/testing/data/settings'
+import { mockAccount, createMockAccount } from '@/testing/data/account'
+import { mockCurrency } from '@/testing/data/currency'
 
-import settingsReducer, {
-  fetchSettings,
-  setDefaultAccount,
-  setAccount,
-} from './index'
+import settingsReducer, { setDefaultAccount, setAccount } from './index'
 import {
   selectSettings,
   selectSettingsStatus,
   selectCurrency,
   selectDefaultAccount,
 } from './selectors'
-import type { RootState } from '@/store'
-import { mockSettings, createMockSettings } from '@/testing/data/settings'
-import { mockAccount, createMockAccount } from '@/testing/data/account'
-import { mockCurrency } from '@/testing/data/currency'
+
+vi.mock('@/store', () => ({
+  createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
+}))
 
 describe('settings slice', () => {
   describe('reducers', () => {

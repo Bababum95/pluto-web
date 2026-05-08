@@ -13,6 +13,7 @@ import { queryClient } from '@/lib/api'
 import { FullScreenLoader } from '@/components/full-screen-loader'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import { syncCoordinator } from '@/lib/local/sync-coordinator'
+import { registerSyncEntities } from '@/lib/local/register-entities'
 import '@/lib/i18n/config'
 
 // Import the generated route tree
@@ -45,6 +46,7 @@ function App() {
 
   useEffect(() => {
     if (LOCAL_DATA_MODE === 'dexie' && isAuth) {
+      registerSyncEntities()
       syncCoordinator.start()
       return () => syncCoordinator.stop()
     }

@@ -100,6 +100,14 @@ class SyncCoordinator {
     this.entityHandlers.set(entity, syncFn)
   }
 
+  hasEntity(entity: string): boolean {
+    return this.entityHandlers.has(entity)
+  }
+
+  getEntityHandler(entity: string): SyncFunction | undefined {
+    return this.entityHandlers.get(entity)
+  }
+
   isOnline(): boolean {
     return this.online
   }

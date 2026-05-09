@@ -5,6 +5,7 @@ import {
   categoryControllerFindOne,
   categoryControllerReorder,
   categoryControllerUpdate,
+  categoryControllerRemove,
 } from '@/lib/api/generated/categories/categories'
 import type { CategoryDto, CreateCategoryDto, UpdateCategoryDto } from './types'
 
@@ -23,5 +24,8 @@ export const categoryApi = {
 
   reorder: (data: { ids: string[] }): Promise<unknown> =>
     categoryControllerReorder(data),
+
+  delete: (id: string): Promise<void> => categoryControllerRemove(id),
+
   invalidate: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
 }

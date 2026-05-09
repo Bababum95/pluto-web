@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 
 import type { TransactionDto } from '@/features/transaction/types'
-import type { CategoryDto } from '@/features/category/types'
+import type { CategoryDto } from '@/entities/category'
 import type { RootState } from '@/store'
 import type { MoneyViewDto } from '@/features/money/types'
 

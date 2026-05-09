@@ -6,8 +6,8 @@ import { AppLayout } from '@/components/AppLayout'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { CategoryForm, DEFAULT_CATEGORY_FORM_VALUES } from '@/features/category'
 import { useAppDispatch } from '@/store'
-import { createCategory } from '@/store/slices/category'
-import type { CategoryFormValues } from '@/features/category/types'
+import { createCategory } from '@/entities/category'
+import type { CategoryFormValues } from '@/entities/category'
 
 const CreateCategoryPage = () => {
   const { t } = useTranslation()

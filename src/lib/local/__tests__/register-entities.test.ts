@@ -12,6 +12,10 @@ vi.mock('@/entities/user', () => ({
   userRepository: {
     syncFromApi: vi.fn(),
   },
+  userReducer: (state = null) => state,
+  setUser: vi.fn(),
+  clearUser: vi.fn(),
+  selectUser: vi.fn(),
 }))
 
 vi.mock('@/entities/settings/local/repository', () => ({
@@ -51,7 +55,8 @@ describe('registerSyncEntities', () => {
     expect(registerSpy).toHaveBeenCalledWith('user', expect.any(Function))
     expect(registerSpy).toHaveBeenCalledWith('settings', expect.any(Function))
     expect(registerSpy).toHaveBeenCalledWith('tag', expect.any(Function))
-    expect(registerSpy).toHaveBeenCalledTimes(3)
+    expect(registerSpy).toHaveBeenCalledWith('category', expect.any(Function))
+    expect(registerSpy).toHaveBeenCalledTimes(4)
   })
 
   it('should be idempotent - multiple calls should only register once', () => {
@@ -59,17 +64,20 @@ describe('registerSyncEntities', () => {
     expect(syncCoordinator.hasEntity('user')).toBe(true)
     expect(syncCoordinator.hasEntity('settings')).toBe(true)
     expect(syncCoordinator.hasEntity('tag')).toBe(true)
+    expect(syncCoordinator.hasEntity('category')).toBe(true)
 
     // Subsequent calls should not change the handlers
     const userHandler = syncCoordinator.getEntityHandler('user')
     const settingsHandler = syncCoordinator.getEntityHandler('settings')
     const tagHandler = syncCoordinator.getEntityHandler('tag')
+    const categoryHandler = syncCoordinator.getEntityHandler('category')
 
     registerSyncEntities()
 
     expect(syncCoordinator.getEntityHandler('user')).toBe(userHandler)
     expect(syncCoordinator.getEntityHandler('settings')).toBe(settingsHandler)
     expect(syncCoordinator.getEntityHandler('tag')).toBe(tagHandler)
+    expect(syncCoordinator.getEntityHandler('category')).toBe(categoryHandler)
   })
 
   it('should sync user from API when handler is called', async () => {

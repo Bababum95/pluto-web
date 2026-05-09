@@ -10,8 +10,8 @@ import {
   selectCategories,
   selectCategoriesStatus,
   updateCategory,
-} from '@/store/slices/category'
-import type { CategoryFormValues } from '@/features/category/types'
+} from '@/entities/category'
+import type { CategoryFormValues } from '@/entities/category'
 
 const EditCategoryPage = () => {
   const { categoryId } = Route.useParams()

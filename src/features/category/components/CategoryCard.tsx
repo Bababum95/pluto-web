@@ -3,7 +3,7 @@ import { type FC, createElement } from 'react'
 import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 
-import type { CategoryDto } from '../types'
+import type { CategoryDto } from '@/entities/category'
 
 type Props = React.ComponentProps<'div'> & {
   category: CategoryDto

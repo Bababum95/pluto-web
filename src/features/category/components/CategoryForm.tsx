@@ -8,7 +8,7 @@ import { FormField } from '@/components/forms/form-field'
 import { ColorPicker } from '@/components/ui/color-picker'
 import { IconPicker } from '@/components/ui/icon-picker'
 import { Button } from '@/components/ui/button'
-import type { CategoryFormValues } from '../types'
+import type { CategoryFormValues } from '@/entities/category'
 
 type Props = {
   defaultValues?: CategoryFormValues

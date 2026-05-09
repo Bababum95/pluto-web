@@ -7,6 +7,21 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
+## Unreleased
+
+### ✨ Features
+
+- integrate sync entity registration and enhance sync coordinator
+
+### ♻️ Refactoring
+
+- reorganize tag feature structure and update imports
+- reorganize settings slice and update async thunks
+- consolidate settings API and types into a unified entity structure
+- add local-first support for Settings and Tag entities
+
+---
+
 ## 30.04.2026 — v0.1.27
 
 ### 🐛 Fixes

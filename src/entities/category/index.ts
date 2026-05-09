@@ -29,3 +29,4 @@ export type {
   CreateCategoryDto,
   UpdateCategoryDto,
 } from './model/types'
+export { DEFAULT_CATEGORY_FORM_VALUES } from './model/constants'

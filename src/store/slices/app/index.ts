@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { fetchCategories } from '@/store/slices/category'
-import { fetchTags } from '@/store/slices/tag'
+import { fetchTags } from '@/entities/tag'
 import { fetchAccounts } from '@/store/slices/account'
 import { fetchSettings } from '@/entities/settings'
 import { fetchTransactions } from '@/store/slices/transaction'

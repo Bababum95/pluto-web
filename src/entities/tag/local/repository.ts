@@ -1,7 +1,7 @@
 import { db } from '@/lib/local/db'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 
-import type { TagDto } from '@/features/tag/types'
+import type { TagDto } from '../model/types'
 import { tagRowFromDto, tagDtoFromRow } from './schema'
 
 export const tagRepository = {

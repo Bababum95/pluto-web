@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import { userReducer } from '@/entities/user'
+import { tagReducer } from '@/entities/tag'
 
 import transactionTypeReducer from './slices/transaction-type'
 import timeRangeReducer from './slices/time-range'
 import appReducer from './slices/app'
 import categoryReducer from './slices/category'
-import tagReducer from './slices/tag'
 import accountReducer from './slices/account'
 import settingsReducer from './slices/settings'
 import transactionReducer from './slices/transaction'

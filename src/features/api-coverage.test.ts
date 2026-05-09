@@ -11,6 +11,7 @@ import * as Transfers from '@/lib/api/generated/transfers/transfers'
 import * as Users from '@/lib/api/generated/users/users'
 import { userApi } from '@/entities/user'
 import { settingsApi } from '@/entities/settings'
+import { tagApi } from '@/entities/tag'
 import { queryClient } from '@/lib/api'
 import {
   mockAccount,
@@ -26,7 +27,6 @@ import { accountApi } from './account/api'
 import { categoryApi } from './category/api'
 import { currencyApi } from './currency/api'
 import { exchangeRateApi } from './exchange-rate/api'
-import { tagApi } from './tag/api'
 import { transactionApi } from './transaction/api'
 import { transferApi } from './transfer/api'
 

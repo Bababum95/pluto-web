@@ -1,4 +1,4 @@
-import type { TagDto } from '@/features/tag/types'
+import type { TagDto } from '../model/types'
 
 export type TagRow = {
   id: string

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { tagRepository } from '../repository'
 import { db } from '@/lib/local/db'
-import type { TagDto } from '@/features/tag/types'
+import type { TagDto } from '../../model/types'
 
 vi.mock('@/lib/local/config', () => ({
   LOCAL_DATA_MODE: 'dexie',

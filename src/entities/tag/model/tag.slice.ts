@@ -4,11 +4,10 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 
-import { tagApi } from '@/features/tag'
-import { tagRepository } from '@/entities/tag/local/repository'
+import { tagApi } from './api'
+import { tagRepository } from '../local/repository'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import type { TagDto, TagFormValues } from '@/features/tag/types'
-import type { RootState } from '@/store'
+import type { TagDto, TagFormValues } from './types'
 import type { Status } from '@/lib/types'
 
 type TagState = {
@@ -103,11 +102,5 @@ export const tagSlice = createSlice({
 })
 
 export const { setTags, addTag, removeTag } = tagSlice.actions
-
-export const selectTags = (state: RootState) => state.tag.tags
-export const selectTagsStatus = (state: RootState) => state.tag.status
-
-export const selectTagById = (id: string) => (state: RootState) =>
-  state.tag.tags.find((t) => t.id === id)
 
 export default tagSlice.reducer

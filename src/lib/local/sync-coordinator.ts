@@ -82,7 +82,10 @@ class SyncCoordinator {
       await outboxProcessor.processPending()
 
       const now = new Date().toISOString()
-      await sessionRepository.updateLastSync(now)
+      const session = await sessionRepository.getCurrent()
+      if (session) {
+        await sessionRepository.updateLastSync(now)
+      }
 
       await outboxProcessor.cleanup(7)
 

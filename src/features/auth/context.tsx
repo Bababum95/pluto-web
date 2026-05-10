@@ -91,6 +91,7 @@ export function AuthProvider({ children }: Props) {
         if (!cancelled) {
           if (LOCAL_DATA_MODE === 'dexie') {
             await userRepository.syncFromApi(apiUser)
+            await sessionRepository.updateCurrentUser(apiUser.id)
           }
           dispatch(setUser(apiUser))
         }

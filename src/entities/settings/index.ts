@@ -1,5 +1,6 @@
 export { settingsApi } from './model/api'
 export { settingsRepository } from './local/repository'
+export { enqueueUpdateSettings } from './local/outbox-helpers'
 export { fetchSettings } from './model/fetch-settings'
 export { updateDefaultAccount } from './model/update-default-account'
 export type { SettingsDto, UpdateSettingsDto } from './model/types'

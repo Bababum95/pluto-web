@@ -124,6 +124,10 @@
   },
   "accounts": {
     "title": "Accounts",
+    "empty": {
+      "title": "No accounts yet",
+      "description": "Add an account to track your balances and transactions."
+    },
     "fields": {
       "name": "Account name",
       "description": "Account description",

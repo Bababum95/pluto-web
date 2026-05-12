@@ -31,7 +31,7 @@ import {
   reorderAccounts,
   selectAccounts,
   selectAccountsStatus,
-} from '@/store/slices/account'
+} from '@/entities/account'
 import { useAppDispatch, useAppSelector } from '@/store'
 import {
   Empty,

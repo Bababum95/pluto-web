@@ -4,12 +4,12 @@ import { useState, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { AccountCard } from './AccountCard'
-import { useAppSelector } from '@/store/hooks'
-import { selectAccountById } from '@/store/slices/account'
 import { Button } from '@/components/ui/button'
+import { selectAccountById } from '@/entities/account'
 import { cn } from '@/lib/utils'
+import { useAppSelector } from '@/store/hooks'
 
+import { AccountCard } from './AccountCard'
 import { AccountDrawer } from './AccountDrawer'
 
 type Props = {

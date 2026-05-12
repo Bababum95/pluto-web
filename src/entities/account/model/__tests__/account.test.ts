@@ -4,6 +4,16 @@ vi.mock('@/store', () => ({
   createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
 }))
 
+import {
+  createTransaction,
+  updateTransaction,
+} from '@/store/slices/transaction'
+import {
+  mockAccount,
+  mockAccountSummary,
+  createMockAccount,
+} from '@/testing/data/account'
+
 import accountReducer, {
   accountSlice,
   fetchAccounts,
@@ -16,16 +26,7 @@ import accountReducer, {
   addAccount,
   setSummary,
   removeAccount,
-} from './index'
-import {
-  createTransaction,
-  updateTransaction,
-} from '@/store/slices/transaction'
-import {
-  mockAccount,
-  mockAccountSummary,
-  createMockAccount,
-} from '@/testing/data/account'
+} from '../account.slice'
 
 const account2 = createMockAccount({
   id: 'account-2',

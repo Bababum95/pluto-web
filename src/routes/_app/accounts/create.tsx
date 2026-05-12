@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { AppLayout } from '@/components/AppLayout'
-import { AccountForm, DEFAULT_ACCOUNT_FORM_VALUES } from '@/features/account'
+import { AccountForm } from '@/features/account'
+import { createAccount, DEFAULT_ACCOUNT_FORM_VALUES } from '@/entities/account'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { createAccount } from '@/store/slices/account'
 import { selectSettings } from '@/store/slices/settings'
-import type { CreateAccountDto } from '@/features/account/types'
+import type { CreateAccountDto } from '@/entities/account'
 
 const CreateAccountPage = () => {
   const { t } = useTranslation()

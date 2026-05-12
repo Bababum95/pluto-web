@@ -3,10 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import type { FC } from 'react'
 
 import { cn } from '@/lib/utils'
-import {
-  selectAccountsStatus,
-  selectAccountsSummary,
-} from '@/store/slices/account'
+import { selectAccountsStatus, selectAccountsSummary } from '@/entities/account'
 import { useAppSelector } from '@/store'
 
 import { Balance } from './Balance'

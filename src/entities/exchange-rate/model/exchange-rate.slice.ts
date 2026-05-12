@@ -1,8 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { exchangeRateApi } from '@/features/exchange-rate/api'
-import type { RateDto } from '@/features/exchange-rate/types'
+import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { syncCoordinator } from '@/lib/local/sync-coordinator'
+import { exchangeRateRepository } from '@/entities/exchange-rate/local'
 import type { Status } from '@/lib/types'
+
+import { exchangeRateApi } from './api'
+import type { RateDto } from './types'
 
 type ExchangeRateState = {
   rates: RateDto[]
@@ -16,7 +20,19 @@ const initialState: ExchangeRateState = {
 
 export const fetchExchangeRates = createAsyncThunk(
   'exchangeRate/fetchAll',
-  () => exchangeRateApi.list()
+  async () => {
+    if (LOCAL_DATA_MODE === 'dexie') {
+      // Load from local first
+      const rates = await exchangeRateRepository.getAll()
+
+      // Trigger background sync (non-blocking)
+      syncCoordinator.syncNow().catch(console.error)
+
+      return rates
+    }
+
+    return exchangeRateApi.list()
+  }
 )
 
 export const exchangeRateSlice = createSlice({

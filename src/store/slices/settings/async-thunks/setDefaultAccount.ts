@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { updateDefaultAccount } from '@/entities/settings'
-import { selectAccountById } from '@/store/slices/account'
+import { selectAccountById } from '@/entities/account'
 import type { RootState } from '@/store'
 
 import { setAccount } from '../index'

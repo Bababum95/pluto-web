@@ -7,7 +7,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { AppLayout } from '@/components/AppLayout'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { selectTransferById, deleteTransfer } from '@/store/slices/transfer'
-import { fetchAccounts } from '@/store/slices/account'
+import { fetchAccounts } from '@/entities/account'
 import {
   DropdownMenu,
   DropdownMenuContent,

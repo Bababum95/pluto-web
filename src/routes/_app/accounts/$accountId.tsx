@@ -18,7 +18,7 @@ import {
   updateAccount,
   deleteAccount,
   toggleExcluded,
-} from '@/store/slices/account'
+} from '@/entities/account'
 import {
   DropdownMenu,
   DropdownMenuContent,

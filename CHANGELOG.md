@@ -11,10 +11,15 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ### ✨ Features
 
+- enhance settings and tag entities with outbox handlers
+- add empty state for accounts page
 - integrate sync entity registration and enhance sync coordinator
 
 ### ♻️ Refactoring
 
+- improve session handling in sync operations
+- move DEFAULT_CATEGORY_FORM_VALUES to entities and update imports
+- reorganize category feature structure and update imports
 - reorganize tag feature structure and update imports
 - reorganize settings slice and update async thunks
 - consolidate settings API and types into a unified entity structure

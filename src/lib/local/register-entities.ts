@@ -6,26 +6,36 @@ import {
   settingsApi,
   fetchSettings,
 } from '@/entities/settings'
-import {
-  tagRepository,
-  tagApi,
-  addTag,
-  removeTag,
-} from '@/entities/tag'
+import { tagRepository, tagApi, addTag, removeTag } from '@/entities/tag'
 import {
   categoryRepository,
   categoryApi,
   removeCategory,
   addCategory,
 } from '@/entities/category'
+import { accountRepository } from '@/entities/account/local'
+import { exchangeRateRepository } from '@/entities/exchange-rate/local'
+import { accountApi } from '@/entities/account'
 import { store } from '@/store'
+import {
+  setAccounts,
+  addAccount,
+  removeAccount,
+  setSummary,
+} from '@/entities/account'
 import { authControllerGetProfile } from '@/lib/api/generated/auth/auth'
 import { settingsControllerFindOne } from '@/lib/api/generated/settings/settings'
 import { tagControllerFindAll } from '@/lib/api/generated/tags/tags'
 import { categoryControllerFindAll } from '@/lib/api/generated/categories/categories'
+import { accountControllerFindAll } from '@/lib/api/generated/accounts/accounts'
+import { rateControllerFindAll } from '@/lib/api/generated/rates/rates'
 import type { CreateCategoryDto, UpdateCategoryDto } from '@/entities/category'
 import type { CreateTagDto, UpdateTagDto } from '@/entities/tag'
 import type { UpdateSettingsDto } from '@/entities/settings'
+import type {
+  CreateAccountDto,
+  UpdateAccountDto,
+} from '@/features/account/types'
 
 let isRegistered = false
 
@@ -109,9 +119,7 @@ export function registerSyncEntities(): void {
     try {
       switch (operation.action) {
         case 'create': {
-          const created = await tagApi.create(
-            operation.payload as CreateTagDto
-          )
+          const created = await tagApi.create(operation.payload as CreateTagDto)
 
           // Replace temp ID with real ID from server
           if (operation.entityId.startsWith('temp-')) {
@@ -186,6 +194,96 @@ export function registerSyncEntities(): void {
       }
     } catch (error) {
       console.error(`Category ${operation.action} operation failed:`, error)
+      throw error
+    }
+  })
+
+  // Account entity sync
+  syncCoordinator.registerEntity('account', async () => {
+    try {
+      const response = await accountControllerFindAll()
+      await accountRepository.syncFromApi(response.list || [])
+      // Note: summary is not stored locally, only accounts
+    } catch (error) {
+      console.error('Account sync failed:', error)
+      throw error
+    }
+  })
+
+  // Account outbox handler
+  outboxProcessor.registerHandler('account', async (operation) => {
+    try {
+      switch (operation.action) {
+        case 'create': {
+          const created = await accountApi.create(
+            operation.payload as CreateAccountDto
+          )
+
+          // Replace temp ID with real ID from server
+          if (operation.entityId.startsWith('temp-')) {
+            await accountRepository.delete(operation.entityId)
+            store.dispatch(removeAccount(operation.entityId))
+          }
+
+          await accountRepository.save(created.account)
+          store.dispatch(addAccount(created.account))
+          store.dispatch(setSummary(created.summary))
+          break
+        }
+        case 'update': {
+          // Handle special operations by entityId
+          if (operation.entityId === 'bulk-reorder') {
+            await accountApi.reorder(operation.payload as { ids: string[] })
+            // Fetch updated accounts to get new order
+            const response = await accountControllerFindAll()
+            await accountRepository.saveMany(response.list || [])
+            store.dispatch(setAccounts(response.list || []))
+            if (response.summary) {
+              store.dispatch(setSummary(response.summary))
+            }
+          } else if (
+            typeof operation.payload === 'object' &&
+            operation.payload !== null &&
+            'toggleExcluded' in operation.payload
+          ) {
+            const updated = await accountApi.toggleExcluded(operation.entityId)
+            await accountRepository.save(updated.account)
+            store.dispatch(addAccount(updated.account))
+            store.dispatch(setSummary(updated.summary))
+          } else {
+            const updated = await accountApi.update(
+              operation.entityId,
+              operation.payload as UpdateAccountDto
+            )
+            await accountRepository.save(updated.account)
+            store.dispatch(addAccount(updated.account))
+            store.dispatch(setSummary(updated.summary))
+          }
+          break
+        }
+        case 'delete': {
+          const summary = await accountApi.delete(operation.entityId)
+          await accountRepository.delete(operation.entityId)
+          store.dispatch(removeAccount(operation.entityId))
+          store.dispatch(setSummary(summary))
+          break
+        }
+        default:
+          throw new Error(`Unknown account action: ${operation.action}`)
+      }
+    } catch (error) {
+      console.error(`Account ${operation.action} operation failed:`, error)
+      throw error
+    }
+  })
+
+  // ExchangeRate entity sync
+  syncCoordinator.registerEntity('exchangeRate', async () => {
+    try {
+      const apiRates = await rateControllerFindAll()
+      await exchangeRateRepository.syncFromApi(apiRates)
+    } catch (error) {
+      console.error('ExchangeRate sync failed:', error)
       throw error
     }
   })

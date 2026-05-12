@@ -13,6 +13,8 @@ import { userApi } from '@/entities/user'
 import { settingsApi } from '@/entities/settings'
 import { tagApi } from '@/entities/tag'
 import { categoryApi } from '@/entities/category'
+import { accountApi } from '@/entities/account'
+import { exchangeRateApi } from '@/entities/exchange-rate'
 import { queryClient } from '@/lib/api'
 import {
   mockAccount,
@@ -24,9 +26,7 @@ import { mockCurrency } from '@/testing/data/currency'
 import { mockSettings } from '@/testing/data/settings'
 import { mockUser } from '@/testing/data/user'
 
-import { accountApi } from './account/api'
 import { currencyApi } from './currency/api'
-import { exchangeRateApi } from './exchange-rate/api'
 import { transactionApi } from './transaction/api'
 import { transferApi } from './transfer/api'
 

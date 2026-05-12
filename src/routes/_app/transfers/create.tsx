@@ -6,7 +6,7 @@ import { AppLayout } from '@/components/AppLayout'
 import { TransferForm, DEFAULT_TRANSFER_FORM_VALUES } from '@/features/transfer'
 import { useAppDispatch } from '@/store'
 import { createTransfer } from '@/store/slices/transfer'
-import { fetchAccounts } from '@/store/slices/account'
+import { fetchAccounts } from '@/entities/account'
 import type { CreateTransferDto } from '@/features/transfer/types'
 
 const CreateTransferPage = () => {

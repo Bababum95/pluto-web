@@ -4,11 +4,7 @@ import { http, HttpResponse } from 'msw'
 
 import { server } from '@/testing/server'
 import { createStore } from '@/store'
-import {
-  fetchAccounts,
-  createAccount,
-  deleteAccount,
-} from '@/store/slices/account'
+import { fetchAccounts, createAccount, deleteAccount } from '@/entities/account'
 import { createTransaction } from '@/store/slices/transaction'
 import {
   mockAccount,

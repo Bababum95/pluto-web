@@ -1,4 +1,4 @@
-import type { RateDto } from '@/features/exchange-rate/types'
+import type { RateDto } from '@/entities/exchange-rate'
 
 export const mockExchangeRate: RateDto = {
   id: 'rate-1',

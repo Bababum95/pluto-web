@@ -1,6 +1,6 @@
 import { Decimal } from 'decimal.js'
 
-import type { RateDto } from '@/features/exchange-rate/types'
+import type { RateDto } from '@/entities/exchange-rate'
 
 /**
  * Calculate exchange rate between two currencies.

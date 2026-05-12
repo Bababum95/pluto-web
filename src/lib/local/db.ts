@@ -4,6 +4,8 @@ import type { UserRow } from '@/entities/user/local/schema'
 import type { SettingsRow } from '@/entities/settings/local/schema'
 import type { TagRow } from '@/entities/tag/local/schema'
 import type { CategoryRow } from '@/entities/category/local/schema'
+import type { AccountRow } from '@/entities/account/local/schema'
+import type { ExchangeRateRow } from '@/entities/exchange-rate/local/schema'
 // import type { TransactionRow } from '@/entities/transaction/local/schema'
 
 import type { SessionRow } from './session'
@@ -14,6 +16,8 @@ class LocalDb extends Dexie {
   settings!: EntityTable<SettingsRow, 'id'>
   tags!: EntityTable<TagRow, 'id'>
   categories!: EntityTable<CategoryRow, 'id'>
+  accounts!: EntityTable<AccountRow, 'id'>
+  exchangeRates!: EntityTable<ExchangeRateRow, 'id'>
   //   transactions!: EntityTable<TransactionRow, 'id'>
   session!: EntityTable<SessionRow, 'id'>
   outbox!: EntityTable<OutboxRow, 'id'>
@@ -42,6 +46,18 @@ class LocalDb extends Dexie {
       settings: 'id',
       tags: 'id, updatedAt',
       categories: 'id, updatedAt',
+      session: 'id',
+      outbox: 'id, status, entity, createdAt',
+    })
+
+    // Version 4: add accounts and exchangeRates
+    this.version(4).stores({
+      users: 'id, updatedAt',
+      settings: 'id',
+      tags: 'id, updatedAt',
+      categories: 'id, updatedAt',
+      accounts: 'id, updatedAt, order',
+      exchangeRates: 'id, updatedAt',
       session: 'id',
       outbox: 'id, status, entity, createdAt',
     })

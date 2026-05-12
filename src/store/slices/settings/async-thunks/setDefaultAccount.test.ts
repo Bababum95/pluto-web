@@ -16,11 +16,12 @@ vi.mock('@/entities/settings', () => ({
   updateDefaultAccount: updateDefaultAccountMock,
 }))
 
-vi.mock('@/store/slices/account', () => ({
+vi.mock('@/entities/account', () => ({
   selectAccountById: selectAccountByIdMock,
 }))
 
 vi.mock('../index', () => ({
+  default: {},
   setAccount: setAccountMock,
 }))
 

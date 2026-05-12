@@ -4,11 +4,8 @@ vi.mock('@/store', () => ({
   createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
 }))
 
-import exchangeRateReducer, { fetchExchangeRates } from './index'
-import {
-  selectExchangeRates,
-  selectExchangeRatesStatus,
-} from './selectors'
+import exchangeRateReducer, { fetchExchangeRates } from '../exchange-rate.slice'
+import { selectExchangeRates, selectExchangeRatesStatus } from '../selectors'
 import type { RootState } from '@/store'
 import {
   mockExchangeRate,

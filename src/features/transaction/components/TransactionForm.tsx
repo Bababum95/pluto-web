@@ -13,7 +13,7 @@ import { DatePicker } from '@/components/ui/date-picker'
 import { MoneyField } from '@/features/money/components/MoneyField'
 import { TransactionTypeToggle } from '@/features/transaction-type'
 import { useAppSelector } from '@/store/hooks'
-import { selectAccounts } from '@/store/slices/account'
+import { selectAccounts } from '@/entities/account'
 import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
 
 import type { TransactionFormType } from '../types'

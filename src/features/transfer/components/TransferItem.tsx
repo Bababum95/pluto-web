@@ -5,7 +5,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Icon } from '@/components/ui/icon'
 import { Separator } from '@/components/ui/separator'
 import { useAppSelector } from '@/store'
-import { selectAccountById } from '@/store/slices/account'
+import { selectAccountById } from '@/entities/account'
 import { Balance, toDecimal } from '@/features/money'
 
 import type { TransferDto } from '../types'

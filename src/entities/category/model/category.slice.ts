@@ -54,46 +54,50 @@ export const fetchCategories = createAsyncThunk(
   }
 )
 
+/**
+ * Create a new category.
+ * In dexie mode: save locally with temp ID, enqueue for sync.
+ * In api-only mode: create via API directly.
+ */
 export const createCategory = createAsyncThunk(
   'category/createCategory',
-  async (data: CategoryFormValues, { getState, rejectWithValue }) => {
+  async (data: CategoryFormValues, { getState }) => {
     const rootState = getState() as RootState
     const payload = {
       ...data,
       type: rootState.transactionType.transactionType,
     }
 
-    try {
-      const created = await categoryApi.create(payload)
-      if (LOCAL_DATA_MODE === 'dexie') {
-        await categoryRepository.save(created)
+    if (LOCAL_DATA_MODE === 'dexie') {
+      const tempId = `temp-${Date.now()}`
+      const tempCategory: CategoryDto = {
+        id: tempId,
+        ...payload,
+        order: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }
-      return created
-    } catch (error) {
-      // Offline: optimistic update
-      if (LOCAL_DATA_MODE === 'dexie' && !navigator.onLine) {
-        const tempId = `temp-${crypto.randomUUID()}`
-        const tempCategory: CategoryDto = {
-          id: tempId,
-          ...payload,
-          order: 0,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        }
-        await categoryRepository.save(tempCategory)
-        await enqueueCreateCategory(tempId, payload)
-        return tempCategory
-      }
-      return rejectWithValue(error)
+
+      await categoryRepository.save(tempCategory)
+      await enqueueCreateCategory(tempId, payload)
+
+      return tempCategory
     }
+
+    return categoryApi.create(payload)
   }
 )
 
+/**
+ * Update an existing category.
+ * In dexie mode: update locally, enqueue for sync.
+ * In api-only mode: update via API directly.
+ */
 export const updateCategory = createAsyncThunk(
   'category/updateCategory',
   async (
     { id, data }: { id: string; data: CategoryFormValues },
-    { getState, rejectWithValue }
+    { getState }
   ) => {
     const rootState = getState() as RootState
     const payload = {
@@ -103,71 +107,56 @@ export const updateCategory = createAsyncThunk(
       type: rootState.transactionType.transactionType,
     }
 
-    try {
-      const updated = await categoryApi.update(id, payload)
-      if (LOCAL_DATA_MODE === 'dexie') {
-        await categoryRepository.save(updated)
-      }
+    if (LOCAL_DATA_MODE === 'dexie') {
+      await categoryRepository.update(id, payload)
+      await enqueueUpdateCategory(id, payload)
+
+      const updated = await categoryRepository.getById(id)
+      if (!updated) throw new Error(`Category ${id} not found after update`)
       return updated
-    } catch (error) {
-      // Offline: optimistic update
-      if (LOCAL_DATA_MODE === 'dexie' && !navigator.onLine) {
-        await categoryRepository.update(id, payload)
-        await enqueueUpdateCategory(id, payload)
-        const local = await categoryRepository.getById(id)
-        if (local) return local
-      }
-      return rejectWithValue(error)
     }
+
+    return categoryApi.update(id, payload)
   }
 )
 
+/**
+ * Reorder categories.
+ * In dexie mode: update order locally, enqueue for sync.
+ * In api-only mode: reorder via API directly.
+ */
 export const reorderCategories = createAsyncThunk(
   'category/reorderCategories',
-  async (ids: string[], { rejectWithValue }) => {
-    try {
-      const result = await categoryApi.reorder({ ids })
-
-      if (LOCAL_DATA_MODE === 'dexie') {
-        // Update order in IndexedDB using update() to preserve isDirty
-        for (let i = 0; i < ids.length; i++) {
-          await categoryRepository.update(ids[i], { order: i })
-        }
+  async (ids: string[]) => {
+    if (LOCAL_DATA_MODE === 'dexie') {
+      for (let i = 0; i < ids.length; i++) {
+        await categoryRepository.update(ids[i], { order: i })
       }
+      await enqueueReorderCategories(ids)
 
-      return result
-    } catch (error) {
-      // Offline: mark as dirty
-      if (LOCAL_DATA_MODE === 'dexie' && !navigator.onLine) {
-        for (let i = 0; i < ids.length; i++) {
-          await categoryRepository.update(ids[i], { order: i })
-        }
-        await enqueueReorderCategories(ids)
-        return { ids }
-      }
-      return rejectWithValue(error)
+      return { ids }
     }
+
+    return categoryApi.reorder({ ids })
   }
 )
 
+/**
+ * Delete a category.
+ * In dexie mode: delete locally, enqueue for sync.
+ * In api-only mode: delete via API directly.
+ */
 export const deleteCategory = createAsyncThunk(
   'category/deleteCategory',
-  async (id: string, { rejectWithValue }) => {
-    try {
-      await categoryApi.delete(id)
-      if (LOCAL_DATA_MODE === 'dexie') {
-        await categoryRepository.delete(id)
-      }
+  async (id: string) => {
+    if (LOCAL_DATA_MODE === 'dexie') {
+      await categoryRepository.delete(id)
+      await enqueueDeleteCategory(id)
       return id
-    } catch (error) {
-      // Offline: mark for deletion
-      if (LOCAL_DATA_MODE === 'dexie' && !navigator.onLine) {
-        await categoryRepository.delete(id)
-        await enqueueDeleteCategory(id)
-        return id
-      }
-      return rejectWithValue(error)
     }
+
+    await categoryApi.delete(id)
+    return id
   }
 )
 
@@ -179,7 +168,12 @@ export const categorySlice = createSlice({
       state.categories = action.payload
     },
     addCategory: (state, action: PayloadAction<CategoryDto>) => {
-      state.categories.push(action.payload)
+      const exists = state.categories.find((c) => c.id === action.payload.id)
+      if (exists) {
+        Object.assign(exists, action.payload)
+      } else {
+        state.categories.push(action.payload)
+      }
     },
     removeCategory: (state, action: PayloadAction<string>) => {
       state.categories = state.categories.filter((c) => c.id !== action.payload)
@@ -202,7 +196,10 @@ export const categorySlice = createSlice({
       })
       .addCase(createCategory.fulfilled, (state, action) => {
         state.status = 'success'
-        state.categories.push(action.payload)
+        const exists = state.categories.find((c) => c.id === action.payload.id)
+        if (!exists) {
+          state.categories.push(action.payload)
+        }
       })
       .addCase(createCategory.rejected, (state) => {
         state.status = 'failed'

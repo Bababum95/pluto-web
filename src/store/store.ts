@@ -5,11 +5,11 @@ import { tagReducer } from '@/entities/tag'
 import { categoryReducer } from '@/entities/category'
 import { accountReducer } from '@/entities/account'
 import { exchangeRateReducer } from '@/entities/exchange-rate'
+import { settingsReducer } from '@/entities/settings'
 
 import transactionTypeReducer from './slices/transaction-type'
 import timeRangeReducer from './slices/time-range'
 import appReducer from './slices/app'
-import settingsReducer from './slices/settings'
 import transactionReducer from './slices/transaction'
 import transferReducer from './slices/transfer'
 

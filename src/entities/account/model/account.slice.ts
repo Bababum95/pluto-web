@@ -4,10 +4,6 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 
-import {
-  createTransaction,
-  updateTransaction,
-} from '@/store/slices/transaction'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import { syncCoordinator } from '@/lib/local/sync-coordinator'
 import type { Status } from '@/lib/types'
@@ -221,9 +217,14 @@ export const accountSlice = createSlice({
       state.accounts = action.payload
     },
     addAccount: (state, action: PayloadAction<AccountDto>) => {
-      state.accounts.push(action.payload)
+      const exists = state.accounts.find((a) => a.id === action.payload.id)
+      if (exists) {
+        Object.assign(exists, action.payload)
+      } else {
+        state.accounts.push(action.payload)
+      }
     },
-    updateAccount: (state, action: PayloadAction<AccountDto>) => {
+    updateAccountInState: (state, action: PayloadAction<AccountDto>) => {
       const idx = state.accounts.findIndex((a) => a.id === action.payload.id)
       if (idx !== -1) {
         state.accounts[idx] = action.payload
@@ -258,27 +259,16 @@ export const accountSlice = createSlice({
         state.summary = action.payload
       })
       .addCase(createAccount.fulfilled, (state, action) => {
-        state.accounts.push(action.payload.account)
+        const exists = state.accounts.find((a) => a.id === action.payload.account.id)
+        if (!exists) {
+          state.accounts.push(action.payload.account)
+        }
         state.summary = action.payload.summary
       })
       .addCase(updateAccount.fulfilled, (state, action) => {
         applyAccountUpdate(
           state,
           [action.payload.account],
-          action.payload.summary
-        )
-      })
-      .addCase(createTransaction.fulfilled, (state, action) => {
-        applyAccountUpdate(
-          state,
-          action.payload.accounts ?? [],
-          action.payload.summary
-        )
-      })
-      .addCase(updateTransaction.fulfilled, (state, action) => {
-        applyAccountUpdate(
-          state,
-          action.payload.accounts ?? [],
           action.payload.summary
         )
       })
@@ -305,7 +295,7 @@ export const accountSlice = createSlice({
   },
 })
 
-export const { setAccounts, addAccount, removeAccount, setSummary } =
+export const { setAccounts, addAccount, updateAccountInState, removeAccount, setSummary } =
   accountSlice.actions
 
 export default accountSlice.reducer

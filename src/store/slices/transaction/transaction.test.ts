@@ -145,7 +145,7 @@ describe('transaction slice', () => {
         {
           transaction: newTx,
           insert: true,
-          accounts: [mockAccount],
+          account: mockAccount,
           summary: mockAccountSummary,
         },
         'req-1',
@@ -168,7 +168,7 @@ describe('transaction slice', () => {
         {
           transaction: newTx,
           insert: false,
-          accounts: [mockAccount],
+          account: mockAccount,
           summary: mockAccountSummary,
         },
         'req-1',
@@ -204,7 +204,7 @@ describe('transaction slice', () => {
       )
       const updated = createMockTransaction({ id: 'tx-1', comment: 'Updated' })
       const action = updateTransaction.fulfilled(
-        { transaction: updated, accounts: [], summary: mockAccountSummary },
+        { transaction: updated, account: mockAccount, summary: mockAccountSummary },
         'req-1',
         { id: 'tx-1', data: {} as never }
       )

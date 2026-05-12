@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { AppLayout } from '@/components/AppLayout'
 import { useAuth } from '@/features/auth'
 import { PASSWORD_MIN_LENGTH } from '@/features/auth/constants'
-import { userApi } from '@/entities/user'
+import { changePasswordApi } from '@/features/change-password'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -212,7 +212,7 @@ function ChangePasswordSheet({
 
   const mutation = useMutation({
     mutationFn: (data: { currentPassword: string; newPassword: string }) =>
-      userApi.changePassword(userId, data),
+      changePasswordApi.changePassword(userId, data),
   })
 
   const form = useForm({

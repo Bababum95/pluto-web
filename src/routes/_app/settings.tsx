@@ -26,9 +26,9 @@ import { ThemeDrawer, useTheme } from '@/features/theme'
 import { AppearanceDrawer, useAppearance } from '@/features/appearance'
 import { AccountDrawer } from '@/features/account'
 import { useTranslation } from '@/lib/i18n'
-import { selectDefaultAccount } from '@/store/slices/settings/selectors'
+import { selectDefaultAccount } from '@/entities/settings'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { setDefaultAccount } from '@/store/slices/settings'
+import { setDefaultAccount } from '@/features/settings'
 import type { SupportedLanguages } from '@/lib/i18n/types'
 
 export const Route = createFileRoute('/_app/settings')({

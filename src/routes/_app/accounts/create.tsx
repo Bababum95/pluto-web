@@ -6,7 +6,7 @@ import { AppLayout } from '@/components/AppLayout'
 import { AccountForm } from '@/features/account'
 import { createAccount, DEFAULT_ACCOUNT_FORM_VALUES } from '@/entities/account'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { selectSettings } from '@/store/slices/settings'
+import { selectSettings } from '@/entities/settings'
 import type { CreateAccountDto } from '@/entities/account'
 
 const CreateAccountPage = () => {

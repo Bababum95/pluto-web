@@ -1,17 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { Status } from '@/lib/types'
-
 import type { UserDto } from './types'
 
 type UserState = {
   user: UserDto | null
-  status: Status
 }
 
 const initialState: UserState = {
   user: null,
-  status: 'idle',
 }
 
 export const userSlice = createSlice({

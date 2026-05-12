@@ -6,6 +6,11 @@ import {
 
 import { tagApi } from './api'
 import { tagRepository } from '../local/repository'
+import {
+  enqueueCreateTag,
+  enqueueUpdateTag,
+  enqueueDeleteTag,
+} from '../local/outbox-helpers'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import type { TagDto, TagFormValues } from './types'
 import type { Status } from '@/lib/types'
@@ -20,38 +25,100 @@ const initialState: TagState = {
   status: 'idle',
 }
 
+/**
+ * Fetch tags from local storage (if available) or API.
+ * In dexie mode: load from IndexedDB first, fallback to API.
+ * In api-only mode: fetch directly from API.
+ */
 export const fetchTags = createAsyncThunk('tag/fetchTags', async () => {
   if (LOCAL_DATA_MODE === 'dexie') {
-    // Load from local DB
     const localTags = await tagRepository.getAll()
 
     if (localTags.length > 0) {
       return localTags
     }
 
-    // Fallback to API if empty
     const apiTags = await tagApi.list()
     await tagRepository.saveMany(apiTags)
     return apiTags
-  } else {
-    // api-only mode
-    return tagApi.list()
   }
+
+  return tagApi.list()
 })
 
+/**
+ * Create a new tag.
+ * In dexie mode: save locally with temp ID, enqueue for sync.
+ * In api-only mode: create via API directly.
+ */
 export const createTag = createAsyncThunk(
   'tag/createTag',
-  (data: TagFormValues) => tagApi.create(data)
+  async (data: TagFormValues) => {
+    if (LOCAL_DATA_MODE === 'dexie') {
+      const tempId = `temp-${Date.now()}`
+      const now = new Date().toISOString()
+      const tempTag: TagDto = {
+        id: tempId,
+        name: data.name,
+        color: data.color || '',
+        icon: data.icon || '',
+        createdAt: now,
+        updatedAt: now,
+      }
+
+      await tagRepository.save(tempTag)
+      await enqueueCreateTag(tempId, data)
+
+      return tempTag
+    }
+
+    return tagApi.create(data)
+  }
 )
 
+/**
+ * Update an existing tag.
+ * In dexie mode: update locally, enqueue for sync.
+ * In api-only mode: update via API directly.
+ */
 export const updateTag = createAsyncThunk(
   'tag/updateTag',
-  ({ id, data }: { id: string; data: TagFormValues }) => tagApi.update(id, data)
+  async ({ id, data }: { id: string; data: TagFormValues }) => {
+    if (LOCAL_DATA_MODE === 'dexie') {
+      const existing = await tagRepository.getById(id)
+      if (!existing) throw new Error(`Tag ${id} not found`)
+
+      const updated: TagDto = {
+        ...existing,
+        ...data,
+        updatedAt: new Date().toISOString(),
+      }
+
+      await tagRepository.save(updated)
+      await enqueueUpdateTag(id, data)
+
+      return updated
+    }
+
+    return tagApi.update(id, data)
+  }
 )
 
-export const deleteTag = createAsyncThunk('tag/deleteTag', (id: string) =>
-  tagApi.delete(id)
-)
+/**
+ * Delete a tag.
+ * In dexie mode: delete locally, enqueue for sync.
+ * In api-only mode: delete via API directly.
+ */
+export const deleteTag = createAsyncThunk('tag/deleteTag', async (id: string) => {
+  if (LOCAL_DATA_MODE === 'dexie') {
+    await tagRepository.delete(id)
+    await enqueueDeleteTag(id)
+    return id
+  }
+
+  await tagApi.delete(id)
+  return id
+})
 
 export const tagSlice = createSlice({
   name: 'tag',
@@ -61,7 +128,12 @@ export const tagSlice = createSlice({
       state.tags = action.payload
     },
     addTag: (state, action: PayloadAction<TagDto>) => {
-      state.tags.push(action.payload)
+      const exists = state.tags.find((t) => t.id === action.payload.id)
+      if (exists) {
+        Object.assign(exists, action.payload)
+      } else {
+        state.tags.push(action.payload)
+      }
     },
     removeTag: (state, action: PayloadAction<string>) => {
       state.tags = state.tags.filter((t) => t.id !== action.payload)
@@ -84,7 +156,10 @@ export const tagSlice = createSlice({
       })
       .addCase(createTag.fulfilled, (state, action) => {
         state.status = 'success'
-        state.tags.push(action.payload)
+        const exists = state.tags.find((t) => t.id === action.payload.id)
+        if (!exists) {
+          state.tags.push(action.payload)
+        }
       })
       .addCase(createTag.rejected, (state) => {
         state.status = 'failed'
@@ -96,7 +171,7 @@ export const tagSlice = createSlice({
         }
       })
       .addCase(deleteTag.fulfilled, (state, action) => {
-        state.tags = state.tags.filter((t) => t.id !== action.meta.arg)
+        state.tags = state.tags.filter((t) => t.id !== action.payload)
       })
   },
 })

@@ -183,7 +183,7 @@ describe('Auth (integration)', () => {
       </AuthProvider>,
       {
         withAuth: false,
-        preloadedState: { user: { user: mockUser, status: 'idle' } },
+        preloadedState: { user: { user: mockUser } },
       }
     )
 

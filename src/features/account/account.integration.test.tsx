@@ -135,7 +135,7 @@ describe('Account flow (integration)', () => {
     server.use(
       http.post('http://localhost/v1/transactions', () =>
         HttpResponse.json({
-          accounts: [updatedAccount],
+          account: updatedAccount,
           summary: updatedSummary,
           transaction: createMockTransaction({ id: 'tx-1' }),
         })

@@ -5,17 +5,12 @@ vi.mock('@/store', () => ({
 }))
 
 import {
-  createTransaction,
-  updateTransaction,
-} from '@/store/slices/transaction'
-import {
   mockAccount,
   mockAccountSummary,
   createMockAccount,
 } from '@/testing/data/account'
 
 import accountReducer, {
-  accountSlice,
   fetchAccounts,
   deleteAccount,
   createAccount,
@@ -24,6 +19,7 @@ import accountReducer, {
   toggleExcluded,
   setAccounts,
   addAccount,
+  updateAccountInState,
   setSummary,
   removeAccount,
 } from '../account.slice'
@@ -53,7 +49,7 @@ describe('account slice', () => {
       expect(state.accounts[1].name).toBe('Second')
     })
 
-    it('updateAccount (sync) updates existing account by id', () => {
+    it('updateAccountInState (sync) updates existing account by id', () => {
       let state = accountReducer(
         undefined,
         setAccounts([mockAccount, account2])
@@ -62,15 +58,15 @@ describe('account slice', () => {
         id: mockAccount.id,
         name: 'Updated Wallet',
       })
-      state = accountReducer(state, accountSlice.actions.updateAccount(updated))
+      state = accountReducer(state, updateAccountInState(updated))
       expect(state.accounts[0].name).toBe('Updated Wallet')
       expect(state.accounts[1]).toEqual(account2)
     })
 
-    it('updateAccount (sync) does nothing when id not in list', () => {
+    it('updateAccountInState (sync) does nothing when id not in list', () => {
       let state = accountReducer(undefined, setAccounts([mockAccount]))
       const unknown = createMockAccount({ id: 'unknown' })
-      state = accountReducer(state, accountSlice.actions.updateAccount(unknown))
+      state = accountReducer(state, updateAccountInState(unknown))
       expect(state.accounts).toHaveLength(1)
       expect(state.accounts[0].id).toBe(mockAccount.id)
     })
@@ -200,88 +196,6 @@ describe('account slice', () => {
       expect(state.accounts[0].name).toBe('Updated Name')
       expect(state.accounts[1]).toEqual(account2)
       expect(state.summary).toEqual(newSummary)
-    })
-  })
-
-  describe('createTransaction.fulfilled', () => {
-    it('applyAccountUpdate updates matching accounts and summary', () => {
-      const updatedAccount = createMockAccount({
-        id: mockAccount.id,
-        name: 'After Transaction',
-      })
-      let state = accountReducer(
-        undefined,
-        fetchAccounts.fulfilled(
-          { list: [mockAccount], summary: mockAccountSummary },
-          'req-1',
-          undefined
-        )
-      )
-      const action = createTransaction.fulfilled(
-        {
-          transaction: {} as never,
-          insert: true,
-          accounts: [updatedAccount],
-          summary: mockAccountSummary,
-        },
-        'req-1',
-        {} as never
-      )
-      state = accountReducer(state, action)
-      expect(state.accounts[0].name).toBe('After Transaction')
-      expect(state.summary).toEqual(mockAccountSummary)
-    })
-
-    it('handles empty accounts array and null summary leaves summary unchanged', () => {
-      let state = accountReducer(
-        undefined,
-        fetchAccounts.fulfilled(
-          { list: [mockAccount], summary: mockAccountSummary },
-          'req-1',
-          undefined
-        )
-      )
-      const action = createTransaction.fulfilled(
-        {
-          transaction: {} as never,
-          insert: false,
-          accounts: [],
-          summary: null as never,
-        },
-        'req-1',
-        {} as never
-      )
-      state = accountReducer(state, action)
-      expect(state.accounts[0]).toEqual(mockAccount)
-      expect(state.summary).toEqual(mockAccountSummary)
-    })
-  })
-
-  describe('updateTransaction.fulfilled', () => {
-    it('applyAccountUpdate updates matching accounts and summary', () => {
-      const updatedAccount = createMockAccount({
-        id: mockAccount.id,
-        name: 'After Update',
-      })
-      let state = accountReducer(
-        undefined,
-        fetchAccounts.fulfilled(
-          { list: [mockAccount], summary: mockAccountSummary },
-          'req-1',
-          undefined
-        )
-      )
-      const action = updateTransaction.fulfilled(
-        {
-          transaction: {} as never,
-          accounts: [updatedAccount],
-          summary: mockAccountSummary,
-        },
-        'req-1',
-        {} as never
-      )
-      state = accountReducer(state, action)
-      expect(state.accounts[0].name).toBe('After Update')
     })
   })
 

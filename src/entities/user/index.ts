@@ -1,5 +1,4 @@
 export { UserAvatar } from './components/user-avatar'
-export { userApi } from './model/api'
 export { setUser, clearUser, default as userReducer } from './model/user.slice'
 export { selectUser } from './model/selectors'
 export { userRepository } from './local/repository'

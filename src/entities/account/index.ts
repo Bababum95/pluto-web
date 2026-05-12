@@ -12,6 +12,7 @@ export {
   toggleExcluded,
   setAccounts,
   addAccount,
+  updateAccountInState,
   setSummary,
   removeAccount,
 } from './model/account.slice'

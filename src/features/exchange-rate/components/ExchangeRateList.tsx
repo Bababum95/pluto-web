@@ -25,7 +25,7 @@ import {
   selectExchangeRates,
   selectExchangeRatesStatus,
 } from '@/entities/exchange-rate'
-import { selectCurrency } from '@/store/slices/settings'
+import { selectCurrency } from '@/entities/settings'
 import type { RateDto } from '@/entities/exchange-rate'
 
 function formatRate(rate: number | undefined | null): string {

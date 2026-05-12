@@ -9,12 +9,12 @@ import * as Tags from '@/lib/api/generated/tags/tags'
 import * as Transactions from '@/lib/api/generated/transactions/transactions'
 import * as Transfers from '@/lib/api/generated/transfers/transfers'
 import * as Users from '@/lib/api/generated/users/users'
-import { userApi } from '@/entities/user'
 import { settingsApi } from '@/entities/settings'
 import { tagApi } from '@/entities/tag'
 import { categoryApi } from '@/entities/category'
 import { accountApi } from '@/entities/account'
 import { exchangeRateApi } from '@/entities/exchange-rate'
+import { changePasswordApi } from '@/features/change-password'
 import { queryClient } from '@/lib/api'
 import {
   mockAccount,
@@ -216,7 +216,7 @@ describe('feature api clients (Orval-generated)', () => {
     await settingsApi.get()
     await settingsApi.update({ account: 'account-1' })
 
-    await userApi.changePassword('user-1', {
+    await changePasswordApi.changePassword('user-1', {
       currentPassword: 'old-password',
       newPassword: 'new-password',
     })

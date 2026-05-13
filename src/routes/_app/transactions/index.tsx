@@ -7,7 +7,7 @@ import { Invoice01Icon, PlusSignIcon } from '@hugeicons/core-free-icons'
 import dayjs from '@/shared/lib/date/dayjs'
 import { AppLayout } from '@/components/AppLayout'
 import { TransactionTypeTabs } from '@/features/transaction-type'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import {
   selectTransactionsByDay,
   selectTransactionsStatus,

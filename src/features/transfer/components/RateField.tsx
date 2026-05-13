@@ -7,7 +7,7 @@ import { sanitizeDecimal, DEFAULT_CURRENCY } from '@/features/money'
 import { stringIsValid } from '@/shared/lib'
 import { selectAccounts } from '@/entities/account'
 import { selectExchangeRates } from '@/entities/exchange-rate'
-import { useAppSelector } from '@/store/hooks'
+import { useAppSelector } from '@/app/store/hooks'
 import type { AccountDto } from '@/features/account/types'
 
 import { calculateTransferRate } from '../lib/calculateTransferRate'

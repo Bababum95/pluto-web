@@ -1,14 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import { waitFor } from '@testing-library/react'
 
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import {
   setTimeRange,
   setTimeRangeIndex,
   increaseTimeRangeIndex,
   decreaseTimeRangeIndex,
-} from '@/store/slices/time-range'
-import { setTransactionType } from '@/store/slices/transaction-type'
+} from '@/app/store/slices/time-range'
+import { setTransactionType } from '@/app/store/slices/transaction-type'
 import { mockTransaction } from '@/testing/data/transaction'
 import { mockTransfer } from '@/testing/data/transfer'
 import { getTimeRangeBounds } from '@/features/time-range'

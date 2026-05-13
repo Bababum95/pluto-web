@@ -4,7 +4,7 @@ import { http, HttpResponse } from 'msw'
 
 import dayjs from '@/shared/lib/date/dayjs'
 import { server } from '@/testing/server'
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import {
   createTransaction,
   deleteTransaction,

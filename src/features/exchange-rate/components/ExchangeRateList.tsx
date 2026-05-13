@@ -20,7 +20,7 @@ import {
   InputGroupInput,
 } from '@/shared/ui/input-group'
 import { Spinner } from '@/shared/ui/spinner'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import {
   selectExchangeRates,
   selectExchangeRatesStatus,

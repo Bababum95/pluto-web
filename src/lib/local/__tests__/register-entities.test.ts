@@ -8,7 +8,7 @@ import { settingsControllerFindOne } from '@/shared/api/generated/settings/setti
 import { tagControllerFindAll } from '@/shared/api/generated/tags/tags'
 import { accountControllerFindAll } from '@/shared/api/generated/accounts/accounts'
 import { accountRepository } from '@/entities/account/local'
-import { store } from '@/store'
+import { store } from '@/app/store'
 import { setAccounts, setSummary } from '@/entities/account'
 import {
   mockAccountListResponse,

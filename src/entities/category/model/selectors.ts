@@ -1,4 +1,4 @@
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 import type { CategoryDto } from './types'
 
 export const selectCategories = (state: RootState): CategoryDto[] =>

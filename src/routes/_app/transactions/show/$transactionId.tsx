@@ -24,7 +24,7 @@ import {
 } from '@/shared/ui/dropdown-menu'
 import { Spinner } from '@/shared/ui/spinner'
 import { formatBalance } from '@/features/money'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import {
   deleteTransaction,
   selectCurrentTransaction,

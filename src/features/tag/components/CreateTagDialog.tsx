@@ -15,7 +15,7 @@ import {
 } from '@/shared/ui/dialog'
 import { Button } from '@/shared/ui/button'
 import { FormField } from '@/shared/ui/forms/form-field'
-import { useAppDispatch } from '@/store'
+import { useAppDispatch } from '@/app/store'
 import { createTag } from '@/entities/tag'
 import type { TagDto } from '@/entities/tag'
 import { MAX_TAG_NAME_LENGTH } from '../constants'

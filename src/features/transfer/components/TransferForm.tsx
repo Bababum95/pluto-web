@@ -21,7 +21,7 @@ import {
 import { SelectAccount } from '@/features/account'
 import { MoneyField, DEFAULT_CURRENCY, sanitizeDecimal } from '@/features/money'
 import { getFormFieldErrorMessage } from '@/shared/lib/react/form/getFormFieldErrorMessage'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import { selectAccounts } from '@/entities/account'
 import { selectExchangeRates } from '@/entities/exchange-rate'
 import type { AccountDto } from '@/features/account/types'

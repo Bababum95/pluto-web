@@ -18,9 +18,9 @@ import {
   selectCategoriesStatus,
   reorderCategories,
 } from '@/entities/category'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import { Spinner } from '@/shared/ui/spinner'
-import { selectTransactionType } from '@/store/slices/transaction-type'
+import { selectTransactionType } from '@/app/store/slices/transaction-type'
 
 const CategoriesPage = () => {
   const { t } = useTranslation()

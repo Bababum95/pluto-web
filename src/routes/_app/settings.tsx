@@ -27,7 +27,7 @@ import { AppearanceDrawer, useAppearance } from '@/features/appearance'
 import { AccountDrawer } from '@/features/account'
 import { useTranslation } from '@/shared/lib/i18n'
 import { selectDefaultAccount } from '@/entities/settings'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import { setDefaultAccount } from '@/features/settings'
 import type { SupportedLanguages } from '@/shared/lib/i18n/types'
 

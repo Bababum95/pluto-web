@@ -7,7 +7,7 @@ import { Field, FieldError, FieldLabel } from '@/shared/ui/field'
 import { Button } from '@/shared/ui/button'
 import { selectAccountById } from '@/entities/account'
 import { cn } from '@/shared/lib'
-import { useAppSelector } from '@/store/hooks'
+import { useAppSelector } from '@/app/store/hooks'
 
 import { AccountCard } from './AccountCard'
 import { AccountDrawer } from './AccountDrawer'

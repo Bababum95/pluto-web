@@ -15,7 +15,7 @@ import {
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import type { CategoryDto, CategoryFormValues } from './types'
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 type CategoryState = {
   categories: CategoryDto[]

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Provider } from 'react-redux'
 
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import {
   createMockCurrency,
   createMockExchangeRate,

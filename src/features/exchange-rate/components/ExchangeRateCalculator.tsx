@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import {
   selectExchangeRates,
   selectExchangeRatesStatus,

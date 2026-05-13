@@ -11,7 +11,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 
 import { AppLayout } from '@/components/AppLayout'
 import { AccountForm } from '@/features/account'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import {
   selectAccounts,
   selectAccountsStatus,

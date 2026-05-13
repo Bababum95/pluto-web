@@ -17,7 +17,7 @@ import {
 import { Icon } from '@/shared/ui/icon'
 import { Balance } from '@/features/money'
 import { useTranslation } from '@/shared/lib/i18n'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import { selectAccounts } from '@/entities/account'
 
 type Props = {

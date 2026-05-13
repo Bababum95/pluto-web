@@ -16,7 +16,7 @@ import {
 import { accountRepository } from '@/entities/account/local'
 import { exchangeRateRepository } from '@/entities/exchange-rate/local'
 import { accountApi } from '@/entities/account'
-import { store } from '@/store'
+import { store } from '@/app/store'
 import {
   setAccounts,
   addAccount,

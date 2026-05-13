@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 import { setCurrent } from '../async-thunks/setCurrent'
 

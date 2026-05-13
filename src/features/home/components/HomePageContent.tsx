@@ -8,7 +8,7 @@ import { Item, ItemActions, ItemContent, ItemTitle } from '@/shared/ui/item'
 import { Icon } from '@/shared/ui/icon'
 import { formatBalance, toDecimal } from '@/features/money'
 import { TimeRangeSwitcher } from '@/features/time-range'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import {
   selectTransactionsSummary,
   selectTransactionsByCategory,

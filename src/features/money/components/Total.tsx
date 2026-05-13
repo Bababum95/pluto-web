@@ -4,7 +4,7 @@ import type { FC } from 'react'
 
 import { cn } from '@/shared/lib'
 import { selectAccountsStatus, selectAccountsSummary } from '@/entities/account'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 
 import { Balance } from './Balance'
 

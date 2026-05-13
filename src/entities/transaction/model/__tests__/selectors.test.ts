@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
 
-vi.mock('@/store', () => ({
+vi.mock('@/app/store', () => ({
   createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
 }))
 
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 import {
   selectTransactionsByCategory,
   selectTransactionsByDay,

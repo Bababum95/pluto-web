@@ -12,7 +12,7 @@ import { TagPicker } from '@/features/tag'
 import { DatePicker } from '@/shared/ui/date-picker'
 import { MoneyField } from '@/features/money/components/MoneyField'
 import { TransactionTypeToggle } from '@/features/transaction-type'
-import { useAppSelector } from '@/store/hooks'
+import { useAppSelector } from '@/app/store/hooks'
 import { selectAccounts } from '@/entities/account'
 import { getFormFieldErrorMessage } from '@/shared/lib/react/form/getFormFieldErrorMessage'
 

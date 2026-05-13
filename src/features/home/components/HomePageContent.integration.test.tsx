@@ -5,9 +5,9 @@ import { http, HttpResponse } from 'msw'
 
 import { renderWithProviders } from '@/testing/render'
 import { server } from '@/testing/server'
-import { initApp } from '@/store/slices/app'
+import { initApp } from '@/app/store/slices/app'
 import { selectTransactionsByCategory } from '@/entities/transaction'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import { mockCategory, mockTransaction } from '@/testing/data'
 
 /** Minimal component that loads app data and displays first category (no router/Link). */

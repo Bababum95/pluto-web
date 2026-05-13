@@ -5,7 +5,7 @@ import { http, HttpResponse } from 'msw'
 
 import { renderWithProviders } from '@/testing/render'
 import { server } from '@/testing/server'
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import { createTransfer } from '@/entities/transfer'
 import { TransferForm } from '@/features/transfer/components/TransferForm'
 import { mockAccount, mockAccountSummary } from '@/testing/data/account'

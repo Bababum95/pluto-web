@@ -3,7 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { type FC, useRef } from 'react'
 
 import { selectCurrency } from '@/entities/settings'
-import { useAppSelector } from '@/store/hooks'
+import { useAppSelector } from '@/app/store/hooks'
 import { cn } from '@/shared/lib'
 import { FieldError, Field, FieldLabel } from '@/shared/ui/field'
 import { Button } from '@/shared/ui/button'

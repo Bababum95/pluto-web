@@ -23,7 +23,7 @@ import {
   DialogDescription,
 } from '@/shared/ui/dialog'
 import { TransactionForm } from '@/features/transaction/components/TransactionForm'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import {
   deleteTransaction,
   selectCurrentTransaction,

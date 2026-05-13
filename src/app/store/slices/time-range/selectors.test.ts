@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 import {
   selectTimeRangeState,
   selectTimeRangeType,

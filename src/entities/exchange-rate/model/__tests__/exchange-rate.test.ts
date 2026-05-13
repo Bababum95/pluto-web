@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from 'vitest'
 
-vi.mock('@/store', () => ({
+vi.mock('@/app/store', () => ({
   createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
 }))
 
 import exchangeRateReducer, { fetchExchangeRates } from '../exchange-rate.slice'
 import { selectExchangeRates, selectExchangeRatesStatus } from '../selectors'
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 import {
   mockExchangeRate,
   createMockExchangeRate,

@@ -4,7 +4,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 
 import { Icon } from '@/shared/ui/icon'
 import { Separator } from '@/shared/ui/separator'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import { selectAccountById } from '@/entities/account'
 import { Balance, toDecimal } from '@/features/money'
 

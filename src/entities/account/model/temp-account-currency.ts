@@ -1,6 +1,6 @@
 import type { MoneyViewCurrencyDto } from '@/shared/api/generated/model'
 
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 /**
  * Resolve currency fields for an optimistic (temp) account before the server

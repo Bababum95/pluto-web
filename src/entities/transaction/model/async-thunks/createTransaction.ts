@@ -11,7 +11,7 @@ import { categoryRepository } from '@/entities/category'
 import { tagRepository } from '@/entities/tag'
 import { transactionApi } from '../api'
 import type { TransactionFormType } from '../dto-types'
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 import {
   transactionRepository,

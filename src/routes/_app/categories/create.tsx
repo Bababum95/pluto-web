@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { AppLayout } from '@/components/AppLayout'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { CategoryForm } from '@/features/category'
-import { useAppDispatch } from '@/store'
+import { useAppDispatch } from '@/app/store'
 import {
   createCategory,
   DEFAULT_CATEGORY_FORM_VALUES,

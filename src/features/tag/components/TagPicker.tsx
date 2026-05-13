@@ -3,7 +3,7 @@ import type { FC } from 'react'
 
 import { Field, FieldLabel } from '@/shared/ui/field'
 import { Badge } from '@/shared/ui/badge'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import { selectTags } from '@/entities/tag'
 
 import { CreateTagDialog } from './CreateTagDialog'

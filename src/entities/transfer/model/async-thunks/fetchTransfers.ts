@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { transferApi } from '../api'
-import { selectTimeRangeFormatted } from '@/store/slices/time-range'
-import type { RootState } from '@/store'
+import { selectTimeRangeFormatted } from '@/app/store/slices/time-range'
+import type { RootState } from '@/app/store'
 
 import { transferRepository } from '../../local'
 

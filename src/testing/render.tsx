@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, type RenderOptions } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
 
-import { createStore, type RootState } from '@/store'
+import { createStore, type RootState } from '@/app/store'
 import { AuthProvider } from '@/features/auth'
 
 type PreloadedState = Partial<RootState>

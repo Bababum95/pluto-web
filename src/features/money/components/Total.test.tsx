@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { screen } from '@testing-library/react'
 
 import { renderWithProviders } from '@/testing/render'
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import { Total } from './Total'
 import { mockAccountSummary } from '@/testing/data/account'
 import { mockCurrency } from '@/testing/data/currency'

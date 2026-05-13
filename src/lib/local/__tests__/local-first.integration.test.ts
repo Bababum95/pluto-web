@@ -42,7 +42,7 @@ import type {
   CreateTransferDto,
 } from '@/shared/api/generated/model'
 import * as syncUtils from '@/shared/lib/local-storage/sync-utils'
-import { store } from '@/store'
+import { store } from '@/app/store'
 import { clearTransactions } from '@/entities/transaction'
 import { clearTransfers } from '@/entities/transfer'
 

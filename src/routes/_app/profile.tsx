@@ -42,7 +42,7 @@ import {
 } from '@/shared/ui/drawer'
 import { PasswordFormField } from '@/shared/ui/forms/password-form-field'
 import { selectUser } from '@/entities/user'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 
 const ProfilePage = () => {
   const { t } = useTranslation()

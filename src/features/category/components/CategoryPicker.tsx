@@ -8,9 +8,9 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAppSelector } from '@/store/hooks'
+import { useAppSelector } from '@/app/store/hooks'
 import { selectCategories } from '@/entities/category'
-import { selectTransactionType } from '@/store/slices/transaction-type'
+import { selectTransactionType } from '@/app/store/slices/transaction-type'
 import { Field, FieldError, FieldLabel } from '@/shared/ui/field'
 
 import { CategoryDrawer } from './CategoryDrawer'

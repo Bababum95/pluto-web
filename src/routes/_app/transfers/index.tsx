@@ -18,7 +18,7 @@ import {
 import { ItemGroup } from '@/shared/ui/item'
 import { Spinner } from '@/shared/ui/spinner'
 import { TimeRangeSwitcher } from '@/features/time-range/components/TimeRangeSwitcher'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 import {
   selectTransfersByDay,
   selectTransfersStatus,

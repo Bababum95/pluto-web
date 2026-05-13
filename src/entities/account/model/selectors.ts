@@ -1,4 +1,4 @@
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 export const selectAccounts = (state: RootState) => state.account.accounts
 export const selectAccountById = (state: RootState, id?: string) => {

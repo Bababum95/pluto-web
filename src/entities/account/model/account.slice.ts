@@ -8,7 +8,7 @@ import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
 import type { Status } from '@/lib/types'
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 import { accountRepository } from '../local'
 import {

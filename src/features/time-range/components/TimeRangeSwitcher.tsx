@@ -14,7 +14,7 @@ import {
 } from '@/shared/ui/toggle-group/toggle-group'
 import { Button } from '@/shared/ui/button'
 import { useTranslation } from '@/shared/lib/i18n'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import {
   decreaseTimeRangeIndex,
   increaseTimeRangeIndex,
@@ -22,7 +22,7 @@ import {
   setTimeRangeIndex,
   selectTimeRangeState,
   type TimeRangeState,
-} from '@/store/slices/time-range'
+} from '@/app/store/slices/time-range'
 import { cn } from '@/shared/lib'
 import { DatePickerRange } from '@/shared/ui/date-picker-range'
 

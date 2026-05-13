@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 import { clearUser, selectUser, setUser, userRepository } from '@/entities/user'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import {
   authControllerGetProfile,
   authControllerLogin,

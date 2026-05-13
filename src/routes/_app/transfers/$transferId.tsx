@@ -5,7 +5,7 @@ import { Delete01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
 import { AppLayout } from '@/components/AppLayout'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import { selectTransferById, deleteTransfer } from '@/entities/transfer'
 import { fetchAccounts } from '@/entities/account'
 import {

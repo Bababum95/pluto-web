@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { transactionApi } from '../api'
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 import { transactionRepository } from '../../local'
 import { selectTransactionById } from '../selectors'

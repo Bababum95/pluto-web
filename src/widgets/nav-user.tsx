@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 
 import { selectUser, UserAvatar } from '@/entities/user'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 
 export const NavUser = () => {
   const user = useAppSelector(selectUser)

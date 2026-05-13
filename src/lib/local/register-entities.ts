@@ -22,7 +22,22 @@ import {
   addAccount,
   removeAccount,
   setSummary,
+  updateAccountInState,
 } from '@/entities/account'
+import { transactionRepository } from '@/entities/transaction/local'
+import { transferRepository } from '@/entities/transfer/local'
+import { transactionApi } from '@/features/transaction'
+import { transferApi } from '@/features/transfer'
+import { transactionControllerFindAll } from '@/lib/api/generated/transactions/transactions'
+import { transferControllerFindAll } from '@/lib/api/generated/transfers/transfers'
+import type {
+  CreateTransactionDto,
+  CreateTransferDto,
+  UpdateTransactionDto,
+  UpdateTransferDto,
+} from '@/lib/api/generated/model'
+import { addTransaction, removeTransaction } from '@/store/slices/transaction'
+import { addTransfer, removeTransfer } from '@/store/slices/transfer'
 import { authControllerGetProfile } from '@/lib/api/generated/auth/auth'
 import { settingsControllerFindOne } from '@/lib/api/generated/settings/settings'
 import { tagControllerFindAll } from '@/lib/api/generated/tags/tags'
@@ -47,6 +62,15 @@ let isRegistered = false
 export function registerSyncEntities(): void {
   if (isRegistered) return
   isRegistered = true
+
+  const refreshAccountsFromApi = async (): Promise<void> => {
+    const response = await accountControllerFindAll()
+    await accountRepository.syncFromApi(response.list || [])
+    store.dispatch(setAccounts(response.list || []))
+    if (response.summary) {
+      store.dispatch(setSummary(response.summary))
+    }
+  }
 
   // User entity sync
   syncCoordinator.registerEntity('user', async () => {
@@ -284,6 +308,129 @@ export function registerSyncEntities(): void {
       await exchangeRateRepository.syncFromApi(apiRates)
     } catch (error) {
       console.error('ExchangeRate sync failed:', error)
+      throw error
+    }
+  })
+
+  // Transaction entity sync
+  syncCoordinator.registerEntity('transaction', async () => {
+    try {
+      const apiTransactions = await transactionControllerFindAll()
+      await transactionRepository.syncFromApi(apiTransactions)
+    } catch (error) {
+      console.error('Transaction sync failed:', error)
+      throw error
+    }
+  })
+
+  // Transfer entity sync
+  syncCoordinator.registerEntity('transfer', async () => {
+    try {
+      const apiTransfers = await transferControllerFindAll()
+      await transferRepository.syncFromApi(apiTransfers)
+    } catch (error) {
+      console.error('Transfer sync failed:', error)
+      throw error
+    }
+  })
+
+  outboxProcessor.registerHandler('transaction', async (operation) => {
+    try {
+      switch (operation.action) {
+        case 'create': {
+          const createdResponse = await transactionApi.create(
+            operation.payload as CreateTransactionDto
+          )
+
+          if (operation.entityId.startsWith('temp-')) {
+            await transactionRepository.delete(operation.entityId)
+            store.dispatch(removeTransaction(operation.entityId))
+          }
+
+          await transactionRepository.save(createdResponse.transaction)
+          store.dispatch(addTransaction(createdResponse.transaction))
+          if (createdResponse.account) {
+            store.dispatch(updateAccountInState(createdResponse.account))
+          }
+          if (createdResponse.summary) {
+            store.dispatch(setSummary(createdResponse.summary))
+          }
+          break
+        }
+        case 'update': {
+          const payload = operation.payload as {
+            data: UpdateTransactionDto
+            params?: Record<string, string>
+          }
+          const updated = await transactionApi.update(
+            operation.entityId,
+            payload.data,
+            payload.params
+          )
+
+          await transactionRepository.save(updated.transaction)
+          store.dispatch(addTransaction(updated.transaction))
+          if (updated.account) {
+            store.dispatch(updateAccountInState(updated.account))
+          }
+          if (updated.summary) {
+            store.dispatch(setSummary(updated.summary))
+          }
+          break
+        }
+        case 'delete': {
+          await transactionApi.delete(operation.entityId)
+          await refreshAccountsFromApi()
+          break
+        }
+        default:
+          throw new Error(`Unknown transaction action: ${operation.action}`)
+      }
+    } catch (error) {
+      console.error(`Transaction ${operation.action} operation failed:`, error)
+      throw error
+    }
+  })
+
+  outboxProcessor.registerHandler('transfer', async (operation) => {
+    try {
+      switch (operation.action) {
+        case 'create': {
+          const created = await transferApi.create(
+            operation.payload as CreateTransferDto
+          )
+
+          if (operation.entityId.startsWith('temp-')) {
+            await transferRepository.delete(operation.entityId)
+            store.dispatch(removeTransfer(operation.entityId))
+          }
+
+          await transferRepository.save(created)
+          store.dispatch(addTransfer(created))
+          await refreshAccountsFromApi()
+          break
+        }
+        case 'update': {
+          const updated = await transferApi.update(
+            operation.entityId,
+            operation.payload as UpdateTransferDto
+          )
+
+          await transferRepository.save(updated)
+          store.dispatch(addTransfer(updated))
+          await refreshAccountsFromApi()
+          break
+        }
+        case 'delete': {
+          await transferApi.delete(operation.entityId)
+          await refreshAccountsFromApi()
+          break
+        }
+        default:
+          throw new Error(`Unknown transfer action: ${operation.action}`)
+      }
+    } catch (error) {
+      console.error(`Transfer ${operation.action} operation failed:`, error)
       throw error
     }
   })

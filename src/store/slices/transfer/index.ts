@@ -18,7 +18,12 @@ export const transferSlice = createSlice({
       state.transfers = action.payload
     },
     addTransfer: (state, action: PayloadAction<TransferDto>) => {
-      state.transfers.push(action.payload)
+      const exists = state.transfers.find((t) => t.id === action.payload.id)
+      if (exists) {
+        Object.assign(exists, action.payload)
+      } else {
+        state.transfers.push(action.payload)
+      }
     },
     removeTransfer: (state, action: PayloadAction<string>) => {
       state.transfers = state.transfers.filter((t) => t.id !== action.payload)

@@ -58,7 +58,9 @@ describe('registerSyncEntities', () => {
     expect(registerSpy).toHaveBeenCalledWith('category', expect.any(Function))
     expect(registerSpy).toHaveBeenCalledWith('account', expect.any(Function))
     expect(registerSpy).toHaveBeenCalledWith('exchangeRate', expect.any(Function))
-    expect(registerSpy).toHaveBeenCalledTimes(6)
+    expect(registerSpy).toHaveBeenCalledWith('transaction', expect.any(Function))
+    expect(registerSpy).toHaveBeenCalledWith('transfer', expect.any(Function))
+    expect(registerSpy).toHaveBeenCalledTimes(8)
   })
 
   it('should be idempotent - multiple calls should only register once', () => {

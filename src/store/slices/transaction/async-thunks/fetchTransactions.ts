@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
+import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { transactionRepository } from '@/entities/transaction/local'
 import { transactionApi } from '@/features/transaction'
 import type { RootState } from '@/store'
 
@@ -11,12 +13,51 @@ let abortController: AbortController | null = null
 
 export const fetchTransactions = createAsyncThunk(
   'transaction/fetchTransactions',
-  (_payload: FetchTransactionsPayload | undefined, { getState }) => {
+  async (_payload: FetchTransactionsPayload | undefined, { getState }) => {
     abortController?.abort()
     abortController = new AbortController()
+    const signal = abortController.signal
 
     const rootState = getState() as RootState
     const { range } = rootState.timeRange
+
+    if (LOCAL_DATA_MODE === 'dexie') {
+      const type = rootState.transactionType.transactionType
+      const localList = await transactionRepository.getByDateRangeAndType(
+        range.from,
+        range.to,
+        type
+      )
+
+      if (localList.length > 0) {
+        transactionApi
+          .list(
+            {
+              type,
+              from: range.from,
+              to: range.to,
+            },
+            { signal }
+          )
+          .then((apiList) => transactionRepository.syncFromApi(apiList))
+          .catch((err) =>
+            console.warn('Background transaction sync failed:', err)
+          )
+
+        return localList
+      }
+
+      const apiList = await transactionApi.list(
+        {
+          type,
+          from: range.from,
+          to: range.to,
+        },
+        { signal }
+      )
+      await transactionRepository.syncFromApi(apiList)
+      return apiList
+    }
 
     return transactionApi.list(
       {
@@ -24,7 +65,7 @@ export const fetchTransactions = createAsyncThunk(
         from: range.from,
         to: range.to,
       },
-      { signal: abortController.signal }
+      { signal }
     )
   }
 )

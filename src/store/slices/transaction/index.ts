@@ -31,7 +31,12 @@ export const transactionSlice = createSlice({
       state.transactions = action.payload
     },
     addTransaction: (state, action: PayloadAction<TransactionDto>) => {
-      state.transactions.push(action.payload)
+      const exists = state.transactions.find((t) => t.id === action.payload.id)
+      if (exists) {
+        Object.assign(exists, action.payload)
+      } else {
+        state.transactions.push(action.payload)
+      }
     },
     updateTransactionLocal: (state, action: PayloadAction<TransactionDto>) => {
       const idx = state.transactions.findIndex(

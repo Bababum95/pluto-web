@@ -1,7 +1,7 @@
 # Local-First Implementation Roadmap
 
 **Status:** In Progress  
-**Last Updated:** 2026-05-11
+**Last Updated:** 2026-05-12
 
 ## Overview
 
@@ -161,133 +161,91 @@ This document tracks the implementation progress of local-first architecture acr
   - Clean separation of concerns (model/local/api)
   - No changes needed
 
-### 🔜 Phase 3: Transactions & Transfers
+### ✅ Phase 3: Transactions & Transfers (Core local-first complete)
 
 #### Transaction Entity
 
 **Local-First Implementation:**
-- [ ] Schema definition (`entities/transaction/local/schema.ts`)
+- [x] Schema definition (`entities/transaction/local/schema.ts`)
   - TransactionDto payload
   - Sync metadata (updatedAt, syncedAt, isDirty)
-  - Indexed fields: accountId, date, type
-- [ ] Repository (`entities/transaction/local/repository.ts`)
+  - Denormalized indexes: accountId, date, type
+- [x] Repository (`entities/transaction/local/repository.ts`)
   - `getById(id)` - single transaction
   - `getAll()` - all transactions
   - `getByAccount(accountId)` - filter by account
   - `getByDateRange(from, to)` - filter by date
-  - `save(transaction)` - upsert single
+  - `getByDateRangeAndType(from, to, type)` - date range + type tab
+  - `save(transaction)` - upsert single (marks temp IDs dirty)
   - `saveMany(transactions)` - bulk upsert
   - `update(id, partial)` - partial update with dirty flag
   - `delete(id)` - remove transaction
-  - `syncFromApi(transactions)` - sync from server
+  - `syncFromApi(transactions)` - sync from server (skips dirty rows)
   - `clear()` - clear all transactions
-- [ ] Outbox helpers (`entities/transaction/local/outbox-helpers.ts`)
-  - `enqueueCreate(transaction)`
-  - `enqueueUpdate(id, data)`
-  - `enqueueDelete(id)`
-- [ ] Dexie table (v5)
-  - Add `transactions: 'id, updatedAt, accountId, date'`
-- [ ] Sync handler registration
-  - Fetch from API: `transactionControllerFindAll()`
-  - Sync to local repository
-- [ ] Outbox handler registration
-  - create → `transactionApi.create()`
-  - update → `transactionApi.update()`
-  - delete → `transactionApi.delete()`
-  - Handle account balance updates
+- [x] Outbox helpers (`entities/transaction/local/outbox-helpers.ts`)
+  - `enqueueCreateTransaction(tempId, data)`
+  - `enqueueUpdateTransaction(id, data, params?)`
+  - `enqueueDeleteTransaction(id)`
+- [x] Dexie table (v5): `transactions: 'id, updatedAt, accountId, date, type'`
+- [x] Sync handler registration (`register-entities.ts`)
+  - `transactionControllerFindAll()` → `transactionRepository.syncFromApi`
+- [x] Outbox handler registration
+  - create → `transactionApi.create()` with temp ID reconciliation
+  - update → `transactionApi.update()` + account/summary dispatch
+  - delete → `transactionApi.delete()` + refresh accounts list/summary from API
 
-**FSD Architecture Refactoring:**
-- [ ] Review and refactor Redux store structure
-  - Ensure proper slice organization
-  - Validate selectors follow FSD patterns
-  - Check for proper separation of concerns
-- [ ] Review and refactor feature layer
-  - Validate feature boundaries
-  - Check for proper use of entities layer
-  - Ensure no cross-feature dependencies
-  - Review UI components structure
-- [ ] Update async thunks
-  - Migrate to local repository pattern
-  - Implement optimistic updates with outbox
-  - Handle temp IDs for created transactions
-  - Update account balances locally
-- [ ] Tests
-  - Repository CRUD operations
-  - Date range filtering
-  - Sync from API
-  - Outbox helpers
-  - Redux integration tests
+**FSD / Redux follow-ups:**
+- [ ] Optional: move `store/slices/transaction` into `entities/transaction/model`
+- [x] Async thunks use local repository + outbox in dexie mode
+- [x] Repository unit tests (`entities/transaction/local/__tests__/repository.test.ts`)
 
 #### Transfer Entity
 
 **Local-First Implementation:**
-- [ ] Schema definition (`entities/transfer/local/schema.ts`)
+- [x] Schema definition (`entities/transfer/local/schema.ts`)
   - TransferDto payload
   - Sync metadata (updatedAt, syncedAt, isDirty)
-  - Indexed fields: fromAccountId, toAccountId, date
-- [ ] Repository (`entities/transfer/local/repository.ts`)
+  - Denormalized indexes: fromAccountId, toAccountId, createdAt
+- [x] Repository (`entities/transfer/local/repository.ts`)
   - `getById(id)` - single transfer
   - `getAll()` - all transfers
-  - `getByAccount(accountId)` - filter by account
-  - `save(transfer)` - upsert single
+  - `getByAccount(accountId)` - filter by account (from OR to)
+  - `getByCreatedRange(from?, to?)` - calendar-day filter for the transfers list
+  - `save(transfer)` - upsert single (marks temp IDs dirty)
   - `saveMany(transfers)` - bulk upsert
   - `update(id, partial)` - partial update with dirty flag
   - `delete(id)` - remove transfer
-  - `syncFromApi(transfers)` - sync from server
+  - `syncFromApi(transfers)` - sync from server (skips dirty rows)
   - `clear()` - clear all transfers
-- [ ] Outbox helpers (`entities/transfer/local/outbox-helpers.ts`)
-  - `enqueueCreate(transfer)`
-  - `enqueueUpdate(id, data)`
-  - `enqueueDelete(id)`
-- [ ] Dexie table (v5)
-  - Add `transfers: 'id, updatedAt, fromAccountId, toAccountId, date'`
-- [ ] Sync handler registration
-  - Fetch from API: `transferControllerFindAll()`
-  - Sync to local repository
-- [ ] Outbox handler registration
-  - create → `transferApi.create()`
-  - update → `transferApi.update()`
-  - delete → `transferApi.delete()`
-  - Handle account balance updates
+- [x] Outbox helpers (`entities/transfer/local/outbox-helpers.ts`)
+  - `enqueueCreateTransfer(tempId, data)`
+  - `enqueueUpdateTransfer(id, data)`
+  - `enqueueDeleteTransfer(id)`
+- [x] Dexie table (v5): `transfers: 'id, updatedAt, fromAccountId, toAccountId, createdAt'`
+- [x] Sync handler registration
+  - `transferControllerFindAll()` → `transferRepository.syncFromApi`
+- [x] Outbox handler registration
+  - create/update/delete → transfer API + `refreshAccountsFromApi()` for balances
 
-**FSD Architecture Refactoring:**
-- [ ] Review and refactor Redux store structure
-  - Ensure proper slice organization
-  - Validate selectors follow FSD patterns
-  - Check for proper separation of concerns
-- [ ] Review and refactor feature layer
-  - Validate feature boundaries
-  - Check for proper use of entities layer
-  - Ensure no cross-feature dependencies
-  - Review UI components structure
-- [ ] Update async thunks
-  - Migrate to local repository pattern
-  - Implement optimistic updates with outbox
-  - Handle temp IDs for created transfers
-  - Update account balances locally
-- [ ] Tests
-  - Repository CRUD operations
-  - Account filtering
-  - Sync from API
-  - Outbox helpers
-  - Redux integration tests
+**FSD / Redux follow-ups:**
+- [ ] Optional: move `store/slices/transfer` into `entities/transfer/model`
+- [x] Async thunks use local repository + outbox in dexie mode
+- [x] Repository unit tests (`entities/transfer/local/__tests__/repository.test.ts`)
 
 ### 📝 Phase 4: Testing & Documentation
 
 #### Integration Tests
 
-- [ ] End-to-end sync flow tests
-  - Login → local data load → API sync
-  - Offline operations → online sync
-  - Conflict resolution scenarios
-- [ ] Outbox processing tests
-  - Retry logic with exponential backoff
-  - Failed operation handling
-  - Cleanup of old operations
-- [ ] Multi-entity sync tests
-  - Account + Transaction consistency
-  - Transfer + Account balance updates
-  - Category/Tag references in transactions
+- [x] End-to-end sync flow tests (`src/lib/local/__tests__/local-first.integration.test.ts`)
+  - Session + `syncCoordinator.syncNow()` → user/transactions written to Dexie (MSW-backed API)
+  - Outbox create → `processPending()` flush after “online” (same file, outbox section)
+  - Dirty local transaction preserved when API list is merged (`syncFromApi` skip)
+- [x] Outbox processing tests (same integration file)
+  - Backoff wired: `calculateBackoff(attempt)` invoked after failed attempt (delay mocked to `0` in setup for speed)
+  - Max attempts → `failed` status; full sync runs `cleanup` for old `done` rows
+- [x] Multi-entity sync tests (same integration file)
+  - Transaction row keeps category/tag IDs from API payload
+  - Transfer outbox create → persisted transfer + accounts refreshed in Dexie
 
 #### Documentation Updates
 
@@ -455,11 +413,10 @@ describe("entityRepository", () => {
 - ExchangeRate entity (read-only reference data)
 - Testing and validation
 
-### Phase 3: Transactions (Next)
+### Phase 3: Transactions & Transfers (Completed — core local-first)
 
-- Transaction entity (main user data)
-- Transfer entity (account-to-account operations)
-- Performance optimization
+- Transaction + Transfer entities (IndexedDB v5, sync + outbox)
+- Optional next: slice migration under `entities/*/model`, integration tests (Phase 4)
 
 ### Phase 4: Polish (Final)
 

@@ -7,7 +7,7 @@
  */
 
 export interface LoginDto {
-  email: string;
+  email: string
   /** @minLength 6 */
-  password: string;
+  password: string
 }

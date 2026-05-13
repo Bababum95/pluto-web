@@ -1,7 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 
-import { Field, FieldLabel, FieldDescription, FieldError, FieldGroup } from './field'
+import {
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+} from './field'
 
 describe('Field', () => {
   it('renders as a group', () => {
@@ -84,9 +90,6 @@ describe('FieldError', () => {
 describe('FieldGroup', () => {
   it('renders with data-slot', () => {
     render(<FieldGroup data-testid="fg">Fields</FieldGroup>)
-    expect(screen.getByTestId('fg')).toHaveAttribute(
-      'data-slot',
-      'field-group'
-    )
+    expect(screen.getByTestId('fg')).toHaveAttribute('data-slot', 'field-group')
   })
 })

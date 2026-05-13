@@ -1,5 +1,8 @@
 import { outboxProcessor } from '@/lib/local/outbox-processor'
-import type { CreateTransferDto, UpdateTransferDto } from '@/lib/api/generated/model'
+import type {
+  CreateTransferDto,
+  UpdateTransferDto,
+} from '@/lib/api/generated/model'
 
 export async function enqueueCreateTransfer(
   tempId: string,

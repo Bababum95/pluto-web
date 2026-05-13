@@ -10,10 +10,7 @@ import { tagRepository } from '@/entities/tag'
 import type { TransactionFormType } from '@/features/transaction/types'
 import type { RootState } from '@/store'
 
-import {
-  transactionRepository,
-  enqueueUpdateTransaction,
-} from '../../local'
+import { transactionRepository, enqueueUpdateTransaction } from '../../local'
 
 type Params = {
   id: string

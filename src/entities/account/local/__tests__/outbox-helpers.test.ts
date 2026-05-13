@@ -8,7 +8,10 @@ import {
   isTempId,
 } from '../outbox-helpers'
 import { db } from '@/lib/local/db'
-import type { CreateAccountDto, UpdateAccountDto } from '@/features/account/types'
+import type {
+  CreateAccountDto,
+  UpdateAccountDto,
+} from '@/features/account/types'
 
 vi.mock('@/lib/local/config', () => ({
   LOCAL_DATA_MODE: 'dexie',

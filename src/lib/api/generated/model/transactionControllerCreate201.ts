@@ -5,12 +5,12 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { AccountDto } from './accountDto';
-import type { AccountSummaryDto } from './accountSummaryDto';
-import type { TransactionDto } from './transactionDto';
+import type { AccountDto } from './accountDto'
+import type { AccountSummaryDto } from './accountSummaryDto'
+import type { TransactionDto } from './transactionDto'
 
 export type TransactionControllerCreate201 = {
-  transaction?: TransactionDto;
-  account?: AccountDto;
-  summary?: AccountSummaryDto;
-};
+  transaction?: TransactionDto
+  account?: AccountDto
+  summary?: AccountSummaryDto
+}

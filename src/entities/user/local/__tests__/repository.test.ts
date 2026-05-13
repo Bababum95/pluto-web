@@ -305,7 +305,9 @@ describe('userRepository', () => {
     })
 
     it('should not throw if user not found', async () => {
-      await expect(userRepository.syncToApi('non-existent')).resolves.not.toThrow()
+      await expect(
+        userRepository.syncToApi('non-existent')
+      ).resolves.not.toThrow()
     })
 
     it('should not sync in api-only mode', async () => {
@@ -363,7 +365,10 @@ describe('userRepository', () => {
       const user1 = { ...mockUser, id: 'user-1' }
       const user2 = { ...mockUser, id: 'user-2' }
 
-      await Promise.all([userRepository.save(user1), userRepository.save(user2)])
+      await Promise.all([
+        userRepository.save(user1),
+        userRepository.save(user2),
+      ])
 
       const saved1 = await db.users.get('user-1')
       const saved2 = await db.users.get('user-2')

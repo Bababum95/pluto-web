@@ -5,26 +5,26 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { AccountDto } from './accountDto';
-import type { CategoryDto } from './categoryDto';
-import type { TagDto } from './tagDto';
-import type { TransactionAmountViewDto } from './transactionAmountViewDto';
-import type { TransactionDtoType } from './transactionDtoType';
+import type { AccountDto } from './accountDto'
+import type { CategoryDto } from './categoryDto'
+import type { TagDto } from './tagDto'
+import type { TransactionAmountViewDto } from './transactionAmountViewDto'
+import type { TransactionDtoType } from './transactionDtoType'
 
 export interface TransactionDto {
-  id: string;
+  id: string
   /** Account data */
-  account: AccountDto;
-  type: TransactionDtoType;
+  account: AccountDto
+  type: TransactionDtoType
   /** Category data */
-  category: CategoryDto;
-  comment: string;
+  category: CategoryDto
+  comment: string
   /** Amount: original (account currency) and converted */
-  amount: TransactionAmountViewDto;
+  amount: TransactionAmountViewDto
   /** Tag entities attached to the transaction */
-  tags: TagDto[];
+  tags: TagDto[]
   /** Transaction date (date only) */
-  date: string;
-  createdAt: string;
-  updatedAt: string;
+  date: string
+  createdAt: string
+  updatedAt: string
 }

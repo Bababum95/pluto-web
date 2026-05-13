@@ -30,10 +30,7 @@ describe('RadioGroup', () => {
         <RadioGroupItem value="a" />
       </RadioGroup>
     )
-    expect(screen.getByTestId('rg')).toHaveAttribute(
-      'data-slot',
-      'radio-group'
-    )
+    expect(screen.getByTestId('rg')).toHaveAttribute('data-slot', 'radio-group')
   })
 
   it('supports default value', () => {

@@ -7,8 +7,8 @@
  */
 
 export interface MoneyViewCurrencyDto {
-  id: string;
-  code: string;
-  symbol: string;
-  decimal_digits: number;
+  id: string
+  code: string
+  symbol: string
+  decimal_digits: number
 }

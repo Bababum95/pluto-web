@@ -2,7 +2,10 @@ import type { FC } from 'react'
 import type { SvgIconProps } from '../types'
 
 /** Filled Ethereum diamond logo (from svg/ethereum.svg). */
-export const EthereumLogoIcon: FC<SvgIconProps> = ({ size = 24, className }) => (
+export const EthereumLogoIcon: FC<SvgIconProps> = ({
+  size = 24,
+  className,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}

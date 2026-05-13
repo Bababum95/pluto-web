@@ -6,10 +6,10 @@
  * OpenAPI spec version: 1.0
  */
 
-export type TransactionControllerFindAllType = typeof TransactionControllerFindAllType[keyof typeof TransactionControllerFindAllType];
-
+export type TransactionControllerFindAllType =
+  (typeof TransactionControllerFindAllType)[keyof typeof TransactionControllerFindAllType]
 
 export const TransactionControllerFindAllType = {
   expense: 'expense',
   income: 'income',
-} as const;
+} as const

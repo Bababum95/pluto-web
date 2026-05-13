@@ -5,14 +5,14 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { MoneyViewCurrencyDto } from './moneyViewCurrencyDto';
+import type { MoneyViewCurrencyDto } from './moneyViewCurrencyDto'
 
 export interface MoneyViewDto {
   /** Amount in decimal form */
-  value: number;
+  value: number
   /** Amount in minor units */
-  raw: number;
+  raw: number
   /** Decimal places (scale) */
-  scale: number;
-  currency: MoneyViewCurrencyDto;
+  scale: number
+  currency: MoneyViewCurrencyDto
 }

@@ -162,10 +162,7 @@ describe('customInstance (Orval + axios)', () => {
 
     server.use(
       http.get(`${TEST_API_ROOT}non-api-error`, () =>
-        HttpResponse.json(
-          { message: 'Boom', statusCode: 500 },
-          { status: 500 }
-        )
+        HttpResponse.json({ message: 'Boom', statusCode: 500 }, { status: 500 })
       )
     )
 

@@ -148,12 +148,8 @@ describe('repositories in api-only mode', () => {
     })
 
     it('exchangeRateRepository writes never touch Dexie', async () => {
-      await exchangeRateRepository.saveMany([
-        { id: 'r-1' } as never,
-      ])
-      await exchangeRateRepository.syncFromApi([
-        { id: 'r-1' } as never,
-      ])
+      await exchangeRateRepository.saveMany([{ id: 'r-1' } as never])
+      await exchangeRateRepository.syncFromApi([{ id: 'r-1' } as never])
       await exchangeRateRepository.clear()
       expect(await db.exchangeRates.toArray()).toEqual([])
     })

@@ -129,7 +129,9 @@ describe('OutboxProcessor', () => {
     })
 
     it('should mark operation as failed after max attempts', async () => {
-      const mockHandler = vi.fn().mockRejectedValue(new Error('Persistent error'))
+      const mockHandler = vi
+        .fn()
+        .mockRejectedValue(new Error('Persistent error'))
       processor.registerHandler('user', mockHandler)
 
       await db.outbox.add({
@@ -300,7 +302,7 @@ describe('OutboxProcessor', () => {
           id: '1',
           entity: 'user',
           action: 'create',
-        entityId: 'user-1',
+          entityId: 'user-1',
           payload: {},
           status: 'done',
           attempts: 1,
@@ -341,14 +343,16 @@ describe('OutboxProcessor', () => {
     })
 
     it('should not remove pending or failed operations', async () => {
-      const oldDate = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString()
+      const oldDate = new Date(
+        Date.now() - 10 * 24 * 60 * 60 * 1000
+      ).toISOString()
 
       await db.outbox.bulkAdd([
         {
           id: '1',
           entity: 'user',
           action: 'create',
-        entityId: 'user-1',
+          entityId: 'user-1',
           payload: {},
           status: 'pending',
           attempts: 0,

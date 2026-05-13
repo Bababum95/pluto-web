@@ -10,4 +10,4 @@
  * Default account ID (MongoDB ObjectId), null to clear
  * @nullable
  */
-export type UpdateSettingsDtoAccount = { [key: string]: unknown } | null;
+export type UpdateSettingsDtoAccount = { [key: string]: unknown } | null

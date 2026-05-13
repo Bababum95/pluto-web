@@ -26,14 +26,20 @@ import { transactionRepository } from '@/entities/transaction/local/repository'
 import { transferRepository } from '@/entities/transfer/local/repository'
 import { accountRepository } from '@/entities/account/local/repository'
 import { mockUser } from '@/testing/data/user'
-import { mockTransaction, createMockTransaction } from '@/testing/data/transaction'
+import {
+  mockTransaction,
+  createMockTransaction,
+} from '@/testing/data/transaction'
 import { mockTag } from '@/testing/data/tag'
 import { mockCategory } from '@/testing/data/category'
 import { createMockTransfer } from '@/testing/data/transfer'
 import { mockAccountListResponse } from '@/testing/data/account'
 import { server } from '@/testing/server'
 import { TEST_API_ROOT } from '@/testing/constants'
-import type { CreateTransactionDto, CreateTransferDto } from '@/lib/api/generated/model'
+import type {
+  CreateTransactionDto,
+  CreateTransferDto,
+} from '@/lib/api/generated/model'
 import * as syncUtils from '@/lib/local/sync-utils'
 import { store } from '@/store'
 import { clearTransactions } from '@/entities/transaction'
@@ -163,7 +169,9 @@ describe('local-first integration', () => {
       expect(result.succeeded).toBeGreaterThanOrEqual(1)
 
       expect(await transactionRepository.getById(tempId)).toBeNull()
-      expect(await transactionRepository.getById(mockTransaction.id)).not.toBeNull()
+      expect(
+        await transactionRepository.getById(mockTransaction.id)
+      ).not.toBeNull()
     })
 
     it('marks outbox row failed after max attempts and does not retry', async () => {
@@ -234,7 +242,9 @@ describe('local-first integration', () => {
 
       await outboxProcessor.processPending()
 
-      expect(await transactionRepository.getById(mockTransaction.id)).not.toBeNull()
+      expect(
+        await transactionRepository.getById(mockTransaction.id)
+      ).not.toBeNull()
     })
 
     it('removes stale done outbox rows during full sync cleanup', async () => {

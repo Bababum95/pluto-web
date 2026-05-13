@@ -43,11 +43,21 @@ function convertAttrName(name) {
 /** Converts SVG attribute value for React (e.g. "1.5" for strokeWidth) */
 function convertAttrValue(name, value) {
   const camel = convertAttrName(name)
-  if (['strokeWidth', 'strokeOpacity', 'fillOpacity', 'strokeMiterlimit'].includes(camel)) {
+  if (
+    [
+      'strokeWidth',
+      'strokeOpacity',
+      'fillOpacity',
+      'strokeMiterlimit',
+    ].includes(camel)
+  ) {
     const num = parseFloat(value)
     if (!Number.isNaN(num)) return num
   }
-  if (['stroke', 'fill'].includes(camel) && ['black', '#000', '#000000'].includes(value?.trim().toLowerCase())) {
+  if (
+    ['stroke', 'fill'].includes(camel) &&
+    ['black', '#000', '#000000'].includes(value?.trim().toLowerCase())
+  ) {
     return 'currentColor'
   }
   return value
@@ -77,10 +87,19 @@ function parseSvg(content) {
   const strokeMatch = attrs.match(/\bstroke\s*=\s*["']([^"']+)["']/i)
   const hasStroke = /stroke=/.test(attrs) || /stroke=/.test(content)
 
-  const innerContent = content.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>[\s\S]*$/, '').trim()
+  const innerContent = content
+    .replace(/^[\s\S]*?<svg[^>]*>/, '')
+    .replace(/<\/svg>[\s\S]*$/, '')
+    .trim()
 
   const fill = fillMatch ? fillMatch[1] : hasStroke ? 'none' : undefined
-  const stroke = strokeMatch ? (['black', '#000', '#000000'].includes(strokeMatch[1].toLowerCase()) ? 'currentColor' : strokeMatch[1]) : hasStroke ? 'currentColor' : undefined
+  const stroke = strokeMatch
+    ? ['black', '#000', '#000000'].includes(strokeMatch[1].toLowerCase())
+      ? 'currentColor'
+      : strokeMatch[1]
+    : hasStroke
+      ? 'currentColor'
+      : undefined
 
   return { viewBox, fill, stroke, innerContent }
 }
@@ -88,7 +107,10 @@ function parseSvg(content) {
 /** Transforms inner SVG elements: convert attributes to JSX, replace black with currentColor */
 function transformInnerContent(inner) {
   return inner
-    .replace(/\s(stroke|fill)=["'](?:black|#000|#000000)["']/gi, ' $1="currentColor"')
+    .replace(
+      /\s(stroke|fill)=["'](?:black|#000|#000000)["']/gi,
+      ' $1="currentColor"'
+    )
     .replace(/\s([a-z0-9:-]+)=["']([^"']*)["']/g, (_, name, value) => {
       const jsxName = convertAttrName(name)
       const jsxValue = convertAttrValue(name, value)
@@ -108,7 +130,11 @@ function filenameToComponentName(filename) {
 }
 
 /** Generates the React component source */
-function generateComponent(svgPath, componentName, { viewBox, fill, stroke, innerContent }) {
+function generateComponent(
+  svgPath,
+  componentName,
+  { viewBox, fill, stroke, innerContent }
+) {
   const transformed = transformInnerContent(innerContent)
   const extraAttrs = []
   if (fill) extraAttrs.push(`fill="${fill}"`)
@@ -139,7 +165,9 @@ function main() {
     process.exit(1)
   }
 
-  const files = readdirSync(SVG_DIR).filter((f) => f.toLowerCase().endsWith('.svg'))
+  const files = readdirSync(SVG_DIR).filter((f) =>
+    f.toLowerCase().endsWith('.svg')
+  )
   if (files.length === 0) {
     console.log('No SVG files found in', SVG_DIR)
     return
@@ -161,7 +189,9 @@ function main() {
   }
 
   if (created.length > 0) {
-    console.log('\nNext: add new icons to src/lib/icons/registry.ts (import + ICON_REGISTRY).')
+    console.log(
+      '\nNext: add new icons to src/lib/icons/registry.ts (import + ICON_REGISTRY).'
+    )
   }
 }
 

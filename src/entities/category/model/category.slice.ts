@@ -37,7 +37,9 @@ export const fetchCategories = createAsyncThunk(
         // Return local data immediately, but trigger background sync
         categoryApi
           .list()
-          .then((apiCategories) => categoryRepository.syncFromApi(apiCategories))
+          .then((apiCategories) =>
+            categoryRepository.syncFromApi(apiCategories)
+          )
           .catch((err) => console.warn('Background category sync failed:', err))
 
         return localCategories

@@ -189,10 +189,7 @@ vi.spyOn(outboxProcessor, 'registerHandler').mockImplementation(
   }
 )
 
-type OutboxOperationInput = Pick<
-  OutboxRow,
-  'entity' | 'action' | 'entityId'
-> &
+type OutboxOperationInput = Pick<OutboxRow, 'entity' | 'action' | 'entityId'> &
   Partial<Pick<OutboxRow, 'payload'>>
 
 const buildOutboxRow = (operation: OutboxOperationInput): OutboxRow => ({

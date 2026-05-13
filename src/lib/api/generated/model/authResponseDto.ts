@@ -5,11 +5,11 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { UserDto } from './userDto';
+import type { UserDto } from './userDto'
 
 export interface AuthResponseDto {
   /** User profile */
-  user: UserDto;
+  user: UserDto
   /** JWT access token; send as Authorization: Bearer <token> */
-  accessToken: string;
+  accessToken: string
 }

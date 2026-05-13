@@ -105,8 +105,7 @@ export class OutboxProcessor {
       return true
     } catch (error) {
       const attempts = operation.attempts + 1
-      const lastError =
-        error instanceof Error ? error.message : 'Unknown error'
+      const lastError = error instanceof Error ? error.message : 'Unknown error'
 
       await db.outbox.update(operation.id, {
         status: attempts >= MAX_ATTEMPTS ? 'failed' : 'pending',

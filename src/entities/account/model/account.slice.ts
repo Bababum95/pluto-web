@@ -257,7 +257,9 @@ export const accountSlice = createSlice({
         state.summary = action.payload
       })
       .addCase(createAccount.fulfilled, (state, action) => {
-        const exists = state.accounts.find((a) => a.id === action.payload.account.id)
+        const exists = state.accounts.find(
+          (a) => a.id === action.payload.account.id
+        )
         if (!exists) {
           state.accounts.push(action.payload.account)
         }
@@ -293,7 +295,12 @@ export const accountSlice = createSlice({
   },
 })
 
-export const { setAccounts, addAccount, updateAccountInState, removeAccount, setSummary } =
-  accountSlice.actions
+export const {
+  setAccounts,
+  addAccount,
+  updateAccountInState,
+  removeAccount,
+  setSummary,
+} = accountSlice.actions
 
 export default accountSlice.reducer

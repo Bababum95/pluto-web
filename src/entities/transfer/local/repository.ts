@@ -4,12 +4,15 @@ import dayjs from '@/lib/dayjs'
 import { DATE_FORMAT } from '@/features/time-range/constants'
 
 import type { TransferDto } from '@/lib/api/generated/model'
-import { transferRowFromDto, transferDtoFromRow, type TransferRow } from './schema'
+import {
+  transferRowFromDto,
+  transferDtoFromRow,
+  type TransferRow,
+} from './schema'
 
 function sortByCreatedDesc(transfers: TransferDto[]): TransferDto[] {
   return transfers.sort(
-    (a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   )
 }
 
@@ -56,9 +59,7 @@ export const transferRepository = {
     for (const r of fromRows) byId.set(r.id, r)
     for (const r of toRows) byId.set(r.id, r)
 
-    return sortByCreatedDesc(
-      [...byId.values()].map(transferDtoFromRow)
-    )
+    return sortByCreatedDesc([...byId.values()].map(transferDtoFromRow))
   },
 
   async getByCreatedRange(
@@ -150,11 +151,7 @@ export const transferRepository = {
     )
 
     const toSync = transfers.filter((transfer) => {
-      if (
-        !transfer.id ||
-        !transfer.from?.account ||
-        !transfer.to?.account
-      ) {
+      if (!transfer.id || !transfer.from?.account || !transfer.to?.account) {
         console.warn('syncFromApi: skipping invalid transfer', transfer)
         return false
       }

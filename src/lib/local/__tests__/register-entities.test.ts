@@ -75,8 +75,14 @@ describe('registerSyncEntities', () => {
     expect(registerSpy).toHaveBeenCalledWith('tag', expect.any(Function))
     expect(registerSpy).toHaveBeenCalledWith('category', expect.any(Function))
     expect(registerSpy).toHaveBeenCalledWith('account', expect.any(Function))
-    expect(registerSpy).toHaveBeenCalledWith('exchangeRate', expect.any(Function))
-    expect(registerSpy).toHaveBeenCalledWith('transaction', expect.any(Function))
+    expect(registerSpy).toHaveBeenCalledWith(
+      'exchangeRate',
+      expect.any(Function)
+    )
+    expect(registerSpy).toHaveBeenCalledWith(
+      'transaction',
+      expect.any(Function)
+    )
     expect(registerSpy).toHaveBeenCalledWith('transfer', expect.any(Function))
     expect(registerSpy).toHaveBeenCalledTimes(8)
   })
@@ -199,7 +205,9 @@ describe('registerSyncEntities', () => {
   })
 
   it('should refresh accounts, Dexie, and Redux summary when account sync handler runs', async () => {
-    vi.mocked(accountControllerFindAll).mockResolvedValue(mockAccountListResponse)
+    vi.mocked(accountControllerFindAll).mockResolvedValue(
+      mockAccountListResponse
+    )
     vi.mocked(accountRepository.syncFromApi).mockResolvedValue()
 
     registerSyncEntities()

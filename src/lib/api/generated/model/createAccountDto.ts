@@ -8,31 +8,31 @@
 
 export interface CreateAccountDto {
   /** Account color in hex format */
-  color: string;
+  color: string
   /** Icon name as string */
-  icon: string;
+  icon: string
   /**
-     * @minLength 1
-     * @maxLength 100
-     */
-  name: string;
+   * @minLength 1
+   * @maxLength 100
+   */
+  name: string
   /**
-     * Optional account description
-     * @maxLength 500
-     */
-  description?: string;
+   * Optional account description
+   * @maxLength 500
+   */
+  description?: string
   /** Account balance (will be stored in minor units) */
-  balance?: number;
+  balance?: number
   /**
-     * Number of decimal places for the currency (scale)
-     * @minimum 0
-     * @maximum 18
-     */
-  scale: number;
+   * Number of decimal places for the currency (scale)
+   * @minimum 0
+   * @maximum 18
+   */
+  scale: number
   /** Currency ID (MongoDB ObjectId) */
-  currency: string;
+  currency: string
   /** Order for sorting accounts (auto-incremented per user) */
-  order?: number;
+  order?: number
   /** Whether the account is excluded from the total balance */
-  excluded?: boolean;
+  excluded?: boolean
 }

@@ -1,5 +1,8 @@
 import { outboxProcessor } from '@/lib/local/outbox-processor'
-import type { CreateAccountDto, UpdateAccountDto } from '@/features/account/types'
+import type {
+  CreateAccountDto,
+  UpdateAccountDto,
+} from '@/features/account/types'
 
 const TEMP_ID_PREFIX = 'temp-'
 

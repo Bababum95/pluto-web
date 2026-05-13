@@ -5,19 +5,19 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { AccountBalanceViewDto } from './accountBalanceViewDto';
+import type { AccountBalanceViewDto } from './accountBalanceViewDto'
 
 export interface AccountDto {
-  id: string;
-  color: string;
-  icon: string;
-  name: string;
+  id: string
+  color: string
+  icon: string
+  name: string
   /** Optional account description */
-  description?: string;
+  description?: string
   /** Balance: original (account currency) and converted */
-  balance: AccountBalanceViewDto;
-  order: number;
-  excluded: boolean;
-  createdAt: string;
-  updatedAt: string;
+  balance: AccountBalanceViewDto
+  order: number
+  excluded: boolean
+  createdAt: string
+  updatedAt: string
 }

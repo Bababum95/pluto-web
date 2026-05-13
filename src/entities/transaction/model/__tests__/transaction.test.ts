@@ -206,7 +206,11 @@ describe('transaction slice', () => {
       )
       const updated = createMockTransaction({ id: 'tx-1', comment: 'Updated' })
       const action = updateTransaction.fulfilled(
-        { transaction: updated, account: mockAccount, summary: mockAccountSummary },
+        {
+          transaction: updated,
+          account: mockAccount,
+          summary: mockAccountSummary,
+        },
         'req-1',
         { id: 'tx-1', data: {} as never }
       )

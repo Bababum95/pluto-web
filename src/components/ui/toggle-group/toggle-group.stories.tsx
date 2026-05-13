@@ -1,24 +1,24 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { ToggleGroup, ToggleGroupItem } from "./toggle-group"
+import { ToggleGroup, ToggleGroupItem } from './toggle-group'
 
 const meta = {
-  title: "UI/ToggleGroup",
+  title: 'UI/ToggleGroup',
   component: ToggleGroup,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
-      options: ["default", "outline"],
+      control: 'select',
+      options: ['default', 'outline'],
     },
     size: {
-      control: "select",
-      options: ["default", "sm", "lg"],
+      control: 'select',
+      options: ['default', 'sm', 'lg'],
     },
-    spacing: { control: "number" },
+    spacing: { control: 'number' },
     orientation: {
-      control: "inline-radio",
-      options: ["horizontal", "vertical"],
+      control: 'inline-radio',
+      options: ['horizontal', 'vertical'],
     },
   },
 } satisfies Meta<typeof ToggleGroup>
@@ -29,11 +29,11 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    type: "single",
-    defaultValue: "income",
+    type: 'single',
+    defaultValue: 'income',
     spacing: 0,
-    variant: "default",
-    size: "default",
+    variant: 'default',
+    size: 'default',
   },
   render: (args) => (
     <ToggleGroup {...args}>
@@ -45,11 +45,11 @@ export const Default: Story = {
 
 export const Outline: Story = {
   args: {
-    type: "single",
-    defaultValue: "income",
+    type: 'single',
+    defaultValue: 'income',
     spacing: 0,
-    variant: "outline",
-    size: "default",
+    variant: 'outline',
+    size: 'default',
   },
   render: (args) => (
     <ToggleGroup {...args}>
@@ -61,8 +61,8 @@ export const Outline: Story = {
 
 export const WithSpacing: Story = {
   args: {
-    type: "single",
-    defaultValue: "income",
+    type: 'single',
+    defaultValue: 'income',
     spacing: 2,
   },
   render: (args) => (
@@ -75,11 +75,11 @@ export const WithSpacing: Story = {
 
 export const Vertical: Story = {
   args: {
-    type: "single",
-    defaultValue: "income",
-    orientation: "vertical",
+    type: 'single',
+    defaultValue: 'income',
+    orientation: 'vertical',
     spacing: 1,
-    variant: "outline",
+    variant: 'outline',
   },
   render: (args) => (
     <ToggleGroup {...args}>

@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0
  */
 
-export interface UpdateTagDto { [key: string]: unknown }
+export interface UpdateTagDto {
+  [key: string]: unknown
+}

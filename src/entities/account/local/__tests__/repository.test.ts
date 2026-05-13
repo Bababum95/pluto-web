@@ -61,9 +61,21 @@ describe('accountRepository', () => {
     })
 
     it('should return all accounts sorted by order', async () => {
-      const account1 = createMockAccount({ id: 'account-1', name: 'First', order: 2 })
-      const account2 = createMockAccount({ id: 'account-2', name: 'Second', order: 0 })
-      const account3 = createMockAccount({ id: 'account-3', name: 'Third', order: 1 })
+      const account1 = createMockAccount({
+        id: 'account-1',
+        name: 'First',
+        order: 2,
+      })
+      const account2 = createMockAccount({
+        id: 'account-2',
+        name: 'Second',
+        order: 0,
+      })
+      const account3 = createMockAccount({
+        id: 'account-3',
+        name: 'Third',
+        order: 1,
+      })
 
       await accountRepository.saveMany([account1, account2, account3])
 

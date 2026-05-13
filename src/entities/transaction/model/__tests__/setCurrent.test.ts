@@ -52,11 +52,7 @@ describe('setCurrent async thunk', () => {
 
     getByIdMock.mockReset()
 
-    const result = await setCurrent('tx-1')(
-      vi.fn(),
-      () => state,
-      undefined
-    )
+    const result = await setCurrent('tx-1')(vi.fn(), () => state, undefined)
 
     expect(result.type).toBe('transaction/setCurrent/fulfilled')
     expect(result.payload).toEqual(existing)
@@ -74,11 +70,7 @@ describe('setCurrent async thunk', () => {
     getByIdMock.mockReset()
     getByIdMock.mockResolvedValue(loaded)
 
-    const result = await setCurrent('tx-2')(
-      vi.fn(),
-      () => state,
-      undefined
-    )
+    const result = await setCurrent('tx-2')(vi.fn(), () => state, undefined)
 
     expect(result.type).toBe('transaction/setCurrent/fulfilled')
     expect(getByIdMock).toHaveBeenCalledWith('tx-2')
@@ -96,11 +88,7 @@ describe('setCurrent async thunk', () => {
     getByIdMock.mockReset()
     getByIdMock.mockRejectedValue(error)
 
-    const result = await setCurrent('tx-3')(
-      vi.fn(),
-      () => state,
-      undefined
-    )
+    const result = await setCurrent('tx-3')(vi.fn(), () => state, undefined)
 
     expect(result.type).toBe('transaction/setCurrent/rejected')
     expect(getByIdMock).toHaveBeenCalledWith('tx-3')
@@ -117,11 +105,7 @@ describe('setCurrent async thunk', () => {
     getByIdMock.mockReset()
     getByIdMock.mockRejectedValue(rejectError)
 
-    const result = await setCurrent('tx-4')(
-      vi.fn(),
-      () => state,
-      undefined
-    )
+    const result = await setCurrent('tx-4')(vi.fn(), () => state, undefined)
 
     expect(result.type).toBe('transaction/setCurrent/rejected')
     expect(getByIdMock).toHaveBeenCalledWith('tx-4')

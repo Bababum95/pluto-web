@@ -10,11 +10,7 @@ import transferReducer, {
   removeTransfer,
   clearTransfers,
 } from '../transfer.slice'
-import {
-  fetchTransfers,
-  createTransfer,
-  deleteTransfer,
-} from '../async-thunks'
+import { fetchTransfers, createTransfer, deleteTransfer } from '../async-thunks'
 import { createMockTransfer } from '@/testing/data/transfer'
 
 const t1 = createMockTransfer({ id: 'transfer-1' })

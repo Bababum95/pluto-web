@@ -109,16 +109,19 @@ export const updateTag = createAsyncThunk(
  * In dexie mode: delete locally, enqueue for sync.
  * In api-only mode: delete via API directly.
  */
-export const deleteTag = createAsyncThunk('tag/deleteTag', async (id: string) => {
-  if (LOCAL_DATA_MODE === 'dexie') {
-    await tagRepository.delete(id)
-    await enqueueDeleteTag(id)
+export const deleteTag = createAsyncThunk(
+  'tag/deleteTag',
+  async (id: string) => {
+    if (LOCAL_DATA_MODE === 'dexie') {
+      await tagRepository.delete(id)
+      await enqueueDeleteTag(id)
+      return id
+    }
+
+    await tagApi.delete(id)
     return id
   }
-
-  await tagApi.delete(id)
-  return id
-})
+)
 
 export const tagSlice = createSlice({
   name: 'tag',

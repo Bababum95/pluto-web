@@ -7,10 +7,10 @@
  */
 
 export interface TagDto {
-  id: string;
-  name: string;
-  color: string;
-  icon: string;
-  createdAt: string;
-  updatedAt: string;
+  id: string
+  name: string
+  color: string
+  icon: string
+  createdAt: string
+  updatedAt: string
 }

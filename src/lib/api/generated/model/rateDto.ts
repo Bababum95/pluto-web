@@ -7,9 +7,9 @@
  */
 
 export interface RateDto {
-  id: string;
-  code: string;
-  value: number;
-  createdAt: string;
-  updatedAt: string;
+  id: string
+  code: string
+  value: number
+  createdAt: string
+  updatedAt: string
 }

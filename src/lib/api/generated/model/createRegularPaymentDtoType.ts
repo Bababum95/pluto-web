@@ -6,10 +6,10 @@
  * OpenAPI spec version: 1.0
  */
 
-export type CreateRegularPaymentDtoType = typeof CreateRegularPaymentDtoType[keyof typeof CreateRegularPaymentDtoType];
-
+export type CreateRegularPaymentDtoType =
+  (typeof CreateRegularPaymentDtoType)[keyof typeof CreateRegularPaymentDtoType]
 
 export const CreateRegularPaymentDtoType = {
   expense: 'expense',
   income: 'income',
-} as const;
+} as const

@@ -6,10 +6,10 @@
  * OpenAPI spec version: 1.0
  */
 
-export type TransactionDtoType = typeof TransactionDtoType[keyof typeof TransactionDtoType];
-
+export type TransactionDtoType =
+  (typeof TransactionDtoType)[keyof typeof TransactionDtoType]
 
 export const TransactionDtoType = {
   expense: 'expense',
   income: 'income',
-} as const;
+} as const

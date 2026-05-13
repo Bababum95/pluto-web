@@ -5,16 +5,16 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { AccountDto } from './accountDto';
-import type { CurrencyDto } from './currencyDto';
+import type { AccountDto } from './accountDto'
+import type { CurrencyDto } from './currencyDto'
 
 export interface SettingsDto {
   /** Settings document ID */
-  id: string;
+  id: string
   /** Default currency */
-  currency: CurrencyDto;
+  currency: CurrencyDto
   /** Default account (null if not set) */
-  account: AccountDto | null;
-  createdAt: string;
-  updatedAt: string;
+  account: AccountDto | null
+  createdAt: string
+  updatedAt: string
 }

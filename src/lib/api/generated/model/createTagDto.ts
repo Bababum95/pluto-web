@@ -8,12 +8,12 @@
 
 export interface CreateTagDto {
   /**
-     * @minLength 1
-     * @maxLength 20
-     */
-  name: string;
+   * @minLength 1
+   * @maxLength 20
+   */
+  name: string
   /** Tag color in hex format */
-  color?: string;
+  color?: string
   /** Icon name */
-  icon?: string;
+  icon?: string
 }

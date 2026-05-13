@@ -30,9 +30,7 @@ describe('ThemeSwitcher (integration)', () => {
       </ThemeProvider>
     )
 
-    await user.click(
-      screen.getByRole('button', { name: 'Change theme' })
-    )
+    await user.click(screen.getByRole('button', { name: 'Change theme' }))
 
     expect(screen.getByRole('menuitemradio', { name: 'Light' })).toBeVisible()
     expect(screen.getByRole('menuitemradio', { name: 'Dark' })).toBeVisible()
@@ -54,9 +52,7 @@ describe('ThemeSwitcher (integration)', () => {
       </ThemeProvider>
     )
 
-    await user.click(
-      screen.getByRole('button', { name: 'Change theme' })
-    )
+    await user.click(screen.getByRole('button', { name: 'Change theme' }))
 
     expect(screen.getByRole('menuitemradio', { name: 'System' })).toBeVisible()
   })

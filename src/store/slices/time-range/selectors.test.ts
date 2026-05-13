@@ -9,9 +9,7 @@ import {
   selectTimeRangeFormatted,
 } from './selectors'
 
-function timeRangeState(
-  timeRange: RootState['timeRange']
-): RootState {
+function timeRangeState(timeRange: RootState['timeRange']): RootState {
   return { timeRange } as RootState
 }
 

@@ -9,10 +9,7 @@ import {
   enqueueReorderCategories,
   isTempId,
 } from '../outbox-helpers'
-import type {
-  CreateCategoryDto,
-  UpdateCategoryDto,
-} from '../../model/types'
+import type { CreateCategoryDto, UpdateCategoryDto } from '../../model/types'
 
 const enqueueSpy = vi.spyOn(outboxProcessor, 'enqueue')
 
@@ -21,7 +18,10 @@ beforeEach(() => {
   enqueueSpy.mockResolvedValue()
 })
 
-const createDto = { name: 'Food', color: '#fff' } as unknown as CreateCategoryDto
+const createDto = {
+  name: 'Food',
+  color: '#fff',
+} as unknown as CreateCategoryDto
 const updateDto = { name: 'Groceries' } as unknown as UpdateCategoryDto
 
 describe('isTempId', () => {

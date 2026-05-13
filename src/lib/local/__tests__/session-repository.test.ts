@@ -185,7 +185,9 @@ describe('sessionRepository', () => {
       const session = await db.session.get('current')
       expect(session).toBeDefined()
       // One of the updates should have succeeded
-      expect(session?.currentUserId === 'user-2' || session?.lastSyncAt).toBeTruthy()
+      expect(
+        session?.currentUserId === 'user-2' || session?.lastSyncAt
+      ).toBeTruthy()
     })
 
     it('should maintain singleton pattern', async () => {

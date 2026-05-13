@@ -8,5 +8,5 @@
 
 export interface ReorderCategoriesDto {
   /** Category IDs in the desired order (index = display order) */
-  ids: string[];
+  ids: string[]
 }

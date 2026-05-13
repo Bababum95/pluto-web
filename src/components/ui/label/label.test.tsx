@@ -25,7 +25,11 @@ describe('Label', () => {
   })
 
   it('applies custom className', () => {
-    render(<Label className="custom" data-testid="label">Text</Label>)
+    render(
+      <Label className="custom" data-testid="label">
+        Text
+      </Label>
+    )
     expect(screen.getByTestId('label')).toHaveClass('custom')
   })
 })

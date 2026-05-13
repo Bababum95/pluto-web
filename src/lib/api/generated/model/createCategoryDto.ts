@@ -8,14 +8,14 @@
 
 export interface CreateCategoryDto {
   /** Category color in hex format */
-  color: string;
+  color: string
   /** Icon name as string */
-  icon: string;
+  icon: string
   /**
-     * @minLength 1
-     * @maxLength 100
-     */
-  name: string;
+   * @minLength 1
+   * @maxLength 100
+   */
+  name: string
   /** Transaction type */
-  type: string;
+  type: string
 }

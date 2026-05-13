@@ -73,8 +73,7 @@ class LocalDb extends Dexie {
       accounts: 'id, updatedAt, order',
       exchangeRates: 'id, updatedAt',
       transactions: 'id, updatedAt, accountId, date, type',
-      transfers:
-        'id, updatedAt, fromAccountId, toAccountId, createdAt',
+      transfers: 'id, updatedAt, fromAccountId, toAccountId, createdAt',
       session: 'id',
       outbox: 'id, status, entity, createdAt',
     })

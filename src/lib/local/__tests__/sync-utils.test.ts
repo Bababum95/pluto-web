@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest'
-import { needsSync, mergeData, createSyncMetadata, calculateBackoff } from '../sync-utils'
+import {
+  needsSync,
+  mergeData,
+  createSyncMetadata,
+  calculateBackoff,
+} from '../sync-utils'
 
 describe('sync-utils', () => {
   describe('needsSync', () => {
@@ -83,7 +88,11 @@ describe('sync-utils', () => {
 
     it('should handle null values', () => {
       const local = { id: '1', name: 'Local', deletedAt: null as string | null }
-      const server = { id: '1', name: 'Server', deletedAt: '2024-01-01' as string | null }
+      const server = {
+        id: '1',
+        name: 'Server',
+        deletedAt: '2024-01-01' as string | null,
+      }
 
       const result = mergeData(local, server, 'server-wins')
 
@@ -91,8 +100,16 @@ describe('sync-utils', () => {
     })
 
     it('should handle undefined values', () => {
-      const local = { id: '1', name: 'Local', optional: undefined as string | undefined }
-      const server = { id: '1', name: 'Server', optional: 'value' as string | undefined }
+      const local = {
+        id: '1',
+        name: 'Local',
+        optional: undefined as string | undefined,
+      }
+      const server = {
+        id: '1',
+        name: 'Server',
+        optional: 'value' as string | undefined,
+      }
 
       const result = mergeData(local, server, 'server-wins')
 
@@ -130,7 +147,9 @@ describe('sync-utils', () => {
       const metadata = createSyncMetadata()
 
       // Should match ISO 8601 format
-      expect(metadata.updatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)
+      expect(metadata.updatedAt).toMatch(
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
+      )
     })
 
     it('should return current timestamp', () => {

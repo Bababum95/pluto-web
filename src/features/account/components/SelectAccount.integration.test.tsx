@@ -78,15 +78,18 @@ describe('SelectAccount (integration)', () => {
   it('opens drawer and propagates selected account id', () => {
     const onChange = vi.fn()
 
-    renderWithProviders(<SelectAccount value={undefined} onChange={onChange} />, {
-      preloadedState: {
-        account: {
-          accounts: [mockAccount],
-          summary: null,
-          status: 'success',
+    renderWithProviders(
+      <SelectAccount value={undefined} onChange={onChange} />,
+      {
+        preloadedState: {
+          account: {
+            accounts: [mockAccount],
+            summary: null,
+            status: 'success',
+          },
         },
-      },
-    })
+      }
+    )
 
     fireEvent.click(screen.getByRole('button', { name: 'Select account' }))
 

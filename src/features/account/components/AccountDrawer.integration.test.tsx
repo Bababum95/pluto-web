@@ -69,9 +69,9 @@ describe('AccountDrawer (integration)', () => {
     expect(screen.getByText('Select account')).toBeInTheDocument()
     expect(screen.getAllByRole('radio')).toHaveLength(2)
     expect(
-      screen.getAllByRole('radio').filter((radio) =>
-        radio.getAttribute('data-state') === 'checked'
-      )
+      screen
+        .getAllByRole('radio')
+        .filter((radio) => radio.getAttribute('data-state') === 'checked')
     ).toHaveLength(1)
 
     await user.click(screen.getByText('Savings Account'))

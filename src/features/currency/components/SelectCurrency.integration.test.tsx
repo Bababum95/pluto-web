@@ -48,10 +48,9 @@ vi.mock('@/components/ui/drawer', () => ({
   DrawerTitle: ({ children, ...props }: React.ComponentProps<'div'>) => (
     <div {...props}>{children}</div>
   ),
-  DrawerDescription: ({
-    children,
-    ...props
-  }: React.ComponentProps<'div'>) => <div {...props}>{children}</div>,
+  DrawerDescription: ({ children, ...props }: React.ComponentProps<'div'>) => (
+    <div {...props}>{children}</div>
+  ),
 }))
 
 describe('SelectCurrency (integration)', () => {
@@ -62,7 +61,11 @@ describe('SelectCurrency (integration)', () => {
     server.use(
       http.get('http://localhost/v1/currencies', () =>
         HttpResponse.json([
-          createMockCurrency({ id: 'currency-usd', code: 'USD', name: 'US Dollar' }),
+          createMockCurrency({
+            id: 'currency-usd',
+            code: 'USD',
+            name: 'US Dollar',
+          }),
           createMockCurrency({ id: 'currency-eur', code: 'EUR', name: 'Euro' }),
         ])
       )
@@ -93,7 +96,9 @@ describe('SelectCurrency (integration)', () => {
     renderWithProviders(<SelectCurrency value="currency-1" />)
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText('Search by name or code')).toBeInTheDocument()
+      expect(
+        screen.getByPlaceholderText('Search by name or code')
+      ).toBeInTheDocument()
     })
 
     const searchInput = screen.getByPlaceholderText('Search by name or code')

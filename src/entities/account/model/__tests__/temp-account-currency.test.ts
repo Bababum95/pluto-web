@@ -60,7 +60,11 @@ describe('resolveMoneyViewCurrencyForTempAccount', () => {
         account: { accounts: [] },
       }) as never
 
-    const result = resolveMoneyViewCurrencyForTempAccount('unknown-id', 4, getState)
+    const result = resolveMoneyViewCurrencyForTempAccount(
+      'unknown-id',
+      4,
+      getState
+    )
 
     expect(result).toEqual({
       id: 'unknown-id',

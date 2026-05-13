@@ -7,12 +7,7 @@ import { DatePicker } from './date-picker'
 describe('DatePicker', () => {
   it('renders with label', () => {
     const onChange = vi.fn()
-    render(
-      <DatePicker
-        label="Date"
-        onChange={onChange}
-      />
-    )
+    render(<DatePicker label="Date" onChange={onChange} />)
     expect(screen.getByText('Date')).toBeInTheDocument()
   })
 
@@ -30,9 +25,7 @@ describe('DatePicker', () => {
     await user.click(screen.getByRole('button'))
     const buttons = screen.getAllByRole('button')
     const dayButton = buttons.find(
-      (b) =>
-        b.hasAttribute('data-day') &&
-        !b.getAttribute('aria-disabled')
+      (b) => b.hasAttribute('data-day') && !b.getAttribute('aria-disabled')
     )
     if (dayButton) {
       await user.click(dayButton)
@@ -43,35 +36,21 @@ describe('DatePicker', () => {
 
   it('displays value when provided', () => {
     const onChange = vi.fn()
-    render(
-      <DatePicker
-        value={new Date(2025, 0, 15)}
-        onChange={onChange}
-      />
-    )
+    render(<DatePicker value={new Date(2025, 0, 15)} onChange={onChange} />)
     expect(screen.getByText('15.01.2025')).toBeInTheDocument()
   })
 
   it('shows error message when isError is true', () => {
     const onChange = vi.fn()
     render(
-      <DatePicker
-        onChange={onChange}
-        isError
-        errorMessage="Invalid date"
-      />
+      <DatePicker onChange={onChange} isError errorMessage="Invalid date" />
     )
     expect(screen.getByText('Invalid date')).toBeInTheDocument()
   })
 
   it('applies error styling to trigger when isError', () => {
     const onChange = vi.fn()
-    render(
-      <DatePicker
-        onChange={onChange}
-        isError
-      />
-    )
+    render(<DatePicker onChange={onChange} isError />)
     const trigger = screen.getByRole('button')
     expect(trigger).toHaveClass('border-destructive')
   })

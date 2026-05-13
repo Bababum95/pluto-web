@@ -4,10 +4,7 @@ vi.mock('@/store', () => ({
   createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
 }))
 
-import {
-  mockCategory,
-  createMockCategory,
-} from '@/testing/data/category'
+import { mockCategory, createMockCategory } from '@/testing/data/category'
 
 import categoryReducer, {
   fetchCategories,
@@ -97,13 +94,13 @@ describe('category slice', () => {
     it('fulfilled removes category by returned id', () => {
       let state = categoryReducer(
         undefined,
-        fetchCategories.fulfilled(
-          [mockCategory, category2],
-          'req-1',
-          undefined
-        )
+        fetchCategories.fulfilled([mockCategory, category2], 'req-1', undefined)
       )
-      const action = deleteCategory.fulfilled(mockCategory.id, 'req-1', mockCategory.id)
+      const action = deleteCategory.fulfilled(
+        mockCategory.id,
+        'req-1',
+        mockCategory.id
+      )
       state = categoryReducer(state, action)
       expect(state.categories).toHaveLength(1)
       expect(state.categories[0].id).toBe('category-2')
@@ -120,7 +117,10 @@ describe('category slice', () => {
     })
 
     it('fulfilled appends category', () => {
-      const newCategory = createMockCategory({ id: 'category-new', name: 'New' })
+      const newCategory = createMockCategory({
+        id: 'category-new',
+        name: 'New',
+      })
       const action = createCategory.fulfilled(newCategory, 'req-1', {} as never)
       let state = categoryReducer(undefined, setCategories([mockCategory]))
       state = categoryReducer(state, action)
@@ -130,7 +130,11 @@ describe('category slice', () => {
 
     it('fulfilled does not duplicate existing category', () => {
       let state = categoryReducer(undefined, setCategories([mockCategory]))
-      const action = createCategory.fulfilled(mockCategory, 'req-1', {} as never)
+      const action = createCategory.fulfilled(
+        mockCategory,
+        'req-1',
+        {} as never
+      )
       state = categoryReducer(state, action)
       expect(state.categories).toHaveLength(1)
       expect(state.categories[0].id).toBe(mockCategory.id)
@@ -153,17 +157,12 @@ describe('category slice', () => {
       })
       let state = categoryReducer(
         undefined,
-        fetchCategories.fulfilled(
-          [mockCategory, category2],
-          'req-1',
-          undefined
-        )
+        fetchCategories.fulfilled([mockCategory, category2], 'req-1', undefined)
       )
-      const action = updateCategory.fulfilled(
-        updated,
-        'req-1',
-        { id: mockCategory.id, data: {} as never }
-      )
+      const action = updateCategory.fulfilled(updated, 'req-1', {
+        id: mockCategory.id,
+        data: {} as never,
+      })
       state = categoryReducer(state, action)
       expect(state.categories[0].name).toBe('Updated Name')
       expect(state.categories[1]).toEqual(category2)
@@ -172,11 +171,10 @@ describe('category slice', () => {
     it('fulfilled does nothing when id not in list', () => {
       let state = categoryReducer(undefined, setCategories([mockCategory]))
       const unknown = createMockCategory({ id: 'unknown' })
-      const action = updateCategory.fulfilled(
-        unknown,
-        'req-1',
-        { id: 'unknown', data: {} as never }
-      )
+      const action = updateCategory.fulfilled(unknown, 'req-1', {
+        id: 'unknown',
+        data: {} as never,
+      })
       state = categoryReducer(state, action)
       expect(state.categories).toHaveLength(1)
       expect(state.categories[0].id).toBe(mockCategory.id)
@@ -196,7 +194,10 @@ describe('category slice', () => {
           undefined
         )
       )
-      const action = reorderCategories.fulfilled({ ids: ['b', 'a'] }, 'req-1', ['b', 'a'])
+      const action = reorderCategories.fulfilled({ ids: ['b', 'a'] }, 'req-1', [
+        'b',
+        'a',
+      ])
       state = categoryReducer(state, action)
       expect(state.categories).toHaveLength(2)
       expect(state.categories[0].id).toBe('b')

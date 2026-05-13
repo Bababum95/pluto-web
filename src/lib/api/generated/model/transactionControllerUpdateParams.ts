@@ -7,8 +7,8 @@
  */
 
 export type TransactionControllerUpdateParams = {
-/**
- * Whether account balance should be recalculated after transaction update
- */
-recalcBalance?: boolean;
-};
+  /**
+   * Whether account balance should be recalculated after transaction update
+   */
+  recalcBalance?: boolean
+}

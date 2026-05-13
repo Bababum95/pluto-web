@@ -69,7 +69,9 @@ describe('storybook stories smoke', () => {
   })
 
   it('renders exchange rate calculator feature story', () => {
-    render(ExchangeRateCalculatorStories.Default.render?.({}, {} as never) ?? null)
+    render(
+      ExchangeRateCalculatorStories.Default.render?.({}, {} as never) ?? null
+    )
 
     expect(
       screen.getByRole('textbox', { name: 'Amount to convert' })
@@ -78,5 +80,4 @@ describe('storybook stories smoke', () => {
       screen.getByRole('textbox', { name: 'Converted amount' })
     ).toHaveValue('0.50')
   })
-
 })

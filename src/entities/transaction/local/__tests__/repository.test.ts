@@ -245,7 +245,10 @@ describe('transactionRepository', () => {
         // valid
         createMockTransaction({ id: 'srv-good' }),
         // missing id
-        { ...createMockTransaction({ id: 'srv-good' }), id: '' } as TransactionDto,
+        {
+          ...createMockTransaction({ id: 'srv-good' }),
+          id: '',
+        } as TransactionDto,
         // missing account
         {
           ...createMockTransaction({ id: 'no-account' }),

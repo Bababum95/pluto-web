@@ -15,10 +15,14 @@ describe('SyncCoordinator', () => {
     vi.useFakeTimers()
 
     // Mock window.addEventListener
-    vi.spyOn(window, 'addEventListener').mockImplementation((event, handler) => {
-      if (event === 'online') onlineEventListener = handler as (event: Event) => void
-      if (event === 'offline') offlineEventListener = handler as (event: Event) => void
-    })
+    vi.spyOn(window, 'addEventListener').mockImplementation(
+      (event, handler) => {
+        if (event === 'online')
+          onlineEventListener = handler as (event: Event) => void
+        if (event === 'offline')
+          offlineEventListener = handler as (event: Event) => void
+      }
+    )
 
     vi.spyOn(window, 'removeEventListener').mockImplementation(() => {})
 
@@ -56,8 +60,14 @@ describe('SyncCoordinator', () => {
     it('should register online/offline event listeners', () => {
       syncCoordinator.start()
 
-      expect(window.addEventListener).toHaveBeenCalledWith('online', expect.any(Function))
-      expect(window.addEventListener).toHaveBeenCalledWith('offline', expect.any(Function))
+      expect(window.addEventListener).toHaveBeenCalledWith(
+        'online',
+        expect.any(Function)
+      )
+      expect(window.addEventListener).toHaveBeenCalledWith(
+        'offline',
+        expect.any(Function)
+      )
     })
 
     it('should trigger immediate sync on start', async () => {
@@ -121,8 +131,14 @@ describe('SyncCoordinator', () => {
       syncCoordinator.start()
       syncCoordinator.stop()
 
-      expect(window.removeEventListener).toHaveBeenCalledWith('online', expect.any(Function))
-      expect(window.removeEventListener).toHaveBeenCalledWith('offline', expect.any(Function))
+      expect(window.removeEventListener).toHaveBeenCalledWith(
+        'online',
+        expect.any(Function)
+      )
+      expect(window.removeEventListener).toHaveBeenCalledWith(
+        'offline',
+        expect.any(Function)
+      )
     })
 
     // TODO: Fix fake timer issues with async operations
@@ -290,7 +306,10 @@ describe('SyncCoordinator', () => {
       syncFn.mockClear()
 
       // Simulate going online
-      Object.defineProperty(navigator, 'onLine', { value: true, writable: true })
+      Object.defineProperty(navigator, 'onLine', {
+        value: true,
+        writable: true,
+      })
       onlineEventListener?.(new Event('online'))
 
       await vi.waitFor(() => {
@@ -344,7 +363,10 @@ describe('SyncCoordinator', () => {
       syncFn.mockClear()
 
       // Go offline
-      Object.defineProperty(navigator, 'onLine', { value: false, writable: true })
+      Object.defineProperty(navigator, 'onLine', {
+        value: false,
+        writable: true,
+      })
       offlineEventListener?.(new Event('offline'))
 
       // Advance time - should not trigger sync

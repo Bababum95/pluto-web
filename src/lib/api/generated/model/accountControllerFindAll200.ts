@@ -5,10 +5,10 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { AccountDto } from './accountDto';
-import type { AccountSummaryDto } from './accountSummaryDto';
+import type { AccountDto } from './accountDto'
+import type { AccountSummaryDto } from './accountSummaryDto'
 
 export type AccountControllerFindAll200 = {
-  list?: AccountDto[];
-  summary?: AccountSummaryDto;
-};
+  list?: AccountDto[]
+  summary?: AccountSummaryDto
+}

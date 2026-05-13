@@ -42,10 +42,7 @@ vi.mock('@/components/ui/drawer', async () => {
         </div>
       </DrawerContext.Provider>
     ),
-    DrawerContent: ({
-      children,
-      ...props
-    }: React.ComponentProps<'div'>) => {
+    DrawerContent: ({ children, ...props }: React.ComponentProps<'div'>) => {
       const { open } = React.useContext(DrawerContext)
       return open ? <div {...props}>{children}</div> : null
     },
@@ -98,5 +95,4 @@ describe('LanguageDrawer (integration)', () => {
     fireEvent.click(screen.getByRole('button', { name: 'close-drawer' }))
     expect(onClose).toHaveBeenCalledTimes(1)
   })
-
 })

@@ -6,7 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 
 import { AppLayout } from '@/components/AppLayout'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { selectTransferById, deleteTransfer } from '@/store/slices/transfer'
+import { selectTransferById, deleteTransfer } from '@/entities/transfer'
 import { fetchAccounts } from '@/entities/account'
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { TransferCard } from '@/features/transfer'
-import { selectTransfersStatus } from '@/store/slices/transfer'
+import { selectTransfersStatus } from '@/entities/transfer'
 
 const TransferDetailPage = () => {
   const { transferId } = Route.useParams()

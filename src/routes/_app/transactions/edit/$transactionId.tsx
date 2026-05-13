@@ -29,7 +29,7 @@ import {
   selectCurrentTransaction,
   setCurrent,
   updateTransaction,
-} from '@/store/slices/transaction'
+} from '@/entities/transaction'
 import { parseDecimal } from '@/features/money'
 import type { TransactionFormType } from '@/features/transaction/types'
 

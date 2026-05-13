@@ -12,11 +12,13 @@ import transactionReducer, {
   updateTransactionLocal,
   removeTransaction,
   clearTransactions,
+} from '../transaction.slice'
+import {
   fetchTransactions,
   createTransaction,
   updateTransaction,
   deleteTransaction,
-} from './index'
+} from '../async-thunks'
 import { createMockTransaction } from '@/testing/data/transaction'
 import { mockAccount, mockAccountSummary } from '@/testing/data/account'
 import { mockCurrency } from '@/testing/data/currency'

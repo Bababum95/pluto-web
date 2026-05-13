@@ -183,6 +183,18 @@ describe('accountRepository', () => {
       expect(result).toHaveLength(1)
       expect(result[0].id).toBe('account-1')
     })
+
+    it('logs and bails on non-array input', async () => {
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+      await accountRepository.syncFromApi(null as unknown as AccountDto[])
+
+      expect(errorSpy).toHaveBeenCalledWith(
+        'syncFromApi: invalid accounts data, expected array'
+      )
+      expect(await db.accounts.toArray()).toEqual([])
+      errorSpy.mockRestore()
+    })
   })
 
   describe('clear', () => {

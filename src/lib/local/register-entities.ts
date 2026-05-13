@@ -36,8 +36,8 @@ import type {
   UpdateTransactionDto,
   UpdateTransferDto,
 } from '@/lib/api/generated/model'
-import { addTransaction, removeTransaction } from '@/store/slices/transaction'
-import { addTransfer, removeTransfer } from '@/store/slices/transfer'
+import { addTransaction, removeTransaction } from '@/entities/transaction'
+import { addTransfer, removeTransfer } from '@/entities/transfer'
 import { authControllerGetProfile } from '@/lib/api/generated/auth/auth'
 import { settingsControllerFindOne } from '@/lib/api/generated/settings/settings'
 import { tagControllerFindAll } from '@/lib/api/generated/tags/tags'

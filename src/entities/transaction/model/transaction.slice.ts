@@ -150,6 +150,5 @@ export const {
   clearTransactions,
 } = transactionSlice.actions
 
-export * from './selectors'
-export * from './async-thunks'
-export default transactionSlice.reducer
+export const transactionReducer = transactionSlice.reducer
+export default transactionReducer

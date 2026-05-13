@@ -10,7 +10,7 @@ import {
   deleteTransaction,
   updateTransaction,
   fetchTransactions,
-} from '@/store/slices/transaction'
+} from '@/entities/transaction'
 import {
   mockTransaction,
   createMockTransaction,

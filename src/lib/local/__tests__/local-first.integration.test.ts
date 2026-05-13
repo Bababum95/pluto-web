@@ -36,8 +36,8 @@ import { TEST_API_ROOT } from '@/testing/constants'
 import type { CreateTransactionDto, CreateTransferDto } from '@/lib/api/generated/model'
 import * as syncUtils from '@/lib/local/sync-utils'
 import { store } from '@/store'
-import { clearTransactions } from '@/store/slices/transaction'
-import { clearTransfers } from '@/store/slices/transfer'
+import { clearTransactions } from '@/entities/transaction'
+import { clearTransfers } from '@/entities/transfer'
 
 async function resetLocalDb(): Promise<void> {
   await Promise.all([

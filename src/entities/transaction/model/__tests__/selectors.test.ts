@@ -8,7 +8,7 @@ import type { RootState } from '@/store'
 import {
   selectTransactionsByCategory,
   selectTransactionsByDay,
-} from '@/store/slices/transaction/selectors'
+} from '../selectors'
 import { createMockTransaction } from '@/testing/data/transaction'
 import { mockCategory, createMockCategory } from '@/testing/data/category'
 import { mockCurrency } from '@/testing/data/currency'

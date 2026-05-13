@@ -1,11 +1,9 @@
 import { describe, it, expect } from 'vitest'
 
 import type { RootState } from '@/store'
-import {
-  selectTransferById,
-  selectTransfersByDay,
-} from './selectors'
 import { createMockTransfer } from '@/testing/data/transfer'
+
+import { selectTransferById, selectTransfersByDay } from '../selectors'
 
 function transferState(
   transfers: RootState['transfer']['transfers']

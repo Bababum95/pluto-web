@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { transactionRepository } from '@/entities/transaction/local'
 import { transactionApi } from '@/features/transaction'
 import type { RootState } from '@/store'
+
+import { transactionRepository } from '../../local'
 
 type FetchTransactionsPayload = {
   clear?: boolean

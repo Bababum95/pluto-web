@@ -2,10 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import { transferApi } from '@/features/transfer'
-import {
-  transferRepository,
-  enqueueDeleteTransfer,
-} from '@/entities/transfer/local'
+
+import { transferRepository, enqueueDeleteTransfer } from '../../local'
 
 export const deleteTransfer = createAsyncThunk(
   'transfer/deleteTransfer',

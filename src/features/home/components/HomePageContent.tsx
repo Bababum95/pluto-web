@@ -13,7 +13,7 @@ import {
   selectTransactionsSummary,
   selectTransactionsByCategory,
   selectTransactionsStatus,
-} from '@/store/slices/transaction'
+} from '@/entities/transaction'
 import { selectCurrency } from '@/entities/settings'
 
 export const HomePageContent: FC = () => {

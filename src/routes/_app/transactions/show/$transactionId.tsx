@@ -29,7 +29,7 @@ import {
   deleteTransaction,
   selectCurrentTransaction,
   setCurrent,
-} from '@/store/slices/transaction'
+} from '@/entities/transaction'
 import { Separator } from '@/components/ui/separator'
 
 const Row: FC<PropsWithChildren> = ({ children }) => (

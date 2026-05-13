@@ -1,7 +1,8 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 
+import { fetchTransactions } from '@/entities/transaction'
+
 import { setTransactionType } from '../slices/transaction-type'
-import { fetchTransactions } from '../slices/transaction'
 
 export const transactionTypeListener = createListenerMiddleware()
 

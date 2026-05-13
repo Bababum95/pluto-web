@@ -2,12 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import { transferApi } from '@/features/transfer'
-import type { TransferDto } from '@/features/transfer/types'
-import {
-  transferRepository,
-  enqueueCreateTransfer,
-} from '@/entities/transfer/local'
-import type { CreateTransferDto } from '@/features/transfer/types'
+import type {
+  CreateTransferDto,
+  TransferDto,
+} from '@/features/transfer/types'
+
+import { transferRepository, enqueueCreateTransfer } from '../../local'
 
 export const createTransfer = createAsyncThunk(
   'transfer/createTransfer',

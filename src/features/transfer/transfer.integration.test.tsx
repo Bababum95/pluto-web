@@ -8,7 +8,7 @@ import {
   createTransfer,
   deleteTransfer,
   fetchTransfers,
-} from '@/store/slices/transfer'
+} from '@/entities/transfer'
 import { mockTransfer, createMockTransfer } from '@/testing/data/transfer'
 
 describe('Transfer flow (integration)', () => {

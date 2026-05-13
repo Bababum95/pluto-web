@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { RootState } from '@/store'
 
-import { setCurrent } from './setCurrent'
+import { setCurrent } from '../async-thunks/setCurrent'
 
 const getByIdMock = vi.fn()
 

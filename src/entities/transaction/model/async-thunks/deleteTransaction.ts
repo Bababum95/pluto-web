@@ -2,10 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import { transactionApi } from '@/features/transaction'
+
 import {
   transactionRepository,
   enqueueDeleteTransaction,
-} from '@/entities/transaction/local'
+} from '../../local'
 
 export const deleteTransaction = createAsyncThunk(
   'transaction/deleteTransaction',

@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { transferRepository } from '@/entities/transfer/local'
 import { transferApi } from '@/features/transfer'
 import { selectTimeRangeFormatted } from '@/store/slices/time-range'
 import type { RootState } from '@/store'
+
+import { transferRepository } from '../../local'
 
 let abortController: AbortController | null = null
 
@@ -35,10 +36,7 @@ export const fetchTransfers = createAsyncThunk(
 
       if (localList.length > 0) {
         transferApi
-          .list(
-            { createdFrom: range.from, createdTo: range.to },
-            { signal }
-          )
+          .list({ createdFrom: range.from, createdTo: range.to }, { signal })
           .then((apiList) => transferRepository.syncFromApi(apiList))
           .catch((err) => console.warn('Background transfer sync failed:', err))
 

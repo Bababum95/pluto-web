@@ -11,7 +11,7 @@ import { useAppSelector } from '@/store'
 import {
   selectTransactionsByDay,
   selectTransactionsStatus,
-} from '@/store/slices/transaction'
+} from '@/entities/transaction'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { TimeRangeSwitcher } from '@/features/time-range/components/TimeRangeSwitcher'
 import {

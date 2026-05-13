@@ -7,7 +7,7 @@ import { TransactionForm } from '@/features/transaction/components/TransactionFo
 import { DEFAULT_TRANSACTION_FORM_VALUES } from '@/features/transaction/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectSettings } from '@/entities/settings'
-import { createTransaction } from '@/store/slices/transaction'
+import { createTransaction } from '@/entities/transaction'
 import type { TransactionFormType } from '@/features/transaction/types'
 
 export const Route = createFileRoute('/_app/transactions/create')({

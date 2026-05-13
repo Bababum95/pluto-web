@@ -9,13 +9,14 @@ import { updateAccountInState, setSummary } from '@/entities/account'
 import { accountRepository } from '@/entities/account/local'
 import { categoryRepository } from '@/entities/category'
 import { tagRepository } from '@/entities/tag'
+import type { TransactionFormType } from '@/features/transaction/types'
+import type { RootState } from '@/store'
+
 import {
   transactionRepository,
   enqueueCreateTransaction,
   buildPlaceholderTransaction,
-} from '@/entities/transaction/local'
-import type { TransactionFormType } from '@/features/transaction/types'
-import type { RootState } from '@/store'
+} from '../../local'
 
 export const createTransaction = createAsyncThunk(
   'transaction/createTransaction',

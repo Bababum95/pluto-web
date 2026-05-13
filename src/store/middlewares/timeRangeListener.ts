@@ -1,13 +1,14 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 
+import { fetchTransactions } from '@/entities/transaction'
+import { fetchTransfers } from '@/entities/transfer'
+
 import {
   setTimeRange,
   setTimeRangeIndex,
   decreaseTimeRangeIndex,
   increaseTimeRangeIndex,
 } from '../slices/time-range'
-import { fetchTransactions } from '../slices/transaction'
-import { fetchTransfers } from '../slices/transfer'
 
 export const timeRangeListener = createListenerMiddleware()
 

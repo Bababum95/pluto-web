@@ -7,12 +7,13 @@ import { parseDecimal } from '@/features/money'
 import { updateAccountInState, setSummary } from '@/entities/account'
 import { categoryRepository } from '@/entities/category'
 import { tagRepository } from '@/entities/tag'
+import type { TransactionFormType } from '@/features/transaction/types'
+import type { RootState } from '@/store'
+
 import {
   transactionRepository,
   enqueueUpdateTransaction,
-} from '@/entities/transaction/local'
-import type { TransactionFormType } from '@/features/transaction/types'
-import type { RootState } from '@/store'
+} from '../../local'
 
 type Params = {
   id: string

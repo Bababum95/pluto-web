@@ -60,8 +60,13 @@ const ShowTransactionPage = () => {
   if (!transaction) {
     return (
       <AppLayout title={t('transactions.title')} showBackButton>
-        <div className="flex flex-1 items-center justify-center py-8">
+        <div className="flex flex-col flex-1 items-center justify-center gap-2 py-8">
           <Spinner size={32} />
+          {transactionId.startsWith('temp-') ? (
+            <span className="text-sm text-muted-foreground">
+              {t('sync.pending')}
+            </span>
+          ) : null}
         </div>
       </AppLayout>
     )

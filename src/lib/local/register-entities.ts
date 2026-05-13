@@ -222,12 +222,10 @@ export function registerSyncEntities(): void {
     }
   })
 
-  // Account entity sync
+  // Account entity sync (Dexie + Redux + summary, same as refreshAccountsFromApi)
   syncCoordinator.registerEntity('account', async () => {
     try {
-      const response = await accountControllerFindAll()
-      await accountRepository.syncFromApi(response.list || [])
-      // Note: summary is not stored locally, only accounts
+      await refreshAccountsFromApi()
     } catch (error) {
       console.error('Account sync failed:', error)
       throw error

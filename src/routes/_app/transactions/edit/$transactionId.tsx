@@ -89,6 +89,15 @@ const EditTransactionPage = () => {
   }, [dispatch, transactionId])
 
   if (!transaction) {
+    if (transactionId.startsWith('temp-')) {
+      return (
+        <AppLayout title={t('transactions.actions.edit')} showBackButton>
+          <div className="flex flex-1 items-center justify-center py-8 text-muted-foreground">
+            {t('sync.pending')}
+          </div>
+        </AppLayout>
+      )
+    }
     return (
       <AppLayout title={t('transactions.actions.edit')} showBackButton>
         <div className="flex flex-1 items-center justify-center py-8">

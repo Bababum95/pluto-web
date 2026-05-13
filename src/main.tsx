@@ -14,6 +14,7 @@ import { FullScreenLoader } from '@/components/full-screen-loader'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import { syncCoordinator } from '@/lib/local/sync-coordinator'
 import { registerSyncEntities } from '@/lib/local/register-entities'
+import { SyncErrorNotifier } from '@/lib/local/sync-error-notifier'
 import '@/lib/i18n/config'
 
 // Import the generated route tree
@@ -55,6 +56,7 @@ function App() {
   return (
     <>
       <FullScreenLoader isVisible={sessionLoading || status === 'pending'} />
+      {LOCAL_DATA_MODE === 'dexie' && <SyncErrorNotifier />}
       {!sessionLoading && (
         <RouterProvider router={router} context={{ isAuth }} />
       )}

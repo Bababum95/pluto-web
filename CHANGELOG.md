@@ -11,6 +11,8 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ### ✨ Features
 
+- surface sync failures to the user via toast when local-first sync errors (`SyncErrorNotifier`)
+- improve detail routes for optimistic `temp-*` ids (pending sync message or redirect when missing)
 - enhance settings and tag entities with outbox handlers
 - add empty state for accounts page
 - integrate sync entity registration and enhance sync coordinator
@@ -24,6 +26,15 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 - reorganize settings slice and update async thunks
 - consolidate settings API and types into a unified entity structure
 - add local-first support for Settings and Tag entities
+
+### 🐛 Fixes
+
+- dispatch Redux accounts + summary after background account pull sync (`refreshAccountsFromApi` in entity sync)
+- resolve temp-account currency display from settings or existing accounts; placeholder until catalog or sync
+
+### 📚 Documentation
+
+- reviewers: conflict strategy for local-first data is documented in `docs/LOCAL_FIRST.md` (Conflict resolution); summary is refreshed after account sync as above
 
 ---
 

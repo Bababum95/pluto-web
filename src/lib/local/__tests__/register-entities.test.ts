@@ -6,6 +6,14 @@ import { tagRepository } from '@/entities/tag/local/repository'
 import { authControllerGetProfile } from '@/lib/api/generated/auth/auth'
 import { settingsControllerFindOne } from '@/lib/api/generated/settings/settings'
 import { tagControllerFindAll } from '@/lib/api/generated/tags/tags'
+import { accountControllerFindAll } from '@/lib/api/generated/accounts/accounts'
+import { accountRepository } from '@/entities/account/local'
+import { store } from '@/store'
+import { setAccounts, setSummary } from '@/entities/account'
+import {
+  mockAccountListResponse,
+  mockAccountSummary,
+} from '@/testing/data/account'
 import { registerSyncEntities } from '../register-entities'
 
 vi.mock('@/entities/user', () => ({
@@ -40,6 +48,16 @@ vi.mock('@/lib/api/generated/settings/settings', () => ({
 
 vi.mock('@/lib/api/generated/tags/tags', () => ({
   tagControllerFindAll: vi.fn(),
+}))
+
+vi.mock('@/entities/account/local', () => ({
+  accountRepository: {
+    syncFromApi: vi.fn(),
+  },
+}))
+
+vi.mock('@/lib/api/generated/accounts/accounts', () => ({
+  accountControllerFindAll: vi.fn(),
 }))
 
 describe('registerSyncEntities', () => {
@@ -178,6 +196,31 @@ describe('registerSyncEntities', () => {
 
     expect(tagControllerFindAll).toHaveBeenCalledTimes(1)
     expect(tagRepository.syncFromApi).toHaveBeenCalledWith(mockTags)
+  })
+
+  it('should refresh accounts, Dexie, and Redux summary when account sync handler runs', async () => {
+    vi.mocked(accountControllerFindAll).mockResolvedValue(mockAccountListResponse)
+    vi.mocked(accountRepository.syncFromApi).mockResolvedValue()
+
+    registerSyncEntities()
+
+    const dispatchSpy = vi.spyOn(store, 'dispatch')
+
+    const accountHandler = syncCoordinator.getEntityHandler('account')
+    expect(accountHandler).toBeDefined()
+
+    await accountHandler!()
+
+    expect(accountControllerFindAll).toHaveBeenCalledTimes(1)
+    expect(accountRepository.syncFromApi).toHaveBeenCalledWith(
+      mockAccountListResponse.list
+    )
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      setAccounts(mockAccountListResponse.list)
+    )
+    expect(dispatchSpy).toHaveBeenCalledWith(setSummary(mockAccountSummary))
+
+    dispatchSpy.mockRestore()
   })
 
   it('should log error and rethrow when user sync fails', async () => {

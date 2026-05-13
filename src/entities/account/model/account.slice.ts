@@ -18,6 +18,7 @@ import {
 } from '../local/outbox-helpers'
 
 import { accountApi } from './api'
+import { resolveMoneyViewCurrencyForTempAccount } from './temp-account-currency'
 import type {
   AccountDto,
   AccountSummaryDto,
@@ -87,9 +88,15 @@ export const deleteAccount = createAsyncThunk(
 
 export const createAccount = createAsyncThunk(
   'account/createAccount',
-  async (data: CreateAccountDto) => {
+  async (data: CreateAccountDto, { getState }) => {
     if (LOCAL_DATA_MODE === 'dexie') {
       const tempId = `temp-${Date.now()}`
+
+      const currencyView = resolveMoneyViewCurrencyForTempAccount(
+        data.currency,
+        data.scale,
+        getState
+      )
 
       // Create a temporary account with placeholder balance structure
       // The real balance will come from the server after sync
@@ -104,23 +111,13 @@ export const createAccount = createAsyncThunk(
             value: (data.balance || 0) / Math.pow(10, data.scale),
             raw: data.balance || 0,
             scale: data.scale,
-            currency: {
-              id: data.currency,
-              code: 'TEMP',
-              symbol: '',
-              decimal_digits: data.scale,
-            },
+            currency: currencyView,
           },
           converted: {
             value: (data.balance || 0) / Math.pow(10, data.scale),
             raw: data.balance || 0,
             scale: data.scale,
-            currency: {
-              id: data.currency,
-              code: 'TEMP',
-              symbol: '',
-              decimal_digits: data.scale,
-            },
+            currency: currencyView,
           },
         },
         order: data.order || 0,

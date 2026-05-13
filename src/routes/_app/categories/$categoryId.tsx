@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
@@ -29,18 +29,31 @@ const EditCategoryPage = () => {
     toast.success(t('categories.messages.updated'))
   }
 
-  if (isLoading || !category) {
+  if (isLoading) {
     return (
       <AppLayout title={t('categories.actions.edit')} showBackButton>
         <TransactionTypeTabs>
           <div className="flex flex-1 items-center justify-center py-8">
-            {isLoading
-              ? t('common.loading')
-              : t('categories.messages.notFound')}
+            {t('common.loading')}
           </div>
         </TransactionTypeTabs>
       </AppLayout>
     )
+  }
+
+  if (!category) {
+    if (categoryId.startsWith('temp-')) {
+      return (
+        <AppLayout title={t('categories.actions.edit')} showBackButton>
+          <TransactionTypeTabs>
+            <div className="flex flex-1 items-center justify-center py-8 text-muted-foreground">
+              {t('sync.pending')}
+            </div>
+          </TransactionTypeTabs>
+        </AppLayout>
+      )
+    }
+    return <Navigate to="/categories" />
   }
 
   return (

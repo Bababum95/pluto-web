@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Delete01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
@@ -34,14 +34,27 @@ const TransferDetailPage = () => {
     toast.success(t('transfers.messages.deleted'))
   }
 
-  if (isLoading || !transfer) {
+  if (isLoading) {
     return (
       <AppLayout title={t('transfers.title')} showBackButton>
         <div className="flex flex-1 items-center justify-center py-8">
-          {isLoading ? t('common.loading') : t('transfers.messages.notFound')}
+          {t('common.loading')}
         </div>
       </AppLayout>
     )
+  }
+
+  if (!transfer) {
+    if (transferId.startsWith('temp-')) {
+      return (
+        <AppLayout title={t('transfers.title')} showBackButton>
+          <div className="flex flex-1 items-center justify-center py-8 text-muted-foreground">
+            {t('sync.pending')}
+          </div>
+        </AppLayout>
+      )
+    }
+    return <Navigate to="/transfers" />
   }
 
   return (

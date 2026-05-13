@@ -33,7 +33,8 @@ Useful project scripts:
 
 ## 3) Source layout
 
-- `src/routes/` — route modules (TanStack Router conventions)
+- `src/routes/` — TanStack Router file modules (thin: `createFileRoute` + page import)
+- `src/pages/` — route-level composition (`ui/` per slice; public API via `index.ts`)
 - `src/features/` — domain features
 - `src/components/` — shared UI components
 - `src/app/providers/` — `AppProviders` (Redux `Provider` + auth, theme, appearance) and per-domain provider modules; `features/auth`, `features/theme`, `features/appearance` re-export for compatibility

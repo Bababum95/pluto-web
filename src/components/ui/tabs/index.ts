@@ -1,1 +1,1 @@
-export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs'
+export * from '@/shared/ui/tabs/index'

@@ -6,7 +6,7 @@ import { renderWithProviders } from '@/testing/render'
 import { AppearanceContext } from '../AppearanceContext'
 import type { AppearanceContextType } from '../types'
 
-vi.mock('@/components/ui/drawer', () => ({
+vi.mock('@/shared/ui/drawer', () => ({
   Drawer: ({
     children,
     open,

@@ -1,2 +1,1 @@
-export const TRANSACTION_TYPES = ['expense', 'income'] as const
-export const DEFAULT_TRANSACTION_TYPE = 'expense'
+export { DEFAULT_TRANSACTION_TYPE, TRANSACTION_TYPES } from '@/shared/config/transaction-types'

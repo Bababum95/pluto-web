@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
-import { cn } from '@/lib/utils'
-import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/shared/lib'
+import { Skeleton } from '@/shared/ui/skeleton'
 
 import { formatBalance } from '../utils/formatBalance'
 import { DEFAULT_CURRENCY } from '../constants'

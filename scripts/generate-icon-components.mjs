@@ -1,6 +1,6 @@
 /**
- * Script: converts SVG files from src/lib/icons/svg/ into React components
- * in src/lib/icons/components/. Run from web/ directory:
+ * Script: converts SVG files from src/shared/ui/icons/svg/ into React components
+ * in src/shared/ui/icons/components/. Run from web/ directory:
  *
  *   node scripts/generate-icon-components.mjs
  *
@@ -190,7 +190,7 @@ function main() {
 
   if (created.length > 0) {
     console.log(
-      '\nNext: add new icons to src/lib/icons/registry.ts (import + ICON_REGISTRY).'
+      '\nNext: add new icons to src/shared/ui/icons/registry.ts (import + ICON_REGISTRY).'
     )
   }
 }

@@ -3,10 +3,10 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Invoice01Icon, PlusSignIcon } from '@hugeicons/core-free-icons'
 import { useTranslation } from 'react-i18next'
 
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 import { AppLayout } from '@/components/AppLayout'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Button } from '@/shared/ui/button'
+import { Card, CardContent, CardHeader } from '@/shared/ui/card'
 import {
   Empty,
   EmptyContent,
@@ -14,9 +14,9 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/components/ui/empty'
-import { ItemGroup } from '@/components/ui/item'
-import { Spinner } from '@/components/ui/spinner'
+} from '@/shared/ui/empty'
+import { ItemGroup } from '@/shared/ui/item'
+import { Spinner } from '@/shared/ui/spinner'
 import { TimeRangeSwitcher } from '@/features/time-range/components/TimeRangeSwitcher'
 import { useAppSelector } from '@/store'
 import {

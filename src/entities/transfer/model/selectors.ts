@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 
 import type { RootState } from '@/store'
-import type { TransferDto } from '@/features/transfer/types'
+import type { TransferDto } from './dto-types'
 
 export const selectTransfers = (state: RootState) => state.transfer.transfers
 export const selectTransfersStatus = (state: RootState) => state.transfer.status

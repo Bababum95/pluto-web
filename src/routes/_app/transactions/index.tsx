@@ -1,10 +1,10 @@
-import { i18n, useTranslation } from '@/lib/i18n'
+import { i18n, useTranslation } from '@/shared/lib/i18n'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Fragment } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Invoice01Icon, PlusSignIcon } from '@hugeicons/core-free-icons'
 
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 import { AppLayout } from '@/components/AppLayout'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { useAppSelector } from '@/store'
@@ -12,7 +12,7 @@ import {
   selectTransactionsByDay,
   selectTransactionsStatus,
 } from '@/entities/transaction'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/shared/ui/card'
 import { TimeRangeSwitcher } from '@/features/time-range/components/TimeRangeSwitcher'
 import {
   Item,
@@ -22,11 +22,11 @@ import {
   ItemGroup,
   ItemSeparator,
   ItemTitle,
-} from '@/components/ui/item'
-import { Icon } from '@/components/ui/icon'
+} from '@/shared/ui/item'
+import { Icon } from '@/shared/ui/icon'
 import { formatBalance, toDecimal } from '@/features/money'
-import { Badge } from '@/components/ui/badge'
-import { Spinner } from '@/components/ui/spinner'
+import { Badge } from '@/shared/ui/badge'
+import { Spinner } from '@/shared/ui/spinner'
 import {
   Empty,
   EmptyContent,
@@ -34,8 +34,8 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/components/ui/empty'
-import { Button } from '@/components/ui/button'
+} from '@/shared/ui/empty'
+import { Button } from '@/shared/ui/button'
 
 const TransactionsPage = () => {
   const { t } = useTranslation()

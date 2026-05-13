@@ -1,1 +1,1 @@
-export { Textarea, textareaVariants, type TextareaProps } from './textarea'
+export * from '@/shared/ui/textarea/index'

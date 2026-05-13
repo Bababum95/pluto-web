@@ -11,8 +11,8 @@ import {
   enqueueUpdateTag,
   enqueueDeleteTag,
 } from '../local/outbox-helpers'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { generateTempEntityId } from '@/lib/local/temp-id'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import type { TagDto, TagFormValues } from './types'
 import type { Status } from '@/lib/types'
 

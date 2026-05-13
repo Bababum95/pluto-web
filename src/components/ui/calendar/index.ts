@@ -1,1 +1,1 @@
-export { Calendar, CalendarDayButton } from './calendar'
+export * from '@/shared/ui/calendar/index'

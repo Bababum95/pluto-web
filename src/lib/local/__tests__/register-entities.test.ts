@@ -3,10 +3,10 @@ import { syncCoordinator } from '../sync-coordinator'
 import { userRepository } from '@/entities/user'
 import { settingsRepository } from '@/entities/settings/local/repository'
 import { tagRepository } from '@/entities/tag/local/repository'
-import { authControllerGetProfile } from '@/lib/api/generated/auth/auth'
-import { settingsControllerFindOne } from '@/lib/api/generated/settings/settings'
-import { tagControllerFindAll } from '@/lib/api/generated/tags/tags'
-import { accountControllerFindAll } from '@/lib/api/generated/accounts/accounts'
+import { authControllerGetProfile } from '@/shared/api/generated/auth/auth'
+import { settingsControllerFindOne } from '@/shared/api/generated/settings/settings'
+import { tagControllerFindAll } from '@/shared/api/generated/tags/tags'
+import { accountControllerFindAll } from '@/shared/api/generated/accounts/accounts'
 import { accountRepository } from '@/entities/account/local'
 import { store } from '@/store'
 import { setAccounts, setSummary } from '@/entities/account'
@@ -38,15 +38,15 @@ vi.mock('@/entities/tag/local/repository', () => ({
   },
 }))
 
-vi.mock('@/lib/api/generated/auth/auth', () => ({
+vi.mock('@/shared/api/generated/auth/auth', () => ({
   authControllerGetProfile: vi.fn(),
 }))
 
-vi.mock('@/lib/api/generated/settings/settings', () => ({
+vi.mock('@/shared/api/generated/settings/settings', () => ({
   settingsControllerFindOne: vi.fn(),
 }))
 
-vi.mock('@/lib/api/generated/tags/tags', () => ({
+vi.mock('@/shared/api/generated/tags/tags', () => ({
   tagControllerFindAll: vi.fn(),
 }))
 
@@ -56,7 +56,7 @@ vi.mock('@/entities/account/local', () => ({
   },
 }))
 
-vi.mock('@/lib/api/generated/accounts/accounts', () => ({
+vi.mock('@/shared/api/generated/accounts/accounts', () => ({
   accountControllerFindAll: vi.fn(),
 }))
 

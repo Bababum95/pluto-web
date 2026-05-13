@@ -10,8 +10,8 @@ import {
   ItemMedia,
   ItemTitle,
   ItemSeparator,
-} from '@/components/ui/item'
-import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
+} from '@/shared/ui/item'
+import { getIconByName, DEFAULT_ICON } from '@/shared/ui/icons'
 import { Balance } from '@/features/money'
 
 import type { AccountDto } from '../types'

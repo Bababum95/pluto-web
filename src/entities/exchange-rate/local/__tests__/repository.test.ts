@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { exchangeRateRepository } from '../repository'
-import { db } from '@/lib/local/db'
+import { db } from '@/shared/lib/local-storage/db'
 import type { RateDto } from '@/entities/exchange-rate'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
 

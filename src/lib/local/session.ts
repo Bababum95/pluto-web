@@ -1,6 +1,1 @@
-export type SessionRow = {
-  id: 'current'
-  currentUserId: string | null
-  lastSyncAt?: string | null
-  updatedAt: string
-}
+export * from '@/shared/lib/local-storage/session'

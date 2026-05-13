@@ -1,11 +1,11 @@
-import { queryClient } from '@/lib/api'
+import { queryClient } from '@/shared/api'
 import {
   tagControllerCreate,
   tagControllerFindAll,
   tagControllerFindOne,
   tagControllerRemove,
   tagControllerUpdate,
-} from '@/lib/api/generated/tags/tags'
+} from '@/shared/api/generated/tags/tags'
 import type { TagDto, TagFormValues, UpdateTagDto } from './types'
 
 const QUERY_KEY = ['tags'] as const

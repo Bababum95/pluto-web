@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import type { FC } from 'react'
 
-import { Button } from '@/components/ui/button'
-import { ButtonGroup } from '@/components/ui/button-group'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FieldGroup, FieldSet, Field, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/shared/ui/button'
+import { ButtonGroup } from '@/shared/ui/button-group'
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
+import { FieldGroup, FieldSet, Field, FieldLabel } from '@/shared/ui/field'
+import { Input } from '@/shared/ui/input'
 import {
   Select,
   SelectContent,
@@ -17,10 +17,10 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/shared/ui/select'
 import { SelectAccount } from '@/features/account'
 import { MoneyField, DEFAULT_CURRENCY, sanitizeDecimal } from '@/features/money'
-import { getFormFieldErrorMessage } from '@/lib/form/getFormFieldErrorMessage'
+import { getFormFieldErrorMessage } from '@/shared/lib/react/form/getFormFieldErrorMessage'
 import { useAppSelector } from '@/store'
 import { selectAccounts } from '@/entities/account'
 import { selectExchangeRates } from '@/entities/exchange-rate'

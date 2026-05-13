@@ -1,1 +1,1 @@
-export { Label } from './label'
+export * from '@/shared/ui/label/index'

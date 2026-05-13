@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { Header, type HeaderProps } from '@/components/Header'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib'
 
 type Props = HeaderProps & {
   children: React.ReactNode

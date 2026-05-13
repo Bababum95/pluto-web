@@ -10,7 +10,7 @@ import { http, HttpResponse } from 'msw'
 
 import { SelectCurrency } from './SelectCurrency'
 
-vi.mock('@/components/ui/drawer', () => ({
+vi.mock('@/shared/ui/drawer', () => ({
   Drawer: ({
     children,
     open,

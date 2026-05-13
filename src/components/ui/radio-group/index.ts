@@ -1,1 +1,1 @@
-export { RadioGroup, RadioGroupItem } from './radio-group'
+export * from '@/shared/ui/radio-group/index'

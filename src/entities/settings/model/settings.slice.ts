@@ -4,7 +4,7 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 
 import { settingsApi } from './api'
 import { settingsRepository } from '../local/repository'

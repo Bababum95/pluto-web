@@ -11,14 +11,14 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '@/components/ui/drawer'
-import { Button } from '@/components/ui/button'
+} from '@/shared/ui/drawer'
+import { Button } from '@/shared/ui/button'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '@/components/ui/input-group'
-import { cn } from '@/lib/utils'
+} from '@/shared/ui/input-group'
+import { cn } from '@/shared/lib'
 
 import { currencyApi } from '../api'
 import type { CurrencyDto } from '../types'

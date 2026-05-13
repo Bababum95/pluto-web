@@ -78,28 +78,28 @@ vi.mock('@/store', () => ({
   },
 }))
 
-vi.mock('@/lib/api/generated/categories/categories', () => ({
+vi.mock('@/shared/api/generated/categories/categories', () => ({
   categoryControllerFindAll: mocks.categoryControllerFindAll,
 }))
-vi.mock('@/lib/api/generated/accounts/accounts', () => ({
+vi.mock('@/shared/api/generated/accounts/accounts', () => ({
   accountControllerFindAll: mocks.accountControllerFindAll,
 }))
-vi.mock('@/lib/api/generated/rates/rates', () => ({
+vi.mock('@/shared/api/generated/rates/rates', () => ({
   rateControllerFindAll: mocks.rateControllerFindAll,
 }))
-vi.mock('@/lib/api/generated/transactions/transactions', () => ({
+vi.mock('@/shared/api/generated/transactions/transactions', () => ({
   transactionControllerFindAll: mocks.transactionControllerFindAll,
 }))
-vi.mock('@/lib/api/generated/transfers/transfers', () => ({
+vi.mock('@/shared/api/generated/transfers/transfers', () => ({
   transferControllerFindAll: mocks.transferControllerFindAll,
 }))
-vi.mock('@/lib/api/generated/auth/auth', () => ({
+vi.mock('@/shared/api/generated/auth/auth', () => ({
   authControllerGetProfile: mocks.authControllerGetProfile,
 }))
-vi.mock('@/lib/api/generated/settings/settings', () => ({
+vi.mock('@/shared/api/generated/settings/settings', () => ({
   settingsControllerFindOne: mocks.settingsControllerFindOne,
 }))
-vi.mock('@/lib/api/generated/tags/tags', () => ({
+vi.mock('@/shared/api/generated/tags/tags', () => ({
   tagControllerFindAll: mocks.tagControllerFindAll,
 }))
 
@@ -156,11 +156,11 @@ vi.mock('@/entities/transfer/local', () => ({
   transferRepository: mocks.transferRepo,
 }))
 
-vi.mock('@/features/transaction', () => ({
+vi.mock('@/entities/transaction/model/api', () => ({
   transactionApi: mocks.transactionApi,
 }))
 
-vi.mock('@/features/transfer', () => ({
+vi.mock('@/entities/transfer/model/api', () => ({
   transferApi: mocks.transferApi,
 }))
 

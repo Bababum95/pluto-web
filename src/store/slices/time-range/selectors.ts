@@ -1,5 +1,5 @@
-import dayjs from '@/lib/dayjs'
-import { DATE_FORMAT } from '@/features/time-range/constants'
+import dayjs from '@/shared/lib/date/dayjs'
+import { DATE_FORMAT } from '@/shared/config/time-ranges'
 import type { RootState } from '@/store'
 
 export const selectTimeRangeState = (state: RootState) => state.timeRange

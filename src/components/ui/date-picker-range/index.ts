@@ -1,1 +1,1 @@
-export { DatePickerRange } from './date-picker-range'
+export * from '@/shared/ui/date-picker-range/index'

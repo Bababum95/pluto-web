@@ -3,19 +3,19 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu01Icon, ArrowLeft02Icon } from '@hugeicons/core-free-icons'
 import type { FC } from 'react'
 
-import dayjs from '@/lib/dayjs'
-import { Button } from '@/components/ui/button'
+import dayjs from '@/shared/lib/date/dayjs'
+import { Button } from '@/shared/ui/button'
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet'
-import { Separator } from '@/components/ui/separator'
-import { useTranslation } from '@/lib/i18n'
-import { MENU_ITEMS } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+} from '@/shared/ui/sheet'
+import { Separator } from '@/shared/ui/separator'
+import { useTranslation } from '@/shared/lib/i18n'
+import { MENU_ITEMS } from '@/shared/config/constants'
+import { cn } from '@/shared/lib'
 import { NavUser } from '@/widgets/nav-user'
 
 export type HeaderProps = {

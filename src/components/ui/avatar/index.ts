@@ -1,8 +1,1 @@
-export {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  AvatarBadge,
-  AvatarGroup,
-  AvatarGroupCount,
-} from './avatar'
+export * from '@/shared/ui/avatar/index'

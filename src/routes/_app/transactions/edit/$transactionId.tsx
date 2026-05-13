@@ -5,15 +5,15 @@ import { Delete01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useEffect, useState } from 'react'
 
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 import { AppLayout } from '@/components/AppLayout'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/shared/ui/dropdown-menu'
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/components/ui/dialog'
+} from '@/shared/ui/dialog'
 import { TransactionForm } from '@/features/transaction/components/TransactionForm'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {

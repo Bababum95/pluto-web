@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import type { FC } from 'react'
 
-import { Field, FieldLabel } from '@/components/ui/field'
-import { Badge } from '@/components/ui/badge'
+import { Field, FieldLabel } from '@/shared/ui/field'
+import { Badge } from '@/shared/ui/badge'
 import { useAppSelector } from '@/store'
 import { selectTags } from '@/entities/tag'
 

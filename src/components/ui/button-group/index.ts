@@ -1,6 +1,1 @@
-export {
-  ButtonGroup,
-  ButtonGroupSeparator,
-  ButtonGroupText,
-  buttonGroupVariants,
-} from './button-group'
+export * from '@/shared/ui/button-group/index'

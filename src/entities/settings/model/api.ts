@@ -1,7 +1,7 @@
 import {
   settingsControllerFindOne,
   settingsControllerUpdate,
-} from '@/lib/api/generated/settings/settings'
+} from '@/shared/api/generated/settings/settings'
 
 import type { SettingsDto, UpdateSettingsDto } from './types'
 

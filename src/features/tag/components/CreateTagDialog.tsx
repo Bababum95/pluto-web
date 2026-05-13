@@ -12,9 +12,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { FormField } from '@/components/forms/form-field'
+} from '@/shared/ui/dialog'
+import { Button } from '@/shared/ui/button'
+import { FormField } from '@/shared/ui/forms/form-field'
 import { useAppDispatch } from '@/store'
 import { createTag } from '@/entities/tag'
 import type { TagDto } from '@/entities/tag'

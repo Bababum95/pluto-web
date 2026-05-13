@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowDataTransferVerticalIcon } from '@hugeicons/core-free-icons'
 
-import { cn } from '@/lib/utils'
-import { Input } from '@/components/ui/input'
+import { cn } from '@/shared/lib'
+import { Input } from '@/shared/ui/input'
 import {
   Select,
   SelectContent,
@@ -12,7 +12,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/shared/ui/select'
 import { useAppSelector } from '@/store'
 import {
   selectExchangeRates,

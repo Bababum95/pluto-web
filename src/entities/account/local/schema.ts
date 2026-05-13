@@ -1,4 +1,4 @@
-import type { AccountDto } from '@/features/account/types'
+import type { AccountDto } from '@/entities/account/model/types'
 
 /** IndexedDB row for the Dexie `accounts` table. */
 export type AccountRow = {

@@ -1,1 +1,1 @@
-export type { CurrencyDto } from '@/lib/api/generated/model'
+export type { CurrencyDto } from '@/shared/api/generated/model'

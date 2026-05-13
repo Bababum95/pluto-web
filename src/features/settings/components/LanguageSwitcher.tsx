@@ -1,17 +1,17 @@
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Globe02Icon } from '@hugeicons/core-free-icons'
 
-import { useTranslation } from '@/lib/i18n'
+import { useTranslation } from '@/shared/lib/i18n'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
+} from '@/shared/ui/dropdown-menu'
+import { Button } from '@/shared/ui/button'
 
-import { SUPPORTED_LANGUAGES } from '@/lib/i18n/config'
+import { SUPPORTED_LANGUAGES } from '@/shared/lib/i18n/config'
 
 export function LanguageSwitcher() {
   const { t, i18n } = useTranslation()

@@ -2,7 +2,7 @@ import type {
   AuthResponseDto,
   LoginDto,
   RegisterDto,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 
 export type AuthContext = {
   isAuth: boolean

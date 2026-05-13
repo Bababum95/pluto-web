@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { transactionApi } from '@/features/transaction'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { transactionApi } from '../api'
 
 import { transactionRepository, enqueueDeleteTransaction } from '../../local'
 

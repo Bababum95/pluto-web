@@ -8,15 +8,15 @@ export default defineConfig({
         'http://localhost:3000/api-docs-json',
     },
     output: {
-      target: 'src/lib/api/generated/endpoints.ts',
-      schemas: 'src/lib/api/generated/model',
+      target: 'src/shared/api/generated/endpoints.ts',
+      schemas: 'src/shared/api/generated/model',
       client: 'react-query',
       httpClient: 'axios',
       mode: 'tags-split',
       clean: true,
       override: {
         mutator: {
-          path: './src/lib/api/orval-mutator.ts',
+          path: './src/shared/api/orval-mutator.ts',
           name: 'customInstance',
         },
         query: {

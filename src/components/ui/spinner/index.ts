@@ -1,1 +1,1 @@
-export { Spinner } from './spinner'
+export * from '@/shared/ui/spinner/index'

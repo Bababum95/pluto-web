@@ -1,12 +1,1 @@
-export {
-  Field,
-  FieldLabel,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldContent,
-  FieldTitle,
-} from './field'
+export * from '@/shared/ui/field/index'

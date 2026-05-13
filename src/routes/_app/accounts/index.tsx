@@ -16,16 +16,16 @@ import {
 } from '@dnd-kit/dom'
 import { move } from '@dnd-kit/helpers'
 
-import { ItemGroup } from '@/components/ui/item'
-import { Card } from '@/components/ui/card'
+import { ItemGroup } from '@/shared/ui/item'
+import { Card } from '@/shared/ui/card'
 import { AppLayout } from '@/components/AppLayout'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
+} from '@/shared/ui/dropdown-menu'
+import { Button } from '@/shared/ui/button'
 import { useTranslation } from 'react-i18next'
 import {
   reorderAccounts,
@@ -40,8 +40,8 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/components/ui/empty'
-import { Spinner } from '@/components/ui/spinner'
+} from '@/shared/ui/empty'
+import { Spinner } from '@/shared/ui/spinner'
 import { Total } from '@/features/money'
 import { SortableAccountItem } from '@/features/account'
 

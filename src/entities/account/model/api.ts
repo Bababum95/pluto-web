@@ -1,4 +1,4 @@
-import { queryClient } from '@/lib/api'
+import { queryClient } from '@/shared/api'
 import {
   accountControllerCreate,
   accountControllerFindAll,
@@ -8,7 +8,7 @@ import {
   accountControllerRemove,
   accountControllerToggleExcluded,
   accountControllerUpdate,
-} from '@/lib/api/generated/accounts/accounts'
+} from '@/shared/api/generated/accounts/accounts'
 
 import type {
   AccountDto,

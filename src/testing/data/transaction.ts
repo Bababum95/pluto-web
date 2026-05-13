@@ -1,4 +1,4 @@
-import type { TransactionDto } from '@/features/transaction/types'
+import type { TransactionDto } from '@/entities/transaction/model/dto-types'
 
 import { mockAccount } from './account'
 import { mockCategory } from './category'

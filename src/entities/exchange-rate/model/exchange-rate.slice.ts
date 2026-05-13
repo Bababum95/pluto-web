@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { syncCoordinator } from '@/lib/local/sync-coordinator'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
 import { exchangeRateRepository } from '@/entities/exchange-rate/local'
 import type { Status } from '@/lib/types'
 

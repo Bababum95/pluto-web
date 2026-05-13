@@ -3,10 +3,10 @@ import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 
 import { AuthCard, useAuth, FALLBACK_URL } from '@/features/auth'
-import { FormField } from '@/components/forms/form-field'
-import { PasswordFormField } from '@/components/forms/password-form-field'
-import { Button } from '@/components/ui/button'
-import { useTranslation } from '@/lib/i18n'
+import { FormField } from '@/shared/ui/forms/form-field'
+import { PasswordFormField } from '@/shared/ui/forms/password-form-field'
+import { Button } from '@/shared/ui/button'
+import { useTranslation } from '@/shared/lib/i18n'
 
 export const Route = createFileRoute('/_auth/register')({
   component: RegisterComponent,

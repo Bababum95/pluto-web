@@ -1,5 +1,5 @@
-import { db } from '@/lib/local/db'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { db } from '@/shared/lib/local-storage/db'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 
 import type { SettingsDto } from '@/entities/settings'
 import { settingsRowFromDto, settingsDtoFromRow } from './schema'

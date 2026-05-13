@@ -7,13 +7,13 @@ import {
   enqueueToggleExcluded,
   isTempId,
 } from '../outbox-helpers'
-import { db } from '@/lib/local/db'
+import { db } from '@/shared/lib/local-storage/db'
 import type {
   CreateAccountDto,
   UpdateAccountDto,
-} from '@/features/account/types'
+} from '@/entities/account/model/types'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
 

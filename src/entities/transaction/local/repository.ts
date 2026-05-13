@@ -1,10 +1,10 @@
-import { db } from '@/lib/local/db'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { db } from '@/shared/lib/local-storage/db'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 
 import type {
   TransactionDto,
   TransactionDtoType,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 import { transactionRowFromDto, transactionDtoFromRow } from './schema'
 
 function sortByDateDesc(transactions: TransactionDto[]): TransactionDto[] {

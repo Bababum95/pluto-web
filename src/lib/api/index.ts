@@ -1,6 +1,1 @@
-export {
-  API_BASE_URL,
-  queryClient,
-  ApiError,
-  type ApiErrorBody,
-} from './client'
+export * from '@/shared/api/index'

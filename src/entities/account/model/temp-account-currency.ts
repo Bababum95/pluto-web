@@ -1,4 +1,4 @@
-import type { MoneyViewCurrencyDto } from '@/lib/api/generated/model'
+import type { MoneyViewCurrencyDto } from '@/shared/api/generated/model'
 
 import type { RootState } from '@/store'
 

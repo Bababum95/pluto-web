@@ -1,4 +1,4 @@
-import { DEFAULT_CURRENCY } from '@/features/money/constants'
+import { DEFAULT_CURRENCY } from '@/shared/lib/money/constants'
 import type { RootState } from '@/store'
 
 export const selectSettings = (state: RootState) => state.settings.settings

@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 import { renderWithProviders } from '@/testing/render'
 import { server } from '@/testing/server'
 import { createStore } from '@/store'

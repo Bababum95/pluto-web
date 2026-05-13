@@ -12,8 +12,8 @@ import {
   enqueueDeleteCategory,
   enqueueReorderCategories,
 } from '../local/outbox-helpers'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { generateTempEntityId } from '@/lib/local/temp-id'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import type { CategoryDto, CategoryFormValues } from './types'
 import type { RootState } from '@/store'
 

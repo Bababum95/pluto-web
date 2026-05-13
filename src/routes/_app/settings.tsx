@@ -9,7 +9,7 @@ import {
 } from '@hugeicons/core-free-icons'
 import { useState } from 'react'
 
-import { Card } from '@/components/ui/card'
+import { Card } from '@/shared/ui/card'
 import { AppLayout } from '@/components/AppLayout'
 import {
   Item,
@@ -20,16 +20,16 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from '@/components/ui/item'
+} from '@/shared/ui/item'
 import { LanguageDrawer } from '@/features/settings'
 import { ThemeDrawer, useTheme } from '@/features/theme'
 import { AppearanceDrawer, useAppearance } from '@/features/appearance'
 import { AccountDrawer } from '@/features/account'
-import { useTranslation } from '@/lib/i18n'
+import { useTranslation } from '@/shared/lib/i18n'
 import { selectDefaultAccount } from '@/entities/settings'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { setDefaultAccount } from '@/features/settings'
-import type { SupportedLanguages } from '@/lib/i18n/types'
+import type { SupportedLanguages } from '@/shared/lib/i18n/types'
 
 export const Route = createFileRoute('/_app/settings')({
   component: SettingsPage,

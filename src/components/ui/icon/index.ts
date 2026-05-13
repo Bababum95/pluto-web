@@ -1,1 +1,1 @@
-export { Icon, type IconProps } from './icon'
+export * from '@/shared/ui/icon/index'

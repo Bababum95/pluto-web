@@ -7,10 +7,10 @@ import {
   authControllerGetProfile,
   authControllerLogin,
   authControllerRegister,
-} from '@/lib/api/generated/auth/auth'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { sessionRepository } from '@/lib/local/session-repository'
-import { db } from '@/lib/local/db'
+} from '@/shared/api/generated/auth/auth'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { sessionRepository } from '@/shared/lib/local-storage/session-repository'
+import { db } from '@/shared/lib/local-storage/db'
 
 import type {
   AuthContext as AuthContextType,

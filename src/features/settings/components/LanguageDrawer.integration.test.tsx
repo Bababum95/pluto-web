@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { renderWithProviders } from '@/testing/render'
-import { i18n } from '@/lib/i18n'
+import { i18n } from '@/shared/lib/i18n'
 
-vi.mock('@/components/ui/drawer', async () => {
+vi.mock('@/shared/ui/drawer', async () => {
   const React = await import('react')
 
   type DrawerContextValue = {

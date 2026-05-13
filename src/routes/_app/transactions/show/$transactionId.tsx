@@ -9,20 +9,20 @@ import {
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
-import { i18n } from '@/lib/i18n'
-import dayjs from '@/lib/dayjs'
+import { i18n } from '@/shared/lib/i18n'
+import dayjs from '@/shared/lib/date/dayjs'
 import { AppLayout } from '@/components/AppLayout'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/shared/ui/badge'
+import { Button } from '@/shared/ui/button'
+import { Card, CardContent } from '@/shared/ui/card'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Spinner } from '@/components/ui/spinner'
+} from '@/shared/ui/dropdown-menu'
+import { Spinner } from '@/shared/ui/spinner'
 import { formatBalance } from '@/features/money'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
@@ -30,7 +30,7 @@ import {
   selectCurrentTransaction,
   setCurrent,
 } from '@/entities/transaction'
-import { Separator } from '@/components/ui/separator'
+import { Separator } from '@/shared/ui/separator'
 
 const Row: FC<PropsWithChildren> = ({ children }) => (
   <div className="flex justify-between text-base gap-2">{children}</div>

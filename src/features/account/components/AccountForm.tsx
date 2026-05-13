@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import type { FC } from 'react'
 
-import { FieldGroup, FieldSet } from '@/components/ui/field'
-import { FormField } from '@/components/forms/form-field'
-import { ColorPicker } from '@/components/ui/color-picker'
-import { IconPicker } from '@/components/ui/icon-picker'
-import { Button } from '@/components/ui/button'
-import { ButtonGroup } from '@/components/ui/button-group'
+import { FieldGroup, FieldSet } from '@/shared/ui/field'
+import { FormField } from '@/shared/ui/forms/form-field'
+import { ColorPicker } from '@/shared/ui/color-picker'
+import { IconPicker } from '@/shared/ui/icon-picker'
+import { Button } from '@/shared/ui/button'
+import { ButtonGroup } from '@/shared/ui/button-group'
 import { SelectCurrency } from '@/features/currency'
 import { MoneyInput, parseDecimal } from '@/features/money'
 
 import type { CreateAccountDto, AccountFormValues } from '../types'
-import { SwitchFormField } from '@/components/forms/switch-form-field'
+import { SwitchFormField } from '@/shared/ui/forms/switch-form-field'
 
 type Props = {
   defaultValues?: AccountFormValues

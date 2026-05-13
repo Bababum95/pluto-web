@@ -6,7 +6,7 @@ import { setCurrent } from '../async-thunks/setCurrent'
 
 const getByIdMock = vi.fn()
 
-vi.mock('@/features/transaction', () => ({
+vi.mock('@/entities/transaction/model/api', () => ({
   transactionApi: {
     getById: (...args: unknown[]) => getByIdMock(...args),
   },

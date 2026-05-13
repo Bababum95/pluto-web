@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { renderWithProviders } from '@/testing/render'
 import { mockAccount, createMockAccount } from '@/testing/data'
 
-vi.mock('@/components/ui/drawer', () => ({
+vi.mock('@/shared/ui/drawer', () => ({
   Drawer: ({
     children,
     open,

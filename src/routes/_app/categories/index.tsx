@@ -10,7 +10,7 @@ import {
 import { move } from '@dnd-kit/helpers'
 
 import { AppLayout } from '@/components/AppLayout'
-import { PlusButton } from '@/components/ui/button'
+import { PlusButton } from '@/shared/ui/button'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { SortableCategoryItem } from '@/features/category'
 import {
@@ -19,7 +19,7 @@ import {
   reorderCategories,
 } from '@/entities/category'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { Spinner } from '@/components/ui/spinner'
+import { Spinner } from '@/shared/ui/spinner'
 import { selectTransactionType } from '@/store/slices/transaction-type'
 
 const CategoriesPage = () => {

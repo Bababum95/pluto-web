@@ -1,1 +1,1 @@
-export { Separator } from './separator'
+export * from '@/shared/ui/separator/index'

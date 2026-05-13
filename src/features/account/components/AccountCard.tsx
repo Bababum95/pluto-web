@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card'
+import { Card } from '@/shared/ui/card'
 import type { FC } from 'react'
 
 import { AccountItem } from './AccountItem'

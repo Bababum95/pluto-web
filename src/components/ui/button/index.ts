@@ -1,1 +1,1 @@
-export { Button, buttonVariants, PlusButton } from './button'
+export * from '@/shared/ui/button/index'

@@ -3,10 +3,10 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useState, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { Button } from '@/components/ui/button'
+import { Field, FieldError, FieldLabel } from '@/shared/ui/field'
+import { Button } from '@/shared/ui/button'
 import { selectAccountById } from '@/entities/account'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib'
 import { useAppSelector } from '@/store/hooks'
 
 import { AccountCard } from './AccountCard'

@@ -4,9 +4,9 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { generateTempEntityId } from '@/lib/local/temp-id'
-import { syncCoordinator } from '@/lib/local/sync-coordinator'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
+import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
 import type { Status } from '@/lib/types'
 import type { RootState } from '@/store'
 

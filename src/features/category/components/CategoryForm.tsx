@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import type { FC } from 'react'
 
-import { FieldGroup } from '@/components/ui/field'
-import { FormField } from '@/components/forms/form-field'
-import { ColorPicker } from '@/components/ui/color-picker'
-import { IconPicker } from '@/components/ui/icon-picker'
-import { Button } from '@/components/ui/button'
+import { FieldGroup } from '@/shared/ui/field'
+import { FormField } from '@/shared/ui/forms/form-field'
+import { ColorPicker } from '@/shared/ui/color-picker'
+import { IconPicker } from '@/shared/ui/icon-picker'
+import { Button } from '@/shared/ui/button'
 import type { CategoryFormValues } from '@/entities/category'
 
 type Props = {

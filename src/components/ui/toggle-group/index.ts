@@ -1,1 +1,1 @@
-export { ToggleGroup, ToggleGroupItem } from './toggle-group'
+export * from '@/shared/ui/toggle-group/index'

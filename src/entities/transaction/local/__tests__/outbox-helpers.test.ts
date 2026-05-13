@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-import { outboxProcessor } from '@/lib/local/outbox-processor'
+import { outboxProcessor } from '@/shared/lib/local-storage/outbox-processor'
 
 import {
   enqueueCreateTransaction,
@@ -11,7 +11,7 @@ import {
 import type {
   CreateTransactionDto,
   UpdateTransactionDto,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 
 const enqueueSpy = vi.spyOn(outboxProcessor, 'enqueue')
 

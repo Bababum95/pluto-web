@@ -2,14 +2,14 @@ import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Calculator01Icon } from '@hugeicons/core-free-icons'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/ui/button'
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '@/components/ui/drawer'
+} from '@/shared/ui/drawer'
 
 import { ExchangeRateCalculator } from './ExchangeRateCalculator'
 

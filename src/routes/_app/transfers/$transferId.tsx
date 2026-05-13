@@ -13,8 +13,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
+} from '@/shared/ui/dropdown-menu'
+import { Button } from '@/shared/ui/button'
 import { TransferCard } from '@/features/transfer'
 import { selectTransfersStatus } from '@/entities/transfer'
 

@@ -1,1 +1,1 @@
-export { Skeleton } from './skeleton'
+export * from '@/shared/ui/skeleton/index'

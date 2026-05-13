@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { useAppSelector } from '@/store/hooks'
 import { selectCategories } from '@/entities/category'
 import { selectTransactionType } from '@/store/slices/transaction-type'
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
+import { Field, FieldError, FieldLabel } from '@/shared/ui/field'
 
 import { CategoryDrawer } from './CategoryDrawer'
 import { CategoriesList } from './CategoriesList'

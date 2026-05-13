@@ -5,7 +5,7 @@ import transactionTypeReducer, {
   selectTransactionType,
 } from './index'
 import type { RootState } from '@/store'
-import { DEFAULT_TRANSACTION_TYPE } from '@/features/transaction-type/constants'
+import { DEFAULT_TRANSACTION_TYPE } from '@/shared/config/transaction-types'
 
 describe('transactionType slice', () => {
   it('initial state uses DEFAULT_TRANSACTION_TYPE', () => {

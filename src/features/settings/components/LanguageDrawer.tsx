@@ -1,21 +1,21 @@
 import type { FC } from 'react'
 
-import { SUPPORTED_LANGUAGES } from '@/lib/i18n/config'
+import { SUPPORTED_LANGUAGES } from '@/shared/lib/i18n/config'
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from '@/components/ui/drawer'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+} from '@/shared/ui/drawer'
+import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 import {
   Field,
   FieldLabel,
   FieldContent,
   FieldTitle,
-} from '@/components/ui/field'
-import { useTranslation } from '@/lib/i18n'
+} from '@/shared/ui/field'
+import { useTranslation } from '@/shared/lib/i18n'
 
 type Props = {
   open: boolean

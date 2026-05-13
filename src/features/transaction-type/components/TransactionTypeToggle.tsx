@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { useTranslation } from '@/lib/i18n'
+import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/toggle-group'
+import { useTranslation } from '@/shared/lib/i18n'
 import { useAppDispatch, useAppSelector } from '@/store'
 import {
   setTransactionType,

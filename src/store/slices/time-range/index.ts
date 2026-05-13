@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { DEFAULT_TIME_RANGE } from '@/features/time-range/constants'
+import { DEFAULT_TIME_RANGE } from '@/shared/config/time-ranges'
 import { getTimeRangeBounds } from '@/features/time-range/utils/getTimeRangeBounds'
-import type { TimeRangeType } from '@/features/time-range/types'
+import type { TimeRangeType } from '@/shared/config/time-range-types'
 
 export type TimeRangeState = {
   type: TimeRangeType

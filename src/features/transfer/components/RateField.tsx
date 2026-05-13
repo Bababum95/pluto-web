@@ -1,10 +1,10 @@
 import Decimal from 'decimal.js'
 import { useMemo, type FC } from 'react'
 
-import { Field, FieldLabel } from '@/components/ui/field'
-import { Input, type InputProps } from '@/components/ui/input'
+import { Field, FieldLabel } from '@/shared/ui/field'
+import { Input, type InputProps } from '@/shared/ui/input'
 import { sanitizeDecimal, DEFAULT_CURRENCY } from '@/features/money'
-import { stringIsValid } from '@/lib/utils'
+import { stringIsValid } from '@/shared/lib'
 import { selectAccounts } from '@/entities/account'
 import { selectExchangeRates } from '@/entities/exchange-rate'
 import { useAppSelector } from '@/store/hooks'

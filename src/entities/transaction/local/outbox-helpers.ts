@@ -1,8 +1,8 @@
-import { outboxProcessor } from '@/lib/local/outbox-processor'
+import { outboxProcessor } from '@/shared/lib/local-storage/outbox-processor'
 import type {
   CreateTransactionDto,
   UpdateTransactionDto,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 
 const TEMP_PREFIX = 'temp-'
 

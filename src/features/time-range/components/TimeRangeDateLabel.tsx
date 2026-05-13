@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
-import dayjs from '@/lib/dayjs'
-import { useTranslation } from '@/lib/i18n'
+import dayjs from '@/shared/lib/date/dayjs'
+import { useTranslation } from '@/shared/lib/i18n'
 
 import type { TimeRangeType } from '../types'
 

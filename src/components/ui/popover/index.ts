@@ -1,9 +1,1 @@
-export {
-  Popover,
-  PopoverAnchor,
-  PopoverContent,
-  PopoverDescription,
-  PopoverHeader,
-  PopoverTitle,
-  PopoverTrigger,
-} from './popover'
+export * from '@/shared/ui/popover/index'

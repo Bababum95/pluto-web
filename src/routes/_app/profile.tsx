@@ -20,9 +20,9 @@ import { AppLayout } from '@/components/AppLayout'
 import { useAuth } from '@/features/auth'
 import { PASSWORD_MIN_LENGTH } from '@/features/auth/constants'
 import { changePasswordApi } from '@/features/change-password'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/shared/ui/button'
+import { Card } from '@/shared/ui/card'
+import { Avatar, AvatarFallback } from '@/shared/ui/avatar'
 import {
   Item,
   ItemContent,
@@ -31,7 +31,7 @@ import {
   ItemMedia,
   ItemTitle,
   ItemActions,
-} from '@/components/ui/item'
+} from '@/shared/ui/item'
 import {
   Drawer,
   DrawerContent,
@@ -39,8 +39,8 @@ import {
   DrawerTitle,
   DrawerDescription,
   DrawerFooter,
-} from '@/components/ui/drawer'
-import { PasswordFormField } from '@/components/forms/password-form-field'
+} from '@/shared/ui/drawer'
+import { PasswordFormField } from '@/shared/ui/forms/password-form-field'
 import { selectUser } from '@/entities/user'
 import { useAppSelector } from '@/store'
 

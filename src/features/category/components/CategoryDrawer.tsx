@@ -3,13 +3,13 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { MoreHorizontalCircle01Icon } from '@hugeicons/core-free-icons'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/ui/button'
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-} from '@/components/ui/drawer'
+} from '@/shared/ui/drawer'
 
 import type { CategoryDto } from '@/entities/category'
 import { CategoriesList } from './CategoriesList'

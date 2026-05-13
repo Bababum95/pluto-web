@@ -1,3 +1,1 @@
-import type { TRANSACTION_TYPES } from './constants'
-
-export type TransactionType = (typeof TRANSACTION_TYPES)[number]
+export type { TransactionType } from '@/shared/config/transaction-types'

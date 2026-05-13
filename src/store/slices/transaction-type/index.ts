@@ -3,8 +3,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import {
   DEFAULT_TRANSACTION_TYPE,
   TRANSACTION_TYPES,
-} from '@/features/transaction-type/constants'
-import type { TransactionType } from '@/features/transaction-type/types'
+} from '@/shared/config/transaction-types'
+import type { TransactionType } from '@/shared/config/transaction-types'
 import type { RootState } from '@/store'
 
 type TransactionTypeState = {

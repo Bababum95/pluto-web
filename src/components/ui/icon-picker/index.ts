@@ -1,1 +1,1 @@
-export { IconPicker, Icon, type IconPickerProps } from './icon-picker'
+export * from '@/shared/ui/icon-picker/index'

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-import { outboxProcessor } from '@/lib/local/outbox-processor'
+import { outboxProcessor } from '@/shared/lib/local-storage/outbox-processor'
 
 import { enqueueUpdateSettings } from '../outbox-helpers'
 import type { UpdateSettingsDto } from '../../model/types'

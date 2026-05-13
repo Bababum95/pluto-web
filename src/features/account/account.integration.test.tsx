@@ -12,7 +12,7 @@ import {
   createMockAccount,
 } from '@/testing/data/account'
 import { createMockTransaction } from '@/testing/data/transaction'
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 
 describe('Account flow (integration)', () => {
   it('fetchAccounts: API populates list and summary', async () => {

@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { accountRepository } from '../repository'
-import { db } from '@/lib/local/db'
-import type { AccountDto } from '@/features/account/types'
+import { db } from '@/shared/lib/local-storage/db'
+import type { AccountDto } from '@/entities/account/model/types'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
 

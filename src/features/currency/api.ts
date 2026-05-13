@@ -1,7 +1,7 @@
 import {
   currencyControllerFindAll,
   currencyControllerFindOne,
-} from '@/lib/api/generated/currencies/currencies'
+} from '@/shared/api/generated/currencies/currencies'
 import type { CurrencyDto } from './types'
 
 export const currencyApi = {

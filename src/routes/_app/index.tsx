@@ -6,7 +6,7 @@ import { AppLayout } from '@/components/AppLayout'
 import { HomePageContent } from '@/features/home'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { Total } from '@/features/money'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/ui/button'
 
 export const Route = createFileRoute('/_app/')({
   component: HomePage,

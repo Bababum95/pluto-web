@@ -1,1 +1,1 @@
-export { PasswordInput, type PasswordInputProps } from './password-input'
+export * from '@/shared/ui/password-input/index'

@@ -5,18 +5,18 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-} from '@/components/ui/drawer'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+} from '@/shared/ui/drawer'
+import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 import {
   Field,
   FieldLabel,
   FieldContent,
   FieldTitle,
   FieldDescription,
-} from '@/components/ui/field'
-import { Icon } from '@/components/ui/icon'
+} from '@/shared/ui/field'
+import { Icon } from '@/shared/ui/icon'
 import { Balance } from '@/features/money'
-import { useTranslation } from '@/lib/i18n'
+import { useTranslation } from '@/shared/lib/i18n'
 import { useAppSelector } from '@/store'
 import { selectAccounts } from '@/entities/account'
 

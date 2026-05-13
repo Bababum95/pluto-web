@@ -1,4 +1,4 @@
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 
 import type { TransactionFormType } from './types'
 

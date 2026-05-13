@@ -1,9 +1,1 @@
-export {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupText,
-  InputGroupInput,
-  InputGroupTextarea,
-  inputGroupVariants,
-} from './input-group'
+export * from '@/shared/ui/input-group/index'

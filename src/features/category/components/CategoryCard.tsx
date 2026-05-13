@@ -1,7 +1,7 @@
 import { type FC, createElement } from 'react'
 
-import { getIconByName, DEFAULT_ICON } from '@/lib/icons'
-import { cn } from '@/lib/utils'
+import { getIconByName, DEFAULT_ICON } from '@/shared/ui/icons'
+import { cn } from '@/shared/lib'
 
 import type { CategoryDto } from '@/entities/category'
 

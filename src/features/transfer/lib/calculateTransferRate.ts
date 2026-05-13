@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js'
 
-import { stringIsValid } from '@/lib/utils'
+import { stringIsValid } from '@/shared/lib'
 import { calculateBaseRate } from '@/features/money'
 import type { RateDto } from '@/entities/exchange-rate'
 

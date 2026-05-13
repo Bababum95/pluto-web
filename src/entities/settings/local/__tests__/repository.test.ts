@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { settingsRepository } from '../repository'
-import { db } from '@/lib/local/db'
+import { db } from '@/shared/lib/local-storage/db'
 import type { SettingsDto } from '@/entities/settings'
-import type { CurrencyDto } from '@/lib/api/generated/model'
+import type { CurrencyDto } from '@/shared/api/generated/model'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
 

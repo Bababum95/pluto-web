@@ -1,1 +1,1 @@
-export { Switch, type SwitchProps } from './switch'
+export * from '@/shared/ui/switch/index'

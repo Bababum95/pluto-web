@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Search01Icon } from '@hugeicons/core-free-icons'
 
-import dayjs from '@/lib/dayjs'
-import { Card } from '@/components/ui/card'
+import dayjs from '@/shared/lib/date/dayjs'
+import { Card } from '@/shared/ui/card'
 import {
   Item,
   ItemContent,
@@ -13,13 +13,13 @@ import {
   ItemTitle,
   ItemDescription,
   ItemActions,
-} from '@/components/ui/item'
+} from '@/shared/ui/item'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '@/components/ui/input-group'
-import { Spinner } from '@/components/ui/spinner'
+} from '@/shared/ui/input-group'
+import { Spinner } from '@/shared/ui/spinner'
 import { useAppSelector } from '@/store'
 import {
   selectExchangeRates,

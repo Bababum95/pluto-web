@@ -1,4 +1,4 @@
-import { usersControllerChangePassword } from '@/lib/api/generated/users/users'
+import { usersControllerChangePassword } from '@/shared/api/generated/users/users'
 
 import type { UserDto } from '@/entities/user'
 

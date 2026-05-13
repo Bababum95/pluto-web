@@ -1,1 +1,1 @@
-export { Input, inputVariants, type InputProps } from './input'
+export * from '@/shared/ui/input/index'

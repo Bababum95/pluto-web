@@ -9,7 +9,7 @@ import {
   vi,
 } from 'vitest'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie' as const,
   getLocalDataMode: (): 'dexie' | 'api-only' => 'dexie',
 }))
@@ -17,11 +17,11 @@ vi.mock('@/lib/local/config', () => ({
 import { http, HttpResponse } from 'msw'
 
 import { registerSyncEntities } from '@/lib/local/register-entities'
-import { syncCoordinator } from '@/lib/local/sync-coordinator'
-import { generateTempEntityId } from '@/lib/local/temp-id'
-import { outboxProcessor } from '@/lib/local/outbox-processor'
-import { db } from '@/lib/local/db'
-import { sessionRepository } from '@/lib/local/session-repository'
+import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
+import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
+import { outboxProcessor } from '@/shared/lib/local-storage/outbox-processor'
+import { db } from '@/shared/lib/local-storage/db'
+import { sessionRepository } from '@/shared/lib/local-storage/session-repository'
 import { userRepository } from '@/entities/user'
 import { transactionRepository } from '@/entities/transaction/local/repository'
 import { transferRepository } from '@/entities/transfer/local/repository'
@@ -40,8 +40,8 @@ import { TEST_API_ROOT } from '@/testing/constants'
 import type {
   CreateTransactionDto,
   CreateTransferDto,
-} from '@/lib/api/generated/model'
-import * as syncUtils from '@/lib/local/sync-utils'
+} from '@/shared/api/generated/model'
+import * as syncUtils from '@/shared/lib/local-storage/sync-utils'
 import { store } from '@/store'
 import { clearTransactions } from '@/entities/transaction'
 import { clearTransfers } from '@/entities/transfer'

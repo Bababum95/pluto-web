@@ -1,5 +1,5 @@
-import { syncCoordinator } from './sync-coordinator'
-import { outboxProcessor } from './outbox-processor'
+import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
+import { outboxProcessor } from '@/shared/lib/local-storage/outbox-processor'
 import { userRepository } from '@/entities/user'
 import {
   settingsRepository,
@@ -26,31 +26,31 @@ import {
 } from '@/entities/account'
 import { transactionRepository } from '@/entities/transaction/local'
 import { transferRepository } from '@/entities/transfer/local'
-import { transactionApi } from '@/features/transaction'
-import { transferApi } from '@/features/transfer'
-import { transactionControllerFindAll } from '@/lib/api/generated/transactions/transactions'
-import { transferControllerFindAll } from '@/lib/api/generated/transfers/transfers'
+import { transactionApi } from '@/entities/transaction/model/api'
+import { transferApi } from '@/entities/transfer/model/api'
+import { transactionControllerFindAll } from '@/shared/api/generated/transactions/transactions'
+import { transferControllerFindAll } from '@/shared/api/generated/transfers/transfers'
 import type {
   CreateTransactionDto,
   CreateTransferDto,
   UpdateTransactionDto,
   UpdateTransferDto,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 import { addTransaction, removeTransaction } from '@/entities/transaction'
 import { addTransfer, removeTransfer } from '@/entities/transfer'
-import { authControllerGetProfile } from '@/lib/api/generated/auth/auth'
-import { settingsControllerFindOne } from '@/lib/api/generated/settings/settings'
-import { tagControllerFindAll } from '@/lib/api/generated/tags/tags'
-import { categoryControllerFindAll } from '@/lib/api/generated/categories/categories'
-import { accountControllerFindAll } from '@/lib/api/generated/accounts/accounts'
-import { rateControllerFindAll } from '@/lib/api/generated/rates/rates'
+import { authControllerGetProfile } from '@/shared/api/generated/auth/auth'
+import { settingsControllerFindOne } from '@/shared/api/generated/settings/settings'
+import { tagControllerFindAll } from '@/shared/api/generated/tags/tags'
+import { categoryControllerFindAll } from '@/shared/api/generated/categories/categories'
+import { accountControllerFindAll } from '@/shared/api/generated/accounts/accounts'
+import { rateControllerFindAll } from '@/shared/api/generated/rates/rates'
 import type { CreateCategoryDto, UpdateCategoryDto } from '@/entities/category'
 import type { CreateTagDto, UpdateTagDto } from '@/entities/tag'
 import type { UpdateSettingsDto } from '@/entities/settings'
 import type {
   CreateAccountDto,
   UpdateAccountDto,
-} from '@/features/account/types'
+} from '@/entities/account/model/types'
 
 let isRegistered = false
 

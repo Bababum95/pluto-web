@@ -70,7 +70,7 @@ const mocks = vi.hoisted(() => {
   }
 })
 
-vi.mock('@/app/store', () => ({
+vi.mock('@/app/store/store', () => ({
   store: {
     dispatch: mocks.dispatch,
     getState: vi.fn(() => ({})),

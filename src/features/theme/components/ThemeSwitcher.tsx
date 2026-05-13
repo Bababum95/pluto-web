@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
 import { Button } from '@/shared/ui/button'
-import { useTheme } from '@/features/theme'
+import { useTheme } from '@/shared/lib/theme'
 import { useTranslation } from '@/shared/lib/i18n'
 
 import type { Theme } from '../types'

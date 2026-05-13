@@ -1,3 +1,4 @@
 export { store, createStore } from './store'
 export { useAppDispatch, useAppSelector } from './hooks'
 export type { RootState, AppDispatch, AppStore } from './store'
+export { registerSyncEntities } from './register-sync-entities'

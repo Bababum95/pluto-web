@@ -1,0 +1,16 @@
+import type {
+  AuthResponseDto,
+  LoginDto,
+  RegisterDto,
+} from '@/shared/api/generated/model'
+
+export type AuthContextValue = {
+  isAuth: boolean
+  sessionLoading: boolean
+  login: (params: LoginDto) => Promise<void>
+  register: (params: RegisterDto) => Promise<void>
+  logout: () => Promise<void>
+  loading: boolean
+}
+
+export type { LoginDto, RegisterDto, AuthResponseDto }

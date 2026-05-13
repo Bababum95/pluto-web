@@ -36,7 +36,8 @@ Useful project scripts:
 - `src/routes/` — route modules (TanStack Router conventions)
 - `src/features/` — domain features
 - `src/components/` — shared UI components
-- `src/app/store/` — Redux store config, app-level slices (`app`, `timeRange`, `transactionType`), listener middlewares
+- `src/app/providers/` — `AppProviders` (Redux `Provider` + auth, theme, appearance) and per-domain provider modules; `features/auth`, `features/theme`, `features/appearance` re-export for compatibility
+- `src/app/store/` — Redux store config, app-level slices, listener middlewares, `registerSyncEntities`
 - `src/store/` — compatibility re-exports → `@/app/store` (prefer importing from `@/app/store` in new code)
 - `src/lib/` — shared utilities, API, i18n, icons
 - `scripts/` — project automation scripts

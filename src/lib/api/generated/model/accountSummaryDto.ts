@@ -5,15 +5,15 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { CurrencyDto } from './currencyDto'
+import type { CurrencyDto } from './currencyDto';
 
 export interface AccountSummaryDto {
   /** Total balance in minor units (e.g., cents for USD) */
-  total_raw: number
+  total_raw: number;
   /** Number of decimal places for the currency (scale) */
-  scale: number
+  scale: number;
   /** Total balance in decimal format */
-  total: number
+  total: number;
   /** User currency for the total amount */
-  currency: CurrencyDto
+  currency: CurrencyDto;
 }

@@ -7,12 +7,12 @@
  */
 
 export type TransferControllerFindAllParams = {
-  /**
-   * Start of period by transfer date (inclusive). ISO date or datetime.
-   */
-  createdFrom?: string
-  /**
-   * End of period by transfer date (inclusive). ISO date or datetime.
-   */
-  createdTo?: string
-}
+/**
+ * Start of period by transfer date (inclusive). ISO date or datetime.
+ */
+createdFrom?: string;
+/**
+ * End of period by transfer date (inclusive). ISO date or datetime.
+ */
+createdTo?: string;
+};

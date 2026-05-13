@@ -5,14 +5,14 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { UpdateSettingsDtoAccount } from './updateSettingsDtoAccount'
+import type { UpdateSettingsDtoAccount } from './updateSettingsDtoAccount';
 
 export interface UpdateSettingsDto {
   /** Currency ID (MongoDB ObjectId) */
-  currency?: string
+  currency?: string;
   /**
-   * Default account ID (MongoDB ObjectId), null to clear
-   * @nullable
-   */
-  account?: UpdateSettingsDtoAccount
+     * Default account ID (MongoDB ObjectId), null to clear
+     * @nullable
+     */
+  account?: UpdateSettingsDtoAccount;
 }

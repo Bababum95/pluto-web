@@ -6,10 +6,10 @@
  * OpenAPI spec version: 1.0
  */
 
-export type CurrencyDtoType =
-  (typeof CurrencyDtoType)[keyof typeof CurrencyDtoType]
+export type CurrencyDtoType = typeof CurrencyDtoType[keyof typeof CurrencyDtoType];
+
 
 export const CurrencyDtoType = {
   fiat: 'fiat',
   crypto: 'crypto',
-} as const
+} as const;

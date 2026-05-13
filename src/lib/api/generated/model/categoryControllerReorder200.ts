@@ -7,6 +7,6 @@
  */
 
 export type CategoryControllerReorder200 = {
-  status?: number
-  message?: string
-}
+  status?: number;
+  message?: string;
+};

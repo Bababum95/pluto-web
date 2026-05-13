@@ -8,11 +8,11 @@
 
 export interface CreateUserDto {
   /**
-   * @minLength 1
-   * @maxLength 50
-   */
-  name: string
-  email: string
+     * @minLength 1
+     * @maxLength 50
+     */
+  name: string;
+  email: string;
   /** @minLength 6 */
-  password: string
+  password: string;
 }

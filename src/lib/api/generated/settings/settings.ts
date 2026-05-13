@@ -5,7 +5,10 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -18,258 +21,174 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
+  UseQueryResult
+} from '@tanstack/react-query';
 
-import type { SettingsDto, UpdateSettingsDto } from '../model'
+import type {
+  SettingsDto,
+  UpdateSettingsDto
+} from '../model';
 
-import { customInstance } from '../../orval-mutator'
-import type { ErrorType, BodyType } from '../../orval-mutator'
+import { customInstance } from '../../orval-mutator';
+import type { ErrorType , BodyType } from '../../orval-mutator';
 
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
+
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+
 
 /**
  * @summary Get current user settings
  */
 export const settingsControllerFindOne = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<SettingsDto>(
-    { url: `/v1/settings`, method: 'GET', signal },
-    options
-  )
-}
+
+
+      return customInstance<SettingsDto>(
+      {url: `/v1/settings`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
 
 export const getSettingsControllerFindOneQueryKey = () => {
-  return [`/v1/settings`] as const
+    return [
+    `/v1/settings`
+    ] as const;
+    }
+
+
+export const getSettingsControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof settingsControllerFindOne>>, TError = ErrorType<void>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getSettingsControllerFindOneQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof settingsControllerFindOne>>> = ({ signal }) => settingsControllerFindOne(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export const getSettingsControllerFindOneQueryOptions = <
-  TData = Awaited<ReturnType<typeof settingsControllerFindOne>>,
-  TError = ErrorType<void>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof settingsControllerFindOne>>,
-      TError,
-      TData
-    >
-  >
-  request?: SecondParameter<typeof customInstance>
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey =
-    queryOptions?.queryKey ?? getSettingsControllerFindOneQueryKey()
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof settingsControllerFindOne>>
-  > = ({ signal }) => settingsControllerFindOne(requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof settingsControllerFindOne>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type SettingsControllerFindOneQueryResult = NonNullable<
-  Awaited<ReturnType<typeof settingsControllerFindOne>>
->
+export type SettingsControllerFindOneQueryResult = NonNullable<Awaited<ReturnType<typeof settingsControllerFindOne>>>
 export type SettingsControllerFindOneQueryError = ErrorType<void>
 
-export function useSettingsControllerFindOne<
-  TData = Awaited<ReturnType<typeof settingsControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof settingsControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useSettingsControllerFindOne<TData = Awaited<ReturnType<typeof settingsControllerFindOne>>, TError = ErrorType<void>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof settingsControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof settingsControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useSettingsControllerFindOne<
-  TData = Awaited<ReturnType<typeof settingsControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof settingsControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useSettingsControllerFindOne<TData = Awaited<ReturnType<typeof settingsControllerFindOne>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof settingsControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof settingsControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useSettingsControllerFindOne<
-  TData = Awaited<ReturnType<typeof settingsControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof settingsControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useSettingsControllerFindOne<TData = Awaited<ReturnType<typeof settingsControllerFindOne>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get current user settings
  */
 
-export function useSettingsControllerFindOne<
-  TData = Awaited<ReturnType<typeof settingsControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof settingsControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
+export function useSettingsControllerFindOne<TData = Awaited<ReturnType<typeof settingsControllerFindOne>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof settingsControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
   const queryOptions = getSettingsControllerFindOneQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Update current user settings
  */
 export const settingsControllerUpdate = (
-  updateSettingsDto: BodyType<UpdateSettingsDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    updateSettingsDto: BodyType<UpdateSettingsDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<SettingsDto>(
-    {
-      url: `/v1/settings`,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      data: updateSettingsDto,
-      signal,
+
+
+      return customInstance<SettingsDto>(
+      {url: `/v1/settings`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateSettingsDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getSettingsControllerUpdateMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof settingsControllerUpdate>>,
-    TError,
-    { data: BodyType<UpdateSettingsDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof settingsControllerUpdate>>,
-  TError,
-  { data: BodyType<UpdateSettingsDto> },
-  TContext
-> => {
-  const mutationKey = ['settingsControllerUpdate']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof settingsControllerUpdate>>,
-    { data: BodyType<UpdateSettingsDto> }
-  > = (props) => {
-    const { data } = props ?? {}
 
-    return settingsControllerUpdate(data, requestOptions)
-  }
+export const getSettingsControllerUpdateMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof settingsControllerUpdate>>, TError,{data: BodyType<UpdateSettingsDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof settingsControllerUpdate>>, TError,{data: BodyType<UpdateSettingsDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['settingsControllerUpdate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type SettingsControllerUpdateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof settingsControllerUpdate>>
->
-export type SettingsControllerUpdateMutationBody = BodyType<UpdateSettingsDto>
-export type SettingsControllerUpdateMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof settingsControllerUpdate>>, {data: BodyType<UpdateSettingsDto>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  settingsControllerUpdate(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SettingsControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof settingsControllerUpdate>>>
+    export type SettingsControllerUpdateMutationBody = BodyType<UpdateSettingsDto>
+    export type SettingsControllerUpdateMutationError = ErrorType<void>
+
+    /**
  * @summary Update current user settings
  */
-export const useSettingsControllerUpdate = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof settingsControllerUpdate>>,
-      TError,
-      { data: BodyType<UpdateSettingsDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof settingsControllerUpdate>>,
-  TError,
-  { data: BodyType<UpdateSettingsDto> },
-  TContext
-> => {
-  return useMutation(
-    getSettingsControllerUpdateMutationOptions(options),
-    queryClient
-  )
-}
+export const useSettingsControllerUpdate = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof settingsControllerUpdate>>, TError,{data: BodyType<UpdateSettingsDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof settingsControllerUpdate>>,
+        TError,
+        {data: BodyType<UpdateSettingsDto>},
+        TContext
+      > => {
+      return useMutation(getSettingsControllerUpdateMutationOptions(options), queryClient);
+    }

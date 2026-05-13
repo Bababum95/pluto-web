@@ -8,13 +8,13 @@
 
 export interface TransferSideDto {
   /** Account ID */
-  account: string
+  account: string;
   /** Amount in account balance units */
-  value: number
+  value: number;
   /**
-   * Decimal places (scale)
-   * @minimum 0
-   * @maximum 18
-   */
-  scale: number
+     * Decimal places (scale)
+     * @minimum 0
+     * @maximum 18
+     */
+  scale: number;
 }

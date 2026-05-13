@@ -5,24 +5,24 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { CreateRegularPaymentDtoType } from './createRegularPaymentDtoType'
+import type { CreateRegularPaymentDtoType } from './createRegularPaymentDtoType';
 
 export interface CreateRegularPaymentDto {
-  type: CreateRegularPaymentDtoType
+  type: CreateRegularPaymentDtoType;
   /** Category ID */
-  category: string
+  category: string;
   /** @maxLength 500 */
-  comment?: string
+  comment?: string;
   /** Account ID */
-  account: string
+  account: string;
   /** Amount (decimal). Negative for expense, positive for income. */
-  amount: number
+  amount: number;
   /**
-   * Decimal places (scale)
-   * @minimum 0
-   * @maximum 18
-   */
-  scale: number
+     * Decimal places (scale)
+     * @minimum 0
+     * @maximum 18
+     */
+  scale: number;
   /** Tag IDs */
-  tags?: string[]
+  tags?: string[];
 }

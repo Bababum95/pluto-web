@@ -7,12 +7,12 @@
  */
 
 export interface CategoryDto {
-  id: string
-  color: string
-  icon: string
-  name: string
-  type: string
-  order: number
-  createdAt: string
-  updatedAt: string
+  id: string;
+  color: string;
+  icon: string;
+  name: string;
+  type: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
 }

@@ -5,7 +5,10 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -18,8 +21,8 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
+  UseQueryResult
+} from '@tanstack/react-query';
 
 import type {
   AccountControllerCreate201,
@@ -31,932 +34,602 @@ import type {
   AccountSummaryDto,
   CreateAccountDto,
   ReorderAccountsDto,
-  UpdateAccountDto,
-} from '../model'
+  UpdateAccountDto
+} from '../model';
 
-import { customInstance } from '../../orval-mutator'
-import type { ErrorType, BodyType } from '../../orval-mutator'
+import { customInstance } from '../../orval-mutator';
+import type { ErrorType , BodyType } from '../../orval-mutator';
 
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
+
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+
 
 /**
  * @summary Create a new account
  */
 export const accountControllerCreate = (
-  createAccountDto: BodyType<CreateAccountDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    createAccountDto: BodyType<CreateAccountDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountControllerCreate201>(
-    {
-      url: `/v1/accounts`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: createAccountDto,
-      signal,
+
+
+      return customInstance<AccountControllerCreate201>(
+      {url: `/v1/accounts`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createAccountDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getAccountControllerCreateMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof accountControllerCreate>>,
-    TError,
-    { data: BodyType<CreateAccountDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof accountControllerCreate>>,
-  TError,
-  { data: BodyType<CreateAccountDto> },
-  TContext
-> => {
-  const mutationKey = ['accountControllerCreate']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof accountControllerCreate>>,
-    { data: BodyType<CreateAccountDto> }
-  > = (props) => {
-    const { data } = props ?? {}
 
-    return accountControllerCreate(data, requestOptions)
-  }
+export const getAccountControllerCreateMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerCreate>>, TError,{data: BodyType<CreateAccountDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof accountControllerCreate>>, TError,{data: BodyType<CreateAccountDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['accountControllerCreate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type AccountControllerCreateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerCreate>>
->
-export type AccountControllerCreateMutationBody = BodyType<CreateAccountDto>
-export type AccountControllerCreateMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof accountControllerCreate>>, {data: BodyType<CreateAccountDto>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  accountControllerCreate(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AccountControllerCreateMutationResult = NonNullable<Awaited<ReturnType<typeof accountControllerCreate>>>
+    export type AccountControllerCreateMutationBody = BodyType<CreateAccountDto>
+    export type AccountControllerCreateMutationError = ErrorType<void>
+
+    /**
  * @summary Create a new account
  */
-export const useAccountControllerCreate = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof accountControllerCreate>>,
-      TError,
-      { data: BodyType<CreateAccountDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof accountControllerCreate>>,
-  TError,
-  { data: BodyType<CreateAccountDto> },
-  TContext
-> => {
-  return useMutation(
-    getAccountControllerCreateMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useAccountControllerCreate = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerCreate>>, TError,{data: BodyType<CreateAccountDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof accountControllerCreate>>,
+        TError,
+        {data: BodyType<CreateAccountDto>},
+        TContext
+      > => {
+      return useMutation(getAccountControllerCreateMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Get all accounts for the current user
  */
 export const accountControllerFindAll = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountControllerFindAll200>(
-    { url: `/v1/accounts`, method: 'GET', signal },
-    options
-  )
-}
+
+
+      return customInstance<AccountControllerFindAll200>(
+      {url: `/v1/accounts`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
 
 export const getAccountControllerFindAllQueryKey = () => {
-  return [`/v1/accounts`] as const
+    return [
+    `/v1/accounts`
+    ] as const;
+    }
+
+
+export const getAccountControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof accountControllerFindAll>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getAccountControllerFindAllQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof accountControllerFindAll>>> = ({ signal }) => accountControllerFindAll(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export const getAccountControllerFindAllQueryOptions = <
-  TData = Awaited<ReturnType<typeof accountControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof accountControllerFindAll>>,
-      TError,
-      TData
-    >
-  >
-  request?: SecondParameter<typeof customInstance>
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey =
-    queryOptions?.queryKey ?? getAccountControllerFindAllQueryKey()
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof accountControllerFindAll>>
-  > = ({ signal }) => accountControllerFindAll(requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof accountControllerFindAll>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AccountControllerFindAllQueryResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerFindAll>>
->
+export type AccountControllerFindAllQueryResult = NonNullable<Awaited<ReturnType<typeof accountControllerFindAll>>>
 export type AccountControllerFindAllQueryError = ErrorType<unknown>
 
-export function useAccountControllerFindAll<
-  TData = Awaited<ReturnType<typeof accountControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindAll>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useAccountControllerFindAll<TData = Awaited<ReturnType<typeof accountControllerFindAll>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindAll>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof accountControllerFindAll>>,
           TError,
           Awaited<ReturnType<typeof accountControllerFindAll>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAccountControllerFindAll<
-  TData = Awaited<ReturnType<typeof accountControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindAll>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAccountControllerFindAll<TData = Awaited<ReturnType<typeof accountControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindAll>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof accountControllerFindAll>>,
           TError,
           Awaited<ReturnType<typeof accountControllerFindAll>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAccountControllerFindAll<
-  TData = Awaited<ReturnType<typeof accountControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindAll>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAccountControllerFindAll<TData = Awaited<ReturnType<typeof accountControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get all accounts for the current user
  */
 
-export function useAccountControllerFindAll<
-  TData = Awaited<ReturnType<typeof accountControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindAll>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
+export function useAccountControllerFindAll<TData = Awaited<ReturnType<typeof accountControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
   const queryOptions = getAccountControllerFindAllQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Get total balance of all accounts in user currency
  */
 export const accountControllerGetSummary = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountSummaryDto>(
-    { url: `/v1/accounts/summary`, method: 'GET', signal },
-    options
-  )
-}
+
+
+      return customInstance<AccountSummaryDto>(
+      {url: `/v1/accounts/summary`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
 
 export const getAccountControllerGetSummaryQueryKey = () => {
-  return [`/v1/accounts/summary`] as const
+    return [
+    `/v1/accounts/summary`
+    ] as const;
+    }
+
+
+export const getAccountControllerGetSummaryQueryOptions = <TData = Awaited<ReturnType<typeof accountControllerGetSummary>>, TError = ErrorType<void>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerGetSummary>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getAccountControllerGetSummaryQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof accountControllerGetSummary>>> = ({ signal }) => accountControllerGetSummary(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof accountControllerGetSummary>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export const getAccountControllerGetSummaryQueryOptions = <
-  TData = Awaited<ReturnType<typeof accountControllerGetSummary>>,
-  TError = ErrorType<void>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof accountControllerGetSummary>>,
-      TError,
-      TData
-    >
-  >
-  request?: SecondParameter<typeof customInstance>
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey =
-    queryOptions?.queryKey ?? getAccountControllerGetSummaryQueryKey()
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof accountControllerGetSummary>>
-  > = ({ signal }) => accountControllerGetSummary(requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof accountControllerGetSummary>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AccountControllerGetSummaryQueryResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerGetSummary>>
->
+export type AccountControllerGetSummaryQueryResult = NonNullable<Awaited<ReturnType<typeof accountControllerGetSummary>>>
 export type AccountControllerGetSummaryQueryError = ErrorType<void>
 
-export function useAccountControllerGetSummary<
-  TData = Awaited<ReturnType<typeof accountControllerGetSummary>>,
-  TError = ErrorType<void>,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerGetSummary>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useAccountControllerGetSummary<TData = Awaited<ReturnType<typeof accountControllerGetSummary>>, TError = ErrorType<void>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerGetSummary>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof accountControllerGetSummary>>,
           TError,
           Awaited<ReturnType<typeof accountControllerGetSummary>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAccountControllerGetSummary<
-  TData = Awaited<ReturnType<typeof accountControllerGetSummary>>,
-  TError = ErrorType<void>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerGetSummary>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAccountControllerGetSummary<TData = Awaited<ReturnType<typeof accountControllerGetSummary>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerGetSummary>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof accountControllerGetSummary>>,
           TError,
           Awaited<ReturnType<typeof accountControllerGetSummary>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAccountControllerGetSummary<
-  TData = Awaited<ReturnType<typeof accountControllerGetSummary>>,
-  TError = ErrorType<void>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerGetSummary>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAccountControllerGetSummary<TData = Awaited<ReturnType<typeof accountControllerGetSummary>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerGetSummary>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get total balance of all accounts in user currency
  */
 
-export function useAccountControllerGetSummary<
-  TData = Awaited<ReturnType<typeof accountControllerGetSummary>>,
-  TError = ErrorType<void>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerGetSummary>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
+export function useAccountControllerGetSummary<TData = Awaited<ReturnType<typeof accountControllerGetSummary>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerGetSummary>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
   const queryOptions = getAccountControllerGetSummaryQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Get an account by ID
  */
 export const accountControllerFindOne = (
-  id: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountDto>(
-    { url: `/v1/accounts/${id}`, method: 'GET', signal },
-    options
-  )
-}
 
-export const getAccountControllerFindOneQueryKey = (id: string) => {
-  return [`/v1/accounts/${id}`] as const
-}
 
-export const getAccountControllerFindOneQueryOptions = <
-  TData = Awaited<ReturnType<typeof accountControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  }
+      return customInstance<AccountDto>(
+      {url: `/v1/accounts/${id}`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getAccountControllerFindOneQueryKey = (id: string,) => {
+    return [
+    `/v1/accounts/${id}`
+    ] as const;
+    }
+
+
+export const getAccountControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof accountControllerFindOne>>, TError = ErrorType<void>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
 
-  const queryKey =
-    queryOptions?.queryKey ?? getAccountControllerFindOneQueryKey(id)
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof accountControllerFindOne>>
-  > = ({ signal }) => accountControllerFindOne(id, requestOptions, signal)
+  const queryKey =  queryOptions?.queryKey ?? getAccountControllerFindOneQueryKey(id);
 
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!id,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof accountControllerFindOne>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof accountControllerFindOne>>> = ({ signal }) => accountControllerFindOne(id, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindOne>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type AccountControllerFindOneQueryResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerFindOne>>
->
+export type AccountControllerFindOneQueryResult = NonNullable<Awaited<ReturnType<typeof accountControllerFindOne>>>
 export type AccountControllerFindOneQueryError = ErrorType<void>
 
-export function useAccountControllerFindOne<
-  TData = Awaited<ReturnType<typeof accountControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useAccountControllerFindOne<TData = Awaited<ReturnType<typeof accountControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindOne>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof accountControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof accountControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAccountControllerFindOne<
-  TData = Awaited<ReturnType<typeof accountControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAccountControllerFindOne<TData = Awaited<ReturnType<typeof accountControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindOne>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof accountControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof accountControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAccountControllerFindOne<
-  TData = Awaited<ReturnType<typeof accountControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAccountControllerFindOne<TData = Awaited<ReturnType<typeof accountControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get an account by ID
  */
 
-export function useAccountControllerFindOne<
-  TData = Awaited<ReturnType<typeof accountControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof accountControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getAccountControllerFindOneQueryOptions(id, options)
+export function useAccountControllerFindOne<TData = Awaited<ReturnType<typeof accountControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof accountControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const queryOptions = getAccountControllerFindOneQueryOptions(id,options)
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Update an account by ID
  */
 export const accountControllerUpdate = (
-  id: string,
-  updateAccountDto: BodyType<UpdateAccountDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+    updateAccountDto: BodyType<UpdateAccountDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountControllerUpdate200>(
-    {
-      url: `/v1/accounts/${id}`,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      data: updateAccountDto,
-      signal,
+
+
+      return customInstance<AccountControllerUpdate200>(
+      {url: `/v1/accounts/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateAccountDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getAccountControllerUpdateMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof accountControllerUpdate>>,
-    TError,
-    { id: string; data: BodyType<UpdateAccountDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof accountControllerUpdate>>,
-  TError,
-  { id: string; data: BodyType<UpdateAccountDto> },
-  TContext
-> => {
-  const mutationKey = ['accountControllerUpdate']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof accountControllerUpdate>>,
-    { id: string; data: BodyType<UpdateAccountDto> }
-  > = (props) => {
-    const { id, data } = props ?? {}
 
-    return accountControllerUpdate(id, data, requestOptions)
-  }
+export const getAccountControllerUpdateMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerUpdate>>, TError,{id: string;data: BodyType<UpdateAccountDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof accountControllerUpdate>>, TError,{id: string;data: BodyType<UpdateAccountDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['accountControllerUpdate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type AccountControllerUpdateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerUpdate>>
->
-export type AccountControllerUpdateMutationBody = BodyType<UpdateAccountDto>
-export type AccountControllerUpdateMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof accountControllerUpdate>>, {id: string;data: BodyType<UpdateAccountDto>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  accountControllerUpdate(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AccountControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof accountControllerUpdate>>>
+    export type AccountControllerUpdateMutationBody = BodyType<UpdateAccountDto>
+    export type AccountControllerUpdateMutationError = ErrorType<void>
+
+    /**
  * @summary Update an account by ID
  */
-export const useAccountControllerUpdate = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof accountControllerUpdate>>,
-      TError,
-      { id: string; data: BodyType<UpdateAccountDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof accountControllerUpdate>>,
-  TError,
-  { id: string; data: BodyType<UpdateAccountDto> },
-  TContext
-> => {
-  return useMutation(
-    getAccountControllerUpdateMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useAccountControllerUpdate = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerUpdate>>, TError,{id: string;data: BodyType<UpdateAccountDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof accountControllerUpdate>>,
+        TError,
+        {id: string;data: BodyType<UpdateAccountDto>},
+        TContext
+      > => {
+      return useMutation(getAccountControllerUpdateMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Delete an account by ID
  */
 export const accountControllerRemove = (
-  id: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountSummaryDto>(
-    { url: `/v1/accounts/${id}`, method: 'DELETE', signal },
-    options
-  )
-}
 
-export const getAccountControllerRemoveMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof accountControllerRemove>>,
-    TError,
-    { id: string },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof accountControllerRemove>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  const mutationKey = ['accountControllerRemove']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof accountControllerRemove>>,
-    { id: string }
-  > = (props) => {
-    const { id } = props ?? {}
+      return customInstance<AccountSummaryDto>(
+      {url: `/v1/accounts/${id}`, method: 'DELETE', signal
+    },
+      options);
+    }
 
-    return accountControllerRemove(id, requestOptions)
-  }
 
-  return { mutationFn, ...mutationOptions }
-}
 
-export type AccountControllerRemoveMutationResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerRemove>>
->
+export const getAccountControllerRemoveMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof accountControllerRemove>>, TError,{id: string}, TContext> => {
 
-export type AccountControllerRemoveMutationError = ErrorType<void>
+const mutationKey = ['accountControllerRemove'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-/**
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof accountControllerRemove>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  accountControllerRemove(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AccountControllerRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof accountControllerRemove>>>
+
+    export type AccountControllerRemoveMutationError = ErrorType<void>
+
+    /**
  * @summary Delete an account by ID
  */
-export const useAccountControllerRemove = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof accountControllerRemove>>,
-      TError,
-      { id: string },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof accountControllerRemove>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  return useMutation(
-    getAccountControllerRemoveMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useAccountControllerRemove = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof accountControllerRemove>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+      return useMutation(getAccountControllerRemoveMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Reorder accounts by providing list of account IDs (index = order)
  */
 export const accountControllerReorder = (
-  reorderAccountsDto: BodyType<ReorderAccountsDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    reorderAccountsDto: BodyType<ReorderAccountsDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountControllerReorder200>(
-    {
-      url: `/v1/accounts/reorder`,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      data: reorderAccountsDto,
-      signal,
+
+
+      return customInstance<AccountControllerReorder200>(
+      {url: `/v1/accounts/reorder`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: reorderAccountsDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getAccountControllerReorderMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof accountControllerReorder>>,
-    TError,
-    { data: BodyType<ReorderAccountsDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof accountControllerReorder>>,
-  TError,
-  { data: BodyType<ReorderAccountsDto> },
-  TContext
-> => {
-  const mutationKey = ['accountControllerReorder']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof accountControllerReorder>>,
-    { data: BodyType<ReorderAccountsDto> }
-  > = (props) => {
-    const { data } = props ?? {}
 
-    return accountControllerReorder(data, requestOptions)
-  }
+export const getAccountControllerReorderMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerReorder>>, TError,{data: BodyType<ReorderAccountsDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof accountControllerReorder>>, TError,{data: BodyType<ReorderAccountsDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['accountControllerReorder'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type AccountControllerReorderMutationResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerReorder>>
->
-export type AccountControllerReorderMutationBody = BodyType<ReorderAccountsDto>
-export type AccountControllerReorderMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof accountControllerReorder>>, {data: BodyType<ReorderAccountsDto>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  accountControllerReorder(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AccountControllerReorderMutationResult = NonNullable<Awaited<ReturnType<typeof accountControllerReorder>>>
+    export type AccountControllerReorderMutationBody = BodyType<ReorderAccountsDto>
+    export type AccountControllerReorderMutationError = ErrorType<void>
+
+    /**
  * @summary Reorder accounts by providing list of account IDs (index = order)
  */
-export const useAccountControllerReorder = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof accountControllerReorder>>,
-      TError,
-      { data: BodyType<ReorderAccountsDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof accountControllerReorder>>,
-  TError,
-  { data: BodyType<ReorderAccountsDto> },
-  TContext
-> => {
-  return useMutation(
-    getAccountControllerReorderMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useAccountControllerReorder = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerReorder>>, TError,{data: BodyType<ReorderAccountsDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof accountControllerReorder>>,
+        TError,
+        {data: BodyType<ReorderAccountsDto>},
+        TContext
+      > => {
+      return useMutation(getAccountControllerReorderMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Toggle account excluded from total balance
  */
 export const accountControllerToggleExcluded = (
-  id: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<AccountControllerToggleExcluded200>(
-    { url: `/v1/accounts/excluded/${id}`, method: 'PATCH', signal },
-    options
-  )
-}
 
-export const getAccountControllerToggleExcludedMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof accountControllerToggleExcluded>>,
-    TError,
-    { id: string },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof accountControllerToggleExcluded>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  const mutationKey = ['accountControllerToggleExcluded']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof accountControllerToggleExcluded>>,
-    { id: string }
-  > = (props) => {
-    const { id } = props ?? {}
+      return customInstance<AccountControllerToggleExcluded200>(
+      {url: `/v1/accounts/excluded/${id}`, method: 'PATCH', signal
+    },
+      options);
+    }
 
-    return accountControllerToggleExcluded(id, requestOptions)
-  }
 
-  return { mutationFn, ...mutationOptions }
-}
 
-export type AccountControllerToggleExcludedMutationResult = NonNullable<
-  Awaited<ReturnType<typeof accountControllerToggleExcluded>>
->
+export const getAccountControllerToggleExcludedMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerToggleExcluded>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof accountControllerToggleExcluded>>, TError,{id: string}, TContext> => {
 
-export type AccountControllerToggleExcludedMutationError = ErrorType<void>
+const mutationKey = ['accountControllerToggleExcluded'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-/**
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof accountControllerToggleExcluded>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  accountControllerToggleExcluded(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AccountControllerToggleExcludedMutationResult = NonNullable<Awaited<ReturnType<typeof accountControllerToggleExcluded>>>
+
+    export type AccountControllerToggleExcludedMutationError = ErrorType<void>
+
+    /**
  * @summary Toggle account excluded from total balance
  */
-export const useAccountControllerToggleExcluded = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof accountControllerToggleExcluded>>,
-      TError,
-      { id: string },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof accountControllerToggleExcluded>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  return useMutation(
-    getAccountControllerToggleExcludedMutationOptions(options),
-    queryClient
-  )
-}
+export const useAccountControllerToggleExcluded = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerToggleExcluded>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof accountControllerToggleExcluded>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+      return useMutation(getAccountControllerToggleExcludedMutationOptions(options), queryClient);
+    }

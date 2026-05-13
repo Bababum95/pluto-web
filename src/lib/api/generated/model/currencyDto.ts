@@ -5,16 +5,16 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { CurrencyDtoType } from './currencyDtoType'
+import type { CurrencyDtoType } from './currencyDtoType';
 
 export interface CurrencyDto {
-  id: string
-  code: string
-  symbol: string
-  name: string
-  symbol_native: string
-  decimal_digits: number
-  rounding: number
-  name_plural: string
-  type: CurrencyDtoType
+  id: string;
+  code: string;
+  symbol: string;
+  name: string;
+  symbol_native: string;
+  decimal_digits: number;
+  rounding: number;
+  name_plural: string;
+  type: CurrencyDtoType;
 }

@@ -5,24 +5,24 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { TransactionControllerFindAllType } from './transactionControllerFindAllType'
+import type { TransactionControllerFindAllType } from './transactionControllerFindAllType';
 
 export type TransactionControllerFindAllParams = {
-  /**
-   * Start of period by transaction date (inclusive). ISO date or datetime.
-   */
-  from?: string
-  /**
-   * End of period by transaction date (inclusive). ISO date or datetime.
-   */
-  to?: string
-  type?: TransactionControllerFindAllType
-  /**
-   * Filter by category ID.
-   */
-  category?: string
-  /**
-   * Filter by account ID.
-   */
-  account?: string
-}
+/**
+ * Start of period by transaction date (inclusive). ISO date or datetime.
+ */
+from?: string;
+/**
+ * End of period by transaction date (inclusive). ISO date or datetime.
+ */
+to?: string;
+type?: TransactionControllerFindAllType;
+/**
+ * Filter by category ID.
+ */
+category?: string;
+/**
+ * Filter by account ID.
+ */
+account?: string;
+};

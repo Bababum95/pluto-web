@@ -5,7 +5,10 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -18,702 +21,457 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
+  UseQueryResult
+} from '@tanstack/react-query';
 
 import type {
   CategoryControllerReorder200,
   CategoryDto,
   CreateCategoryDto,
   ReorderCategoriesDto,
-  UpdateCategoryDto,
-} from '../model'
+  UpdateCategoryDto
+} from '../model';
 
-import { customInstance } from '../../orval-mutator'
-import type { ErrorType, BodyType } from '../../orval-mutator'
+import { customInstance } from '../../orval-mutator';
+import type { ErrorType , BodyType } from '../../orval-mutator';
 
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
+
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+
 
 /**
  * @summary Create a new category
  */
 export const categoryControllerCreate = (
-  createCategoryDto: BodyType<CreateCategoryDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    createCategoryDto: BodyType<CreateCategoryDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<CategoryDto>(
-    {
-      url: `/v1/categories`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: createCategoryDto,
-      signal,
+
+
+      return customInstance<CategoryDto>(
+      {url: `/v1/categories`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createCategoryDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getCategoryControllerCreateMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof categoryControllerCreate>>,
-    TError,
-    { data: BodyType<CreateCategoryDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof categoryControllerCreate>>,
-  TError,
-  { data: BodyType<CreateCategoryDto> },
-  TContext
-> => {
-  const mutationKey = ['categoryControllerCreate']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof categoryControllerCreate>>,
-    { data: BodyType<CreateCategoryDto> }
-  > = (props) => {
-    const { data } = props ?? {}
 
-    return categoryControllerCreate(data, requestOptions)
-  }
+export const getCategoryControllerCreateMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerCreate>>, TError,{data: BodyType<CreateCategoryDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof categoryControllerCreate>>, TError,{data: BodyType<CreateCategoryDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['categoryControllerCreate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type CategoryControllerCreateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof categoryControllerCreate>>
->
-export type CategoryControllerCreateMutationBody = BodyType<CreateCategoryDto>
-export type CategoryControllerCreateMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof categoryControllerCreate>>, {data: BodyType<CreateCategoryDto>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  categoryControllerCreate(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CategoryControllerCreateMutationResult = NonNullable<Awaited<ReturnType<typeof categoryControllerCreate>>>
+    export type CategoryControllerCreateMutationBody = BodyType<CreateCategoryDto>
+    export type CategoryControllerCreateMutationError = ErrorType<void>
+
+    /**
  * @summary Create a new category
  */
-export const useCategoryControllerCreate = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof categoryControllerCreate>>,
-      TError,
-      { data: BodyType<CreateCategoryDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof categoryControllerCreate>>,
-  TError,
-  { data: BodyType<CreateCategoryDto> },
-  TContext
-> => {
-  return useMutation(
-    getCategoryControllerCreateMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useCategoryControllerCreate = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerCreate>>, TError,{data: BodyType<CreateCategoryDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof categoryControllerCreate>>,
+        TError,
+        {data: BodyType<CreateCategoryDto>},
+        TContext
+      > => {
+      return useMutation(getCategoryControllerCreateMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Get all categories for the current user
  */
 export const categoryControllerFindAll = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<CategoryDto[]>(
-    { url: `/v1/categories`, method: 'GET', signal },
-    options
-  )
-}
+
+
+      return customInstance<CategoryDto[]>(
+      {url: `/v1/categories`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
 
 export const getCategoryControllerFindAllQueryKey = () => {
-  return [`/v1/categories`] as const
+    return [
+    `/v1/categories`
+    ] as const;
+    }
+
+
+export const getCategoryControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof categoryControllerFindAll>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getCategoryControllerFindAllQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof categoryControllerFindAll>>> = ({ signal }) => categoryControllerFindAll(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export const getCategoryControllerFindAllQueryOptions = <
-  TData = Awaited<ReturnType<typeof categoryControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof categoryControllerFindAll>>,
-      TError,
-      TData
-    >
-  >
-  request?: SecondParameter<typeof customInstance>
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey =
-    queryOptions?.queryKey ?? getCategoryControllerFindAllQueryKey()
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof categoryControllerFindAll>>
-  > = ({ signal }) => categoryControllerFindAll(requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof categoryControllerFindAll>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CategoryControllerFindAllQueryResult = NonNullable<
-  Awaited<ReturnType<typeof categoryControllerFindAll>>
->
+export type CategoryControllerFindAllQueryResult = NonNullable<Awaited<ReturnType<typeof categoryControllerFindAll>>>
 export type CategoryControllerFindAllQueryError = ErrorType<unknown>
 
-export function useCategoryControllerFindAll<
-  TData = Awaited<ReturnType<typeof categoryControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindAll>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useCategoryControllerFindAll<TData = Awaited<ReturnType<typeof categoryControllerFindAll>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindAll>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof categoryControllerFindAll>>,
           TError,
           Awaited<ReturnType<typeof categoryControllerFindAll>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useCategoryControllerFindAll<
-  TData = Awaited<ReturnType<typeof categoryControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindAll>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCategoryControllerFindAll<TData = Awaited<ReturnType<typeof categoryControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindAll>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof categoryControllerFindAll>>,
           TError,
           Awaited<ReturnType<typeof categoryControllerFindAll>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useCategoryControllerFindAll<
-  TData = Awaited<ReturnType<typeof categoryControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindAll>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCategoryControllerFindAll<TData = Awaited<ReturnType<typeof categoryControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get all categories for the current user
  */
 
-export function useCategoryControllerFindAll<
-  TData = Awaited<ReturnType<typeof categoryControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindAll>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
+export function useCategoryControllerFindAll<TData = Awaited<ReturnType<typeof categoryControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
   const queryOptions = getCategoryControllerFindAllQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Get a category by ID
  */
 export const categoryControllerFindOne = (
-  id: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<CategoryDto>(
-    { url: `/v1/categories/${id}`, method: 'GET', signal },
-    options
-  )
-}
 
-export const getCategoryControllerFindOneQueryKey = (id: string) => {
-  return [`/v1/categories/${id}`] as const
-}
 
-export const getCategoryControllerFindOneQueryOptions = <
-  TData = Awaited<ReturnType<typeof categoryControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  }
+      return customInstance<CategoryDto>(
+      {url: `/v1/categories/${id}`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getCategoryControllerFindOneQueryKey = (id: string,) => {
+    return [
+    `/v1/categories/${id}`
+    ] as const;
+    }
+
+
+export const getCategoryControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof categoryControllerFindOne>>, TError = ErrorType<void>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
 
-  const queryKey =
-    queryOptions?.queryKey ?? getCategoryControllerFindOneQueryKey(id)
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof categoryControllerFindOne>>
-  > = ({ signal }) => categoryControllerFindOne(id, requestOptions, signal)
+  const queryKey =  queryOptions?.queryKey ?? getCategoryControllerFindOneQueryKey(id);
 
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!id,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof categoryControllerFindOne>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof categoryControllerFindOne>>> = ({ signal }) => categoryControllerFindOne(id, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindOne>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type CategoryControllerFindOneQueryResult = NonNullable<
-  Awaited<ReturnType<typeof categoryControllerFindOne>>
->
+export type CategoryControllerFindOneQueryResult = NonNullable<Awaited<ReturnType<typeof categoryControllerFindOne>>>
 export type CategoryControllerFindOneQueryError = ErrorType<void>
 
-export function useCategoryControllerFindOne<
-  TData = Awaited<ReturnType<typeof categoryControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useCategoryControllerFindOne<TData = Awaited<ReturnType<typeof categoryControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindOne>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof categoryControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof categoryControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useCategoryControllerFindOne<
-  TData = Awaited<ReturnType<typeof categoryControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCategoryControllerFindOne<TData = Awaited<ReturnType<typeof categoryControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindOne>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof categoryControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof categoryControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useCategoryControllerFindOne<
-  TData = Awaited<ReturnType<typeof categoryControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useCategoryControllerFindOne<TData = Awaited<ReturnType<typeof categoryControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get a category by ID
  */
 
-export function useCategoryControllerFindOne<
-  TData = Awaited<ReturnType<typeof categoryControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof categoryControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getCategoryControllerFindOneQueryOptions(id, options)
+export function useCategoryControllerFindOne<TData = Awaited<ReturnType<typeof categoryControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof categoryControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const queryOptions = getCategoryControllerFindOneQueryOptions(id,options)
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Update a category by ID
  */
 export const categoryControllerUpdate = (
-  id: string,
-  updateCategoryDto: BodyType<UpdateCategoryDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+    updateCategoryDto: BodyType<UpdateCategoryDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<CategoryDto>(
-    {
-      url: `/v1/categories/${id}`,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      data: updateCategoryDto,
-      signal,
+
+
+      return customInstance<CategoryDto>(
+      {url: `/v1/categories/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateCategoryDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getCategoryControllerUpdateMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof categoryControllerUpdate>>,
-    TError,
-    { id: string; data: BodyType<UpdateCategoryDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof categoryControllerUpdate>>,
-  TError,
-  { id: string; data: BodyType<UpdateCategoryDto> },
-  TContext
-> => {
-  const mutationKey = ['categoryControllerUpdate']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof categoryControllerUpdate>>,
-    { id: string; data: BodyType<UpdateCategoryDto> }
-  > = (props) => {
-    const { id, data } = props ?? {}
 
-    return categoryControllerUpdate(id, data, requestOptions)
-  }
+export const getCategoryControllerUpdateMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerUpdate>>, TError,{id: string;data: BodyType<UpdateCategoryDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof categoryControllerUpdate>>, TError,{id: string;data: BodyType<UpdateCategoryDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['categoryControllerUpdate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type CategoryControllerUpdateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof categoryControllerUpdate>>
->
-export type CategoryControllerUpdateMutationBody = BodyType<UpdateCategoryDto>
-export type CategoryControllerUpdateMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof categoryControllerUpdate>>, {id: string;data: BodyType<UpdateCategoryDto>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  categoryControllerUpdate(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CategoryControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof categoryControllerUpdate>>>
+    export type CategoryControllerUpdateMutationBody = BodyType<UpdateCategoryDto>
+    export type CategoryControllerUpdateMutationError = ErrorType<void>
+
+    /**
  * @summary Update a category by ID
  */
-export const useCategoryControllerUpdate = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof categoryControllerUpdate>>,
-      TError,
-      { id: string; data: BodyType<UpdateCategoryDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof categoryControllerUpdate>>,
-  TError,
-  { id: string; data: BodyType<UpdateCategoryDto> },
-  TContext
-> => {
-  return useMutation(
-    getCategoryControllerUpdateMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useCategoryControllerUpdate = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerUpdate>>, TError,{id: string;data: BodyType<UpdateCategoryDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof categoryControllerUpdate>>,
+        TError,
+        {id: string;data: BodyType<UpdateCategoryDto>},
+        TContext
+      > => {
+      return useMutation(getCategoryControllerUpdateMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Delete a category by ID
  */
 export const categoryControllerRemove = (
-  id: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<void>(
-    { url: `/v1/categories/${id}`, method: 'DELETE', signal },
-    options
-  )
-}
 
-export const getCategoryControllerRemoveMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof categoryControllerRemove>>,
-    TError,
-    { id: string },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof categoryControllerRemove>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  const mutationKey = ['categoryControllerRemove']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof categoryControllerRemove>>,
-    { id: string }
-  > = (props) => {
-    const { id } = props ?? {}
+      return customInstance<void>(
+      {url: `/v1/categories/${id}`, method: 'DELETE', signal
+    },
+      options);
+    }
 
-    return categoryControllerRemove(id, requestOptions)
-  }
 
-  return { mutationFn, ...mutationOptions }
-}
 
-export type CategoryControllerRemoveMutationResult = NonNullable<
-  Awaited<ReturnType<typeof categoryControllerRemove>>
->
+export const getCategoryControllerRemoveMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof categoryControllerRemove>>, TError,{id: string}, TContext> => {
 
-export type CategoryControllerRemoveMutationError = ErrorType<void>
+const mutationKey = ['categoryControllerRemove'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-/**
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof categoryControllerRemove>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  categoryControllerRemove(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CategoryControllerRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof categoryControllerRemove>>>
+
+    export type CategoryControllerRemoveMutationError = ErrorType<void>
+
+    /**
  * @summary Delete a category by ID
  */
-export const useCategoryControllerRemove = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof categoryControllerRemove>>,
-      TError,
-      { id: string },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof categoryControllerRemove>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  return useMutation(
-    getCategoryControllerRemoveMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useCategoryControllerRemove = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof categoryControllerRemove>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+      return useMutation(getCategoryControllerRemoveMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Reorder categories by providing list of category IDs (index = order)
  */
 export const categoryControllerReorder = (
-  reorderCategoriesDto: BodyType<ReorderCategoriesDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    reorderCategoriesDto: BodyType<ReorderCategoriesDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<CategoryControllerReorder200>(
-    {
-      url: `/v1/categories/reorder`,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      data: reorderCategoriesDto,
-      signal,
+
+
+      return customInstance<CategoryControllerReorder200>(
+      {url: `/v1/categories/reorder`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: reorderCategoriesDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getCategoryControllerReorderMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof categoryControllerReorder>>,
-    TError,
-    { data: BodyType<ReorderCategoriesDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof categoryControllerReorder>>,
-  TError,
-  { data: BodyType<ReorderCategoriesDto> },
-  TContext
-> => {
-  const mutationKey = ['categoryControllerReorder']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof categoryControllerReorder>>,
-    { data: BodyType<ReorderCategoriesDto> }
-  > = (props) => {
-    const { data } = props ?? {}
 
-    return categoryControllerReorder(data, requestOptions)
-  }
+export const getCategoryControllerReorderMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerReorder>>, TError,{data: BodyType<ReorderCategoriesDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof categoryControllerReorder>>, TError,{data: BodyType<ReorderCategoriesDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['categoryControllerReorder'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type CategoryControllerReorderMutationResult = NonNullable<
-  Awaited<ReturnType<typeof categoryControllerReorder>>
->
-export type CategoryControllerReorderMutationBody =
-  BodyType<ReorderCategoriesDto>
-export type CategoryControllerReorderMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof categoryControllerReorder>>, {data: BodyType<ReorderCategoriesDto>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  categoryControllerReorder(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CategoryControllerReorderMutationResult = NonNullable<Awaited<ReturnType<typeof categoryControllerReorder>>>
+    export type CategoryControllerReorderMutationBody = BodyType<ReorderCategoriesDto>
+    export type CategoryControllerReorderMutationError = ErrorType<void>
+
+    /**
  * @summary Reorder categories by providing list of category IDs (index = order)
  */
-export const useCategoryControllerReorder = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof categoryControllerReorder>>,
-      TError,
-      { data: BodyType<ReorderCategoriesDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof categoryControllerReorder>>,
-  TError,
-  { data: BodyType<ReorderCategoriesDto> },
-  TContext
-> => {
-  return useMutation(
-    getCategoryControllerReorderMutationOptions(options),
-    queryClient
-  )
-}
+export const useCategoryControllerReorder = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof categoryControllerReorder>>, TError,{data: BodyType<ReorderCategoriesDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof categoryControllerReorder>>,
+        TError,
+        {data: BodyType<ReorderCategoriesDto>},
+        TContext
+      > => {
+      return useMutation(getCategoryControllerReorderMutationOptions(options), queryClient);
+    }

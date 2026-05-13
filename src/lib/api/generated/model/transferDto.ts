@@ -5,16 +5,16 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { FeeDto } from './feeDto'
-import type { TransferSideDto } from './transferSideDto'
+import type { FeeDto } from './feeDto';
+import type { TransferSideDto } from './transferSideDto';
 
 export interface TransferDto {
-  id: string
-  from: TransferSideDto
-  to: TransferSideDto
-  rate: number
+  id: string;
+  from: TransferSideDto;
+  to: TransferSideDto;
+  rate: number;
   /** Transfer fee */
-  fee: FeeDto
-  createdAt: string
-  updatedAt: string
+  fee: FeeDto;
+  createdAt: string;
+  updatedAt: string;
 }

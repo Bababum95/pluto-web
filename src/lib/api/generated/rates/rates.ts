@@ -5,7 +5,10 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -18,768 +21,484 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
+  UseQueryResult
+} from '@tanstack/react-query';
 
-import type { CreateRateDto, RateDto, UpdateRateDto } from '../model'
+import type {
+  CreateRateDto,
+  RateDto,
+  UpdateRateDto
+} from '../model';
 
-import { customInstance } from '../../orval-mutator'
-import type { ErrorType, BodyType } from '../../orval-mutator'
+import { customInstance } from '../../orval-mutator';
+import type { ErrorType , BodyType } from '../../orval-mutator';
 
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
+
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+
 
 /**
  * @summary Create a new rate
  */
 export const rateControllerCreate = (
-  createRateDto: BodyType<CreateRateDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    createRateDto: BodyType<CreateRateDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<RateDto>(
-    {
-      url: `/v1/rates`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: createRateDto,
-      signal,
+
+
+      return customInstance<RateDto>(
+      {url: `/v1/rates`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createRateDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getRateControllerCreateMutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof rateControllerCreate>>,
-    TError,
-    { data: BodyType<CreateRateDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof rateControllerCreate>>,
-  TError,
-  { data: BodyType<CreateRateDto> },
-  TContext
-> => {
-  const mutationKey = ['rateControllerCreate']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof rateControllerCreate>>,
-    { data: BodyType<CreateRateDto> }
-  > = (props) => {
-    const { data } = props ?? {}
 
-    return rateControllerCreate(data, requestOptions)
-  }
+export const getRateControllerCreateMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rateControllerCreate>>, TError,{data: BodyType<CreateRateDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof rateControllerCreate>>, TError,{data: BodyType<CreateRateDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['rateControllerCreate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type RateControllerCreateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof rateControllerCreate>>
->
-export type RateControllerCreateMutationBody = BodyType<CreateRateDto>
-export type RateControllerCreateMutationError = ErrorType<unknown>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof rateControllerCreate>>, {data: BodyType<CreateRateDto>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  rateControllerCreate(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RateControllerCreateMutationResult = NonNullable<Awaited<ReturnType<typeof rateControllerCreate>>>
+    export type RateControllerCreateMutationBody = BodyType<CreateRateDto>
+    export type RateControllerCreateMutationError = ErrorType<unknown>
+
+    /**
  * @summary Create a new rate
  */
-export const useRateControllerCreate = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof rateControllerCreate>>,
-      TError,
-      { data: BodyType<CreateRateDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof rateControllerCreate>>,
-  TError,
-  { data: BodyType<CreateRateDto> },
-  TContext
-> => {
-  return useMutation(
-    getRateControllerCreateMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useRateControllerCreate = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rateControllerCreate>>, TError,{data: BodyType<CreateRateDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof rateControllerCreate>>,
+        TError,
+        {data: BodyType<CreateRateDto>},
+        TContext
+      > => {
+      return useMutation(getRateControllerCreateMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Get all rates
  */
 export const rateControllerFindAll = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<RateDto[]>(
-    { url: `/v1/rates`, method: 'GET', signal },
-    options
-  )
-}
+
+
+      return customInstance<RateDto[]>(
+      {url: `/v1/rates`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
 
 export const getRateControllerFindAllQueryKey = () => {
-  return [`/v1/rates`] as const
+    return [
+    `/v1/rates`
+    ] as const;
+    }
+
+
+export const getRateControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof rateControllerFindAll>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getRateControllerFindAllQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof rateControllerFindAll>>> = ({ signal }) => rateControllerFindAll(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export const getRateControllerFindAllQueryOptions = <
-  TData = Awaited<ReturnType<typeof rateControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof rateControllerFindAll>>,
-      TError,
-      TData
-    >
-  >
-  request?: SecondParameter<typeof customInstance>
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey = queryOptions?.queryKey ?? getRateControllerFindAllQueryKey()
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof rateControllerFindAll>>
-  > = ({ signal }) => rateControllerFindAll(requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof rateControllerFindAll>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type RateControllerFindAllQueryResult = NonNullable<
-  Awaited<ReturnType<typeof rateControllerFindAll>>
->
+export type RateControllerFindAllQueryResult = NonNullable<Awaited<ReturnType<typeof rateControllerFindAll>>>
 export type RateControllerFindAllQueryError = ErrorType<unknown>
 
-export function useRateControllerFindAll<
-  TData = Awaited<ReturnType<typeof rateControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindAll>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useRateControllerFindAll<TData = Awaited<ReturnType<typeof rateControllerFindAll>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindAll>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof rateControllerFindAll>>,
           TError,
           Awaited<ReturnType<typeof rateControllerFindAll>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useRateControllerFindAll<
-  TData = Awaited<ReturnType<typeof rateControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindAll>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRateControllerFindAll<TData = Awaited<ReturnType<typeof rateControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindAll>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof rateControllerFindAll>>,
           TError,
           Awaited<ReturnType<typeof rateControllerFindAll>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useRateControllerFindAll<
-  TData = Awaited<ReturnType<typeof rateControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindAll>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRateControllerFindAll<TData = Awaited<ReturnType<typeof rateControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get all rates
  */
 
-export function useRateControllerFindAll<
-  TData = Awaited<ReturnType<typeof rateControllerFindAll>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindAll>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
+export function useRateControllerFindAll<TData = Awaited<ReturnType<typeof rateControllerFindAll>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
   const queryOptions = getRateControllerFindAllQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Get a rate by currency code
  */
 export const rateControllerFindByCode = (
-  code: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    code: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<RateDto>(
-    { url: `/v1/rates/code/${code}`, method: 'GET', signal },
-    options
-  )
-}
 
-export const getRateControllerFindByCodeQueryKey = (code: string) => {
-  return [`/v1/rates/code/${code}`] as const
-}
 
-export const getRateControllerFindByCodeQueryOptions = <
-  TData = Awaited<ReturnType<typeof rateControllerFindByCode>>,
-  TError = ErrorType<void>,
->(
-  code: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindByCode>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  }
+      return customInstance<RateDto>(
+      {url: `/v1/rates/code/${code}`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getRateControllerFindByCodeQueryKey = (code: string,) => {
+    return [
+    `/v1/rates/code/${code}`
+    ] as const;
+    }
+
+
+export const getRateControllerFindByCodeQueryOptions = <TData = Awaited<ReturnType<typeof rateControllerFindByCode>>, TError = ErrorType<void>>(code: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindByCode>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
 
-  const queryKey =
-    queryOptions?.queryKey ?? getRateControllerFindByCodeQueryKey(code)
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof rateControllerFindByCode>>
-  > = ({ signal }) => rateControllerFindByCode(code, requestOptions, signal)
+  const queryKey =  queryOptions?.queryKey ?? getRateControllerFindByCodeQueryKey(code);
 
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!code,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof rateControllerFindByCode>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof rateControllerFindByCode>>> = ({ signal }) => rateControllerFindByCode(code, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(code), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindByCode>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type RateControllerFindByCodeQueryResult = NonNullable<
-  Awaited<ReturnType<typeof rateControllerFindByCode>>
->
+export type RateControllerFindByCodeQueryResult = NonNullable<Awaited<ReturnType<typeof rateControllerFindByCode>>>
 export type RateControllerFindByCodeQueryError = ErrorType<void>
 
-export function useRateControllerFindByCode<
-  TData = Awaited<ReturnType<typeof rateControllerFindByCode>>,
-  TError = ErrorType<void>,
->(
-  code: string,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindByCode>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useRateControllerFindByCode<TData = Awaited<ReturnType<typeof rateControllerFindByCode>>, TError = ErrorType<void>>(
+ code: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindByCode>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof rateControllerFindByCode>>,
           TError,
           Awaited<ReturnType<typeof rateControllerFindByCode>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useRateControllerFindByCode<
-  TData = Awaited<ReturnType<typeof rateControllerFindByCode>>,
-  TError = ErrorType<void>,
->(
-  code: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindByCode>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRateControllerFindByCode<TData = Awaited<ReturnType<typeof rateControllerFindByCode>>, TError = ErrorType<void>>(
+ code: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindByCode>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof rateControllerFindByCode>>,
           TError,
           Awaited<ReturnType<typeof rateControllerFindByCode>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useRateControllerFindByCode<
-  TData = Awaited<ReturnType<typeof rateControllerFindByCode>>,
-  TError = ErrorType<void>,
->(
-  code: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindByCode>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRateControllerFindByCode<TData = Awaited<ReturnType<typeof rateControllerFindByCode>>, TError = ErrorType<void>>(
+ code: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindByCode>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get a rate by currency code
  */
 
-export function useRateControllerFindByCode<
-  TData = Awaited<ReturnType<typeof rateControllerFindByCode>>,
-  TError = ErrorType<void>,
->(
-  code: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindByCode>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getRateControllerFindByCodeQueryOptions(code, options)
+export function useRateControllerFindByCode<TData = Awaited<ReturnType<typeof rateControllerFindByCode>>, TError = ErrorType<void>>(
+ code: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindByCode>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const queryOptions = getRateControllerFindByCodeQueryOptions(code,options)
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Get a rate by ID
  */
 export const rateControllerFindOne = (
-  id: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<RateDto>(
-    { url: `/v1/rates/${id}`, method: 'GET', signal },
-    options
-  )
-}
 
-export const getRateControllerFindOneQueryKey = (id: string) => {
-  return [`/v1/rates/${id}`] as const
-}
 
-export const getRateControllerFindOneQueryOptions = <
-  TData = Awaited<ReturnType<typeof rateControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  }
+      return customInstance<RateDto>(
+      {url: `/v1/rates/${id}`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getRateControllerFindOneQueryKey = (id: string,) => {
+    return [
+    `/v1/rates/${id}`
+    ] as const;
+    }
+
+
+export const getRateControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof rateControllerFindOne>>, TError = ErrorType<void>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
 
-  const queryKey =
-    queryOptions?.queryKey ?? getRateControllerFindOneQueryKey(id)
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof rateControllerFindOne>>
-  > = ({ signal }) => rateControllerFindOne(id, requestOptions, signal)
+  const queryKey =  queryOptions?.queryKey ?? getRateControllerFindOneQueryKey(id);
 
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!id,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof rateControllerFindOne>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof rateControllerFindOne>>> = ({ signal }) => rateControllerFindOne(id, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindOne>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type RateControllerFindOneQueryResult = NonNullable<
-  Awaited<ReturnType<typeof rateControllerFindOne>>
->
+export type RateControllerFindOneQueryResult = NonNullable<Awaited<ReturnType<typeof rateControllerFindOne>>>
 export type RateControllerFindOneQueryError = ErrorType<void>
 
-export function useRateControllerFindOne<
-  TData = Awaited<ReturnType<typeof rateControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useRateControllerFindOne<TData = Awaited<ReturnType<typeof rateControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindOne>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof rateControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof rateControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useRateControllerFindOne<
-  TData = Awaited<ReturnType<typeof rateControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindOne>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRateControllerFindOne<TData = Awaited<ReturnType<typeof rateControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindOne>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof rateControllerFindOne>>,
           TError,
           Awaited<ReturnType<typeof rateControllerFindOne>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useRateControllerFindOne<
-  TData = Awaited<ReturnType<typeof rateControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRateControllerFindOne<TData = Awaited<ReturnType<typeof rateControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get a rate by ID
  */
 
-export function useRateControllerFindOne<
-  TData = Awaited<ReturnType<typeof rateControllerFindOne>>,
-  TError = ErrorType<void>,
->(
-  id: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof rateControllerFindOne>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getRateControllerFindOneQueryOptions(id, options)
+export function useRateControllerFindOne<TData = Awaited<ReturnType<typeof rateControllerFindOne>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof rateControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const queryOptions = getRateControllerFindOneQueryOptions(id,options)
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
 
 /**
  * @summary Update a rate by ID
  */
 export const rateControllerUpdate = (
-  id: string,
-  updateRateDto: BodyType<UpdateRateDto>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+    updateRateDto: BodyType<UpdateRateDto>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<RateDto>(
-    {
-      url: `/v1/rates/${id}`,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      data: updateRateDto,
-      signal,
+
+
+      return customInstance<RateDto>(
+      {url: `/v1/rates/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateRateDto, signal
     },
-    options
-  )
-}
+      options);
+    }
 
-export const getRateControllerUpdateMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof rateControllerUpdate>>,
-    TError,
-    { id: string; data: BodyType<UpdateRateDto> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof rateControllerUpdate>>,
-  TError,
-  { id: string; data: BodyType<UpdateRateDto> },
-  TContext
-> => {
-  const mutationKey = ['rateControllerUpdate']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof rateControllerUpdate>>,
-    { id: string; data: BodyType<UpdateRateDto> }
-  > = (props) => {
-    const { id, data } = props ?? {}
 
-    return rateControllerUpdate(id, data, requestOptions)
-  }
+export const getRateControllerUpdateMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rateControllerUpdate>>, TError,{id: string;data: BodyType<UpdateRateDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof rateControllerUpdate>>, TError,{id: string;data: BodyType<UpdateRateDto>}, TContext> => {
 
-  return { mutationFn, ...mutationOptions }
-}
+const mutationKey = ['rateControllerUpdate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-export type RateControllerUpdateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof rateControllerUpdate>>
->
-export type RateControllerUpdateMutationBody = BodyType<UpdateRateDto>
-export type RateControllerUpdateMutationError = ErrorType<void>
 
-/**
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof rateControllerUpdate>>, {id: string;data: BodyType<UpdateRateDto>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  rateControllerUpdate(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RateControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof rateControllerUpdate>>>
+    export type RateControllerUpdateMutationBody = BodyType<UpdateRateDto>
+    export type RateControllerUpdateMutationError = ErrorType<void>
+
+    /**
  * @summary Update a rate by ID
  */
-export const useRateControllerUpdate = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof rateControllerUpdate>>,
-      TError,
-      { id: string; data: BodyType<UpdateRateDto> },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof rateControllerUpdate>>,
-  TError,
-  { id: string; data: BodyType<UpdateRateDto> },
-  TContext
-> => {
-  return useMutation(
-    getRateControllerUpdateMutationOptions(options),
-    queryClient
-  )
-}
-/**
+export const useRateControllerUpdate = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rateControllerUpdate>>, TError,{id: string;data: BodyType<UpdateRateDto>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof rateControllerUpdate>>,
+        TError,
+        {id: string;data: BodyType<UpdateRateDto>},
+        TContext
+      > => {
+      return useMutation(getRateControllerUpdateMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Delete a rate by ID
  */
 export const rateControllerRemove = (
-  id: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<RateDto>(
-    { url: `/v1/rates/${id}`, method: 'DELETE', signal },
-    options
-  )
-}
 
-export const getRateControllerRemoveMutationOptions = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof rateControllerRemove>>,
-    TError,
-    { id: string },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof rateControllerRemove>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  const mutationKey = ['rateControllerRemove']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof rateControllerRemove>>,
-    { id: string }
-  > = (props) => {
-    const { id } = props ?? {}
+      return customInstance<RateDto>(
+      {url: `/v1/rates/${id}`, method: 'DELETE', signal
+    },
+      options);
+    }
 
-    return rateControllerRemove(id, requestOptions)
-  }
 
-  return { mutationFn, ...mutationOptions }
-}
 
-export type RateControllerRemoveMutationResult = NonNullable<
-  Awaited<ReturnType<typeof rateControllerRemove>>
->
+export const getRateControllerRemoveMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rateControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof rateControllerRemove>>, TError,{id: string}, TContext> => {
 
-export type RateControllerRemoveMutationError = ErrorType<void>
+const mutationKey = ['rateControllerRemove'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-/**
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof rateControllerRemove>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  rateControllerRemove(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RateControllerRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof rateControllerRemove>>>
+
+    export type RateControllerRemoveMutationError = ErrorType<void>
+
+    /**
  * @summary Delete a rate by ID
  */
-export const useRateControllerRemove = <
-  TError = ErrorType<void>,
-  TContext = unknown,
->(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof rateControllerRemove>>,
-      TError,
-      { id: string },
-      TContext
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseMutationResult<
-  Awaited<ReturnType<typeof rateControllerRemove>>,
-  TError,
-  { id: string },
-  TContext
-> => {
-  return useMutation(
-    getRateControllerRemoveMutationOptions(options),
-    queryClient
-  )
-}
+export const useRateControllerRemove = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rateControllerRemove>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof rateControllerRemove>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+      return useMutation(getRateControllerRemoveMutationOptions(options), queryClient);
+    }

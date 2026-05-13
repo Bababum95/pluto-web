@@ -5,24 +5,24 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { AccountDto } from './accountDto'
-import type { CategoryDto } from './categoryDto'
-import type { RegularPaymentAmountViewDto } from './regularPaymentAmountViewDto'
-import type { RegularPaymentDtoType } from './regularPaymentDtoType'
-import type { TagDto } from './tagDto'
+import type { AccountDto } from './accountDto';
+import type { CategoryDto } from './categoryDto';
+import type { RegularPaymentAmountViewDto } from './regularPaymentAmountViewDto';
+import type { RegularPaymentDtoType } from './regularPaymentDtoType';
+import type { TagDto } from './tagDto';
 
 export interface RegularPaymentDto {
-  id: string
+  id: string;
   /** Account data */
-  account: AccountDto
-  type: RegularPaymentDtoType
+  account: AccountDto;
+  type: RegularPaymentDtoType;
   /** Category data */
-  category: CategoryDto
-  comment: string
+  category: CategoryDto;
+  comment: string;
   /** Amount: original (account currency) and converted */
-  amount: RegularPaymentAmountViewDto
+  amount: RegularPaymentAmountViewDto;
   /** Tag entities attached to the regular payment */
-  tags: TagDto[]
-  createdAt: string
-  updatedAt: string
+  tags: TagDto[];
+  createdAt: string;
+  updatedAt: string;
 }

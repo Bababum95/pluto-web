@@ -5,11 +5,11 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import type { MoneyViewDto } from './moneyViewDto'
+import type { MoneyViewDto } from './moneyViewDto';
 
 export interface AccountBalanceViewDto {
   /** Balance in account currency */
-  original: MoneyViewDto
+  original: MoneyViewDto;
   /** Balance in converted (e.g. base) currency */
-  converted: MoneyViewDto
+  converted: MoneyViewDto;
 }

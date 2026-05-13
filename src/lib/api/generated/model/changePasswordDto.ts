@@ -7,7 +7,7 @@
  */
 
 export interface ChangePasswordDto {
-  currentPassword: string
+  currentPassword: string;
   /** @minLength 6 */
-  newPassword: string
+  newPassword: string;
 }

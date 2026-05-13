@@ -8,11 +8,11 @@
 
 export interface FeeDto {
   /** Fee amount in smallest units */
-  value: number
+  value: number;
   /**
-   * Decimal places (scale) for fee
-   * @minimum 0
-   * @maximum 18
-   */
-  scale: number
+     * Decimal places (scale) for fee
+     * @minimum 0
+     * @maximum 18
+     */
+  scale: number;
 }

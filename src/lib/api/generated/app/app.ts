@@ -5,7 +5,9 @@
  * The Pluto API description
  * OpenAPI spec version: 1.0
  */
-import { useQuery } from '@tanstack/react-query'
+import {
+  useQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -15,156 +17,100 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
+  UseQueryResult
+} from '@tanstack/react-query';
 
-import { customInstance } from '../../orval-mutator'
-import type { ErrorType } from '../../orval-mutator'
+import { customInstance } from '../../orval-mutator';
+import type { ErrorType } from '../../orval-mutator';
 
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
+
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+
 
 export const appControllerGetHealth = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<void>(
-    { url: `/v1/health`, method: 'GET', signal },
-    options
-  )
-}
+
+
+      return customInstance<void>(
+      {url: `/v1/health`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
 
 export const getAppControllerGetHealthQueryKey = () => {
-  return [`/v1/health`] as const
+    return [
+    `/v1/health`
+    ] as const;
+    }
+
+
+export const getAppControllerGetHealthQueryOptions = <TData = Awaited<ReturnType<typeof appControllerGetHealth>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHealth>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getAppControllerGetHealthQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof appControllerGetHealth>>> = ({ signal }) => appControllerGetHealth(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHealth>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export const getAppControllerGetHealthQueryOptions = <
-  TData = Awaited<ReturnType<typeof appControllerGetHealth>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof appControllerGetHealth>>,
-      TError,
-      TData
-    >
-  >
-  request?: SecondParameter<typeof customInstance>
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey = queryOptions?.queryKey ?? getAppControllerGetHealthQueryKey()
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof appControllerGetHealth>>
-  > = ({ signal }) => appControllerGetHealth(requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof appControllerGetHealth>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AppControllerGetHealthQueryResult = NonNullable<
-  Awaited<ReturnType<typeof appControllerGetHealth>>
->
+export type AppControllerGetHealthQueryResult = NonNullable<Awaited<ReturnType<typeof appControllerGetHealth>>>
 export type AppControllerGetHealthQueryError = ErrorType<unknown>
 
-export function useAppControllerGetHealth<
-  TData = Awaited<ReturnType<typeof appControllerGetHealth>>,
-  TError = ErrorType<unknown>,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHealth>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+
+export function useAppControllerGetHealth<TData = Awaited<ReturnType<typeof appControllerGetHealth>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHealth>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof appControllerGetHealth>>,
           TError,
           Awaited<ReturnType<typeof appControllerGetHealth>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAppControllerGetHealth<
-  TData = Awaited<ReturnType<typeof appControllerGetHealth>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHealth>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAppControllerGetHealth<TData = Awaited<ReturnType<typeof appControllerGetHealth>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHealth>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof appControllerGetHealth>>,
           TError,
           Awaited<ReturnType<typeof appControllerGetHealth>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useAppControllerGetHealth<
-  TData = Awaited<ReturnType<typeof appControllerGetHealth>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHealth>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useAppControllerGetHealth<TData = Awaited<ReturnType<typeof appControllerGetHealth>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHealth>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useAppControllerGetHealth<
-  TData = Awaited<ReturnType<typeof appControllerGetHealth>>,
-  TError = ErrorType<unknown>,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof appControllerGetHealth>>,
-        TError,
-        TData
-      >
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-  queryClient?: QueryClient
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
+export function useAppControllerGetHealth<TData = Awaited<ReturnType<typeof appControllerGetHealth>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof appControllerGetHealth>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
   const queryOptions = getAppControllerGetHealthQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  return { ...query, queryKey: queryOptions.queryKey }
+  return { ...query, queryKey: queryOptions.queryKey };
 }
+
+
+
+
+
+

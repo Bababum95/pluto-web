@@ -8,11 +8,11 @@
 
 export interface RegisterDto {
   /**
-   * @minLength 2
-   * @maxLength 50
-   */
-  name: string
-  email: string
+     * @minLength 2
+     * @maxLength 50
+     */
+  name: string;
+  email: string;
   /** @minLength 6 */
-  password: string
+  password: string;
 }

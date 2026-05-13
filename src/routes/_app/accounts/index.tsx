@@ -6,6 +6,7 @@ import {
   Clock04Icon,
   PlusSignIcon,
   ArrowDataTransferHorizontalIcon,
+  Wallet01Icon,
 } from '@hugeicons/core-free-icons'
 import { DragDropProvider } from '@dnd-kit/react'
 import {
@@ -30,8 +31,16 @@ import {
   reorderAccounts,
   selectAccounts,
   selectAccountsStatus,
-} from '@/store/slices/account'
+} from '@/entities/account'
 import { useAppDispatch, useAppSelector } from '@/store'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty'
 import { Spinner } from '@/components/ui/spinner'
 import { Total } from '@/features/money'
 import { SortableAccountItem } from '@/features/account'
@@ -123,20 +132,44 @@ function AccountsPage() {
           </div>
         ) : (
           <Card size="sm" className="py-1!">
-            <ItemGroup>
-              {accounts.map((account, index) => (
-                <SortableAccountItem
-                  key={account.id}
-                  id={account.id}
-                  index={index}
-                  accountItemProps={{
-                    ...account,
-                    separator: index !== accounts.length - 1,
-                    onClick: () => handleAccountClick(account.id),
-                  }}
-                />
-              ))}
-            </ItemGroup>
+            {accounts.length === 0 ? (
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <HugeiconsIcon icon={Wallet01Icon} />
+                  </EmptyMedia>
+                  <EmptyTitle>{t('accounts.empty.title')}</EmptyTitle>
+                  <EmptyDescription>
+                    {t('accounts.empty.description')}
+                  </EmptyDescription>
+                </EmptyHeader>
+                <EmptyContent className="flex-row justify-center">
+                  <Button>
+                    <Link
+                      to="/accounts/create"
+                      viewTransition={{ types: ['slide-left'] }}
+                    >
+                      {t('accounts.actions.add')}
+                    </Link>
+                  </Button>
+                </EmptyContent>
+              </Empty>
+            ) : (
+              <ItemGroup>
+                {accounts.map((account, index) => (
+                  <SortableAccountItem
+                    key={account.id}
+                    id={account.id}
+                    index={index}
+                    accountItemProps={{
+                      ...account,
+                      separator: index !== accounts.length - 1,
+                      onClick: () => handleAccountClick(account.id),
+                    }}
+                  />
+                ))}
+              </ItemGroup>
+            )}
           </Card>
         )}
       </DragDropProvider>

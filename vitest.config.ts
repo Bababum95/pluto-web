@@ -8,6 +8,7 @@ export default defineConfig({
     env: {
       VITE_API_BASE_URL: 'http://localhost',
       VITE_API_VERSION: 'v1',
+      VITE_LOCAL_DATA_MODE: 'api-only',
     },
     setupFiles: ['./src/test-setup.ts'],
     include: ['src/**/*.test.{ts,tsx}', 'src/**/*.integration.test.{ts,tsx}'],

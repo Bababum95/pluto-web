@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
@@ -18,7 +18,7 @@ import {
   updateAccount,
   deleteAccount,
   toggleExcluded,
-} from '@/store/slices/account'
+} from '@/entities/account'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,14 +62,27 @@ const EditAccountPage = () => {
     )
   }
 
-  if (isLoading || !account) {
+  if (isLoading) {
     return (
       <AppLayout title={t('accounts.actions.edit')} showBackButton>
         <div className="flex flex-1 items-center justify-center py-8">
-          {isLoading ? t('common.loading') : t('accounts.messages.notFound')}
+          {t('common.loading')}
         </div>
       </AppLayout>
     )
+  }
+
+  if (!account) {
+    if (accountId.startsWith('temp-')) {
+      return (
+        <AppLayout title={t('accounts.actions.edit')} showBackButton>
+          <div className="flex flex-1 items-center justify-center py-8 text-muted-foreground">
+            {t('sync.pending')}
+          </div>
+        </AppLayout>
+      )
+    }
+    return <Navigate to="/accounts" />
   }
 
   return (

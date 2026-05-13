@@ -6,7 +6,7 @@ import { http, HttpResponse } from 'msw'
 import { renderWithProviders } from '@/testing/render'
 import { server } from '@/testing/server'
 import { initApp } from '@/store/slices/app'
-import { selectTransactionsByCategory } from '@/store/slices/transaction'
+import { selectTransactionsByCategory } from '@/entities/transaction'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { mockCategory, mockTransaction } from '@/testing/data'
 

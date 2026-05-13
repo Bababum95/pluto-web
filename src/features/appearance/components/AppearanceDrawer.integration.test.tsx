@@ -32,10 +32,9 @@ vi.mock('@/components/ui/drawer', () => ({
   DrawerTitle: ({ children, ...props }: React.ComponentProps<'div'>) => (
     <div {...props}>{children}</div>
   ),
-  DrawerDescription: ({
-    children,
-    ...props
-  }: React.ComponentProps<'div'>) => <div {...props}>{children}</div>,
+  DrawerDescription: ({ children, ...props }: React.ComponentProps<'div'>) => (
+    <div {...props}>{children}</div>
+  ),
 }))
 
 import { AppearanceDrawer } from './AppearanceDrawer'
@@ -60,7 +59,9 @@ describe('AppearanceDrawer (integration)', () => {
     })
 
     expect(screen.getByText('Appearance')).toBeInTheDocument()
-    expect(screen.getByText('Choose the component display style')).toBeInTheDocument()
+    expect(
+      screen.getByText('Choose the component display style')
+    ).toBeInTheDocument()
     expect(screen.getByRole('radio', { name: 'Classic' })).toBeInTheDocument()
     expect(screen.getByRole('radio', { name: 'Liquid' })).toHaveAttribute(
       'data-state',

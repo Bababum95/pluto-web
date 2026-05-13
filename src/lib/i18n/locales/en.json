@@ -63,6 +63,10 @@
     "en": "English",
     "ru": "Русский"
   },
+  "sync": {
+    "failed": "Sync failed: {{message}}",
+    "pending": "Waiting for sync…"
+  },
   "transactions": {
     "title": "Transactions",
     "create": "Create Transaction",
@@ -124,6 +128,10 @@
   },
   "accounts": {
     "title": "Accounts",
+    "empty": {
+      "title": "No accounts yet",
+      "description": "Add an account to track your balances and transactions."
+    },
     "fields": {
       "name": "Account name",
       "description": "Account description",

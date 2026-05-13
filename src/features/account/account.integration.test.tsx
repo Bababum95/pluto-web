@@ -4,12 +4,8 @@ import { http, HttpResponse } from 'msw'
 
 import { server } from '@/testing/server'
 import { createStore } from '@/store'
-import {
-  fetchAccounts,
-  createAccount,
-  deleteAccount,
-} from '@/store/slices/account'
-import { createTransaction } from '@/store/slices/transaction'
+import { fetchAccounts, createAccount, deleteAccount } from '@/entities/account'
+import { createTransaction } from '@/entities/transaction'
 import {
   mockAccount,
   mockAccountSummary,
@@ -139,7 +135,7 @@ describe('Account flow (integration)', () => {
     server.use(
       http.post('http://localhost/v1/transactions', () =>
         HttpResponse.json({
-          accounts: [updatedAccount],
+          account: updatedAccount,
           summary: updatedSummary,
           transaction: createMockTransaction({ id: 'tx-1' }),
         })

@@ -11,7 +11,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/drawer'
 
-import type { CategoryDto } from '../types'
+import type { CategoryDto } from '@/entities/category'
 import { CategoriesList } from './CategoriesList'
 
 type Props = {

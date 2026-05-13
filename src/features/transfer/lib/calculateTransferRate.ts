@@ -2,7 +2,7 @@ import Decimal from 'decimal.js'
 
 import { stringIsValid } from '@/lib/utils'
 import { calculateBaseRate } from '@/features/money'
-import type { RateDto } from '@/features/exchange-rate/types'
+import type { RateDto } from '@/entities/exchange-rate'
 
 import type { FeeType } from '../types'
 

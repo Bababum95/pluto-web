@@ -13,9 +13,9 @@ import { mockTransaction } from '@/testing/data/transaction'
 import { mockTransfer } from '@/testing/data/transfer'
 import { getTimeRangeBounds } from '@/features/time-range'
 
-async function waitForTransactionsAndTransfersRefetch(store: ReturnType<
-  typeof createStore
->): Promise<void> {
+async function waitForTransactionsAndTransfersRefetch(
+  store: ReturnType<typeof createStore>
+): Promise<void> {
   await waitFor(
     () => {
       const { transaction, transfer } = store.getState()

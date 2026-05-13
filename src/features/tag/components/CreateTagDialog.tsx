@@ -16,11 +16,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/forms/form-field'
 import { useAppDispatch } from '@/store'
-import { createTag } from '@/store/slices/tag'
+import { createTag } from '@/entities/tag'
+import type { TagDto } from '@/entities/tag'
+import { MAX_TAG_NAME_LENGTH } from '../constants'
 
-import type { TagDto } from '../types'
-
-const MAX_LENGTH = 20
+const MAX_LENGTH = MAX_TAG_NAME_LENGTH
 
 type Props = {
   onSuccess?: (tag: TagDto) => void

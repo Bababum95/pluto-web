@@ -32,10 +32,9 @@ vi.mock('@/components/ui/drawer', () => ({
   DrawerTitle: ({ children, ...props }: React.ComponentProps<'div'>) => (
     <div {...props}>{children}</div>
   ),
-  DrawerDescription: ({
-    children,
-    ...props
-  }: React.ComponentProps<'div'>) => <div {...props}>{children}</div>,
+  DrawerDescription: ({ children, ...props }: React.ComponentProps<'div'>) => (
+    <div {...props}>{children}</div>
+  ),
 }))
 
 import { ThemeProvider } from './ThemeProvider'

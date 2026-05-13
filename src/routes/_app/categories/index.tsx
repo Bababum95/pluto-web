@@ -17,7 +17,7 @@ import {
   selectCategories,
   selectCategoriesStatus,
   reorderCategories,
-} from '@/store/slices/category'
+} from '@/entities/category'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { Spinner } from '@/components/ui/spinner'
 import { selectTransactionType } from '@/store/slices/transaction-type'

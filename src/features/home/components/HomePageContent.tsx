@@ -13,8 +13,8 @@ import {
   selectTransactionsSummary,
   selectTransactionsByCategory,
   selectTransactionsStatus,
-} from '@/store/slices/transaction'
-import { selectCurrency } from '@/store/slices/settings'
+} from '@/entities/transaction'
+import { selectCurrency } from '@/entities/settings'
 
 export const HomePageContent: FC = () => {
   const summary = useAppSelector(selectTransactionsSummary)

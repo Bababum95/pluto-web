@@ -17,9 +17,7 @@ describe('LanguageSwitcher (integration)', () => {
 
     renderWithProviders(<LanguageSwitcher />)
 
-    await user.click(
-      screen.getByRole('button', { name: 'Change language' })
-    )
+    await user.click(screen.getByRole('button', { name: 'Change language' }))
 
     await user.click(screen.getByRole('menuitemradio', { name: 'Русский' }))
 

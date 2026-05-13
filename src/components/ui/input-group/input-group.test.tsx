@@ -19,10 +19,7 @@ describe('InputGroup', () => {
         <InputGroupInput />
       </InputGroup>
     )
-    expect(screen.getByTestId('ig')).toHaveAttribute(
-      'data-slot',
-      'input-group'
-    )
+    expect(screen.getByTestId('ig')).toHaveAttribute('data-slot', 'input-group')
   })
 
   it('renders input inside group', () => {

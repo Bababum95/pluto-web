@@ -1,4 +1,4 @@
-import type { CategoryDto } from '@/features/category/types'
+import type { CategoryDto } from '@/entities/category'
 
 export const mockCategory: CategoryDto = {
   id: 'category-1',

@@ -18,7 +18,7 @@ import { Icon } from '@/components/ui/icon'
 import { Balance } from '@/features/money'
 import { useTranslation } from '@/lib/i18n'
 import { useAppSelector } from '@/store'
-import { selectAccounts } from '@/store/slices/account'
+import { selectAccounts } from '@/entities/account'
 
 type Props = {
   open: boolean

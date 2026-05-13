@@ -41,8 +41,12 @@ describe('isDateWithinBounds', () => {
   })
 
   it('returns false when bounds contain invalid date', () => {
-    expect(isDateWithinBounds('2024-01-15', { from: 'invalid', to: '2024-01-20' })).toBe(false)
-    expect(isDateWithinBounds('2024-01-15', { from: '2024-01-10', to: 'invalid' })).toBe(false)
+    expect(
+      isDateWithinBounds('2024-01-15', { from: 'invalid', to: '2024-01-20' })
+    ).toBe(false)
+    expect(
+      isDateWithinBounds('2024-01-15', { from: '2024-01-10', to: 'invalid' })
+    ).toBe(false)
   })
 
   it('rejects non-YYYY-MM-DD date string that dayjs parses differently', () => {

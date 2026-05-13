@@ -1,4 +1,4 @@
-import type { UserDto } from '@/features/user/types'
+import type { UserDto } from '@/entities/user'
 
 export const mockUser: UserDto = {
   id: 'user-1',

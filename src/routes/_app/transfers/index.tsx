@@ -22,7 +22,7 @@ import { useAppSelector } from '@/store'
 import {
   selectTransfersByDay,
   selectTransfersStatus,
-} from '@/store/slices/transfer'
+} from '@/entities/transfer'
 import { TransferItem } from '@/features/transfer'
 
 export const Route = createFileRoute('/_app/transfers/')({

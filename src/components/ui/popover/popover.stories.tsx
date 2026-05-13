@@ -47,9 +47,7 @@ export const WithCustomContent: Story = {
       <PopoverContent className="w-80">
         <PopoverHeader>
           <PopoverTitle>Settings</PopoverTitle>
-          <PopoverDescription>
-            Manage your preferences here.
-          </PopoverDescription>
+          <PopoverDescription>Manage your preferences here.</PopoverDescription>
         </PopoverHeader>
         <div className="grid gap-2 text-sm">
           <p>Theme, language, notifications and more.</p>

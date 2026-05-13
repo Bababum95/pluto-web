@@ -9,6 +9,75 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ## Unreleased
 
+### ✨ Features
+
+- surface sync failures to the user via toast when local-first sync errors (`SyncErrorNotifier`)
+- improve detail routes for optimistic `temp-*` ids (pending sync message or redirect when missing)
+- enhance settings and tag entities with outbox handlers
+- add empty state for accounts page
+- integrate sync entity registration and enhance sync coordinator
+
+### ♻️ Refactoring
+
+- improve session handling in sync operations
+- move DEFAULT_CATEGORY_FORM_VALUES to entities and update imports
+- reorganize category feature structure and update imports
+- reorganize tag feature structure and update imports
+- reorganize settings slice and update async thunks
+- consolidate settings API and types into a unified entity structure
+- add local-first support for Settings and Tag entities
+
+### 🐛 Fixes
+
+- dispatch Redux accounts + summary after background account pull sync (`refreshAccountsFromApi` in entity sync)
+- resolve temp-account currency display from settings or existing accounts; placeholder until catalog or sync
+
+### 📚 Documentation
+
+- reviewers: conflict strategy for local-first data is documented in `docs/LOCAL_FIRST.md` (Conflict resolution); summary is refreshed after account sync as above
+
+---
+
+## 30.04.2026 — v0.1.27
+
+### 🐛 Fixes
+
+- correct type definition and improve ToggleGroup styling
+- update TimeRangeSwitcher test to use radio role for tab selection
+
+### ♻️ Refactoring
+
+- migrate API client generation to Orval and update configuration
+- add abort signal support for transaction and transfer API requests
+- clean up categories API imports and formatting
+
+### 🧹 Chore
+
+- increase API test coverage and update Vitest coverage thresholds
+
+---
+
+## 22.04.2026 — v0.1.26
+
+### 🐛 Fixes
+
+- refine TabsTrigger spring transition parameters for smoother animations
+
+### ♻️ Refactoring
+
+- replace Tabs with ToggleGroup in TimeRangeSwitcher and simplify Tabs internals
+- improve TabsTrigger className and transform handling for animation performance
+- update App/Header layout and remove redundant Drawer/Sheet classes
+- refresh Toggle and Button styling for consistent visuals
+
+### 🧹 Chore
+
+- raise frontend coverage above 80%
+
+---
+
+## 20.04.2026 — v0.1.25
+
 ### ♻️ Refactoring
 
 - integrate AppearanceProvider and update component variants

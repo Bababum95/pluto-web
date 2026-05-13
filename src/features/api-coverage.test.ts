@@ -9,6 +9,12 @@ import * as Tags from '@/lib/api/generated/tags/tags'
 import * as Transactions from '@/lib/api/generated/transactions/transactions'
 import * as Transfers from '@/lib/api/generated/transfers/transfers'
 import * as Users from '@/lib/api/generated/users/users'
+import { settingsApi } from '@/entities/settings'
+import { tagApi } from '@/entities/tag'
+import { categoryApi } from '@/entities/category'
+import { accountApi } from '@/entities/account'
+import { exchangeRateApi } from '@/entities/exchange-rate'
+import { changePasswordApi } from '@/features/change-password'
 import { queryClient } from '@/lib/api'
 import {
   mockAccount,
@@ -20,15 +26,9 @@ import { mockCurrency } from '@/testing/data/currency'
 import { mockSettings } from '@/testing/data/settings'
 import { mockUser } from '@/testing/data/user'
 
-import { accountApi } from './account/api'
-import { categoryApi } from './category/api'
 import { currencyApi } from './currency/api'
-import { exchangeRateApi } from './exchange-rate/api'
-import { settingsApi } from './settings/api'
-import { tagApi } from './tag/api'
 import { transactionApi } from './transaction/api'
 import { transferApi } from './transfer/api'
-import { userApi } from './user/api'
 
 describe('feature api clients (Orval-generated)', () => {
   beforeEach(() => {
@@ -115,9 +115,9 @@ describe('feature api clients (Orval-generated)', () => {
     vi.spyOn(Rates, 'rateControllerFindByCode').mockResolvedValue({} as never)
     vi.spyOn(Rates, 'rateControllerFindOne').mockResolvedValue({} as never)
 
-    vi.spyOn(Currencies, 'currencyControllerFindAll').mockResolvedValue(
-      [mockCurrency] as never
-    )
+    vi.spyOn(Currencies, 'currencyControllerFindAll').mockResolvedValue([
+      mockCurrency,
+    ] as never)
     vi.spyOn(Currencies, 'currencyControllerFindOne').mockResolvedValue(
       mockCurrency as never
     )
@@ -186,9 +186,9 @@ describe('feature api clients (Orval-generated)', () => {
       summary: null,
     } as never)
 
-    await expect(
-      accountApi.create({ name: 'Main' } as never)
-    ).rejects.toThrow('Account response is missing required fields')
+    await expect(accountApi.create({ name: 'Main' } as never)).rejects.toThrow(
+      'Account response is missing required fields'
+    )
   })
 
   it('calls category controllers and invalidation', async () => {
@@ -216,7 +216,7 @@ describe('feature api clients (Orval-generated)', () => {
     await settingsApi.get()
     await settingsApi.update({ account: 'account-1' })
 
-    await userApi.changePassword('user-1', {
+    await changePasswordApi.changePassword('user-1', {
       currentPassword: 'old-password',
       newPassword: 'new-password',
     })

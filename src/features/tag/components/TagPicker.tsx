@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next'
 import type { FC } from 'react'
 
 import { Field, FieldLabel } from '@/components/ui/field'
+import { Badge } from '@/components/ui/badge'
+import { useAppSelector } from '@/store'
+import { selectTags } from '@/entities/tag'
 
 import { CreateTagDialog } from './CreateTagDialog'
-import { selectTags } from '@/store/slices/tag'
-import { useAppSelector } from '@/store'
-import { Badge } from '@/components/ui/badge'
 
 type Props = {
   values?: string[]

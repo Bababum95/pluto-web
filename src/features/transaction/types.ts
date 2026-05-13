@@ -19,7 +19,7 @@ export type TransactionFormType = Omit<
 
 export type TransactionMutationResponse = {
   transaction: TransactionDto
-  accounts: AccountDto[]
+  account: AccountDto
   summary: AccountSummaryDto
 }
 

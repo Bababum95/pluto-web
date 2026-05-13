@@ -1,10 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 
-import {
-  setAccessToken,
-  getAccessToken,
-  removeAccessToken,
-} from './auth-token'
+import { setAccessToken, getAccessToken, removeAccessToken } from './auth-token'
 import { TOKEN_COOKIE_NAME } from '../constants'
 
 describe('auth-token', () => {

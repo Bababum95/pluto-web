@@ -110,7 +110,10 @@ const SheetContent: FC<SheetContentProps> = ({
       <SheetOverlay />
       <SheetPrimitive.Content
         data-slot="sheet-content"
-        className={cn(sheetContentVariants({ side, variant: resolved }), className)}
+        className={cn(
+          sheetContentVariants({ side, variant: resolved }),
+          className
+        )}
         {...props}
       >
         {children}

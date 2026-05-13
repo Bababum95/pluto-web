@@ -3,7 +3,7 @@ import type { FC } from 'react'
 
 import { cn } from '@/lib/utils'
 
-import type { CategoryDto } from '../types'
+import type { CategoryDto } from '@/entities/category'
 
 import { CategoryCard } from './CategoryCard'
 

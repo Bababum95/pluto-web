@@ -2,7 +2,7 @@ import { MultiplicationSignIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { type FC, useRef } from 'react'
 
-import { selectCurrency } from '@/store/slices/settings'
+import { selectCurrency } from '@/entities/settings'
 import { useAppSelector } from '@/store/hooks'
 import { cn } from '@/lib/utils'
 import { FieldError, Field, FieldLabel } from '@/components/ui/field'

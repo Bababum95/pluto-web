@@ -50,9 +50,7 @@ describe('EmptyTitle', () => {
 
 describe('EmptyDescription', () => {
   it('renders with data-slot attribute', () => {
-    render(
-      <EmptyDescription data-testid="desc">Description</EmptyDescription>
-    )
+    render(<EmptyDescription data-testid="desc">Description</EmptyDescription>)
     expect(screen.getByTestId('desc')).toHaveAttribute(
       'data-slot',
       'empty-description'

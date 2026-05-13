@@ -1,4 +1,4 @@
-import type { TagDto } from '@/features/tag/types'
+import type { TagDto } from '@/entities/tag'
 
 export const mockTag: TagDto = {
   id: 'tag-1',

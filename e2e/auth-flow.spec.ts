@@ -28,7 +28,9 @@ test.describe('auth pages', () => {
     await expect(page.locator('input[type="text"]').first()).toBeVisible()
   })
 
-  test('user can navigate between login and register pages', async ({ page }) => {
+  test('user can navigate between login and register pages', async ({
+    page,
+  }) => {
     await page.goto('/login')
     await page.locator('a[href="/register"]').click()
     await expect(page).toHaveURL(/\/register$/)
@@ -39,7 +41,9 @@ test.describe('auth pages', () => {
     await expect(page).toHaveURL(/\/login$/)
   })
 
-  test('login form validates password length before submit', async ({ page }) => {
+  test('login form validates password length before submit', async ({
+    page,
+  }) => {
     let loginRequests = 0
 
     await page.route('**/v1/auth/login', async (route) => {
@@ -72,7 +76,9 @@ test.describe('auth pages', () => {
     expect(loginRequests).toBe(0)
   })
 
-  test('register page validates confirm password mismatch', async ({ page }) => {
+  test('register page validates confirm password mismatch', async ({
+    page,
+  }) => {
     await page.goto('/register')
 
     await page.getByLabel('Name').fill('Test User')

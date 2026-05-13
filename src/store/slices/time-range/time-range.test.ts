@@ -49,7 +49,10 @@ describe('timeRange slice', () => {
   })
 
   it('setTimeRange switching to period without range keeps previous range', () => {
-    let state = timeRangeReducer(undefined, setTimeRange({ type: 'day', index: 0 }))
+    let state = timeRangeReducer(
+      undefined,
+      setTimeRange({ type: 'day', index: 0 })
+    )
     const previous = state.range
     state = timeRangeReducer(state, setTimeRange({ type: 'period' }))
     expect(state.type).toBe('period')
@@ -57,7 +60,10 @@ describe('timeRange slice', () => {
   })
 
   it('setTimeRangeIndex updates range for non-period types', () => {
-    let state = timeRangeReducer(undefined, setTimeRange({ type: 'day', index: 0 }))
+    let state = timeRangeReducer(
+      undefined,
+      setTimeRange({ type: 'day', index: 0 })
+    )
     state = timeRangeReducer(state, setTimeRangeIndex(3))
     expect(state.index).toBe(3)
     expect(state.range).toEqual(getTimeRangeBounds('day', 3))
@@ -75,7 +81,10 @@ describe('timeRange slice', () => {
   })
 
   it('decreaseTimeRangeIndex clamps at 0 and updates range', () => {
-    let state = timeRangeReducer(undefined, setTimeRange({ type: 'week', index: 1 }))
+    let state = timeRangeReducer(
+      undefined,
+      setTimeRange({ type: 'week', index: 1 })
+    )
     state = timeRangeReducer(state, decreaseTimeRangeIndex())
     expect(state.index).toBe(0)
     expect(state.range).toEqual(getTimeRangeBounds('week', 0))
@@ -84,7 +93,10 @@ describe('timeRange slice', () => {
   })
 
   it('increaseTimeRangeIndex increments index and range', () => {
-    let state = timeRangeReducer(undefined, setTimeRange({ type: 'month', index: 0 }))
+    let state = timeRangeReducer(
+      undefined,
+      setTimeRange({ type: 'month', index: 0 })
+    )
     state = timeRangeReducer(state, increaseTimeRangeIndex())
     expect(state.index).toBe(1)
     expect(state.range).toEqual(getTimeRangeBounds('month', 1))

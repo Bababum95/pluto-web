@@ -17,10 +17,9 @@ import { useAppSelector } from '@/store'
 import {
   selectExchangeRates,
   selectExchangeRatesStatus,
-} from '@/store/slices/exchange-rate'
-import { selectCurrency } from '@/store/slices/settings'
-
-import type { RateDto } from '../types'
+} from '@/entities/exchange-rate'
+import { selectCurrency } from '@/entities/settings'
+import type { RateDto } from '@/entities/exchange-rate'
 
 function getRateValue(
   rates: RateDto[],

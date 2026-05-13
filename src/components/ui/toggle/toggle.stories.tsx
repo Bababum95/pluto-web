@@ -1,22 +1,22 @@
-import type { Meta, StoryObj } from "@storybook/react-vite"
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { Toggle } from "./toggle"
+import { Toggle } from './toggle'
 
 const meta = {
-  title: "UI/Toggle",
+  title: 'UI/Toggle',
   component: Toggle,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
-      options: ["default", "outline"],
+      control: 'select',
+      options: ['default', 'outline'],
     },
     size: {
-      control: "select",
-      options: ["default", "sm", "lg"],
+      control: 'select',
+      options: ['default', 'sm', 'lg'],
     },
-    pressed: { control: "boolean" },
-    disabled: { control: "boolean" },
+    pressed: { control: 'boolean' },
+    disabled: { control: 'boolean' },
   },
 } satisfies Meta<typeof Toggle>
 
@@ -26,34 +26,34 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    "aria-label": "Toggle income",
-    children: "Income",
-    variant: "default",
-    size: "default",
+    'aria-label': 'Toggle income',
+    children: 'Income',
+    variant: 'default',
+    size: 'default',
   },
 }
 
 export const Outline: Story = {
   args: {
-    "aria-label": "Toggle expense",
-    children: "Expense",
-    variant: "outline",
-    size: "default",
+    'aria-label': 'Toggle expense',
+    children: 'Expense',
+    variant: 'outline',
+    size: 'default',
   },
 }
 
 export const Pressed: Story = {
   args: {
-    "aria-label": "Pressed toggle",
-    children: "Selected",
+    'aria-label': 'Pressed toggle',
+    children: 'Selected',
     pressed: true,
   },
 }
 
 export const Disabled: Story = {
   args: {
-    "aria-label": "Disabled toggle",
-    children: "Disabled",
+    'aria-label': 'Disabled toggle',
+    children: 'Disabled',
     disabled: true,
   },
 }

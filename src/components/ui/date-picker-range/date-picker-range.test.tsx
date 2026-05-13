@@ -35,8 +35,7 @@ describe('DatePickerRange', () => {
     const buttons = screen.getAllByRole('button')
     const dayButton = buttons.find(
       (b) =>
-        b.hasAttribute('data-day') &&
-        b.getAttribute('aria-disabled') !== 'true'
+        b.hasAttribute('data-day') && b.getAttribute('aria-disabled') !== 'true'
     )
     if (dayButton) {
       await user.click(dayButton)

@@ -1,7 +1,7 @@
 import { motion, AnimatePresence, type Variants } from 'motion/react'
 import { useState, type FC } from 'react'
 
-import type { CategoryDto } from '../types'
+import type { CategoryDto } from '@/entities/category'
 
 import { CategoryCard } from './CategoryCard'
 

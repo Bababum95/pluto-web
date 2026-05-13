@@ -11,7 +11,9 @@ type Props = {
 export const AppearanceProvider: FC<Props> = ({ children }) => {
   const [appearance, setAppearanceState] = useState<Appearance>(() => {
     if (typeof window === 'undefined') return DEFAULT_APPEARANCE
-    const stored = localStorage.getItem(APPEARANCE_STORAGE_KEY) as Appearance | null
+    const stored = localStorage.getItem(
+      APPEARANCE_STORAGE_KEY
+    ) as Appearance | null
     return stored || DEFAULT_APPEARANCE
   })
 

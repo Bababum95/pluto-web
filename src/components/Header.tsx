@@ -13,10 +13,10 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
-import { NavUser } from '@/features/user'
 import { useTranslation } from '@/lib/i18n'
 import { MENU_ITEMS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import { NavUser } from '@/widgets/nav-user'
 
 export type HeaderProps = {
   title?: React.ReactNode

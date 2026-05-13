@@ -7,15 +7,16 @@ import { Switch } from './switch'
 describe('Switch', () => {
   it('renders a switch element', () => {
     render(<Switch aria-label="Enable feature" />)
-    expect(screen.getByRole('switch', { name: 'Enable feature' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('switch', { name: 'Enable feature' })
+    ).toBeInTheDocument()
   })
 
   it('supports checked state', () => {
     render(<Switch aria-label="Checked switch" checked />)
-    expect(screen.getByRole('switch', { name: 'Checked switch' })).toHaveAttribute(
-      'data-state',
-      'checked'
-    )
+    expect(
+      screen.getByRole('switch', { name: 'Checked switch' })
+    ).toHaveAttribute('data-state', 'checked')
   })
 
   it('handles toggle events', async () => {
@@ -23,7 +24,10 @@ describe('Switch', () => {
     const onCheckedChange = vi.fn()
 
     render(
-      <Switch aria-label="Interactive switch" onCheckedChange={onCheckedChange} />
+      <Switch
+        aria-label="Interactive switch"
+        onCheckedChange={onCheckedChange}
+      />
     )
 
     await user.click(screen.getByRole('switch', { name: 'Interactive switch' }))
@@ -44,7 +48,9 @@ describe('Switch', () => {
       />
     )
 
-    const switchElement = screen.getByRole('switch', { name: 'Disabled switch' })
+    const switchElement = screen.getByRole('switch', {
+      name: 'Disabled switch',
+    })
 
     expect(switchElement).toBeDisabled()
     await user.click(switchElement)
@@ -53,6 +59,8 @@ describe('Switch', () => {
 
   it('applies custom className', () => {
     render(<Switch aria-label="Styled switch" className="test-class" />)
-    expect(screen.getByRole('switch', { name: 'Styled switch' })).toHaveClass('test-class')
+    expect(screen.getByRole('switch', { name: 'Styled switch' })).toHaveClass(
+      'test-class'
+    )
   })
 })

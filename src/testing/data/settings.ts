@@ -1,4 +1,5 @@
-import type { SettingsDto } from '@/features/settings/types'
+import type { SettingsDto } from '@/entities/settings'
+
 import { mockAccount } from './account'
 import { mockCurrency } from './currency'
 

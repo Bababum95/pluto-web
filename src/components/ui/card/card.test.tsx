@@ -23,12 +23,20 @@ describe('Card', () => {
   })
 
   it('applies data-size attribute', () => {
-    render(<Card data-testid="card" size="sm">Small</Card>)
+    render(
+      <Card data-testid="card" size="sm">
+        Small
+      </Card>
+    )
     expect(screen.getByTestId('card')).toHaveAttribute('data-size', 'sm')
   })
 
   it('applies custom className', () => {
-    render(<Card className="custom" data-testid="card">Styled</Card>)
+    render(
+      <Card className="custom" data-testid="card">
+        Styled
+      </Card>
+    )
     expect(screen.getByTestId('card')).toHaveClass('custom')
   })
 })

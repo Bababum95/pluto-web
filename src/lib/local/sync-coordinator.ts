@@ -74,11 +74,25 @@ class SyncCoordinator {
     this.lastError = null
     this.emitEvent('sync-start')
 
-    try {
-      for (const handler of this.entityHandlers.values()) {
-        await handler()
-      }
+    const pullErrors: string[] = []
 
+    for (const handler of this.entityHandlers.values()) {
+      try {
+        await handler()
+      } catch (error) {
+        console.error('Entity sync failed:', error)
+        pullErrors.push(
+          error instanceof Error ? error.message : String(error)
+        )
+      }
+    }
+
+    if (pullErrors.length > 0) {
+      this.lastError = pullErrors.join('; ')
+      this.emitEvent('sync-error')
+    }
+
+    try {
       await outboxProcessor.processPending()
 
       const now = new Date().toISOString()
@@ -91,7 +105,8 @@ class SyncCoordinator {
 
       this.emitEvent('sync-complete')
     } catch (error) {
-      this.lastError = error instanceof Error ? error.message : 'Unknown error'
+      const msg = error instanceof Error ? error.message : 'Unknown error'
+      this.lastError = this.lastError ? `${this.lastError}; ${msg}` : msg
       this.emitEvent('sync-error')
       console.error('Sync error:', error)
     } finally {
@@ -101,6 +116,11 @@ class SyncCoordinator {
 
   registerEntity(entity: string, syncFn: SyncFunction): void {
     this.entityHandlers.set(entity, syncFn)
+  }
+
+  /** Clears registered entity handlers (Vitest isolation). */
+  clearEntityHandlers(): void {
+    this.entityHandlers.clear()
   }
 
   hasEntity(entity: string): boolean {

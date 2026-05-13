@@ -12,6 +12,7 @@ describe('SyncCoordinator', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+    syncCoordinator.clearEntityHandlers()
     vi.useFakeTimers()
 
     // Mock window.addEventListener
@@ -239,14 +240,15 @@ describe('SyncCoordinator', () => {
       expect(syncFn).not.toHaveBeenCalled()
     })
 
-    // TODO: Fix mock issues - outboxProcessor.processPending not being called
-    it.skip('should handle sync errors gracefully', async () => {
+    it('still runs remaining entity handlers and outbox when one handler fails', async () => {
       const errorSyncFn = vi.fn().mockRejectedValue(new Error('Sync failed'))
+      const okSyncFn = vi.fn().mockResolvedValue(undefined)
       syncCoordinator.registerEntity('user', errorSyncFn)
+      syncCoordinator.registerEntity('category', okSyncFn)
 
       await syncCoordinator.syncNow()
 
-      // Should still try to process outbox even if entity sync fails
+      expect(okSyncFn).toHaveBeenCalledTimes(1)
       expect(outboxProcessor.processPending).toHaveBeenCalled()
     })
 

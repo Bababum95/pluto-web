@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { generateTempEntityId } from '@/lib/local/temp-id'
 import { transferApi } from '@/features/transfer'
 import type { CreateTransferDto, TransferDto } from '@/features/transfer/types'
 
@@ -10,7 +11,7 @@ export const createTransfer = createAsyncThunk(
   'transfer/createTransfer',
   async (data: CreateTransferDto) => {
     if (LOCAL_DATA_MODE === 'dexie') {
-      const tempId = `temp-${Date.now()}`
+      const tempId = generateTempEntityId()
       const now = new Date().toISOString()
       const fee = data.fee ?? { value: 0, scale: 0 }
 

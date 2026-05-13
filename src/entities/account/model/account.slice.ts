@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { generateTempEntityId } from '@/lib/local/temp-id'
 import { syncCoordinator } from '@/lib/local/sync-coordinator'
 import type { Status } from '@/lib/types'
 import type { RootState } from '@/store'
@@ -91,7 +92,7 @@ export const createAccount = createAsyncThunk(
   'account/createAccount',
   async (data: CreateAccountDto, { getState }) => {
     if (LOCAL_DATA_MODE === 'dexie') {
-      const tempId = `temp-${Date.now()}`
+      const tempId = generateTempEntityId()
 
       const currencyView = resolveMoneyViewCurrencyForTempAccount(
         data.currency,

@@ -12,6 +12,7 @@ import {
   enqueueDeleteTag,
 } from '../local/outbox-helpers'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { generateTempEntityId } from '@/lib/local/temp-id'
 import type { TagDto, TagFormValues } from './types'
 import type { Status } from '@/lib/types'
 
@@ -55,7 +56,7 @@ export const createTag = createAsyncThunk(
   'tag/createTag',
   async (data: TagFormValues) => {
     if (LOCAL_DATA_MODE === 'dexie') {
-      const tempId = `temp-${Date.now()}`
+      const tempId = generateTempEntityId()
       const now = new Date().toISOString()
       const tempTag: TagDto = {
         id: tempId,

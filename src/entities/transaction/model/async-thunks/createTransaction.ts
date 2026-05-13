@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import dayjs from '@/lib/dayjs'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { generateTempEntityId } from '@/lib/local/temp-id'
 import { transactionApi } from '@/features/transaction'
 import { isDateWithinBounds } from '@/features/time-range'
 import { parseDecimal } from '@/features/money'
@@ -28,7 +29,7 @@ export const createTransaction = createAsyncThunk(
     const transactionType = rootState.transactionType.transactionType
 
     if (LOCAL_DATA_MODE === 'dexie') {
-      const tempId = `temp-${Date.now()}`
+      const tempId = generateTempEntityId()
 
       const account = await accountRepository.getById(data.account)
       const category = await categoryRepository.getById(data.category)

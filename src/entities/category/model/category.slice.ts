@@ -13,6 +13,7 @@ import {
   enqueueReorderCategories,
 } from '../local/outbox-helpers'
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { generateTempEntityId } from '@/lib/local/temp-id'
 import type { CategoryDto, CategoryFormValues } from './types'
 import type { RootState } from '@/store'
 
@@ -71,7 +72,7 @@ export const createCategory = createAsyncThunk(
     }
 
     if (LOCAL_DATA_MODE === 'dexie') {
-      const tempId = `temp-${Date.now()}`
+      const tempId = generateTempEntityId()
       const tempCategory: CategoryDto = {
         id: tempId,
         ...payload,

@@ -18,6 +18,7 @@ import { http, HttpResponse } from 'msw'
 
 import { registerSyncEntities } from '@/lib/local/register-entities'
 import { syncCoordinator } from '@/lib/local/sync-coordinator'
+import { generateTempEntityId } from '@/lib/local/temp-id'
 import { outboxProcessor } from '@/lib/local/outbox-processor'
 import { db } from '@/lib/local/db'
 import { sessionRepository } from '@/lib/local/session-repository'
@@ -139,7 +140,7 @@ describe('local-first integration', () => {
     })
 
     it('reconciles temp transaction id after create succeeds', async () => {
-      const tempId = `temp-${Date.now()}`
+      const tempId = generateTempEntityId()
       await transactionRepository.save(
         createMockTransaction({
           id: tempId,
@@ -278,7 +279,7 @@ describe('local-first integration', () => {
     })
 
     it('persists transfer after outbox create and refreshes accounts in Dexie', async () => {
-      const tempId = `temp-${Date.now()}`
+      const tempId = generateTempEntityId()
       await transferRepository.save(
         createMockTransfer({
           id: tempId,

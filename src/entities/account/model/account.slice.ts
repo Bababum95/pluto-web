@@ -7,6 +7,7 @@ import {
 import { LOCAL_DATA_MODE } from '@/lib/local/config'
 import { syncCoordinator } from '@/lib/local/sync-coordinator'
 import type { Status } from '@/lib/types'
+import type { RootState } from '@/store'
 
 import { accountRepository } from '../local'
 import {
@@ -95,7 +96,7 @@ export const createAccount = createAsyncThunk(
       const currencyView = resolveMoneyViewCurrencyForTempAccount(
         data.currency,
         data.scale,
-        getState
+        getState as () => RootState
       )
 
       // Create a temporary account with placeholder balance structure

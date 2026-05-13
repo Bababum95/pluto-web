@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "format": "prettier --write .",
     "preview": "vite preview",
     "generate:api": "orval --config ./orval.config.ts",
     "icons:generate": "node scripts/generate-icon-components.mjs",

@@ -56,11 +56,8 @@ pnpm install
 - `src/widgets/` — composite sections (e.g. `app-shell`, lists, header)
 - `src/features/` — user flows by domain (often `create/`, `update/`, …)
 - `src/entities/` — Redux domains, selectors, local-first repositories
-- `src/app/` — providers, Redux store wiring, app-level slices
-- `src/shared/` — design-system UI, config, money/date/i18n helpers, API plumbing
-- `src/components/` — legacy/misc not yet migrated (e.g. devtools, loaders)
-- `src/lib/` — shims and paths still pointing at shared/local (see `docs/FSD_ARCHITECTURE.md`)
-- `src/lib/api/generated/` — generated Orval client, hooks, and models
+- `src/app/` — providers, Redux store, app-level slices, shell UI (`app/ui/`: devtools, full-screen-loader)
+- `src/shared/` — design-system UI, config, money/date/i18n helpers, API plumbing (`shared/api/generated/` from Orval)
 - `scripts/` — build scripts (e.g. icon component generation)
 
 Layer rules and verification commands: **`docs/FSD_ARCHITECTURE.md`** (repo root).

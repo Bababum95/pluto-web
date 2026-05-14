@@ -8,7 +8,7 @@ import { fetchTransactions } from '@/entities/transaction'
 import { fetchExchangeRates } from '@/entities/exchange-rate'
 import { fetchTransfers } from '@/entities/transfer'
 import type { RootState } from '../../store'
-import type { Status } from '@/lib/types'
+import type { Status } from '@/shared/lib/async-status'
 
 type AppState = {
   status: Status

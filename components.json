@@ -12,7 +12,7 @@
   },
   "iconLibrary": "hugeicons",
   "aliases": {
-    "components": "@/components",
+    "components": "@/shared/ui",
     "utils": "@/shared/lib",
     "ui": "@/shared/ui",
     "lib": "@/shared/lib",

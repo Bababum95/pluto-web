@@ -1,7 +1,7 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 
 import { Toaster } from '@/shared/ui/sonner'
-import { Devtools } from '@/components/Devtools'
+import { Devtools } from '@/app/ui/devtools'
 import type { AppStore } from '@/app/store'
 
 const showDevtools =

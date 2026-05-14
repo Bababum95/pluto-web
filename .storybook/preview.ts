@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/react-vite'
 import { createElement, Fragment, type ReactNode } from 'react'
 
 import '../src/index.css'
-import '../src/lib/i18n/config'
+import '../src/shared/lib/i18n/config'
 
 /** Applies theme class to document so CSS variables (e.g. .dark in index.css) take effect. */
 function ThemeDecorator(

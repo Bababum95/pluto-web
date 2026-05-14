@@ -12,8 +12,8 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const WEB_ROOT = join(__dirname, '..')
-const SVG_DIR = join(WEB_ROOT, 'src', 'lib', 'icons', 'svg')
-const COMPONENTS_DIR = join(WEB_ROOT, 'src', 'lib', 'icons', 'components')
+const SVG_DIR = join(WEB_ROOT, 'src', 'shared', 'ui', 'icons', 'svg')
+const COMPONENTS_DIR = join(WEB_ROOT, 'src', 'shared', 'ui', 'icons', 'components')
 /** Converts kebab-case SVG attribute to camelCase for JSX */
 const ATTR_MAP = {
   'stroke-width': 'strokeWidth',

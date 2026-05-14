@@ -14,7 +14,7 @@ import {
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import type { TagDto, TagFormValues } from './types'
-import type { Status } from '@/lib/types'
+import type { Status } from '@/shared/lib/async-status'
 
 type TagState = {
   tags: TagDto[]

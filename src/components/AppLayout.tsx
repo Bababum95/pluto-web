@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { Header, type HeaderProps } from '@/components/Header'
+import { Header, type HeaderProps } from '@/widgets/header'
 import { cn } from '@/shared/lib'
 
 type Props = HeaderProps & {

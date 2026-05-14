@@ -9,7 +9,7 @@ import {
   createMockSettings,
 } from '@/testing/data'
 
-import { ExchangeRateCalculator } from './ExchangeRateCalculator'
+import { ExchangeRateCalculator } from './exchange-rate-calculator'
 
 describe('ExchangeRateCalculator (integration)', () => {
   it('renders converted amount and swaps currencies', async () => {

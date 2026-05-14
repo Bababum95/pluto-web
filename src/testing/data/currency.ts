@@ -1,4 +1,4 @@
-import type { CurrencyDto } from '@/features/currency/types'
+import type { CurrencyDto } from '@/features/currency'
 
 export const mockCurrency: CurrencyDto = {
   id: 'currency-1',

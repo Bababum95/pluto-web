@@ -8,10 +8,10 @@ import {
   createMockSettings,
 } from '@/testing/data'
 
-import { ExchangeRateCalculator } from './ExchangeRateCalculator'
+import { ExchangeRateCalculator } from './exchange-rate-calculator'
 
 const meta = {
-  title: 'Features/ExchangeRate/ExchangeRateCalculator',
+  title: 'Features/ExchangeRate/Calculate/ExchangeRateCalculator',
   component: ExchangeRateCalculator,
   tags: ['autodocs'],
 } satisfies Meta<typeof ExchangeRateCalculator>

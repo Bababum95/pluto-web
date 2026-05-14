@@ -11,7 +11,7 @@ import {
   DrawerTrigger,
 } from '@/shared/ui/drawer'
 
-import { ExchangeRateCalculator } from './ExchangeRateCalculator'
+import { ExchangeRateCalculator } from './exchange-rate-calculator'
 
 export function ExchangeRateCalculatorSheet() {
   const { t } = useTranslation()

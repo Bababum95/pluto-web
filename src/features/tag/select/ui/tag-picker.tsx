@@ -1,26 +1,25 @@
 import { useTranslation } from 'react-i18next'
-import type { FC } from 'react'
 
 import { Field, FieldLabel } from '@/shared/ui/field'
 import { Badge } from '@/shared/ui/badge'
 import { useAppSelector } from '@/app/store'
 import { selectTags } from '@/entities/tag'
 
-import { CreateTagDialog } from './CreateTagDialog'
+import { CreateTagDialog } from '@/features/tag/create'
 
-type Props = {
+export type TagPickerProps = {
   values?: string[]
   onChange: (value: string[]) => void
   multiple?: boolean
   className?: string
 }
 
-export const TagPicker: FC<Props> = ({
+export function TagPicker({
   className,
   onChange,
   multiple,
   values = [],
-}) => {
+}: TagPickerProps) {
   const { t } = useTranslation()
   const tags = useAppSelector(selectTags)
 

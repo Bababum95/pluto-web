@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import * as ExchangeRateCalculatorStories from './ExchangeRateCalculator.stories'
+import * as ExchangeRateCalculatorStories from './exchange-rate-calculator.stories'
 
 describe('ExchangeRateCalculator stories', () => {
   it('renders exchange rate calculator story', () => {

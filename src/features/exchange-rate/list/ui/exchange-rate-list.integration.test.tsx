@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { renderWithProviders } from '@/testing/render'
 import { createMockExchangeRate, mockSettings } from '@/testing/data'
 
-import { ExchangeRateList } from './ExchangeRateList'
+import { ExchangeRateList } from './exchange-rate-list'
 
 describe('ExchangeRateList (integration)', () => {
   it('shows loader state while exchange rates are pending', () => {

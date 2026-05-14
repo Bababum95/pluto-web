@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react'
+import { useState } from 'react'
 import { PlusSignIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
@@ -22,11 +22,11 @@ import { MAX_TAG_NAME_LENGTH } from '../constants'
 
 const MAX_LENGTH = MAX_TAG_NAME_LENGTH
 
-type Props = {
+type CreateTagDialogProps = {
   onSuccess?: (tag: TagDto) => void
 }
 
-export const CreateTagDialog: FC<Props> = ({ onSuccess }) => {
+export function CreateTagDialog({ onSuccess }: CreateTagDialogProps) {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch()

@@ -3,7 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { TransactionHistoryIcon } from '@hugeicons/core-free-icons'
 
 import { AppLayout } from '@/components/AppLayout'
-import { HomePageContent } from '@/features/home'
+import { HomeCategoryInsights } from '@/widgets/category-chart'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { Total } from '@/features/money'
 import { Button } from '@/shared/ui/button'
@@ -26,7 +26,7 @@ export function HomePage() {
       }
     >
       <TransactionTypeTabs>
-        <HomePageContent />
+        <HomeCategoryInsights />
       </TransactionTypeTabs>
     </AppLayout>
   )

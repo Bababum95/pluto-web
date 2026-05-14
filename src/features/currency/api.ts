@@ -2,7 +2,7 @@ import {
   currencyControllerFindAll,
   currencyControllerFindOne,
 } from '@/shared/api/generated/currencies/currencies'
-import type { CurrencyDto } from './types'
+import type { CurrencyDto } from './model/types'
 
 export const currencyApi = {
   list: (): Promise<CurrencyDto[]> => currencyControllerFindAll(),

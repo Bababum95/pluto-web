@@ -30,7 +30,7 @@ import {
   updateTransaction,
 } from '@/entities/transaction'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
-import type { TransactionFormType } from '@/features/transaction/types'
+import type { TransactionFormType } from '@/features/transaction'
 
 export type EditTransactionPageProps = {
   transactionId: string

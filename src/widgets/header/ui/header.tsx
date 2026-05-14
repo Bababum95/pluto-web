@@ -1,7 +1,6 @@
 import { Link, useRouter } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu01Icon, ArrowLeft02Icon } from '@hugeicons/core-free-icons'
-import type { FC } from 'react'
 
 import dayjs from '@/shared/lib/date/dayjs'
 import { Button } from '@/shared/ui/button'
@@ -25,12 +24,12 @@ export type HeaderProps = {
   backPath?: string
 }
 
-export const Header: FC<HeaderProps> = ({
+export function Header({
   title,
   actions,
   showBackButton,
   backPath,
-}) => {
+}: HeaderProps) {
   const { t } = useTranslation()
   const router = useRouter()
 

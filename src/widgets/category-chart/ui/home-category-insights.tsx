@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import type { FC } from 'react'
 
 import { PlusButton } from '@/shared/ui/button'
 import { ChartPieDonutText } from '@/shared/ui/charts/chart-pie-donut-text'
@@ -17,7 +16,7 @@ import {
 } from '@/entities/transaction'
 import { selectCurrency } from '@/entities/settings'
 
-export const HomePageContent: FC = () => {
+export function HomeCategoryInsights() {
   const summary = useAppSelector(selectTransactionsSummary)
   const currency = useAppSelector(selectCurrency)
   const transactions = useAppSelector(selectTransactionsByCategory)

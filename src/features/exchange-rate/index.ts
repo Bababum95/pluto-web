@@ -1,2 +1,5 @@
-export { ExchangeRateList } from './components/ExchangeRateList'
-export { ExchangeRateCalculatorSheet } from './components/ExchangeRateCalculatorSheet'
+export { ExchangeRateList } from './list'
+export {
+  ExchangeRateCalculator,
+  ExchangeRateCalculatorSheet,
+} from './calculate'

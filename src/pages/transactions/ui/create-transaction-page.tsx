@@ -3,12 +3,14 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { AppLayout } from '@/components/AppLayout'
-import { TransactionForm } from '@/features/transaction'
-import { DEFAULT_TRANSACTION_FORM_VALUES } from '@/features/transaction/constants'
+import {
+  DEFAULT_TRANSACTION_FORM_VALUES,
+  TransactionForm,
+} from '@/features/transaction'
+import type { TransactionFormType } from '@/features/transaction'
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { selectSettings } from '@/entities/settings'
 import { createTransaction } from '@/entities/transaction'
-import type { TransactionFormType } from '@/features/transaction/types'
 
 export function CreateTransactionPage() {
   const { t } = useTranslation()

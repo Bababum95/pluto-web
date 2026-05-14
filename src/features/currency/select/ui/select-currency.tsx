@@ -21,7 +21,7 @@ import {
 import { cn } from '@/shared/lib'
 
 import { currencyApi } from '../../api'
-import type { CurrencyDto } from '../../types'
+import type { CurrencyDto } from '../../model/types'
 
 type Props = {
   value?: string

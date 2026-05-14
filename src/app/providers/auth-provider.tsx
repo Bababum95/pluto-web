@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
-import { clearUser, selectUser, setUser, userRepository } from '@/entities/user'
+import { selectUser, setUser, userRepository } from '@/entities/user'
 import { useAppDispatch, useAppSelector } from '@/app/store'
 import {
   authControllerGetProfile,
@@ -16,11 +16,8 @@ import {
 } from '@/shared/api/generated/auth/auth'
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { sessionRepository } from '@/shared/lib/local-storage/session-repository'
-import { db } from '@/shared/lib/local-storage/db'
-import {
-  setAccessToken,
-  removeAccessToken,
-} from '@/shared/lib/auth/access-token'
+import { setAccessToken } from '@/shared/lib/auth/access-token'
+import { clearClientSession } from '@/shared/lib/auth/clear-client-session'
 
 import type {
   AuthContextValue,
@@ -112,14 +109,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [dispatch])
 
   const logout = useCallback(async () => {
-    removeAccessToken()
-    dispatch(clearUser())
-
-    if (LOCAL_DATA_MODE === 'dexie') {
-      await userRepository.clear()
-      await sessionRepository.clear()
-      await db.outbox.where('entity').equals('user').delete()
-    }
+    await clearClientSession(dispatch)
   }, [dispatch])
 
   const login = useCallback(

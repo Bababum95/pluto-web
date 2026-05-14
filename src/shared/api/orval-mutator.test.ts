@@ -13,12 +13,18 @@ import { render, waitFor } from '@testing-library/react'
 
 import { ApiError } from './client'
 import { customInstance } from './orval-mutator'
+import { resetUnauthorizedRedirectGuardForTests } from '@/shared/lib/auth/invalidate-session-after-unauthorized'
 import { TEST_API_ROOT } from '@/testing/constants'
 import { server } from '@/testing/server'
 
-vi.mock('@/shared/lib/auth/access-token', () => ({
-  getAccessToken: vi.fn(),
-}))
+vi.mock('@/shared/lib/auth/access-token', async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import('@/shared/lib/auth/access-token')>()
+  return {
+    ...actual,
+    getAccessToken: vi.fn(),
+  }
+})
 vi.mock('sonner', () => ({
   toast: { error: vi.fn() },
 }))
@@ -52,6 +58,10 @@ const createTestQueryClient = (): QueryClient => {
 describe('customInstance (Orval + axios)', () => {
   beforeEach(() => {
     vi.mocked(getAccessToken).mockReturnValue(null)
+  })
+
+  afterEach(() => {
+    resetUnauthorizedRedirectGuardForTests()
   })
 
   it('requests OpenAPI path under base URL', async () => {
@@ -173,6 +183,64 @@ describe('customInstance (Orval + axios)', () => {
       expect(e).toBeInstanceOf(Error)
     } finally {
       isAxiosErrorSpy.mockRestore()
+    }
+  })
+
+  it('401 with Bearer token triggers login redirect', async () => {
+    vi.mocked(getAccessToken).mockReturnValue('secret-token')
+    const assignMock = vi.fn()
+    const prevLocation = window.location
+    vi.stubGlobal('location', {
+      ...prevLocation,
+      assign: assignMock,
+    } as Location)
+
+    server.use(
+      http.get(`${TEST_API_ROOT}protected`, () =>
+        HttpResponse.json(
+          { message: 'Unauthorized', statusCode: 401 },
+          { status: 401 }
+        )
+      )
+    )
+
+    try {
+      await expect(
+        customInstance({ url: '/v1/protected', method: 'GET' })
+      ).rejects.toThrow(ApiError)
+
+      expect(assignMock).toHaveBeenCalledWith('/login')
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+
+  it('401 without Bearer does not redirect to login', async () => {
+    vi.mocked(getAccessToken).mockReturnValue(null)
+    const assignMock = vi.fn()
+    const prevLocation = window.location
+    vi.stubGlobal('location', {
+      ...prevLocation,
+      assign: assignMock,
+    } as Location)
+
+    server.use(
+      http.get(`${TEST_API_ROOT}public-401`, () =>
+        HttpResponse.json(
+          { message: 'Unauthorized', statusCode: 401 },
+          { status: 401 }
+        )
+      )
+    )
+
+    try {
+      await expect(
+        customInstance({ url: '/v1/public-401', method: 'GET' })
+      ).rejects.toThrow(ApiError)
+
+      expect(assignMock).not.toHaveBeenCalled()
+    } finally {
+      vi.unstubAllGlobals()
     }
   })
 

@@ -1,10 +1,11 @@
+import userEvent from '@testing-library/user-event'
 import { describe, it, expect } from 'vitest'
 import { waitFor } from '@testing-library/react'
 import { useState } from 'react'
-import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 
-import { AuthProvider, useAuth } from '@/features/auth'
+import { useAuth } from '@/features/auth'
+import { AuthProvider } from '@/app/providers/auth-provider'
 import { renderWithProviders } from '@/testing/render'
 import { server } from '@/testing/server'
 import { mockUser } from '@/testing/data'

@@ -2,12 +2,9 @@ import { Link, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 
-import {
-  AuthCard,
-  useAuth,
-  FALLBACK_URL,
-  PASSWORD_MIN_LENGTH,
-} from '@/features/auth'
+import { AuthCard, useAuth } from '@/features/auth'
+import { FALLBACK_URL } from '@/shared/config/auth-routes'
+import { PASSWORD_MIN_LENGTH } from '@/shared/config/password-policy'
 import { FormField } from '@/shared/ui/forms/form-field'
 import { PasswordFormField } from '@/shared/ui/forms/password-form-field'
 import { Button } from '@/shared/ui/button'

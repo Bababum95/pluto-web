@@ -1,6 +1,6 @@
 export { TransactionsPage } from './ui/transactions-page'
 export { CreateTransactionPage } from './ui/create-transaction-page'
 export { ShowTransactionPage } from './ui/show-transaction-page'
-export type { ShowTransactionPageProps } from './ui/show-transaction-page'
 export { EditTransactionPage } from './ui/edit-transaction-page'
+export type { ShowTransactionPageProps } from './ui/show-transaction-page'
 export type { EditTransactionPageProps } from './ui/edit-transaction-page'

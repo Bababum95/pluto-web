@@ -1,7 +1,7 @@
 import dayjs from '@/shared/lib/date/dayjs'
 
-import { DATE_FORMAT } from '../constants'
-import type { TimeRangeType } from '../types'
+import { DATE_FORMAT } from '@/shared/config/time-ranges'
+import type { TimeRangeType } from '@/shared/config/time-range-types'
 
 /**
  * Computes inclusive date bounds [from, to] for the given time range and index.

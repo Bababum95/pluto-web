@@ -7,7 +7,7 @@ import { TransferForm, DEFAULT_TRANSFER_FORM_VALUES } from '@/features/transfer'
 import { useAppDispatch } from '@/app/store'
 import { createTransfer } from '@/entities/transfer'
 import { fetchAccounts } from '@/entities/account'
-import type { CreateTransferDto } from '@/features/transfer/types'
+import type { CreateTransferDto } from '@/entities/transfer'
 
 export function CreateTransferPage() {
   const { t } = useTranslation()

@@ -25,9 +25,8 @@ import {
 } from '@/app/store/slices/time-range'
 import { cn } from '@/shared/lib'
 import { DatePickerRange } from '@/shared/ui/date-picker-range'
-
-import { DATE_FORMAT, TIME_RANGES } from '../constants'
-import type { TimeRangeType } from '../types'
+import { DATE_FORMAT, TIME_RANGES } from '@/shared/config/time-ranges'
+import type { TimeRangeType } from '@/shared/config/time-range-types'
 
 import { TimeRangeDateLabel } from './TimeRangeDateLabel'
 

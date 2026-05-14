@@ -1,7 +1,4 @@
-const TOKEN_COOKIE_NAME =
-  import.meta.env.VITE_TOKEN_ACCESS_COOKIE_NAME || 'access_token'
-const MAX_AGE_DAYS = import.meta.env.VITE_TOKEN_MAX_AGE_DAYS || 7
-const MAX_AGE_SEC = MAX_AGE_DAYS * 24 * 60 * 60
+import { MAX_AGE_SEC, TOKEN_COOKIE_NAME } from './constants'
 
 /**
  * Store access token in a non-httpOnly cookie so it can be read and sent as Authorization header.

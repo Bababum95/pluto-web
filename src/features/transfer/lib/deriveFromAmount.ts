@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js'
 
-import type { FeeType } from '../types'
+import type { FeeType } from '@/entities/transfer'
 
 /**
  * Derive missing "from" amount using rate and fee.

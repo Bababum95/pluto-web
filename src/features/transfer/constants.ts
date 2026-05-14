@@ -1,4 +1,4 @@
-import type { TransferFormValues } from './types'
+import type { TransferFormValues } from '@/entities/transfer'
 
 export const DEFAULT_TRANSFER_FORM_VALUES: TransferFormValues = {
   fromAccount: '',

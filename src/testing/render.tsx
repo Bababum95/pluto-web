@@ -4,7 +4,7 @@ import { render, type RenderOptions } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
 
 import { createStore, type RootState } from '@/app/store'
-import { AuthProvider } from '@/features/auth'
+import { AuthProvider } from '@/app/providers/auth-provider'
 
 type PreloadedState = Partial<RootState>
 

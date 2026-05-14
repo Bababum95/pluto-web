@@ -7,8 +7,7 @@ import {
   setTransactionType,
   selectTransactionType,
 } from '@/app/store/slices/transaction-type'
-
-import { TRANSACTION_TYPES } from '../constants'
+import { TRANSACTION_TYPES } from '@/shared/config/transaction-types'
 
 type Props = {
   children: ReactNode

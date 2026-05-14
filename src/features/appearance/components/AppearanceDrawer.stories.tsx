@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { AppearanceProvider } from './AppearanceProvider'
+import { AppearanceProvider } from '@/app/providers/appearance-provider'
+
 import { AppearanceDrawer } from './AppearanceDrawer'
 
 const meta = {

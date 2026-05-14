@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useMemo } from 'react'
 import { Input, type InputProps } from '@/shared/ui/input'
 import { cn } from '@/shared/lib'
 
-import { sanitizeDecimal } from '../utils/sanitizeDecimal'
+import { sanitizeDecimal } from '@/shared/lib/money/utils/sanitizeDecimal'
 
 type Props = Omit<InputProps, 'onChange'> & {
   value: string

@@ -10,9 +10,9 @@ import { selectAccounts } from '@/entities/account'
 import { selectExchangeRates } from '@/entities/exchange-rate'
 import { useAppSelector } from '@/app/store/hooks'
 import type { AccountDto } from '@/entities/account'
+import type { FeeType } from '@/entities/transfer'
 
 import { calculateTransferRate } from '../../lib/calculateTransferRate'
-import type { FeeType } from '../../types'
 
 type Props = Omit<InputProps, 'onChange'> & {
   label: string

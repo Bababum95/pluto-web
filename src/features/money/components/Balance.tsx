@@ -2,10 +2,9 @@ import type { FC } from 'react'
 
 import { cn } from '@/shared/lib'
 import { Skeleton } from '@/shared/ui/skeleton'
-
-import { formatBalance } from '../utils/formatBalance'
-import { DEFAULT_CURRENCY } from '../constants'
-import type { FormatBalanceParams } from '../types'
+import { formatBalance } from '@/shared/lib/money/utils/formatBalance'
+import { DEFAULT_CURRENCY } from '@/shared/lib/money/constants'
+import type { FormatBalanceParams } from '@/shared/lib/money/types'
 
 type Props = Partial<FormatBalanceParams> & {
   className?: string

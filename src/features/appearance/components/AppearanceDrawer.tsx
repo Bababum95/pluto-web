@@ -11,17 +11,13 @@ import {
   DrawerTitle,
 } from '@/shared/ui/drawer'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
-import {
-  Field,
-  FieldLabel,
-  FieldContent,
-  FieldTitle,
-} from '@/shared/ui/field'
+import { Field, FieldLabel, FieldContent, FieldTitle } from '@/shared/ui/field'
 import { useTranslation } from '@/shared/lib/i18n'
-
-import { APPEARANCES } from '../constants'
-import { AppearanceContext } from '../AppearanceContext'
-import type { Appearance } from '../types'
+import {
+  AppearanceContext,
+  APPEARANCES,
+  type Appearance,
+} from '@/shared/lib/appearance'
 
 const appearanceIcons: Record<Appearance, typeof BloodIcon> = {
   classic: AiMagicIcon,

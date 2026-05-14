@@ -27,6 +27,11 @@ import { useAppSelector } from '@/app/store'
 import { selectAccounts } from '@/entities/account'
 import type { AccountDto } from '@/entities/account'
 import { selectExchangeRates } from '@/entities/exchange-rate'
+import type {
+  CreateTransferDto,
+  FeeType,
+  TransferFormValues,
+} from '@/entities/transfer'
 
 import {
   calculateTransferRate,
@@ -35,7 +40,6 @@ import {
   toDtoAmount,
   normalizeFeeToFrom,
 } from '../../lib'
-import type { CreateTransferDto, FeeType, TransferFormValues } from '../../types'
 
 import { RateField } from './rate-field'
 

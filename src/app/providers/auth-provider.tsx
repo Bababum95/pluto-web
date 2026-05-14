@@ -1,4 +1,10 @@
-import { createContext, useCallback, useEffect, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 import { clearUser, selectUser, setUser, userRepository } from '@/entities/user'
@@ -11,7 +17,10 @@ import {
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { sessionRepository } from '@/shared/lib/local-storage/session-repository'
 import { db } from '@/shared/lib/local-storage/db'
-import { setAccessToken, removeAccessToken } from '@/shared/lib/auth/access-token'
+import {
+  setAccessToken,
+  removeAccessToken,
+} from '@/shared/lib/auth/access-token'
 
 import type {
   AuthContextValue,

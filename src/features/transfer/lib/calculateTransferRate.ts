@@ -3,8 +3,7 @@ import Decimal from 'decimal.js'
 import { stringIsValid } from '@/shared/lib'
 import { calculateBaseRate } from '@/shared/lib/money/utils/calculateBaseRate'
 import type { RateDto } from '@/entities/exchange-rate'
-
-import type { FeeType } from '../types'
+import type { FeeType } from '@/entities/transfer'
 
 type Value = Decimal | null
 type Money = {

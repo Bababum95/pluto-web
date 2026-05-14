@@ -1,6 +1,5 @@
 import { Card } from '@/shared/ui/card'
-
-import type { TransferDto } from '../../types'
+import type { TransferDto } from '@/entities/transfer'
 
 import { TransferItem } from './transfer-item'
 

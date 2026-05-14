@@ -11,8 +11,7 @@ import {
 import { Button } from '@/shared/ui/button'
 import { useTheme } from '@/shared/lib/theme'
 import { useTranslation } from '@/shared/lib/i18n'
-
-import type { Theme } from '../types'
+import type { Theme } from '@/shared/lib/theme'
 
 type ThemeOption = {
   value: Theme

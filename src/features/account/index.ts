@@ -3,7 +3,7 @@ export {
   AccountDrawer,
   AccountCard,
   AccountItem,
-  type AccountItemProps,
   SelectAccount,
   SortableAccountItem,
+  type AccountItemProps,
 } from './update'

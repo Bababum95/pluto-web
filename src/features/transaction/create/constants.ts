@@ -1,6 +1,5 @@
 import dayjs from '@/shared/lib/date/dayjs'
-
-import type { TransactionFormType } from '../model/types'
+import type { TransactionFormType } from '@/entities/transaction'
 
 export const DEFAULT_TRANSACTION_FORM_VALUES: TransactionFormType = {
   amount: '',

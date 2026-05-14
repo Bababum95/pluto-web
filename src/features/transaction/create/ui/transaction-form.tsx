@@ -15,8 +15,7 @@ import { TransactionTypeToggle } from '@/features/transaction-type'
 import { useAppSelector } from '@/app/store/hooks'
 import { selectAccounts } from '@/entities/account'
 import { getFormFieldErrorMessage } from '@/shared/lib/react/form/getFormFieldErrorMessage'
-
-import type { TransactionFormType } from '../../model/types'
+import type { TransactionFormType } from '@/entities/transaction'
 
 type TransactionFormProps = {
   defaultValues: TransactionFormType

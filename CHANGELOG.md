@@ -9,32 +9,52 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ## Unreleased
 
+### ♻️ Refactoring
+
+- update vitest configuration and remove obsolete tests
+- update component structure and import paths
+- reorganize features and update import paths
+- reorganize account and category components, update import paths
+- streamline route components and update import paths
+- consolidate provider components and update import paths
+- update Redux store import paths and enhance directory structure
+- reorganize component imports and update paths to shared directory
+
+---
+
+## 13.05.2026 — v0.2.0
+
 ### ✨ Features
 
-- surface sync failures to the user via toast when local-first sync errors (`SyncErrorNotifier`)
-- improve detail routes for optimistic `temp-*` ids (pending sync message or redirect when missing)
+- implement local-first support for transactions and transfers with enhanced sync capabilities
+- enhance account entity with update functionality and refactor related tests
+- enhance account and exchange rate entities with outbox handlers
 - enhance settings and tag entities with outbox handlers
 - add empty state for accounts page
 - integrate sync entity registration and enhance sync coordinator
+- enhance sync error handling and improve account display logic
+- add local-first support for Settings and Tag entities
 
 ### ♻️ Refactoring
 
+- migrate transaction and transfer logic to entities and update imports
 - improve session handling in sync operations
 - move DEFAULT_CATEGORY_FORM_VALUES to entities and update imports
 - reorganize category feature structure and update imports
 - reorganize tag feature structure and update imports
 - reorganize settings slice and update async thunks
 - consolidate settings API and types into a unified entity structure
-- add local-first support for Settings and Tag entities
+- standardize import statements and improve code formatting across multiple files
+- replace temporary ID generation with utility function across entities
 
 ### 🐛 Fixes
 
-- dispatch Redux accounts + summary after background account pull sync (`refreshAccountsFromApi` in entity sync)
-- resolve temp-account currency display from settings or existing accounts; placeholder until catalog or sync
+- cast getState to RootState in createAccount thunk for type safety
 
-### 📚 Documentation
+### 🧹 Chore
 
-- reviewers: conflict strategy for local-first data is documented in `docs/LOCAL_FIRST.md` (Conflict resolution); summary is refreshed after account sync as above
+- add missing newlines to configuration files and remove format script from package.json
+- format code and improve consistency across configuration files
 
 ---
 

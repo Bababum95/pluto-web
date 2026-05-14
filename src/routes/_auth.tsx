@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { FALLBACK_URL } from '@/features/auth'
+import { FALLBACK_URL } from '@/shared/config/auth-routes'
 
 export const Route = createFileRoute('/_auth')({
   component: AuthLayout,

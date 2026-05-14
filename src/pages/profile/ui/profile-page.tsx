@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next'
 
 import { AppLayout } from '@/widgets/app-shell'
 import { useAuth } from '@/features/auth'
-import { PASSWORD_MIN_LENGTH } from '@/features/auth/constants'
+import { PASSWORD_MIN_LENGTH } from '@/shared/config/password-policy'
 import { changePasswordApi } from '@/features/change-password'
 import { Button } from '@/shared/ui/button'
 import { Card } from '@/shared/ui/card'

@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js'
 
-import type { FeeType } from '../types'
+import type { FeeType } from '@/entities/transfer'
 
 /**
  * Normalize fee to from_currency format.

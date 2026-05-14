@@ -25,10 +25,10 @@ import {
 import { mockCurrency } from '@/testing/data/currency'
 import { mockSettings } from '@/testing/data/settings'
 import { mockUser } from '@/testing/data/user'
+import { transactionApi } from '@/entities/transaction'
+import { transferApi } from '@/entities/transfer'
 
 import { currencyApi } from './currency/api'
-import { transactionApi } from './transaction/api'
-import { transferApi } from './transfer/api'
 
 describe('feature api clients (Orval-generated)', () => {
   beforeEach(() => {

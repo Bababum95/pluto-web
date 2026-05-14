@@ -7,8 +7,7 @@ import { useAppSelector } from '@/app/store'
 import { selectAccountById } from '@/entities/account'
 import { Balance } from '@/features/money'
 import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
-
-import type { TransferDto } from '../../types'
+import type { TransferDto } from '@/entities/transfer'
 
 type TransferItemProps = TransferDto & {
   onClick?: () => void

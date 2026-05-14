@@ -2,8 +2,7 @@ import type { FC } from 'react'
 
 import dayjs from '@/shared/lib/date/dayjs'
 import { useTranslation } from '@/shared/lib/i18n'
-
-import type { TimeRangeType } from '../types'
+import type { TimeRangeType } from '@/shared/config/time-range-types'
 
 type Props = {
   timeRange: TimeRangeType

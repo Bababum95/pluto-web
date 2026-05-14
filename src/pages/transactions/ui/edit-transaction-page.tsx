@@ -21,7 +21,10 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/shared/ui/dialog'
-import { TransactionForm, TransactionDeleteMenuItem } from '@/features/transaction'
+import {
+  TransactionForm,
+  TransactionDeleteMenuItem,
+} from '@/features/transaction'
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import {
   deleteTransaction,
@@ -30,7 +33,7 @@ import {
   updateTransaction,
 } from '@/entities/transaction'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
-import type { TransactionFormType } from '@/features/transaction'
+import type { TransactionFormType } from '@/entities/transaction'
 
 export type EditTransactionPageProps = {
   transactionId: string

@@ -1,6 +1,6 @@
 import { Decimal } from 'decimal.js'
 
-import type { FeeType } from '../types'
+import type { FeeType } from '@/entities/transfer'
 
 Decimal.set({ precision: 20, rounding: Decimal.ROUND_HALF_UP })
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { sanitizeDecimal } from './sanitizeDecimal'
+import { sanitizeDecimal } from '../sanitizeDecimal'
 
 describe('sanitizeDecimal', () => {
   it('replaces comma with dot', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { formatBalance } from './formatBalance'
+import { formatBalance } from '../formatBalance'
 
 describe('formatBalance', () => {
   it('formats crypto code with decimal fallback', () => {

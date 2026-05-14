@@ -16,7 +16,9 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'lcov', 'json-summary'],
       reportsDirectory: './coverage',
-      include: ['src/{app,entities,features,pages,shared,widgets}/**/*.{ts,tsx}'],
+      include: [
+        'src/{app,entities,features,pages,shared,widgets}/**/*.{ts,tsx}',
+      ],
       thresholds: {
         lines: 70,
         statements: 70,
@@ -30,8 +32,8 @@ export default defineConfig({
         'src/routeTree.gen.ts',
         'src/vite-env.d.ts',
         // Barrel and type-only modules: no runtime logic to exercise in unit tests.
-        'src/{app,entities,features,pages,widgets}/**/index.ts',
-        'src/{app,entities,features,pages,widgets}/**/types.ts',
+        'src/{app,entities,features,pages,shared,widgets}/**/index.ts',
+        'src/{app,entities,features,pages,shared,widgets}/**/types.ts',
         // Orval-generated HTTP clients (exercised indirectly via MSW integration tests).
         'src/shared/api/generated/**',
       ],

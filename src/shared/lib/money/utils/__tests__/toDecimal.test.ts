@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { toDecimal, toDecimalString } from './toDecimal'
+import { toDecimal, toDecimalString } from '../toDecimal'
 
 describe('toDecimal', () => {
   it('returns number with scale 0 (integer)', () => {

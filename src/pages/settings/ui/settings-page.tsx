@@ -9,7 +9,7 @@ import {
 import { useState } from 'react'
 
 import { Card } from '@/shared/ui/card'
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import {
   Item,
   ItemActions,

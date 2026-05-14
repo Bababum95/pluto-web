@@ -5,7 +5,7 @@ import { Badge } from '@/shared/ui/badge'
 import { useAppSelector } from '@/app/store'
 import { selectTags } from '@/entities/tag'
 
-import { CreateTagDialog } from '@/features/tag/create'
+import { CreateTagDialog } from '../../create'
 
 export type TagPickerProps = {
   values?: string[]

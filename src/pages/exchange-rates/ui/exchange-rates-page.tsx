@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import {
   ExchangeRateList,
   ExchangeRateCalculatorSheet,

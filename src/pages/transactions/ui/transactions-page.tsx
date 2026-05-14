@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { PlusSignIcon } from '@hugeicons/core-free-icons'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { Button } from '@/shared/ui/button'
 import { TransactionsList } from '@/widgets/transaction-list'

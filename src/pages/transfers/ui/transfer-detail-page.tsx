@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { Delete01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { useAppDispatch, useAppSelector } from '@/app/store'
 import {
   selectTransferById,

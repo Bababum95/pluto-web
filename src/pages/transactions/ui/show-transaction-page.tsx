@@ -10,7 +10,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 
 import { i18n } from '@/shared/lib/i18n'
 import dayjs from '@/shared/lib/date/dayjs'
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { Badge } from '@/shared/ui/badge'
 import { Button } from '@/shared/ui/button'
 import { Card, CardContent } from '@/shared/ui/card'

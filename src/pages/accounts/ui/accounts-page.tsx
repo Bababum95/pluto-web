@@ -7,7 +7,7 @@ import {
   ArrowDataTransferHorizontalIcon,
 } from '@hugeicons/core-free-icons'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import {
   DropdownMenu,
   DropdownMenuContent,

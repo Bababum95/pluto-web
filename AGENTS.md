@@ -35,16 +35,15 @@ Useful project scripts:
 
 - `src/routes/` — TanStack Router file modules (thin: `createFileRoute` + page import)
 - `src/pages/` — route-level composition (`ui/` per slice; public API via `index.ts`)
-- `src/widgets/` — composite page sections (`header/`, `nav-user/`, `transaction-list/`, `account-summary/`, `category-chart/`); public API via each slice `index.ts`
-- `src/features/` — domain features, grouped **by action** per domain (e.g. `transaction/create|update|delete|filter`, `category/...`, `account/...`, `transfer/create|delete`, `settings/language`, `settings/default-account`, `currency/select` + `currency/model`, `tag/create|select`, `exchange-rate/list|calculate`, `change-password/update`, …); public API remains each domain `index.ts` where present
-- `src/components/` — app shell pieces (e.g. `AppLayout`) and any legacy shared composition not yet migrated
+- `src/widgets/` — composite page sections (`app-shell/` for `AppLayout`, `header/`, `nav-user/`, `transaction-list/`, `account-summary/`, `category-chart/`); public API via each slice `index.ts`
+- `src/features/` — domain features, grouped **by action** per domain (e.g. `transaction/create|update|delete|filter`, `category/...`, `account/...`, `transfer/create|delete|list`, `settings/language`, `settings/default-account`, `currency/select` + `currency/model`, `tag/create|select`, `exchange-rate/list|calculate`, `change-password/update`, …); public API remains each domain `index.ts` where present
+- `src/components/` — legacy/misc not yet migrated (e.g. `Devtools`, `FullScreenLoader`); prefer `shared/ui/` or `widgets/*` for new UI
 - `src/app/providers/` — `AppProviders` (Redux `Provider` + auth, theme, appearance) and per-domain provider modules; `features/auth`, `features/theme`, `features/appearance` re-export for compatibility
 - `src/app/store/` — Redux store config, app-level slices, listener middlewares, `registerSyncEntities`
-- `src/store/` — compatibility re-exports → `@/app/store` (prefer importing from `@/app/store` in new code)
 - `src/lib/` — shared utilities, API, i18n, icons
 - `scripts/` — project automation scripts
 
-Use the alias `@/*` for imports from `src/*` when practical.
+Use the alias `@/*` for imports from `src/*` when practical. **Import rules:** see repo root `docs/FSD_ARCHITECTURE.md`; entity → features/widgets/pages imports are blocked by ESLint.
 
 ## 4) Coding standards
 

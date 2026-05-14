@@ -6,7 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useEffect, useState } from 'react'
 
 import dayjs from '@/shared/lib/date/dayjs'
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { Button } from '@/shared/ui/button'
 import {
   DropdownMenu,

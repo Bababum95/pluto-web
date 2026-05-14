@@ -16,7 +16,7 @@ import { z } from 'zod'
 import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { useAuth } from '@/features/auth'
 import { PASSWORD_MIN_LENGTH } from '@/features/auth/constants'
 import { changePasswordApi } from '@/features/change-password'

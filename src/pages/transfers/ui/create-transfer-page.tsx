@@ -2,7 +2,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { TransferForm, DEFAULT_TRANSFER_FORM_VALUES } from '@/features/transfer'
 import { useAppDispatch } from '@/app/store'
 import { createTransfer } from '@/entities/transfer'

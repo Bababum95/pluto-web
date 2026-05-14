@@ -1,4 +1,3 @@
-import type { FC } from 'react'
 import { ArrowDown02Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
@@ -9,33 +8,35 @@ import { selectAccountById } from '@/entities/account'
 import { Balance } from '@/features/money'
 import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
 
-import type { TransferDto } from '../types'
+import type { TransferDto } from '../../types'
 
-type Props = TransferDto & {
+type TransferItemProps = TransferDto & {
   onClick?: () => void
   separator?: boolean
 }
 
-type AccountProps = {
+type AccountRowProps = {
   icon?: string
   color?: string
   name: string
 }
 
-const Account: FC<AccountProps> = ({ icon, color, name }) => (
-  <div className="flex items-center gap-2">
-    <Icon name={icon} color={color} size={16} className="p-1" />
-    <span>{name}</span>
-  </div>
-)
+function AccountRow({ icon, color, name }: AccountRowProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <Icon name={icon} color={color} size={16} className="p-1" />
+      <span>{name}</span>
+    </div>
+  )
+}
 
-export const TransferItem: FC<Props> = ({
+export function TransferItem({
   from,
   to,
   rate,
   onClick,
   separator = false,
-}) => {
+}: TransferItemProps) {
   const fromAccount = useAppSelector((state) =>
     selectAccountById(state, from.account)
   )
@@ -54,12 +55,12 @@ export const TransferItem: FC<Props> = ({
       <div className="flex items-center gap-2 p-2 pr-3 pl-1" onClick={onClick}>
         <HugeiconsIcon icon={ArrowDown02Icon} size={24} />
         <div className="flex flex-col gap-3">
-          <Account
+          <AccountRow
             icon={fromAccount?.icon}
             color={fromAccount?.color}
             name={fromName}
           />
-          <Account
+          <AccountRow
             icon={toAccount?.icon}
             color={toAccount?.color}
             name={toName}

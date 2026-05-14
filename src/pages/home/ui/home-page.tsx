@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { TransactionHistoryIcon } from '@hugeicons/core-free-icons'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { HomeCategoryInsights } from '@/widgets/category-chart'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { Total } from '@/features/money'

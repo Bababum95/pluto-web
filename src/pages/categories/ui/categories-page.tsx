@@ -9,7 +9,7 @@ import {
 } from '@dnd-kit/dom'
 import { move } from '@dnd-kit/helpers'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { PlusButton } from '@/shared/ui/button'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { SortableCategoryItem } from '@/features/category'

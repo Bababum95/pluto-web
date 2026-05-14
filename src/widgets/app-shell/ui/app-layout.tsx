@@ -1,18 +1,16 @@
-import type { FC } from 'react'
-
 import { Header, type HeaderProps } from '@/widgets/header'
 import { cn } from '@/shared/lib'
 
-type Props = HeaderProps & {
+export type AppLayoutProps = HeaderProps & {
   children: React.ReactNode
   className?: string
 }
 
-export const AppLayout: FC<Props> = ({
+export function AppLayout({
   children,
   className,
   ...headerProps
-}) => {
+}: AppLayoutProps) {
   return (
     <>
       <Header {...headerProps} />

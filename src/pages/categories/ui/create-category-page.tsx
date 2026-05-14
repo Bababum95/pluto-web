@@ -2,7 +2,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
-import { AppLayout } from '@/components/AppLayout'
+import { AppLayout } from '@/widgets/app-shell'
 import { TransactionTypeTabs } from '@/features/transaction-type'
 import { CategoryForm } from '@/features/category'
 import { useAppDispatch } from '@/app/store'

@@ -1,4 +1,4 @@
-import type { CreateTagDto, TagDto } from '@/lib/api/generated/model'
+import type { CreateTagDto, TagDto } from '@/shared/api/generated/model'
 
 export type UpdateTagDto = Partial<
   Pick<CreateTagDto, 'name' | 'color' | 'icon'>

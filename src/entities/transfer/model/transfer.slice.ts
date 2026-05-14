@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { TransferDto } from '@/features/transfer/types'
+import type { TransferDto } from './dto-types'
 
 import { createTransfer, deleteTransfer, fetchTransfers } from './async-thunks'
 import type { TransferState } from './types'

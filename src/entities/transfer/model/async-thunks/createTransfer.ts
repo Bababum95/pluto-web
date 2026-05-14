@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { generateTempEntityId } from '@/lib/local/temp-id'
-import { transferApi } from '@/features/transfer'
-import type { CreateTransferDto, TransferDto } from '@/features/transfer/types'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
+import { transferApi } from '../api'
+import type { CreateTransferDto, TransferDto } from '../dto-types'
 
 import { transferRepository, enqueueCreateTransfer } from '../../local'
 

@@ -2,7 +2,7 @@ import type {
   AccountDto,
   AccountSummaryDto,
   CreateAccountDto,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 
 export type AccountListResponseDto = {
   list: AccountDto[]

@@ -1,4 +1,4 @@
-import { queryClient } from '@/lib/api'
+import { queryClient } from '@/shared/api'
 import {
   categoryControllerCreate,
   categoryControllerFindAll,
@@ -6,7 +6,7 @@ import {
   categoryControllerReorder,
   categoryControllerUpdate,
   categoryControllerRemove,
-} from '@/lib/api/generated/categories/categories'
+} from '@/shared/api/generated/categories/categories'
 import type { CategoryDto, CreateCategoryDto, UpdateCategoryDto } from './types'
 
 const QUERY_KEY = ['categories'] as const

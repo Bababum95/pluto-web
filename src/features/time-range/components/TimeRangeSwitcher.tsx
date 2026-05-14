@@ -7,14 +7,14 @@ import {
 import type { FC } from 'react'
 import type { DateRange } from 'react-day-picker'
 
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from '@/components/ui/toggle-group/toggle-group'
-import { Button } from '@/components/ui/button'
-import { useTranslation } from '@/lib/i18n'
-import { useAppDispatch, useAppSelector } from '@/store'
+} from '@/shared/ui/toggle-group/toggle-group'
+import { Button } from '@/shared/ui/button'
+import { useTranslation } from '@/shared/lib/i18n'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import {
   decreaseTimeRangeIndex,
   increaseTimeRangeIndex,
@@ -22,9 +22,9 @@ import {
   setTimeRangeIndex,
   selectTimeRangeState,
   type TimeRangeState,
-} from '@/store/slices/time-range'
-import { cn } from '@/lib/utils'
-import { DatePickerRange } from '@/components/ui/date-picker-range'
+} from '@/app/store/slices/time-range'
+import { cn } from '@/shared/lib'
+import { DatePickerRange } from '@/shared/ui/date-picker-range'
 
 import { DATE_FORMAT, TIME_RANGES } from '../constants'
 import type { TimeRangeType } from '../types'

@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll } from 'vitest'
 import 'fake-indexeddb/auto'
 
 import '@testing-library/jest-dom/vitest'
-import '@/lib/i18n/config'
+import '@/shared/lib/i18n/config'
 import { server } from '@/testing/server'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))

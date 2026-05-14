@@ -51,13 +51,16 @@ pnpm install
 
 ## Project structure
 
-- `src/routes/` — TanStack Router file-based routes
-- `src/features/` — feature modules (account, home, category, tag, settings, theme, etc.)
-- `src/components/` — shared UI components and Storybook stories
-- `src/store/` — Redux slices and async thunks
-- `src/lib/` — API client, i18n, icons, utilities
-- `src/lib/api/generated/` — generated Orval client, hooks, and models
+- `src/routes/` — TanStack Router file-based routes (thin → `pages/`)
+- `src/pages/` — route-level screens
+- `src/widgets/` — composite sections (e.g. `app-shell`, lists, header)
+- `src/features/` — user flows by domain (often `create/`, `update/`, …)
+- `src/entities/` — Redux domains, selectors, local-first repositories
+- `src/app/` — providers, Redux store, app-level slices, shell UI (`app/ui/`: devtools, full-screen-loader)
+- `src/shared/` — design-system UI, config, money/date/i18n helpers, API plumbing (`shared/api/generated/` from Orval)
 - `scripts/` — build scripts (e.g. icon component generation)
+
+Layer rules and verification commands: **`docs/FSD_ARCHITECTURE.md`** (repo root).
 
 ## Environment
 

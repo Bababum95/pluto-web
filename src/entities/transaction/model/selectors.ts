@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import type { TransactionDto } from '@/features/transaction/types'
+import type { TransactionDto } from './dto-types'
 import type { CategoryDto } from '@/entities/category'
-import type { RootState } from '@/store'
-import type { MoneyViewDto } from '@/features/money/types'
+import type { RootState } from '@/app/store'
+import type { MoneyViewDto } from '@/shared/lib/money/types'
 
 export const selectTransactions = (state: RootState) =>
   state.transaction.transactions

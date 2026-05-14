@@ -8,15 +8,15 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from '@/components/ui/drawer'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { useTranslation } from '@/lib/i18n'
+} from '@/shared/ui/drawer'
+import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
+import { useTranslation } from '@/shared/lib/i18n'
 import {
   Field,
   FieldLabel,
   FieldContent,
   FieldTitle,
-} from '@/components/ui/field'
+} from '@/shared/ui/field'
 
 import type { Theme } from '../types'
 import { useTheme } from '../hooks/useTheme'

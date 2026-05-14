@@ -1,0 +1,141 @@
+import { Navigate, useNavigate } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
+import {
+  Delete01Icon,
+  MoreVerticalIcon,
+  ViewOffSlashIcon,
+  ViewIcon,
+} from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+
+import { AppLayout } from '@/widgets/app-shell'
+import { AccountForm } from '@/features/account'
+import { useAppDispatch, useAppSelector } from '@/app/store'
+import {
+  selectAccounts,
+  selectAccountsStatus,
+  updateAccount,
+  deleteAccount,
+  toggleExcluded,
+} from '@/entities/account'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu'
+import { Button } from '@/shared/ui/button'
+import type { UpdateAccountDto } from '@/entities/account/model/types'
+
+export type EditAccountPageProps = {
+  accountId: string
+}
+
+export function EditAccountPage({ accountId }: EditAccountPageProps) {
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const accounts = useAppSelector(selectAccounts)
+  const status = useAppSelector(selectAccountsStatus)
+  const account = accounts.find((a) => a.id === accountId)
+  const isLoading = status === 'pending'
+
+  const handleSubmit = async (values: UpdateAccountDto) => {
+    await dispatch(updateAccount({ id: accountId, data: values })).unwrap()
+
+    navigate({ to: '/accounts' })
+    toast.success(t('accounts.messages.updated'))
+  }
+
+  const handleDelete = async () => {
+    await dispatch(deleteAccount(accountId)).unwrap()
+    navigate({ to: '/accounts' })
+    toast.success(t('accounts.messages.deleted'))
+  }
+
+  const handleToggleExcluded = async () => {
+    const result = await dispatch(toggleExcluded(accountId)).unwrap()
+
+    toast.success(
+      result.account.excluded
+        ? t('accounts.messages.shown')
+        : t('accounts.messages.hidden')
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <AppLayout title={t('accounts.actions.edit')} showBackButton>
+        <div className="flex flex-1 items-center justify-center py-8">
+          {t('common.loading')}
+        </div>
+      </AppLayout>
+    )
+  }
+
+  if (!account) {
+    if (accountId.startsWith('temp-')) {
+      return (
+        <AppLayout title={t('accounts.actions.edit')} showBackButton>
+          <div className="flex flex-1 items-center justify-center py-8 text-muted-foreground">
+            {t('sync.pending')}
+          </div>
+        </AppLayout>
+      )
+    }
+    return <Navigate to="/accounts" />
+  }
+
+  return (
+    <AppLayout
+      title={t('accounts.actions.edit')}
+      showBackButton
+      actions={
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="[&_svg]:size-6">
+              <HugeiconsIcon icon={MoreVerticalIcon} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-52">
+            <DropdownMenuItem key="hide" onClick={handleToggleExcluded}>
+              <HugeiconsIcon
+                icon={account.excluded ? ViewIcon : ViewOffSlashIcon}
+              />
+              <span>
+                {account.excluded
+                  ? t(`accounts.actions.show`)
+                  : t(`accounts.actions.hide`)}
+              </span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              key="delete"
+              variant="destructive"
+              onClick={handleDelete}
+            >
+              <HugeiconsIcon icon={Delete01Icon} />
+              <span>{t(`accounts.actions.delete`)}</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      }
+    >
+      <AccountForm
+        defaultValues={{
+          name: account.name,
+          color: account.color,
+          icon: account.icon,
+          currency: account.balance.original.currency.id,
+          balance: account.balance.original.value.toString(),
+          description: account.description,
+          excluded: account.excluded ?? false,
+        }}
+        submitLabel={t('accounts.actions.save')}
+        onSubmit={handleSubmit}
+      />
+    </AppLayout>
+  )
+}

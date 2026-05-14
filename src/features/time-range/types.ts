@@ -1,3 +1,1 @@
-import type { TIME_RANGES } from './constants'
-
-export type TimeRangeType = (typeof TIME_RANGES)[number]
+export type { TimeRangeType } from '@/shared/config/time-range-types'

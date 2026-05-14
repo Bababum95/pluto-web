@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 
 import { transferRepository } from '../repository'
-import { db } from '@/lib/local/db'
-import type { TransferDto } from '@/lib/api/generated/model'
+import { db } from '@/shared/lib/local-storage/db'
+import type { TransferDto } from '@/shared/api/generated/model'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
 

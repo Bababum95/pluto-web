@@ -1,7 +1,7 @@
 import type {
   TransactionDto,
   TransactionDtoType,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 
 /** IndexedDB row for the Dexie `transactions` table (denormalized fields for indexing). */
 export type TransactionRow = {

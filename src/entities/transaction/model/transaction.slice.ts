@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { toDecimal } from '@/features/money/utils/toDecimal'
-import type { TransactionDto } from '@/features/transaction/types'
+import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
+import type { TransactionDto } from './dto-types'
 
 import {
   createTransaction,

@@ -1,6 +1,4 @@
-export { TransferForm } from './components/TransferForm'
-export { TransferCard } from './components/TransferCard'
-export { TransferItem } from './components/TransferItem'
+export { TransferForm, DEFAULT_TRANSFER_FORM_VALUES } from './create'
+export { TransferCard, TransferItem } from './list'
 
 export { transferApi } from './api'
-export { DEFAULT_TRANSFER_FORM_VALUES } from './constants'

@@ -30,3 +30,4 @@ export type {
   UpdateCategoryDto,
 } from './model/types'
 export { DEFAULT_CATEGORY_FORM_VALUES } from './model/constants'
+export { CategoryCard } from './ui/category-card'

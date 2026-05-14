@@ -1,6 +1,6 @@
-import { db } from '@/lib/local/db'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { needsSync } from '@/lib/local/sync-utils'
+import { db } from '@/shared/lib/local-storage/db'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { needsSync } from '@/shared/lib/local-storage/sync-utils'
 
 import type { UserDto } from '../model/types'
 import { userRowFromDto, userDtoFromRow } from './schema'

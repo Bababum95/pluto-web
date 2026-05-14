@@ -1,0 +1,32 @@
+import { useNavigate } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
+
+import { AppLayout } from '@/widgets/app-shell'
+import { TransferForm, DEFAULT_TRANSFER_FORM_VALUES } from '@/features/transfer'
+import { useAppDispatch } from '@/app/store'
+import { createTransfer } from '@/entities/transfer'
+import { fetchAccounts } from '@/entities/account'
+import type { CreateTransferDto } from '@/features/transfer/types'
+
+export function CreateTransferPage() {
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const handleSubmit = async (values: CreateTransferDto) => {
+    await dispatch(createTransfer(values)).unwrap()
+    await dispatch(fetchAccounts())
+    navigate({ to: '/accounts' })
+    toast.success(t('transfers.messages.created'))
+  }
+
+  return (
+    <AppLayout title={t('transfers.actions.create')} showBackButton>
+      <TransferForm
+        onSubmit={handleSubmit}
+        defaultValues={DEFAULT_TRANSFER_FORM_VALUES}
+      />
+    </AppLayout>
+  )
+}

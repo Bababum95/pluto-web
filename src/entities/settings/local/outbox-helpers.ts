@@ -1,4 +1,4 @@
-import { outboxProcessor } from '@/lib/local/outbox-processor'
+import { outboxProcessor } from '@/shared/lib/local-storage/outbox-processor'
 import type { UpdateSettingsDto } from '../model/types'
 
 /**

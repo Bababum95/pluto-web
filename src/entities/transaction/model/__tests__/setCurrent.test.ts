@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { RootState } from '@/store'
+import type { RootState } from '@/app/store'
 
 import { setCurrent } from '../async-thunks/setCurrent'
 
 const getByIdMock = vi.fn()
 
-vi.mock('@/features/transaction', () => ({
+vi.mock('@/entities/transaction/model/api', () => ({
   transactionApi: {
     getById: (...args: unknown[]) => getByIdMock(...args),
   },

@@ -1,4 +1,4 @@
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 
 import { DATE_FORMAT } from '../constants'
 import type { TimeRangeType } from '../types'

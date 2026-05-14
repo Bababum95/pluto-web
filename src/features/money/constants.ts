@@ -1,5 +1,1 @@
-export const DEFAULT_CURRENCY = {
-  code: 'USD',
-  symbol: '$',
-  decimal_digits: 2,
-} as const
+export { DEFAULT_CURRENCY } from '@/shared/lib/money/constants'

@@ -3,7 +3,7 @@ import type {
   AccountListResponseDto,
   AccountSummaryDto,
   AccountWithSummaryResponseDto,
-} from '@/features/account/types'
+} from '@/entities/account'
 import { mockCurrency } from './currency'
 
 const moneyViewCurrency = {

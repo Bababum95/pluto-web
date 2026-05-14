@@ -7,10 +7,10 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { useTheme } from '@/features/theme'
-import { useTranslation } from '@/lib/i18n'
+} from '@/shared/ui/dropdown-menu'
+import { Button } from '@/shared/ui/button'
+import { useTheme } from '@/shared/lib/theme'
+import { useTranslation } from '@/shared/lib/i18n'
 
 import type { Theme } from '../types'
 

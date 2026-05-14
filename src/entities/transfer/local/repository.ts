@@ -1,9 +1,9 @@
-import { db } from '@/lib/local/db'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import dayjs from '@/lib/dayjs'
-import { DATE_FORMAT } from '@/features/time-range/constants'
+import { db } from '@/shared/lib/local-storage/db'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import dayjs from '@/shared/lib/date/dayjs'
+import { DATE_FORMAT } from '@/shared/config/time-ranges'
 
-import type { TransferDto } from '@/lib/api/generated/model'
+import type { TransferDto } from '@/shared/api/generated/model'
 import {
   transferRowFromDto,
   transferDtoFromRow,

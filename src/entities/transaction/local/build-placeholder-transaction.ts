@@ -4,7 +4,7 @@ import type {
   TagDto,
   TransactionDto,
   TransactionDtoType,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 
 type Params = {
   id: string

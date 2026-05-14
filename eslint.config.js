@@ -63,5 +63,22 @@ export default defineConfig([
       'i18next/no-literal-string': 'off',
     },
   },
+  {
+    files: ['src/entities/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/features/**', '@/widgets/**', '@/pages/**'],
+              message:
+                'FSD: entity layer must not import features, widgets, or pages. Use @/shared, @/entities, or @/app/store.',
+            },
+          ],
+        },
+      ],
+    },
+  },
   ...storybook.configs['flat/recommended'],
 ])

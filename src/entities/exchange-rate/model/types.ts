@@ -1,1 +1,1 @@
-export type { RateDto } from '@/lib/api/generated/model'
+export type { RateDto } from '@/shared/api/generated/model'

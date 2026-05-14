@@ -5,12 +5,12 @@ import { http, HttpResponse } from 'msw'
 
 import { renderWithProviders } from '@/testing/render'
 import { server } from '@/testing/server'
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import { createAccount } from '@/entities/account'
 import { mockAccount, mockAccountSummary } from '@/testing/data/account'
 import { mockCurrency } from '@/testing/data/currency'
 
-import { AccountForm } from './components/AccountForm'
+import { AccountForm } from './create'
 
 describe('AccountForm (integration)', () => {
   it('submit: fills name, calls POST /accounts, store updated on success', async () => {

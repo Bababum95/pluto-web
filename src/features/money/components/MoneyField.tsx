@@ -3,11 +3,11 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { type FC, useRef } from 'react'
 
 import { selectCurrency } from '@/entities/settings'
-import { useAppSelector } from '@/store/hooks'
-import { cn } from '@/lib/utils'
-import { FieldError, Field, FieldLabel } from '@/components/ui/field'
-import { Button } from '@/components/ui/button'
-import type { InputProps } from '@/components/ui/input'
+import { useAppSelector } from '@/app/store/hooks'
+import { cn } from '@/shared/lib'
+import { FieldError, Field, FieldLabel } from '@/shared/ui/field'
+import { Button } from '@/shared/ui/button'
+import type { InputProps } from '@/shared/ui/input'
 
 import { MoneyInput } from './MoneyInput'
 

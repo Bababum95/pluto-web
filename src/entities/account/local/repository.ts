@@ -1,7 +1,7 @@
-import { db } from '@/lib/local/db'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
+import { db } from '@/shared/lib/local-storage/db'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 
-import type { AccountDto } from '@/features/account/types'
+import type { AccountDto } from '@/entities/account/model/types'
 import { accountRowFromDto, accountDtoFromRow } from './schema'
 
 export const accountRepository = {

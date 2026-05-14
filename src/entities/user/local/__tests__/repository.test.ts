@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { userRepository } from '../repository'
-import { db } from '@/lib/local/db'
-import type { UserDto } from '@/lib/api/generated/model'
+import { db } from '@/shared/lib/local-storage/db'
+import type { UserDto } from '@/shared/api/generated/model'
 
 // Mock LOCAL_DATA_MODE at module level
 let mockLocalDataMode = 'dexie'
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   get LOCAL_DATA_MODE() {
     return mockLocalDataMode
   },

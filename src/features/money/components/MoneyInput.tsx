@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useMemo } from 'react'
 
-import { Input, type InputProps } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
+import { Input, type InputProps } from '@/shared/ui/input'
+import { cn } from '@/shared/lib'
 
 import { sanitizeDecimal } from '../utils/sanitizeDecimal'
 

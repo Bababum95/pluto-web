@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { FC } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib'
 import { selectAccountsStatus, selectAccountsSummary } from '@/entities/account'
-import { useAppSelector } from '@/store'
+import { useAppSelector } from '@/app/store'
 
 import { Balance } from './Balance'
 

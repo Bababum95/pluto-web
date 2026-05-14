@@ -1,7 +1,7 @@
 import type {
   SettingsDto,
   UpdateSettingsDto as GeneratedUpdateSettingsDto,
-} from '@/lib/api/generated/model'
+} from '@/shared/api/generated/model'
 
 export type { SettingsDto }
 

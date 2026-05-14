@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { db } from '@/lib/local/db'
+import { db } from '@/shared/lib/local-storage/db'
 
 import type { CategoryDto } from '../../model/types'
 
 import { categoryRepository } from '../repository'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
 

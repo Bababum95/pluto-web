@@ -1,21 +1,18 @@
 import ReactDOM from 'react-dom/client'
 import { StrictMode, useEffect } from 'react'
-import { Provider } from 'react-redux'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 
-import { AuthProvider, useAuth } from '@/features/auth'
-import { ThemeProvider } from '@/features/theme'
-import { AppearanceProvider } from '@/features/appearance'
-import { store, useAppSelector } from '@/store'
-import { selectAppInitStatus } from '@/store/slices/app'
-import { queryClient } from '@/lib/api'
-import { FullScreenLoader } from '@/components/full-screen-loader'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { syncCoordinator } from '@/lib/local/sync-coordinator'
-import { registerSyncEntities } from '@/lib/local/register-entities'
-import { SyncErrorNotifier } from '@/lib/local/sync-error-notifier'
-import '@/lib/i18n/config'
+import { AppProviders } from '@/app/providers'
+import { useAuth } from '@/features/auth'
+import { store, useAppSelector, registerSyncEntities } from '@/app/store'
+import { selectAppInitStatus } from '@/app/store/slices/app'
+import { queryClient } from '@/shared/api'
+import { FullScreenLoader } from '@/app/ui/full-screen-loader'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
+import { SyncErrorNotifier } from '@/shared/lib/local-storage/sync-error-notifier'
+import '@/shared/lib/i18n/config'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -71,15 +68,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <AuthProvider>
-            <ThemeProvider>
-              <AppearanceProvider>
-                <App />
-              </AppearanceProvider>
-            </ThemeProvider>
-          </AuthProvider>
-        </Provider>
+        <AppProviders>
+          <App />
+        </AppProviders>
       </QueryClientProvider>
     </StrictMode>
   )

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 
 // Avoid circular load: async-thunks import store → store loads account → account needs createTransaction.
 // Mock store so it is not built when this test file loads.
-vi.mock('@/store', () => ({
+vi.mock('@/app/store', () => ({
   createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
 }))
 

@@ -1,12 +1,12 @@
 import type { FC, ReactNode } from 'react'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useTranslation } from '@/lib/i18n'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs'
+import { useTranslation } from '@/shared/lib/i18n'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import {
   setTransactionType,
   selectTransactionType,
-} from '@/store/slices/transaction-type'
+} from '@/app/store/slices/transaction-type'
 
 import { TRANSACTION_TYPES } from '../constants'
 

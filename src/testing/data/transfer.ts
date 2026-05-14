@@ -1,4 +1,4 @@
-import type { TransferDto } from '@/features/transfer/types'
+import type { TransferDto } from '@/entities/transfer/model/dto-types'
 
 export const mockTransfer: TransferDto = {
   id: 'transfer-1',

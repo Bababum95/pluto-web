@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 
 import { transactionRepository } from '../repository'
-import { db } from '@/lib/local/db'
+import { db } from '@/shared/lib/local-storage/db'
 import { createMockTransaction } from '@/testing/data/transaction'
-import type { TransactionDto } from '@/lib/api/generated/model'
+import type { TransactionDto } from '@/shared/api/generated/model'
 
-vi.mock('@/lib/local/config', () => ({
+vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie',
 }))
 

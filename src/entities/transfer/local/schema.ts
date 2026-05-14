@@ -1,4 +1,4 @@
-import type { TransferDto } from '@/lib/api/generated/model'
+import type { TransferDto } from '@/shared/api/generated/model'
 
 /** IndexedDB row for the Dexie `transfers` table (denormalized fields for indexing). */
 export type TransferRow = {

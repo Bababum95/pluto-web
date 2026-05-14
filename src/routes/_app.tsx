@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
-import { initApp } from '@/store/slices/app'
+import { initApp } from '@/app/store/slices/app'
 
 const AppLayout = () => {
   return (

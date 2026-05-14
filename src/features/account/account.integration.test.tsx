@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 
 import { server } from '@/testing/server'
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import { fetchAccounts, createAccount, deleteAccount } from '@/entities/account'
 import { createTransaction } from '@/entities/transaction'
 import {
@@ -12,7 +12,7 @@ import {
   createMockAccount,
 } from '@/testing/data/account'
 import { createMockTransaction } from '@/testing/data/transaction'
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 
 describe('Account flow (integration)', () => {
   it('fetchAccounts: API populates list and summary', async () => {

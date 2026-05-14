@@ -2,7 +2,7 @@ import {
   rateControllerFindAll,
   rateControllerFindByCode,
   rateControllerFindOne,
-} from '@/lib/api/generated/rates/rates'
+} from '@/shared/api/generated/rates/rates'
 import type { RateDto } from './types'
 
 export const exchangeRateApi = {

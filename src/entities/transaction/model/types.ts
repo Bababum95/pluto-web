@@ -1,5 +1,5 @@
-import type { TransactionDto } from '@/features/transaction/types'
-import type { Status } from '@/lib/types'
+import type { TransactionDto } from './dto-types'
+import type { Status } from '@/shared/lib/async-status'
 
 export type TransactionState = {
   transactions: TransactionDto[]

@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { renderWithProviders } from '@/testing/render'
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import { MoneyField } from './MoneyField'
 import { createMockSettings } from '@/testing/data/settings'
 import { mockCurrency } from '@/testing/data/currency'

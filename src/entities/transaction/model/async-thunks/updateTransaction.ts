@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-import dayjs from '@/lib/dayjs'
-import { LOCAL_DATA_MODE } from '@/lib/local/config'
-import { transactionApi } from '@/features/transaction'
-import { parseDecimal } from '@/features/money'
+import dayjs from '@/shared/lib/date/dayjs'
+import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
 import { updateAccountInState, setSummary } from '@/entities/account'
 import { categoryRepository } from '@/entities/category'
 import { tagRepository } from '@/entities/tag'
-import type { TransactionFormType } from '@/features/transaction/types'
-import type { RootState } from '@/store'
+import { transactionApi } from '../api'
+import type { TransactionFormType } from '../dto-types'
+import type { RootState } from '@/app/store'
 
 import { transactionRepository, enqueueUpdateTransaction } from '../../local'
 

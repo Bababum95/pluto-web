@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest'
 import { waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 
-import dayjs from '@/lib/dayjs'
+import dayjs from '@/shared/lib/date/dayjs'
 import { server } from '@/testing/server'
-import { createStore } from '@/store'
+import { createStore } from '@/app/store'
 import {
   createTransaction,
   deleteTransaction,

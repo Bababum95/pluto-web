@@ -1,1 +1,1 @@
-export { changePasswordApi } from './api'
+export { changePasswordApi } from './update'

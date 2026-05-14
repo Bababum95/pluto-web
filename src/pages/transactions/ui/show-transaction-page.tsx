@@ -3,7 +3,6 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  Delete01Icon,
   MoreVerticalIcon,
   PencilEdit01Icon,
 } from '@hugeicons/core-free-icons'
@@ -30,6 +29,7 @@ import {
   selectCurrentTransaction,
   setCurrent,
 } from '@/entities/transaction'
+import { TransactionDeleteMenuItem } from '@/features/transaction'
 import { Separator } from '@/shared/ui/separator'
 
 const Row: FC<PropsWithChildren> = ({ children }) => (
@@ -105,10 +105,7 @@ export function ShowTransactionPage({
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" onClick={handleDelete}>
-              <HugeiconsIcon icon={Delete01Icon} />
-              <span>{t('transactions.actions.delete')}</span>
-            </DropdownMenuItem>
+            <TransactionDeleteMenuItem onSelect={handleDelete} />
           </DropdownMenuContent>
         </DropdownMenu>
       }

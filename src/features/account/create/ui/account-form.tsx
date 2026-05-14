@@ -1,0 +1,153 @@
+import { useForm } from '@tanstack/react-form'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
+import type { FC } from 'react'
+
+import { FieldGroup, FieldSet } from '@/shared/ui/field'
+import { FormField } from '@/shared/ui/forms/form-field'
+import { ColorPicker } from '@/shared/ui/color-picker'
+import { IconPicker } from '@/shared/ui/icon-picker'
+import { Button } from '@/shared/ui/button'
+import { ButtonGroup } from '@/shared/ui/button-group'
+import { SelectCurrency } from '@/features/currency'
+import { MoneyInput } from '@/features/money'
+import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
+
+import type { CreateAccountDto, AccountFormValues } from '../../types'
+import { SwitchFormField } from '@/shared/ui/forms/switch-form-field'
+
+type Props = {
+  defaultValues?: AccountFormValues
+  onSubmit: (values: CreateAccountDto) => Promise<void>
+  submitLabel?: string
+}
+
+export const AccountForm: FC<Props> = ({
+  defaultValues,
+  onSubmit,
+  submitLabel,
+}) => {
+  const { t } = useTranslation()
+
+  const form = useForm({
+    validators: {
+      onSubmit: z.object({
+        name: z.string().min(1, { message: t('forms.validation.required') }),
+        color: z.string().min(1, { message: t('forms.validation.required') }),
+        icon: z.string().min(1, { message: t('forms.validation.required') }),
+        currency: z
+          .string()
+          .min(1, { message: t('forms.validation.required') }),
+        balance: z.string(),
+        excluded: z.boolean().optional(),
+      }),
+    },
+    defaultValues: defaultValues,
+    onSubmit: async ({ value }) => {
+      await onSubmit({
+        ...value,
+        ...parseDecimal(value.balance),
+      })
+    },
+  })
+
+  return (
+    <form
+      className="flex flex-1 flex-col gap-2"
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        form.handleSubmit()
+      }}
+    >
+      <FieldGroup>
+        <FieldSet disabled={form.state.isSubmitting}>
+          <ButtonGroup className="w-full">
+            <form.Field
+              name="balance"
+              children={(field) => (
+                <MoneyInput
+                  value={field.state.value}
+                  onChange={(value) => field.handleChange(value)}
+                />
+              )}
+            />
+            <form.Field
+              name="currency"
+              children={(field) => (
+                <SelectCurrency
+                  value={field.state.value}
+                  onChange={(value) => field.handleChange(value)}
+                />
+              )}
+            />
+          </ButtonGroup>
+          <form.Field
+            name="name"
+            children={(field) => (
+              <FormField field={field} label={t('accounts.fields.name')} />
+            )}
+          />
+          <form.Subscribe
+            selector={(state) => state.values.color}
+            children={(color) => (
+              <form.Field
+                name="icon"
+                children={(field) => (
+                  <IconPicker
+                    value={field.state.value as string}
+                    onChange={(value) => field.handleChange(value)}
+                    label={t('common.fields.icon')}
+                    iconColor={color}
+                  />
+                )}
+              />
+            )}
+          />
+          <form.Field
+            name="color"
+            children={(field) => (
+              <ColorPicker
+                value={field.state.value as string}
+                onChange={(value) => field.handleChange(value)}
+                label={t('common.fields.color')}
+              />
+            )}
+          />
+          <form.Field
+            name="excluded"
+            children={(field) => (
+              <SwitchFormField
+                field={field}
+                title={t('accounts.fields.excluded.title')}
+                description={t('accounts.fields.excluded.description')}
+              />
+            )}
+          />
+          <form.Field
+            name="description"
+            children={(field) => (
+              <FormField
+                field={field}
+                label={t('accounts.fields.description')}
+              />
+            )}
+          />
+        </FieldSet>
+      </FieldGroup>
+      <form.Subscribe
+        selector={(state) => [state.canSubmit, state.isSubmitting]}
+        children={([canSubmit, isSubmitting]) => (
+          <Button
+            type="submit"
+            className="mt-auto w-full"
+            disabled={!canSubmit}
+            isLoading={isSubmitting}
+          >
+            {submitLabel ?? t('accounts.actions.create')}
+          </Button>
+        )}
+      />
+    </form>
+  )
+}

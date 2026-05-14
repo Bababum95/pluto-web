@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { AppLayout } from '@/components/AppLayout'
-import { TransactionForm } from '@/features/transaction/components/TransactionForm'
+import { TransactionForm } from '@/features/transaction'
 import { DEFAULT_TRANSACTION_FORM_VALUES } from '@/features/transaction/constants'
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { selectSettings } from '@/entities/settings'

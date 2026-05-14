@@ -10,7 +10,7 @@ import { createAccount } from '@/entities/account'
 import { mockAccount, mockAccountSummary } from '@/testing/data/account'
 import { mockCurrency } from '@/testing/data/currency'
 
-import { AccountForm } from './components/AccountForm'
+import { AccountForm } from './create'
 
 describe('AccountForm (integration)', () => {
   it('submit: fills name, calls POST /accounts, store updated on success', async () => {

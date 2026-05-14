@@ -4,12 +4,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import mockExchangeRates from '@/__mocks__/rates.json'
 import { calculateTransferRate } from './calculateTransferRate'
 
-vi.mock(
-  '@/features/money',
-  async () => await import('@/__mocks__/features/money')
-)
+vi.mock('@/shared/lib/money/utils/calculateBaseRate', async () => {
+  const mod = await import('@/__mocks__/features/money')
+  return { calculateBaseRate: mod.calculateBaseRate }
+})
 
-const { calculateBaseRate } = await import('@/features/money')
+const { calculateBaseRate } = await import(
+  '@/shared/lib/money/utils/calculateBaseRate'
+)
 
 describe('calculateTransferRate', () => {
   beforeEach(() => {

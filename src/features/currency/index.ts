@@ -1,3 +1,3 @@
 export { currencyApi } from './api'
 
-export { SelectCurrency } from './components/SelectCurrency'
+export { SelectCurrency } from './select'

@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { Delete01Icon, MoreVerticalIcon } from '@hugeicons/core-free-icons'
+import { MoreVerticalIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useEffect, useState } from 'react'
 
@@ -11,7 +11,6 @@ import { Button } from '@/shared/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
 import {
@@ -22,7 +21,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/shared/ui/dialog'
-import { TransactionForm } from '@/features/transaction/components/TransactionForm'
+import { TransactionForm, TransactionDeleteMenuItem } from '@/features/transaction'
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import {
   deleteTransaction,
@@ -124,10 +123,7 @@ export function EditTransactionPage({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuItem variant="destructive" onClick={handleDelete}>
-              <HugeiconsIcon icon={Delete01Icon} />
-              <span>{t('transactions.actions.delete')}</span>
-            </DropdownMenuItem>
+            <TransactionDeleteMenuItem onSelect={handleDelete} />
           </DropdownMenuContent>
         </DropdownMenu>
       }

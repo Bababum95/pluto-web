@@ -35,7 +35,7 @@ Useful project scripts:
 
 - `src/routes/` — TanStack Router file modules (thin: `createFileRoute` + page import)
 - `src/pages/` — route-level composition (`ui/` per slice; public API via `index.ts`)
-- `src/features/` — domain features
+- `src/features/` — domain features, increasingly grouped **by action** under each domain (e.g. `features/transaction/create|update|delete|filter/`, `features/category/create|update|delete|reorder|select/`, `features/account/create|update|delete/`, `features/transfer/create|delete/`, `features/settings/language/`, `features/settings/default-account/`, `features/currency/select/`, `features/change-password/update/`); public API remains the domain `index.ts` where present
 - `src/components/` — shared UI components
 - `src/app/providers/` — `AppProviders` (Redux `Provider` + auth, theme, appearance) and per-domain provider modules; `features/auth`, `features/theme`, `features/appearance` re-export for compatibility
 - `src/app/store/` — Redux store config, app-level slices, listener middlewares, `registerSyncEntities`

@@ -6,7 +6,8 @@ import { Icon } from '@/shared/ui/icon'
 import { Separator } from '@/shared/ui/separator'
 import { useAppSelector } from '@/app/store'
 import { selectAccountById } from '@/entities/account'
-import { Balance, toDecimal } from '@/features/money'
+import { Balance } from '@/features/money'
+import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
 
 import type { TransferDto } from '../types'
 

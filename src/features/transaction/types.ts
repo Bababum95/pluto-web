@@ -7,4 +7,4 @@ export type {
   TransactionMutationResponse,
   UpdateTransactionDto,
   UpdateTransactionOptionsDto,
-} from '@/entities/transaction/model/dto-types'
+} from './model/types'

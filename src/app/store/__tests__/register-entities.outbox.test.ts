@@ -164,10 +164,14 @@ vi.mock('@/entities/transfer/model/api', () => ({
   transferApi: mocks.transferApi,
 }))
 
-vi.mock('@/entities/transaction', () => ({
-  addTransaction: mocks.addTransaction,
-  removeTransaction: mocks.removeTransaction,
-}))
+vi.mock('@/entities/transaction', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/entities/transaction')>()
+  return {
+    ...actual,
+    addTransaction: mocks.addTransaction,
+    removeTransaction: mocks.removeTransaction,
+  }
+})
 
 vi.mock('@/entities/transfer', () => ({
   addTransfer: mocks.addTransfer,
@@ -693,6 +697,10 @@ describe('transaction outbox handler', () => {
     expect(mocks.transactionRepo.save).toHaveBeenCalledWith(
       response.transaction
     )
+    expect(mocks.updateAccountInState).toHaveBeenCalledWith(
+      response.accounts[0]
+    )
+    expect(mocks.setSummary).toHaveBeenCalledWith(response.summary)
   })
 
   it('handles delete and refreshes accounts from API', async () => {

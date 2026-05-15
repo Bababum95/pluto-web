@@ -77,6 +77,29 @@ describe('transactionRepository', () => {
       const list = await transactionRepository.getAll()
       expect(list).toEqual([])
     })
+
+    it('sorts same-day transactions by createdAt desc', async () => {
+      await transactionRepository.saveMany([
+        createMockTransaction({
+          id: 'older-same-day',
+          date: '2024-02-15',
+          createdAt: '2024-02-15T08:00:00.000Z',
+          updatedAt: '2024-02-15T08:00:00.000Z',
+        }),
+        createMockTransaction({
+          id: 'newer-same-day',
+          date: '2024-02-15',
+          createdAt: '2024-02-15T18:00:00.000Z',
+          updatedAt: '2024-02-15T18:00:00.000Z',
+        }),
+      ])
+
+      const list = await transactionRepository.getAll()
+      expect(list.map((t) => t.id)).toEqual([
+        'newer-same-day',
+        'older-same-day',
+      ])
+    })
   })
 
   describe('getByAccount', () => {

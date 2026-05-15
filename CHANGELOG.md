@@ -7,10 +7,21 @@ The format follows Conventional Commits. Versions are listed in reverse chronolo
 
 ---
 
-## Unreleased
+## 15.05.2026 — v0.2.2
 
 ### ♻️ Refactoring
 
+- improve transaction sorting logic and add related tests
+- enhance transaction handling and streamline API responses
+- streamline auth provider and enhance error handling
+
+---
+
+## 14.05.2026 — v0.2.1
+
+### ♻️ Refactoring
+
+- clean up and reorganize auth and appearance components
 - update vitest configuration and remove obsolete tests
 - update component structure and import paths
 - reorganize features and update import paths

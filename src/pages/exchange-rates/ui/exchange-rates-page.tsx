@@ -12,7 +12,6 @@ export function ExchangeRatesPage() {
   return (
     <AppLayout
       title={t('exchangeRates.title')}
-      showBackButton
       actions={<ExchangeRateCalculatorSheet />}
     >
       <ExchangeRateList />

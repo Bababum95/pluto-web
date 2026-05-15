@@ -7,10 +7,23 @@ import type {
 } from '@/shared/api/generated/model'
 import { transactionRowFromDto, transactionDtoFromRow } from './schema'
 
+function compareTransactionsDesc(a: TransactionDto, b: TransactionDto): number {
+  const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime()
+  if (dateDiff !== 0) {
+    return dateDiff
+  }
+
+  const createdAtDiff =
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  if (createdAtDiff !== 0) {
+    return createdAtDiff
+  }
+
+  return b.id.localeCompare(a.id)
+}
+
 function sortByDateDesc(transactions: TransactionDto[]): TransactionDto[] {
-  return transactions.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
+  return transactions.sort(compareTransactionsDesc)
 }
 
 export const transactionRepository = {

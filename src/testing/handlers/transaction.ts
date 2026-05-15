@@ -18,11 +18,17 @@ export const transactionHandlers = [
   }),
   http.post(BASE, () =>
     HttpResponse.json({
-      account: { id: 'account-1', balance: {} },
+      accounts: [{ id: 'account-1', balance: {} }],
       summary: { total_raw: 0, scale: 2, total: 0, currency: {} },
       transaction: mockTransaction,
     })
   ),
-  http.patch(`${BASE}/:id`, () => HttpResponse.json(mockTransaction)),
+  http.patch(`${BASE}/:id`, () =>
+    HttpResponse.json({
+      accounts: [{ id: 'account-1', balance: {} }],
+      summary: { total_raw: 0, scale: 2, total: 0, currency: {} },
+      transaction: mockTransaction,
+    })
+  ),
   http.delete(`${BASE}/:id`, () => new HttpResponse(null, { status: 204 })),
 ]

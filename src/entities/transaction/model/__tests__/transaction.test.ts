@@ -1,10 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 
-// Avoid circular load: async-thunks import store → store loads account → account needs createTransaction.
-// Mock store so it is not built when this test file loads.
-vi.mock('@/app/store', () => ({
-  createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
-}))
+import { createMockTransaction } from '@/testing/data/transaction'
+import { mockCurrency } from '@/testing/data/currency'
 
 import transactionReducer, {
   setTransactions,
@@ -19,9 +16,12 @@ import {
   updateTransaction,
   deleteTransaction,
 } from '../async-thunks'
-import { createMockTransaction } from '@/testing/data/transaction'
-import { mockAccount, mockAccountSummary } from '@/testing/data/account'
-import { mockCurrency } from '@/testing/data/currency'
+
+// Avoid circular load: async-thunks import store → store loads account → account needs createTransaction.
+// Mock store so it is not built when this test file loads.
+vi.mock('@/app/store', () => ({
+  createStore: vi.fn(() => ({ getState: vi.fn(() => ({})) })),
+}))
 
 const currencyRef = {
   id: mockCurrency.id,
@@ -147,8 +147,6 @@ describe('transaction slice', () => {
         {
           transaction: newTx,
           insert: true,
-          account: mockAccount,
-          summary: mockAccountSummary,
         },
         'req-1',
         {} as never
@@ -170,8 +168,6 @@ describe('transaction slice', () => {
         {
           transaction: newTx,
           insert: false,
-          account: mockAccount,
-          summary: mockAccountSummary,
         },
         'req-1',
         {} as never
@@ -208,8 +204,6 @@ describe('transaction slice', () => {
       const action = updateTransaction.fulfilled(
         {
           transaction: updated,
-          account: mockAccount,
-          summary: mockAccountSummary,
         },
         'req-1',
         { id: 'tx-1', data: {} as never }

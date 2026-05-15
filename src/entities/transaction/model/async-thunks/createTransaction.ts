@@ -5,13 +5,14 @@ import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import { isDateWithinBounds } from '@/shared/lib/date/isDateWithinBounds'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
-import { updateAccountInState, setSummary } from '@/entities/account'
 import { accountRepository } from '@/entities/account/local'
+import { selectExchangeRates } from '@/entities/exchange-rate'
 import { categoryRepository } from '@/entities/category'
+import { selectCurrency } from '@/entities/settings'
 import { tagRepository } from '@/entities/tag'
-import { transactionApi } from '../api'
-import type { TransactionFormType } from '../dto-types'
-import type { RootState } from '@/app/store'
+import type { MoneyViewCurrencyDto } from '@/shared/lib/money/types'
+import type { AccountDto } from '@/shared/api/generated/model'
+import type { AppDispatch, RootState } from '@/app/store'
 
 import {
   transactionRepository,
@@ -19,10 +20,42 @@ import {
   buildPlaceholderTransaction,
 } from '../../local'
 
-export const createTransaction = createAsyncThunk(
+import { applyTransactionMutationSideEffects } from '../apply-transaction-mutation-side-effects'
+import { transactionApi } from '../api'
+import type {
+  TransactionFormType,
+  TransactionDto,
+  TransactionMutationResponse,
+} from '../dto-types'
+
+type CreateTransactionResult =
+  | { transaction: TransactionDto; insert: boolean }
+  | (TransactionMutationResponse & { insert: boolean })
+
+function resolveTargetCurrency(
+  settingsCurrency: ReturnType<typeof selectCurrency>,
+  account: AccountDto
+): MoneyViewCurrencyDto {
+  if ('id' in settingsCurrency && settingsCurrency.id) {
+    return {
+      id: settingsCurrency.id,
+      code: settingsCurrency.code,
+      symbol: settingsCurrency.symbol,
+      decimal_digits: settingsCurrency.decimal_digits,
+    }
+  }
+
+  return account.balance.converted.currency
+}
+
+export const createTransaction = createAsyncThunk<
+  CreateTransactionResult,
+  TransactionFormType,
+  { state: RootState; dispatch: AppDispatch }
+>(
   'transaction/createTransaction',
   async (data: TransactionFormType, { getState, dispatch }) => {
-    const rootState = getState() as RootState
+    const rootState = getState()
     const { range } = rootState.timeRange
     const { balance, scale } = parseDecimal(data.amount)
     const date = dayjs(data.date).format('YYYY-MM-DD')
@@ -51,6 +84,8 @@ export const createTransaction = createAsyncThunk(
         amountRaw: balance,
         scale,
         date,
+        rates: selectExchangeRates(rootState),
+        targetCurrency: resolveTargetCurrency(selectCurrency(rootState), account),
       })
 
       await transactionRepository.save(transaction)
@@ -64,8 +99,6 @@ export const createTransaction = createAsyncThunk(
 
       return {
         transaction,
-        account: undefined,
-        summary: undefined,
         insert: isDateWithinBounds(date, range),
       }
     }
@@ -78,12 +111,7 @@ export const createTransaction = createAsyncThunk(
       type: transactionType,
     })
 
-    if (response.account) {
-      dispatch(updateAccountInState(response.account))
-    }
-    if (response.summary) {
-      dispatch(setSummary(response.summary))
-    }
+    applyTransactionMutationSideEffects(dispatch, response)
 
     return {
       ...response,

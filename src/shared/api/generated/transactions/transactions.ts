@@ -26,10 +26,10 @@ import type {
 
 import type {
   CreateTransactionDto,
-  TransactionControllerCreate201,
   TransactionControllerFindAllParams,
   TransactionControllerUpdateParams,
   TransactionDto,
+  TransactionMutationResponseDto,
   UpdateTransactionDto
 } from '../model';
 
@@ -50,7 +50,7 @@ export const transactionControllerCreate = (
 ) => {
 
 
-      return customInstance<TransactionControllerCreate201>(
+      return customInstance<TransactionMutationResponseDto>(
       {url: `/v1/transactions`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createTransactionDto, signal
@@ -301,7 +301,7 @@ export const transactionControllerUpdate = (
 ) => {
 
 
-      return customInstance<TransactionDto>(
+      return customInstance<TransactionMutationResponseDto>(
       {url: `/v1/transactions/${id}`, method: 'PATCH',
       headers: {'Content-Type': 'application/json', },
       data: updateTransactionDto,

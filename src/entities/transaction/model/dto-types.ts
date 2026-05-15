@@ -4,8 +4,6 @@ import type {
   TransactionControllerUpdateParams,
   TransactionDto,
 } from '@/shared/api/generated/model'
-import type { AccountDto, AccountSummaryDto } from '@/entities/account/model/types'
-
 export type UpdateTransactionDto = Partial<CreateTransactionDto>
 export type UpdateTransactionOptionsDto = TransactionControllerUpdateParams
 
@@ -17,12 +15,7 @@ export type TransactionFormType = Omit<
   date: Date
 }
 
-export type TransactionMutationResponse = {
-  transaction: TransactionDto
-  account: AccountDto
-  summary: AccountSummaryDto
-}
-
+export type { TransactionMutationResponseDto as TransactionMutationResponse } from '@/shared/api/generated/model'
 export type {
   CreateTransactionDto,
   TransactionControllerFindAllParams,

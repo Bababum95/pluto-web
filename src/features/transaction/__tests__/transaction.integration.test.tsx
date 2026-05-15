@@ -55,7 +55,7 @@ describe('Transaction flow (integration)', () => {
       http.post('http://localhost/v1/transactions', async ({ request }) => {
         capturedBody = (await request.json()) as Record<string, unknown>
         return HttpResponse.json({
-          account: mockAccount,
+          accounts: [mockAccount],
           summary: mockAccountSummary,
           transaction: newTx,
         })
@@ -103,7 +103,7 @@ describe('Transaction flow (integration)', () => {
     server.use(
       http.post('http://localhost/v1/transactions', () =>
         HttpResponse.json({
-          account: updatedAccount,
+          accounts: [updatedAccount],
           summary: updatedSummary,
           transaction: createMockTransaction({ id: 'transaction-new' }),
         })
@@ -152,7 +152,7 @@ describe('Transaction flow (integration)', () => {
     server.use(
       http.post('http://localhost/v1/transactions', () =>
         HttpResponse.json({
-          account: mockAccount,
+          accounts: [mockAccount],
           summary: mockAccountSummary,
           transaction: createMockTransaction({
             id: 'transaction-outside',
@@ -296,7 +296,7 @@ describe('Transaction flow (integration)', () => {
           })
           return HttpResponse.json({
             transaction: updatedTransaction,
-            account: updatedAccount,
+            accounts: [updatedAccount],
             summary: updatedSummary,
           })
         }

@@ -3,14 +3,19 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import dayjs from '@/shared/lib/date/dayjs'
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
-import { updateAccountInState, setSummary } from '@/entities/account'
 import { categoryRepository } from '@/entities/category'
 import { tagRepository } from '@/entities/tag'
-import { transactionApi } from '../api'
-import type { TransactionFormType } from '../dto-types'
-import type { RootState } from '@/app/store'
+import type { AppDispatch, RootState } from '@/app/store'
 
 import { transactionRepository, enqueueUpdateTransaction } from '../../local'
+
+import { transactionApi } from '../api'
+import { applyTransactionMutationSideEffects } from '../apply-transaction-mutation-side-effects'
+import type {
+  TransactionDto,
+  TransactionFormType,
+  TransactionMutationResponse,
+} from '../dto-types'
 
 type Params = {
   id: string
@@ -18,10 +23,14 @@ type Params = {
   data: TransactionFormType
 }
 
-export const updateTransaction = createAsyncThunk(
+export const updateTransaction = createAsyncThunk<
+  { transaction: TransactionDto } | TransactionMutationResponse,
+  Params,
+  { state: RootState; dispatch: AppDispatch }
+>(
   'transaction/updateTransaction',
   async ({ id, recalcBalance, data }: Params, { getState, dispatch }) => {
-    const rootState = getState() as RootState
+    const rootState = getState()
     const { balance, scale } = parseDecimal(data.amount)
     const date = dayjs(data.date).format('YYYY-MM-DD')
     const transactionType = rootState.transactionType.transactionType
@@ -78,21 +87,14 @@ export const updateTransaction = createAsyncThunk(
       await enqueueUpdateTransaction(id, body, params)
 
       const transaction = await transactionRepository.getById(id)
-      return {
-        transaction: transaction!,
-        account: undefined,
-        summary: undefined,
-      }
+      if (!transaction) throw new Error('Transaction not found')
+
+      return { transaction }
     }
 
     const response = await transactionApi.update(id, body, params)
 
-    if (response.account) {
-      dispatch(updateAccountInState(response.account))
-    }
-    if (response.summary) {
-      dispatch(setSummary(response.summary))
-    }
+    applyTransactionMutationSideEffects(dispatch, response)
 
     return response
   }

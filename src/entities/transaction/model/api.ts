@@ -29,18 +29,14 @@ export const transactionApi = {
     transactionControllerFindOne(id),
 
   create: (data: CreateTransactionDto): Promise<TransactionMutationResponse> =>
-    transactionControllerCreate(data).then(
-      (response) => response as unknown as TransactionMutationResponse
-    ),
+    transactionControllerCreate(data),
 
   update: (
     id: string,
     data: UpdateTransactionDto,
     params?: Record<string, string>
   ): Promise<TransactionMutationResponse> =>
-    transactionControllerUpdate(id, data, params).then(
-      (response) => response as unknown as TransactionMutationResponse
-    ),
+    transactionControllerUpdate(id, data, params),
 
   delete: (id: string): Promise<void> => transactionControllerRemove(id),
 

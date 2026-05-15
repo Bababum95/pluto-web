@@ -630,7 +630,7 @@ describe('transaction outbox handler', () => {
   it('handles create with temp id replacement + summary + account refresh', async () => {
     const response = {
       transaction: { id: 'tx-1' },
-      account: { id: 'acc-1' },
+      accounts: [{ id: 'acc-1' }],
       summary: { total: 1 },
     }
     mocks.transactionApi.create.mockResolvedValue(response)
@@ -648,11 +648,13 @@ describe('transaction outbox handler', () => {
       response.transaction
     )
     expect(mocks.addTransaction).toHaveBeenCalledWith(response.transaction)
-    expect(mocks.updateAccountInState).toHaveBeenCalledWith(response.account)
+    expect(mocks.updateAccountInState).toHaveBeenCalledWith(
+      response.accounts[0]
+    )
     expect(mocks.setSummary).toHaveBeenCalledWith(response.summary)
   })
 
-  it('handles create when response has no account or summary', async () => {
+  it('handles create when response has no accounts or summary', async () => {
     mocks.transactionApi.create.mockResolvedValue({
       transaction: { id: 'tx-1' },
     })
@@ -671,7 +673,7 @@ describe('transaction outbox handler', () => {
   it('handles update with params payload', async () => {
     const response = {
       transaction: { id: 'tx-1' },
-      account: { id: 'acc-1' },
+      accounts: [{ id: 'acc-1' }],
       summary: { total: 2 },
     }
     mocks.transactionApi.update.mockResolvedValue(response)

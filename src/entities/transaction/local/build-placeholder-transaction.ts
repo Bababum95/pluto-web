@@ -1,3 +1,7 @@
+import { convertMoneyAmount } from '@/shared/lib/money/utils/convertMoneyAmount'
+import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
+import type { RateDto } from '@/entities/exchange-rate'
+import type { MoneyViewCurrencyDto } from '@/shared/lib/money/types'
 import type {
   AccountDto,
   CategoryDto,
@@ -16,6 +20,8 @@ type Params = {
   amountRaw: number
   scale: number
   date: string
+  rates: RateDto[]
+  targetCurrency: MoneyViewCurrencyDto
 }
 
 /**
@@ -31,26 +37,27 @@ export function buildPlaceholderTransaction({
   amountRaw,
   scale,
   date,
+  rates,
+  targetCurrency,
 }: Params): TransactionDto {
   const now = new Date().toISOString()
-  const divisor = 10 ** scale
-  const value = amountRaw / divisor
-  const originalCurrency = account.balance.original.currency
-  const convertedCurrency = account.balance.converted.currency
+  const sourceCurrency = account.balance.original.currency
 
   const original = {
-    value,
+    value: toDecimal(amountRaw, scale),
     raw: amountRaw,
     scale,
-    currency: originalCurrency,
+    currency: sourceCurrency,
   }
 
-  const converted = {
-    value,
-    raw: amountRaw,
-    scale,
-    currency: convertedCurrency,
-  }
+  const converted =
+    convertMoneyAmount({
+      amountRaw,
+      scale,
+      sourceCurrency,
+      targetCurrency,
+      rates,
+    }) ?? original
 
   return {
     id,

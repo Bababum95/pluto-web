@@ -22,7 +22,6 @@ import {
   addAccount,
   removeAccount,
   setSummary,
-  updateAccountInState,
 } from '@/entities/account'
 import { transactionRepository } from '@/entities/transaction/local'
 import { transferRepository } from '@/entities/transfer/local'
@@ -36,7 +35,11 @@ import type {
   UpdateTransactionDto,
   UpdateTransferDto,
 } from '@/shared/api/generated/model'
-import { addTransaction, removeTransaction } from '@/entities/transaction'
+import {
+  addTransaction,
+  removeTransaction,
+  applyTransactionMutationSideEffects,
+} from '@/entities/transaction'
 import { addTransfer, removeTransfer } from '@/entities/transfer'
 import { authControllerGetProfile } from '@/shared/api/generated/auth/auth'
 import { settingsControllerFindOne } from '@/shared/api/generated/settings/settings'
@@ -347,12 +350,7 @@ export function registerSyncEntities(): void {
 
           await transactionRepository.save(createdResponse.transaction)
           store.dispatch(addTransaction(createdResponse.transaction))
-          if (createdResponse.account) {
-            store.dispatch(updateAccountInState(createdResponse.account))
-          }
-          if (createdResponse.summary) {
-            store.dispatch(setSummary(createdResponse.summary))
-          }
+          applyTransactionMutationSideEffects(store.dispatch, createdResponse)
           break
         }
         case 'update': {
@@ -368,12 +366,7 @@ export function registerSyncEntities(): void {
 
           await transactionRepository.save(updated.transaction)
           store.dispatch(addTransaction(updated.transaction))
-          if (updated.account) {
-            store.dispatch(updateAccountInState(updated.account))
-          }
-          if (updated.summary) {
-            store.dispatch(setSummary(updated.summary))
-          }
+          applyTransactionMutationSideEffects(store.dispatch, updated)
           break
         }
         case 'delete': {

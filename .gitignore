@@ -29,6 +29,12 @@ dist-ssr
 # Test coverage
 coverage/
 
+# Accidental tsc emit next to sources (Vitest runs .ts directly)
+src/**/*.test.js
+src/**/*.test.js.map
+src/**/*.integration.test.js
+src/**/*.integration.test.js.map
+
 # Storybook
 storybook-static/
 

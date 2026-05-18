@@ -104,6 +104,21 @@ describe('ThemeProvider (integration)', () => {
     )
   })
 
+  it('applies theme without updating meta when theme-color meta is absent', () => {
+    document.head.innerHTML = ''
+    installMatchMedia(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeProbe />
+      </ThemeProvider>
+    )
+
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('system')
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
+    expect(document.querySelector('meta[name="theme-color"]')).toBeNull()
+  })
+
   it('reacts to system theme changes when selected theme is system', async () => {
     const media = installMatchMedia(false)
     const user = userEvent.setup()

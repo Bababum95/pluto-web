@@ -47,6 +47,20 @@ describe('AppearanceProvider (integration)', () => {
     expect(screen.getByTestId('appearance-value')).toHaveTextContent('classic')
   })
 
+  it('falls back to default appearance when localStorage value is empty', () => {
+    localStorage.setItem(APPEARANCE_STORAGE_KEY, '')
+
+    render(
+      <AppearanceProvider>
+        <AppearanceProbe />
+      </AppearanceProvider>
+    )
+
+    expect(screen.getByTestId('appearance-value')).toHaveTextContent(
+      DEFAULT_APPEARANCE
+    )
+  })
+
   it('updates appearance and persists it after selection', async () => {
     const user = userEvent.setup()
 

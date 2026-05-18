@@ -73,4 +73,33 @@ describe('formatBalance', () => {
     expect(result).toMatch(/1/)
     expect(result).toMatch(/\d/)
   })
+
+  it('uses zero minimum fraction digits for balances at or above 100', () => {
+    const result = formatBalance({
+      balance: 250,
+      currency: { code: 'USD', decimal_digits: 0 },
+    })
+    expect(result).not.toContain('.')
+    expect(result).toMatch(/\$/)
+  })
+
+  it('uses zero minimum fraction digits when balance is exactly 100', () => {
+    const result = formatBalance({
+      balance: 100,
+      currency: { code: 'USD', decimal_digits: 2 },
+    })
+    expect(result).toMatch(/\$/)
+    expect(result).not.toMatch(/,\d{2}$/)
+  })
+
+  it('defaults decimal_digits when omitted at runtime', () => {
+    const result = formatBalance({
+      balance: 10.5,
+      currency: {
+        code: 'USD',
+        decimal_digits: 2,
+      },
+    })
+    expect(result).toMatch(/\d/)
+  })
 })

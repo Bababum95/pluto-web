@@ -1,10 +1,10 @@
 import { db } from '@/shared/lib/local-storage/db'
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
-
 import type {
   TransactionDto,
   TransactionDtoType,
 } from '@/shared/api/generated/model'
+
 import { transactionRowFromDto, transactionDtoFromRow } from './schema'
 
 function compareTransactionsDesc(a: TransactionDto, b: TransactionDto): number {

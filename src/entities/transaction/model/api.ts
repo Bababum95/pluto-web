@@ -9,10 +9,10 @@ import {
 import type {
   CreateTransactionDto,
   TransactionDto,
-  TransactionMutationResponse,
+  TransactionMutationResponseDto,
   UpdateTransactionDto,
   TransactionControllerFindAllParams,
-} from './dto-types'
+} from './types'
 
 const QUERY_KEY = ['transactions'] as const
 
@@ -28,14 +28,16 @@ export const transactionApi = {
   getById: (id: string): Promise<TransactionDto> =>
     transactionControllerFindOne(id),
 
-  create: (data: CreateTransactionDto): Promise<TransactionMutationResponse> =>
+  create: (
+    data: CreateTransactionDto
+  ): Promise<TransactionMutationResponseDto> =>
     transactionControllerCreate(data),
 
   update: (
     id: string,
     data: UpdateTransactionDto,
     params?: Record<string, string>
-  ): Promise<TransactionMutationResponse> =>
+  ): Promise<TransactionMutationResponseDto> =>
     transactionControllerUpdate(id, data, params),
 
   delete: (id: string): Promise<void> => transactionControllerRemove(id),

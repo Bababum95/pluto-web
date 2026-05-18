@@ -14,8 +14,8 @@ import { applyTransactionMutationSideEffects } from '../apply-transaction-mutati
 import type {
   TransactionDto,
   TransactionFormType,
-  TransactionMutationResponse,
-} from '../dto-types'
+  TransactionMutationResponseDto,
+} from '../types'
 
 type Params = {
   id: string
@@ -24,7 +24,7 @@ type Params = {
 }
 
 export const updateTransaction = createAsyncThunk<
-  { transaction: TransactionDto } | TransactionMutationResponse,
+  { transaction: TransactionDto } | TransactionMutationResponseDto,
   Params,
   { state: RootState; dispatch: AppDispatch }
 >(

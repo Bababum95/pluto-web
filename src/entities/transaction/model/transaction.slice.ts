@@ -1,7 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
-import type { TransactionDto } from './dto-types'
 
 import {
   createTransaction,
@@ -10,7 +9,7 @@ import {
   updateTransaction,
   setCurrent,
 } from './async-thunks'
-import type { TransactionState } from './types'
+import type { TransactionState, TransactionDto } from './types'
 
 const initialState: TransactionState = {
   transactions: [],

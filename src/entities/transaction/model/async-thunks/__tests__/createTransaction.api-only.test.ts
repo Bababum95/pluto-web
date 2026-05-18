@@ -22,7 +22,7 @@ vi.mock('../../api')
 import { createTransaction } from '../createTransaction'
 import { transactionApi } from '../../api'
 import { applyTransactionMutationSideEffects } from '../../apply-transaction-mutation-side-effects'
-import type { TransactionFormType } from '../../dto-types'
+import type { TransactionFormType } from '../../types'
 import type { AppDispatch } from '@/app/store/store'
 
 function createTransactionTestStore() {

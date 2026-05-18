@@ -21,3 +21,9 @@ export { DEFAULT_ACCOUNT_FORM_VALUES } from './model/constants'
 
 // Local-first layer
 export * from './local'
+
+export {
+  getSignedTransactionAmountRaw,
+  applyTransactionDeltaToAccount,
+  calculateAccountsSummary,
+} from './lib/transaction-balance'

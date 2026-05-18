@@ -5,11 +5,17 @@ import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import { isDateWithinBounds } from '@/shared/lib/date/isDateWithinBounds'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
-import { accountRepository } from '@/entities/account/local'
+import {
+  accountRepository,
+  applyTransactionDeltaToAccount,
+  calculateAccountsSummary,
+  getSignedTransactionAmountRaw,
+} from '@/entities/account'
 import { selectExchangeRates } from '@/entities/exchange-rate'
 import { categoryRepository } from '@/entities/category'
-import { selectCurrency } from '@/entities/settings'
+import { selectCurrency, selectSettings } from '@/entities/settings'
 import { tagRepository } from '@/entities/tag'
+import type { CurrencyDto } from '@/shared/api/generated/model'
 import type { MoneyViewCurrencyDto } from '@/shared/lib/money/types'
 import type { AccountDto } from '@/shared/api/generated/model'
 import type { AppDispatch, RootState } from '@/app/store'
@@ -25,12 +31,12 @@ import { transactionApi } from '../api'
 import type {
   TransactionFormType,
   TransactionDto,
-  TransactionMutationResponse,
-} from '../dto-types'
+  TransactionMutationResponseDto,
+} from '../types'
 
 type CreateTransactionResult =
   | { transaction: TransactionDto; insert: boolean }
-  | (TransactionMutationResponse & { insert: boolean })
+  | (TransactionMutationResponseDto & { insert: boolean })
 
 function resolveTargetCurrency(
   settingsCurrency: ReturnType<typeof selectCurrency>,
@@ -48,6 +54,28 @@ function resolveTargetCurrency(
   return account.balance.converted.currency
 }
 
+function resolveSummaryCurrency(
+  settings: ReturnType<typeof selectSettings>,
+  account: AccountDto
+): CurrencyDto {
+  if (settings?.currency) {
+    return settings.currency
+  }
+
+  const view = account.balance.converted.currency
+  return {
+    id: view.id,
+    code: view.code,
+    symbol: view.symbol,
+    name: view.code,
+    symbol_native: view.symbol,
+    decimal_digits: view.decimal_digits,
+    rounding: 0,
+    name_plural: view.code,
+    type: 'fiat',
+  }
+}
+
 export const createTransaction = createAsyncThunk<
   CreateTransactionResult,
   TransactionFormType,
@@ -56,16 +84,17 @@ export const createTransaction = createAsyncThunk<
   'transaction/createTransaction',
   async (data: TransactionFormType, { getState, dispatch }) => {
     const rootState = getState()
+    const transactionType = rootState.transactionType.transactionType
+    const date = dayjs(data.date).format('YYYY-MM-DD')
     const { range } = rootState.timeRange
     const { balance, scale } = parseDecimal(data.amount)
-    const date = dayjs(data.date).format('YYYY-MM-DD')
-    const transactionType = rootState.transactionType.transactionType
 
     if (LOCAL_DATA_MODE === 'dexie') {
       const tempId = generateTempEntityId()
 
       const account = await accountRepository.getById(data.account)
       const category = await categoryRepository.getById(data.category)
+
       if (!account) throw new Error('Account not found')
       if (!category) throw new Error('Category not found')
 
@@ -85,7 +114,10 @@ export const createTransaction = createAsyncThunk<
         scale,
         date,
         rates: selectExchangeRates(rootState),
-        targetCurrency: resolveTargetCurrency(selectCurrency(rootState), account),
+        targetCurrency: resolveTargetCurrency(
+          selectCurrency(rootState),
+          account
+        ),
       })
 
       await transactionRepository.save(transaction)
@@ -95,6 +127,41 @@ export const createTransaction = createAsyncThunk<
         date,
         amount: balance,
         type: transactionType,
+      })
+
+      const rates = selectExchangeRates(rootState)
+      const targetCurrency = resolveTargetCurrency(
+        selectCurrency(rootState),
+        account
+      )
+      const signedDelta = getSignedTransactionAmountRaw(
+        transactionType,
+        balance
+      )
+      const updatedAccount = applyTransactionDeltaToAccount(
+        account,
+        signedDelta,
+        rates,
+        targetCurrency
+      )
+
+      await accountRepository.save(updatedAccount)
+
+      const allAccounts = await accountRepository.getAll()
+      const summaryCurrency = resolveSummaryCurrency(
+        selectSettings(rootState),
+        account
+      )
+      const summary = calculateAccountsSummary(
+        allAccounts,
+        rates,
+        targetCurrency,
+        summaryCurrency
+      )
+
+      applyTransactionMutationSideEffects(dispatch, {
+        accounts: [updatedAccount],
+        summary,
       })
 
       return {

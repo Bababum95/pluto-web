@@ -1,5 +1,5 @@
-import type { AppDispatch } from '@/app/store'
 import { updateAccountInState, setSummary } from '@/entities/account'
+import type { AppDispatch } from '@/app/store'
 import type {
   AccountDto,
   AccountSummaryDto,
@@ -18,6 +18,7 @@ export function applyTransactionMutationSideEffects(
   for (const account of accounts) {
     dispatch(updateAccountInState(account))
   }
+
   if (response.summary) {
     dispatch(setSummary(response.summary))
   }

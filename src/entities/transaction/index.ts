@@ -2,7 +2,6 @@
 export * from './model/types'
 export * from './model/selectors'
 export { transactionApi } from './model/api'
-export { applyTransactionMutationSideEffects } from './model/apply-transaction-mutation-side-effects'
 export {
   default as transactionReducer,
   transactionSlice,

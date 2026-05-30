@@ -4,13 +4,13 @@ import dayjs from '@/shared/lib/date/dayjs'
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
 import { categoryRepository } from '@/entities/category'
+import { accountsPatched } from '@/entities/account'
 import { tagRepository } from '@/entities/tag'
 import type { AppDispatch, RootState } from '@/app/store'
 
 import { transactionRepository, enqueueUpdateTransaction } from '../../local'
 
 import { transactionApi } from '../api'
-import { applyTransactionMutationSideEffects } from '../apply-transaction-mutation-side-effects'
 import type {
   TransactionDto,
   TransactionFormType,
@@ -94,7 +94,17 @@ export const updateTransaction = createAsyncThunk<
 
     const response = await transactionApi.update(id, body, params)
 
-    applyTransactionMutationSideEffects(dispatch, response)
+    if (
+      (response.accounts?.length ?? 0) > 0 ||
+      response.summary !== undefined
+    ) {
+      dispatch(
+        accountsPatched({
+          accounts: response.accounts,
+          summary: response.summary,
+        })
+      )
+    }
 
     return response
   }

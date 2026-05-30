@@ -20,6 +20,7 @@ import accountReducer, {
   setAccounts,
   addAccount,
   updateAccountInState,
+  accountsPatched,
   setSummary,
   removeAccount,
 } from '../account.slice'
@@ -69,6 +70,49 @@ describe('account slice', () => {
       state = accountReducer(state, updateAccountInState(unknown))
       expect(state.accounts).toHaveLength(1)
       expect(state.accounts[0].id).toBe(mockAccount.id)
+    })
+
+    it('accountsPatched updates multiple accounts and summary', () => {
+      const account2 = createMockAccount({ id: 'account-2', name: 'Savings' })
+      let state = accountReducer(
+        undefined,
+        setAccounts([mockAccount, account2])
+      )
+      const updated1 = createMockAccount({
+        id: mockAccount.id,
+        name: 'Updated Wallet',
+      })
+      const updated2 = createMockAccount({
+        id: account2.id,
+        name: 'Updated Savings',
+      })
+      const nextSummary = { ...mockAccountSummary, total: 999 }
+
+      state = accountReducer(
+        state,
+        accountsPatched({
+          accounts: [updated1, updated2],
+          summary: nextSummary,
+        })
+      )
+
+      expect(state.accounts[0].name).toBe('Updated Wallet')
+      expect(state.accounts[1].name).toBe('Updated Savings')
+      expect(state.summary).toEqual(nextSummary)
+    })
+
+    it('accountsPatched skips unknown account ids and omits summary when absent', () => {
+      let state = accountReducer(undefined, setAccounts([mockAccount]))
+      const unknown = createMockAccount({ id: 'unknown' })
+
+      state = accountReducer(
+        state,
+        accountsPatched({ accounts: [unknown] })
+      )
+
+      expect(state.accounts).toHaveLength(1)
+      expect(state.accounts[0]).toEqual(mockAccount)
+      expect(state.summary).toBeNull()
     })
 
     it('setSummary sets summary', () => {

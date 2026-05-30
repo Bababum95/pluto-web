@@ -13,6 +13,7 @@ export {
   setAccounts,
   addAccount,
   updateAccountInState,
+  accountsPatched,
   setSummary,
   removeAccount,
 } from './model/account.slice'

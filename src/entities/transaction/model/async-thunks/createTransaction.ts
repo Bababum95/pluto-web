@@ -7,6 +7,7 @@ import { isDateWithinBounds } from '@/shared/lib/date/isDateWithinBounds'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
 import {
   accountRepository,
+  accountsPatched,
   applyTransactionDeltaToAccount,
   calculateAccountsSummary,
   getSignedTransactionAmountRaw,
@@ -26,7 +27,6 @@ import {
   buildPlaceholderTransaction,
 } from '../../local'
 
-import { applyTransactionMutationSideEffects } from '../apply-transaction-mutation-side-effects'
 import { transactionApi } from '../api'
 import type {
   TransactionFormType,
@@ -159,10 +159,12 @@ export const createTransaction = createAsyncThunk<
         summaryCurrency
       )
 
-      applyTransactionMutationSideEffects(dispatch, {
-        accounts: [updatedAccount],
-        summary,
-      })
+      dispatch(
+        accountsPatched({
+          accounts: [updatedAccount],
+          summary,
+        })
+      )
 
       return {
         transaction,
@@ -178,7 +180,17 @@ export const createTransaction = createAsyncThunk<
       type: transactionType,
     })
 
-    applyTransactionMutationSideEffects(dispatch, response)
+    if (
+      (response.accounts?.length ?? 0) > 0 ||
+      response.summary !== undefined
+    ) {
+      dispatch(
+        accountsPatched({
+          accounts: response.accounts,
+          summary: response.summary,
+        })
+      )
+    }
 
     return {
       ...response,

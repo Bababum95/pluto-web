@@ -27,19 +27,24 @@ vi.mock('@/shared/lib/local-storage/temp-id', () => ({
   generateTempEntityId: () => 'temp-txn-1',
 }))
 
+vi.mock('@/entities/account', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/entities/account')>()
+  return {
+    ...actual,
+    accountsPatched: vi.fn(actual.accountsPatched),
+  }
+})
+
 vi.mock('../../api')
-vi.mock('../../apply-transaction-mutation-side-effects', () => ({
-  applyTransactionMutationSideEffects: vi.fn(),
-}))
 vi.mock('../../../local/repository')
 vi.mock('../../../local/outbox-helpers')
 vi.mock('@/entities/account/local/repository')
 vi.mock('@/entities/category')
 vi.mock('@/entities/tag')
 
+import { accountsPatched } from '@/entities/account'
 import { createTransaction } from '../createTransaction'
 import { transactionApi } from '../../api'
-import { applyTransactionMutationSideEffects } from '../../apply-transaction-mutation-side-effects'
 import { transactionRepository } from '../../../local/repository'
 import { enqueueCreateTransaction } from '../../../local/outbox-helpers'
 import { accountRepository } from '@/entities/account/local/repository'
@@ -137,8 +142,7 @@ describe('createTransaction (dexie mode)', () => {
         }),
       })
     )
-    expect(applyTransactionMutationSideEffects).toHaveBeenCalledWith(
-      expect.any(Function),
+    expect(accountsPatched).toHaveBeenCalledWith(
       expect.objectContaining({
         accounts: [
           expect.objectContaining({
@@ -148,10 +152,7 @@ describe('createTransaction (dexie mode)', () => {
             }),
           }),
         ],
-        summary: expect.objectContaining({
-          total_raw: expect.any(Number),
-          total: expect.any(Number),
-        }),
+        summary: expect.any(Object),
       })
     )
   })

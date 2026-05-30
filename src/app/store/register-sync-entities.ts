@@ -15,7 +15,7 @@ import {
 } from '@/entities/category'
 import { accountRepository } from '@/entities/account/local'
 import { exchangeRateRepository } from '@/entities/exchange-rate/local'
-import { accountApi } from '@/entities/account'
+import { accountApi, accountsPatched } from '@/entities/account'
 import { store } from '@/app/store/store'
 import {
   setAccounts,
@@ -35,11 +35,7 @@ import type {
   UpdateTransactionDto,
   UpdateTransferDto,
 } from '@/shared/api/generated/model'
-import {
-  addTransaction,
-  removeTransaction,
-  applyTransactionMutationSideEffects,
-} from '@/entities/transaction'
+import { addTransaction, removeTransaction } from '@/entities/transaction'
 import { addTransfer, removeTransfer } from '@/entities/transfer'
 import { authControllerGetProfile } from '@/shared/api/generated/auth/auth'
 import { settingsControllerFindOne } from '@/shared/api/generated/settings/settings'
@@ -350,7 +346,17 @@ export function registerSyncEntities(): void {
 
           await transactionRepository.save(createdResponse.transaction)
           store.dispatch(addTransaction(createdResponse.transaction))
-          applyTransactionMutationSideEffects(store.dispatch, createdResponse)
+          if (
+            (createdResponse.accounts?.length ?? 0) > 0 ||
+            createdResponse.summary !== undefined
+          ) {
+            store.dispatch(
+              accountsPatched({
+                accounts: createdResponse.accounts,
+                summary: createdResponse.summary,
+              })
+            )
+          }
           break
         }
         case 'update': {
@@ -366,7 +372,17 @@ export function registerSyncEntities(): void {
 
           await transactionRepository.save(updated.transaction)
           store.dispatch(addTransaction(updated.transaction))
-          applyTransactionMutationSideEffects(store.dispatch, updated)
+          if (
+            (updated.accounts?.length ?? 0) > 0 ||
+            updated.summary !== undefined
+          ) {
+            store.dispatch(
+              accountsPatched({
+                accounts: updated.accounts,
+                summary: updated.summary,
+              })
+            )
+          }
           break
         }
         case 'delete': {

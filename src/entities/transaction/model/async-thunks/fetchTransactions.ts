@@ -32,14 +32,7 @@ export const fetchTransactions = createAsyncThunk(
 
       if (localList.length > 0) {
         transactionApi
-          .list(
-            {
-              type,
-              from: range.from,
-              to: range.to,
-            },
-            { signal }
-          )
+          .list({ type, from: range.from, to: range.to }, { signal })
           .then((apiList) => transactionRepository.syncFromApi(apiList))
           .catch((err) =>
             console.warn('Background transaction sync failed:', err)
@@ -49,14 +42,12 @@ export const fetchTransactions = createAsyncThunk(
       }
 
       const apiList = await transactionApi.list(
-        {
-          type,
-          from: range.from,
-          to: range.to,
-        },
+        { type, from: range.from, to: range.to },
         { signal }
       )
+
       await transactionRepository.syncFromApi(apiList)
+
       return apiList
     }
 

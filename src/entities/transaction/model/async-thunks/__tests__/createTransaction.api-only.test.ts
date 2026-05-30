@@ -13,15 +13,19 @@ vi.mock('@/app/store', () => ({
   })),
 }))
 
-vi.mock('../../apply-transaction-mutation-side-effects', () => ({
-  applyTransactionMutationSideEffects: vi.fn(),
-}))
+vi.mock('@/entities/account', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/entities/account')>()
+  return {
+    ...actual,
+    accountsPatched: vi.fn(actual.accountsPatched),
+  }
+})
 
 vi.mock('../../api')
 
+import { accountsPatched } from '@/entities/account'
 import { createTransaction } from '../createTransaction'
 import { transactionApi } from '../../api'
-import { applyTransactionMutationSideEffects } from '../../apply-transaction-mutation-side-effects'
 import type { TransactionFormType } from '../../types'
 import type { AppDispatch } from '@/app/store/store'
 
@@ -91,10 +95,10 @@ describe('createTransaction (api-only mode)', () => {
       )
       expect(result.payload.transaction).toEqual(transaction)
       expect(result.payload.insert).toBe(true)
-      expect(applyTransactionMutationSideEffects).toHaveBeenCalledWith(
-        expect.any(Function),
-        apiResponse
-      )
+      expect(accountsPatched).toHaveBeenCalledWith({
+        accounts: apiResponse.accounts,
+        summary: apiResponse.summary,
+      })
     }
   })
 

@@ -40,6 +40,11 @@ const initialState: AccountState = {
   status: 'idle',
 }
 
+type AccountsPatchedPayload = {
+  accounts?: AccountDto[]
+  summary?: AccountSummaryDto | null
+}
+
 function applyAccountUpdate(
   state: AccountState,
   accounts: AccountDto[] = [],
@@ -229,6 +234,13 @@ export const accountSlice = createSlice({
         state.accounts[idx] = action.payload
       }
     },
+    accountsPatched: (state, action: PayloadAction<AccountsPatchedPayload>) => {
+      applyAccountUpdate(
+        state,
+        action.payload.accounts ?? [],
+        action.payload.summary
+      )
+    },
     setSummary: (state, action: PayloadAction<AccountSummaryDto | null>) => {
       state.summary = action.payload
     },
@@ -300,6 +312,7 @@ export const {
   setAccounts,
   addAccount,
   updateAccountInState,
+  accountsPatched,
   removeAccount,
   setSummary,
 } = accountSlice.actions

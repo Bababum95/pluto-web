@@ -63,6 +63,7 @@ const mocks = vi.hoisted(() => {
     removeAccount: fn(),
     setSummary: fn(),
     updateAccountInState: fn(),
+    accountsPatched: fn(),
     addTransaction: fn(),
     removeTransaction: fn(),
     addTransfer: fn(),
@@ -146,6 +147,7 @@ vi.mock('@/entities/account', () => ({
   removeAccount: mocks.removeAccount,
   setSummary: mocks.setSummary,
   updateAccountInState: mocks.updateAccountInState,
+  accountsPatched: mocks.accountsPatched,
 }))
 
 vi.mock('@/entities/transaction/local', () => ({
@@ -652,10 +654,10 @@ describe('transaction outbox handler', () => {
       response.transaction
     )
     expect(mocks.addTransaction).toHaveBeenCalledWith(response.transaction)
-    expect(mocks.updateAccountInState).toHaveBeenCalledWith(
-      response.accounts[0]
-    )
-    expect(mocks.setSummary).toHaveBeenCalledWith(response.summary)
+    expect(mocks.accountsPatched).toHaveBeenCalledWith({
+      accounts: response.accounts,
+      summary: response.summary,
+    })
   })
 
   it('handles create when response has no accounts or summary', async () => {
@@ -670,8 +672,7 @@ describe('transaction outbox handler', () => {
       payload: {},
     })
 
-    expect(mocks.updateAccountInState).not.toHaveBeenCalled()
-    expect(mocks.setSummary).not.toHaveBeenCalled()
+    expect(mocks.accountsPatched).not.toHaveBeenCalled()
   })
 
   it('handles update with params payload', async () => {
@@ -697,10 +698,10 @@ describe('transaction outbox handler', () => {
     expect(mocks.transactionRepo.save).toHaveBeenCalledWith(
       response.transaction
     )
-    expect(mocks.updateAccountInState).toHaveBeenCalledWith(
-      response.accounts[0]
-    )
-    expect(mocks.setSummary).toHaveBeenCalledWith(response.summary)
+    expect(mocks.accountsPatched).toHaveBeenCalledWith({
+      accounts: response.accounts,
+      summary: response.summary,
+    })
   })
 
   it('handles delete and refreshes accounts from API', async () => {

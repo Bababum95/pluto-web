@@ -1,10 +1,15 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { RootState } from '@/app/store'
+import type { RootState } from '@/app/store/store'
 
-import { setCurrent } from '../async-thunks/setCurrent'
+import { setCurrent } from '../setCurrent'
 
 const getByIdMock = vi.fn()
+
+vi.mock('@/shared/lib/local-storage/config', () => ({
+  LOCAL_DATA_MODE: 'api-only' as const,
+  getLocalDataMode: (): 'dexie' | 'api-only' => 'api-only',
+}))
 
 vi.mock('@/entities/transaction/model/api', () => ({
   transactionApi: {

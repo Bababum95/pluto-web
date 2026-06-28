@@ -1,19 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
+import type { RootState } from '@/app/store'
+
+import { transactionLocalApi } from '../../local'
 import { transactionApi } from '../api'
 
-import { transactionRepository, enqueueDeleteTransaction } from '../../local'
-
-export const deleteTransaction = createAsyncThunk(
-  'transaction/deleteTransaction',
-  async (id: string) => {
-    if (LOCAL_DATA_MODE === 'dexie') {
-      await transactionRepository.delete(id)
-      await enqueueDeleteTransaction(id)
-      return
-    }
-
-    await transactionApi.delete(id)
+export const deleteTransaction = createAsyncThunk<
+  void,
+  string,
+  { state: RootState }
+>('transaction/deleteTransaction', async (id: string) => {
+  if (LOCAL_DATA_MODE === 'dexie') {
+    await transactionLocalApi.delete(id)
+    return
   }
-)
+
+  await transactionApi.delete(id)
+})

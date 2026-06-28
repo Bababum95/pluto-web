@@ -9,8 +9,7 @@ vi.mock('@/app/store', () => ({
 
 import { deleteTransaction } from '../deleteTransaction'
 import { transactionApi } from '../../api'
-import { transactionRepository } from '../../../local/repository'
-import { enqueueDeleteTransaction } from '../../../local/outbox-helpers'
+import { transactionLocalApi } from '../../../local/operations'
 
 vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie' as const,
@@ -18,22 +17,19 @@ vi.mock('@/shared/lib/local-storage/config', () => ({
 }))
 
 vi.mock('../../api')
-vi.mock('../../../local/repository')
-vi.mock('../../../local/outbox-helpers')
+vi.mock('../../../local/operations')
 
 describe('deleteTransaction (dexie mode)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
-  it('deletes locally and enqueues outbox operation', async () => {
-    vi.mocked(transactionRepository.delete).mockResolvedValue()
-    vi.mocked(enqueueDeleteTransaction).mockResolvedValue()
+  it('deletes locally via transactionLocalApi', async () => {
+    vi.mocked(transactionLocalApi.delete).mockResolvedValue()
 
     await deleteTransaction('txn-1')(vi.fn(), vi.fn(), undefined)
 
-    expect(transactionRepository.delete).toHaveBeenCalledWith('txn-1')
-    expect(enqueueDeleteTransaction).toHaveBeenCalledWith('txn-1')
+    expect(transactionLocalApi.delete).toHaveBeenCalledWith('txn-1')
     expect(transactionApi.delete).not.toHaveBeenCalled()
   })
 })

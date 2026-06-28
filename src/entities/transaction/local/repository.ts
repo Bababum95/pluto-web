@@ -9,15 +9,12 @@ import { transactionRowFromDto, transactionDtoFromRow } from './schema'
 
 function compareTransactionsDesc(a: TransactionDto, b: TransactionDto): number {
   const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime()
-  if (dateDiff !== 0) {
-    return dateDiff
-  }
+  if (dateDiff !== 0) return dateDiff
 
   const createdAtDiff =
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  if (createdAtDiff !== 0) {
-    return createdAtDiff
-  }
+
+  if (createdAtDiff !== 0) return createdAtDiff
 
   return b.id.localeCompare(a.id)
 }
@@ -28,22 +25,17 @@ function sortByDateDesc(transactions: TransactionDto[]): TransactionDto[] {
 
 export const transactionRepository = {
   async getById(id: string): Promise<TransactionDto | null> {
-    if (LOCAL_DATA_MODE !== 'dexie') return null
-
     const row = await db.transactions.get(id)
+
     return row ? transactionDtoFromRow(row) : null
   },
 
   async getAll(): Promise<TransactionDto[]> {
-    if (LOCAL_DATA_MODE !== 'dexie') return []
-
     const rows = await db.transactions.toArray()
     return sortByDateDesc(rows.map(transactionDtoFromRow))
   },
 
   async getByAccount(accountId: string): Promise<TransactionDto[]> {
-    if (LOCAL_DATA_MODE !== 'dexie') return []
-
     const rows = await db.transactions
       .where('accountId')
       .equals(accountId)
@@ -53,8 +45,6 @@ export const transactionRepository = {
   },
 
   async getByDateRange(from: string, to: string): Promise<TransactionDto[]> {
-    if (LOCAL_DATA_MODE !== 'dexie') return []
-
     const rows = await db.transactions
       .where('date')
       .between(from, to, true, true)
@@ -68,8 +58,6 @@ export const transactionRepository = {
     to: string,
     type: TransactionDtoType
   ): Promise<TransactionDto[]> {
-    if (LOCAL_DATA_MODE !== 'dexie') return []
-
     const rows = await db.transactions
       .where('date')
       .between(from, to, true, true)
@@ -80,8 +68,6 @@ export const transactionRepository = {
   },
 
   async save(transaction: TransactionDto): Promise<void> {
-    if (LOCAL_DATA_MODE !== 'dexie') return
-
     const now = new Date().toISOString()
     const row = transactionRowFromDto(transaction, now)
     const isTemp = transaction.id.startsWith('temp-')
@@ -94,11 +80,11 @@ export const transactionRepository = {
   },
 
   async saveMany(transactions: TransactionDto[]): Promise<void> {
-    if (LOCAL_DATA_MODE !== 'dexie') return
-
     const now = new Date().toISOString()
+
     const rows = transactions.map((t) => {
       const isTemp = t.id.startsWith('temp-')
+
       return {
         ...transactionRowFromDto(t, now),
         syncedAt: isTemp ? undefined : now,
@@ -110,9 +96,8 @@ export const transactionRepository = {
   },
 
   async update(id: string, data: Partial<TransactionDto>): Promise<void> {
-    if (LOCAL_DATA_MODE !== 'dexie') return
-
     const existing = await db.transactions.get(id)
+
     if (!existing) return
 
     const updated: TransactionDto = {
@@ -159,6 +144,7 @@ export const transactionRepository = {
         console.warn('syncFromApi: skipping invalid transaction', transaction)
         return false
       }
+
       return !dirtyIds.has(transaction.id)
     })
 
@@ -172,8 +158,6 @@ export const transactionRepository = {
   },
 
   async clear(): Promise<void> {
-    if (LOCAL_DATA_MODE !== 'dexie') return
-
     await db.transactions.clear()
   },
 }

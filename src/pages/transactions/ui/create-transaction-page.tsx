@@ -19,11 +19,8 @@ export function CreateTransactionPage() {
   const settings = useAppSelector(selectSettings)
 
   const handleSubmit = async (values: TransactionFormType) => {
-    if (!values.account) {
-      throw new Error('Account is required')
-    }
-
     await dispatch(createTransaction(values)).unwrap()
+
     navigate({ to: '/' })
     toast.success(t('transactions.messages.added'))
   }

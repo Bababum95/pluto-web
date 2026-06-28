@@ -3,28 +3,18 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 import timeRangeReducer from '@/app/store/slices/time-range'
 import transactionTypeReducer from '@/app/store/slices/transaction-type'
-import accountReducer from '@/entities/account/model/account.slice'
 import exchangeRateReducer from '@/entities/exchange-rate/model/exchange-rate.slice'
 import settingsReducer from '@/entities/settings/model/settings.slice'
+import { createMockTransaction } from '@/testing/data/transaction'
 import { mockAccount, mockAccountSummary } from '@/testing/data/account'
 import { mockCategory } from '@/testing/data/category'
 import { mockSettings } from '@/testing/data/settings'
-import { mockTag } from '@/testing/data/tag'
 
 vi.mock('@/app/store', () => ({
   createStore: vi.fn(() => ({
     getState: vi.fn(() => ({})),
     dispatch: vi.fn(),
   })),
-}))
-
-vi.mock('@/shared/lib/local-storage/config', () => ({
-  LOCAL_DATA_MODE: 'dexie' as const,
-  getLocalDataMode: (): 'dexie' | 'api-only' => 'dexie',
-}))
-
-vi.mock('@/shared/lib/local-storage/temp-id', () => ({
-  generateTempEntityId: () => 'temp-txn-1',
 }))
 
 vi.mock('@/entities/account', async (importOriginal) => {
@@ -36,29 +26,25 @@ vi.mock('@/entities/account', async (importOriginal) => {
 })
 
 vi.mock('../../api')
-vi.mock('../../../local/repository')
-vi.mock('../../../local/outbox-helpers')
-vi.mock('@/entities/account/local/repository')
-vi.mock('@/entities/category')
-vi.mock('@/entities/tag')
+vi.mock('../../../local/operations')
 
 import { accountsPatched } from '@/entities/account'
 import { createTransaction } from '../createTransaction'
 import { transactionApi } from '../../api'
-import { transactionRepository } from '../../../local/repository'
-import { enqueueCreateTransaction } from '../../../local/outbox-helpers'
-import { accountRepository } from '@/entities/account/local/repository'
-import { categoryRepository } from '@/entities/category'
-import { tagRepository } from '@/entities/tag'
+import { transactionLocalApi } from '../../../local/operations'
 import type { TransactionFormType } from '../../types'
 import type { AppDispatch } from '@/app/store/store'
+
+vi.mock('@/shared/lib/local-storage/config', () => ({
+  LOCAL_DATA_MODE: 'dexie' as const,
+  getLocalDataMode: (): 'dexie' | 'api-only' => 'dexie',
+}))
 
 function createDexieTestStore() {
   return configureStore({
     reducer: {
       timeRange: timeRangeReducer,
       transactionType: transactionTypeReducer,
-      account: accountReducer,
       exchangeRate: exchangeRateReducer,
       settings: settingsReducer,
     },
@@ -69,11 +55,6 @@ function createDexieTestStore() {
         range: { from: '2024-01-01', to: '2024-12-31' },
       },
       transactionType: { transactionType: 'expense' as const },
-      account: {
-        accounts: [mockAccount],
-        summary: mockAccountSummary,
-        status: 'success' as const,
-      },
       exchangeRate: {
         rates: [
           {
@@ -103,57 +84,51 @@ describe('createTransaction (dexie mode)', () => {
     category: mockCategory.id,
     date: new Date('2024-01-15'),
     comment: 'Coffee',
-    tags: [mockTag.id],
+    tags: ['tag-1'],
   }
 
   beforeEach(() => {
     const store = createDexieTestStore()
     dispatch = store.dispatch as AppDispatch
     vi.clearAllMocks()
-
-    vi.mocked(accountRepository.getById).mockResolvedValue(mockAccount)
-    vi.mocked(accountRepository.getAll).mockResolvedValue([mockAccount])
-    vi.mocked(accountRepository.save).mockResolvedValue()
-    vi.mocked(categoryRepository.getById).mockResolvedValue(mockCategory)
-    vi.mocked(tagRepository.getById).mockResolvedValue(mockTag)
-    vi.mocked(transactionRepository.save).mockResolvedValue()
-    vi.mocked(enqueueCreateTransaction).mockResolvedValue()
   })
 
-  it('persists transaction, updates account balance locally, and applies side effects', async () => {
+  it('creates transaction locally and applies account side effects', async () => {
+    const transaction = createMockTransaction({ id: 'temp-txn-1' })
+    const updatedAccount = {
+      ...mockAccount,
+      balance: {
+        ...mockAccount.balance,
+        original: {
+          ...mockAccount.balance.original,
+          raw: 99950,
+        },
+      },
+    }
+
+    vi.mocked(transactionLocalApi.create).mockResolvedValue({
+      transaction,
+      accounts: [updatedAccount],
+      summary: mockAccountSummary,
+    })
+
     const result = await dispatch(createTransaction(formData))
 
     expect(createTransaction.fulfilled.match(result)).toBe(true)
     expect(transactionApi.create).not.toHaveBeenCalled()
-    expect(transactionRepository.save).toHaveBeenCalled()
-    expect(enqueueCreateTransaction).toHaveBeenCalledWith(
-      'temp-txn-1',
+    expect(transactionLocalApi.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        amount: 50,
-        scale: 0,
-        type: 'expense',
-      })
-    )
-    expect(accountRepository.save).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: mockAccount.id,
-        balance: expect.objectContaining({
-          original: expect.objectContaining({ raw: 99950 }),
+        data: expect.objectContaining({
+          amount: 50,
+          scale: 0,
+          type: 'expense',
+          date: '2024-01-15',
         }),
       })
     )
-    expect(accountsPatched).toHaveBeenCalledWith(
-      expect.objectContaining({
-        accounts: [
-          expect.objectContaining({
-            id: mockAccount.id,
-            balance: expect.objectContaining({
-              original: expect.objectContaining({ raw: 99950 }),
-            }),
-          }),
-        ],
-        summary: expect.any(Object),
-      })
-    )
+    expect(accountsPatched).toHaveBeenCalledWith({
+      accounts: [updatedAccount],
+      summary: mockAccountSummary,
+    })
   })
 })

@@ -18,6 +18,3 @@ export {
   updateTransaction,
   setCurrent,
 } from './model/async-thunks'
-
-// Local-first layer
-export * from './local'

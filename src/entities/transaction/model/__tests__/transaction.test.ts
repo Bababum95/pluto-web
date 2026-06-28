@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 
 import { createMockTransaction } from '@/testing/data/transaction'
+import { mockAccountSummary } from '@/testing/data/account'
 import { mockCurrency } from '@/testing/data/currency'
 
 import transactionReducer, {
@@ -146,6 +147,8 @@ describe('transaction slice', () => {
       const action = createTransaction.fulfilled(
         {
           transaction: newTx,
+          accounts: [],
+          summary: mockAccountSummary,
           insert: true,
         },
         'req-1',
@@ -167,6 +170,8 @@ describe('transaction slice', () => {
       const action = createTransaction.fulfilled(
         {
           transaction: newTx,
+          accounts: [],
+          summary: mockAccountSummary,
           insert: false,
         },
         'req-1',

@@ -50,15 +50,13 @@ function applyAccountUpdate(
   accounts: AccountDto[] = [],
   summary?: AccountSummaryDto | null
 ) {
+  if (summary) state.summary = summary
+
   accounts.forEach((account) => {
     const idx = state.accounts.findIndex((a) => a.id === account.id)
-    if (idx !== -1) {
-      state.accounts[idx] = account
-    }
+
+    if (idx !== -1) state.accounts[idx] = account
   })
-  if (summary) {
-    state.summary = summary
-  }
 }
 
 export const fetchAccounts = createAsyncThunk(

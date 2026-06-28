@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 
-import type { RootState } from '@/app/store'
+import type { RootState } from '@/app/store/store'
 import { createMockTransaction } from '@/testing/data/transaction'
 
 vi.mock('@/shared/lib/local-storage/config', () => ({
@@ -23,7 +23,7 @@ vi.mock('@/entities/transaction/local/repository', () => ({
   },
 }))
 
-import { setCurrent } from '../async-thunks/setCurrent'
+import { setCurrent } from '../setCurrent'
 
 describe('setCurrent (dexie mode)', () => {
   beforeEach(() => {

@@ -85,7 +85,7 @@ describe('updateTransaction (dexie mode)', () => {
         type: 'expense',
         date: '2024-02-01',
       }),
-      params: undefined,
+      params: { recalcBalance: 'false' },
     })
     expect(accountsPatched).not.toHaveBeenCalled()
   })

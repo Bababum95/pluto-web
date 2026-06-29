@@ -2,7 +2,7 @@ import { i18n, useTranslation } from '@/shared/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import { Fragment } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Invoice01Icon } from '@hugeicons/core-free-icons'
+import { DatabaseSyncIcon, Invoice01Icon } from '@hugeicons/core-free-icons'
 
 import dayjs from '@/shared/lib/date/dayjs'
 import { useAppSelector } from '@/app/store'
@@ -35,6 +35,7 @@ import {
   EmptyTitle,
 } from '@/shared/ui/empty'
 import { Button } from '@/shared/ui/button'
+import { isTempEntityId } from '@/shared/lib/local-storage/temp-id'
 
 export function TransactionsList() {
   const { t } = useTranslation()
@@ -46,6 +47,7 @@ export function TransactionsList() {
       <CardHeader className="items-center pb-0">
         <TimeRangeSwitcher />
       </CardHeader>
+
       <CardContent>
         {status === 'pending' ? (
           <div className="flex items-center justify-center py-8">
@@ -67,6 +69,7 @@ export function TransactionsList() {
                     })}
                   </span>
                 </div>
+
                 <Card size="sm" className="bg-muted/50 rounded-md py-0!">
                   <ItemGroup>
                     {list.map((transaction, index) => (
@@ -74,6 +77,7 @@ export function TransactionsList() {
                         {index > 0 && (
                           <ItemSeparator className="bg-muted-foreground/15" />
                         )}
+
                         <Item size="xs" asChild>
                           <Link
                             to="/transactions/show/$transactionId"
@@ -86,28 +90,38 @@ export function TransactionsList() {
                               color={transaction.category.color}
                               size={24}
                             />
+
                             <ItemContent className="gap-0">
                               <ItemTitle>{transaction.category.name}</ItemTitle>
+
                               <ItemDescription>
                                 {transaction.account.name}
                               </ItemDescription>
                             </ItemContent>
-                            <ItemActions className="flex flex-col items-end gap-0">
-                              <span className="font-medium">
-                                {formatBalance({
-                                  currency:
-                                    transaction.amount.converted.currency,
-                                  balance: transaction.amount.converted.value,
-                                })}
-                              </span>
-                              <span className="text-muted-foreground">
-                                {formatBalance({
-                                  currency:
-                                    transaction.amount.original.currency,
-                                  balance: transaction.amount.original.value,
-                                })}
-                              </span>
+
+                            <ItemActions>
+                              {isTempEntityId(transaction.id) && (
+                                <HugeiconsIcon icon={DatabaseSyncIcon} />
+                              )}
+
+                              <div className="flex flex-col items-end gap-0">
+                                <span className="font-medium">
+                                  {formatBalance({
+                                    currency:
+                                      transaction.amount.converted.currency,
+                                    balance: transaction.amount.converted.value,
+                                  })}
+                                </span>
+                                <span className="text-muted-foreground">
+                                  {formatBalance({
+                                    currency:
+                                      transaction.amount.original.currency,
+                                    balance: transaction.amount.original.value,
+                                  })}
+                                </span>
+                              </div>
                             </ItemActions>
+
                             {transaction.tags.length > 0 && (
                               <div className="flex gap-1 flex-wrap w-full">
                                 {transaction.tags.map((tag) => (
@@ -122,6 +136,7 @@ export function TransactionsList() {
                                 ))}
                               </div>
                             )}
+
                             {transaction.comment.trim().length > 0 && (
                               <p className="text-xs text-muted-foreground w-full">
                                 {transaction.comment}
@@ -142,11 +157,14 @@ export function TransactionsList() {
               <EmptyMedia variant="icon">
                 <HugeiconsIcon icon={Invoice01Icon} />
               </EmptyMedia>
+
               <EmptyTitle>{t('transactions.empty.title')}</EmptyTitle>
+
               <EmptyDescription>
                 {t('transactions.empty.description')}
               </EmptyDescription>
             </EmptyHeader>
+
             <EmptyContent className="flex-row justify-center">
               <Button>
                 <Link

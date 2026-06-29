@@ -4,12 +4,6 @@ import type {
   UpdateTransactionDto,
 } from '@/shared/api/generated/model'
 
-const TEMP_PREFIX = 'temp-'
-
-export function isTempTransactionId(id: string): boolean {
-  return id.startsWith(TEMP_PREFIX)
-}
-
 export async function enqueueCreateTransaction(
   tempId: string,
   data: CreateTransactionDto

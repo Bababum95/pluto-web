@@ -1,23 +1,24 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 
-import type { RootState } from '@/app/store/store'
 import { createMockTransaction } from '@/testing/data/transaction'
+
+import type { SetCurrentState } from '../setCurrent'
+
+const getByIdMock = vi.fn()
+const repositoryGetByIdMock = vi.fn()
 
 vi.mock('@/shared/lib/local-storage/config', () => ({
   LOCAL_DATA_MODE: 'dexie' as const,
   getLocalDataMode: (): 'dexie' | 'api-only' => 'dexie',
 }))
 
-const getByIdMock = vi.fn()
-const repositoryGetByIdMock = vi.fn()
-
-vi.mock('@/entities/transaction/model/api', () => ({
+vi.mock('../../api', () => ({
   transactionApi: {
     getById: (...args: unknown[]) => getByIdMock(...args),
   },
 }))
 
-vi.mock('@/entities/transaction/local/repository', () => ({
+vi.mock('../../../local/repository', () => ({
   transactionRepository: {
     getById: (...args: unknown[]) => repositoryGetByIdMock(...args),
   },
@@ -34,9 +35,9 @@ describe('setCurrent (dexie mode)', () => {
     const localTransaction = createMockTransaction({ id: 'tx-local' })
     repositoryGetByIdMock.mockResolvedValue(localTransaction)
 
-    const state = {
+    const state: SetCurrentState = {
       transaction: { transactions: [] },
-    } as unknown as RootState
+    }
 
     const result = await setCurrent('tx-local')(vi.fn(), () => state, undefined)
 
@@ -50,9 +51,9 @@ describe('setCurrent (dexie mode)', () => {
     const existing = createMockTransaction({ id: 'tx-state' })
     repositoryGetByIdMock.mockResolvedValue(null)
 
-    const state = {
+    const state: SetCurrentState = {
       transaction: { transactions: [existing] },
-    } as unknown as RootState
+    }
 
     const result = await setCurrent('tx-state')(vi.fn(), () => state, undefined)
 

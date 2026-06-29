@@ -6,7 +6,6 @@ import {
   enqueueCreateTransaction,
   enqueueUpdateTransaction,
   enqueueDeleteTransaction,
-  isTempTransactionId,
 } from '../outbox-helpers'
 import type {
   CreateTransactionDto,
@@ -18,17 +17,6 @@ const enqueueSpy = vi.spyOn(outboxProcessor, 'enqueue')
 beforeEach(() => {
   enqueueSpy.mockClear()
   enqueueSpy.mockResolvedValue()
-})
-
-describe('isTempTransactionId', () => {
-  it('returns true for ids with temp- prefix', () => {
-    expect(isTempTransactionId('temp-123')).toBe(true)
-  })
-
-  it('returns false for real ids', () => {
-    expect(isTempTransactionId('tx-1')).toBe(false)
-    expect(isTempTransactionId('')).toBe(false)
-  })
 })
 
 describe('transaction outbox helpers', () => {

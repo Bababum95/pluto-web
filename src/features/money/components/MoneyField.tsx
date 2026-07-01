@@ -9,6 +9,8 @@ import { FieldError, Field, FieldLabel } from '@/shared/ui/field'
 import { Button } from '@/shared/ui/button'
 import type { InputProps } from '@/shared/ui/input'
 
+import { formatThousands } from '@/shared/lib/money/utils/formatThousands'
+
 import { MoneyInput } from './MoneyInput'
 
 type Props = Omit<InputProps, 'onChange'> & {
@@ -25,6 +27,24 @@ type Props = Omit<InputProps, 'onChange'> & {
 
 const PRESET_MULTIPLIERS = [1000, 10000, 100000]
 
+function getBaseAmount(value: string): number {
+  const parsed = parseFloat(value)
+
+  if (Number.isNaN(parsed) || parsed === 0) {
+    return 1
+  }
+
+  return parsed
+}
+
+function getMultipliedAmount(value: string, multiplier: number): number {
+  return getBaseAmount(value) * multiplier
+}
+
+function formatPresetAmount(value: string, multiplier: number): string {
+  return formatThousands(getMultipliedAmount(value, multiplier).toString())
+}
+
 export const MoneyField: FC<Props> = ({
   inputProps,
   isError,
@@ -36,12 +56,7 @@ export const MoneyField: FC<Props> = ({
   const ref = useRef<HTMLInputElement>(null)
   const defaultCurrency = useAppSelector(selectCurrency)
   const handleMultiply = (multiplier: number) => {
-    let currentValue = parseFloat(inputProps.value)
-    if (Number.isNaN(currentValue) || currentValue === 0) {
-      currentValue = 1
-    }
-
-    inputProps.onChange((currentValue * multiplier).toString())
+    inputProps.onChange(getMultipliedAmount(inputProps.value, multiplier).toString())
     ref.current?.focus()
   }
 
@@ -85,7 +100,7 @@ export const MoneyField: FC<Props> = ({
             onClick={() => handleMultiply(multiplier)}
             type="button"
           >
-            {multiplier.toLocaleString()}
+            {formatPresetAmount(inputProps.value, multiplier)}
           </Button>
         ))}
       </div>

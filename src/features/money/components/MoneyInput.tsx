@@ -3,21 +3,13 @@ import { forwardRef, useCallback, useMemo } from 'react'
 import { Input, type InputProps } from '@/shared/ui/input'
 import { cn } from '@/shared/lib'
 
+import { formatThousands } from '@/shared/lib/money/utils/formatThousands'
 import { sanitizeDecimal } from '@/shared/lib/money/utils/sanitizeDecimal'
 
 type Props = Omit<InputProps, 'onChange'> & {
   value: string
   onChange: (value: string) => void
   isError?: boolean
-}
-
-function formatThousands(value: string): string {
-  const [integerPart, fractionPart] = value.split('.')
-  const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-
-  return fractionPart === undefined
-    ? formattedIntegerPart
-    : `${formattedIntegerPart}.${fractionPart}`
 }
 
 export const MoneyInput = forwardRef<HTMLInputElement, Props>(

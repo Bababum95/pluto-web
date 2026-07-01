@@ -93,7 +93,7 @@ describe('MoneyField', () => {
     expect(onChange).toHaveBeenCalledWith('')
   })
 
-  it('renders multiplier buttons 1000, 10000, 100000', () => {
+  it('renders preset buttons with multiplied amounts for empty input', () => {
     const store = createStore({
       settings: {
         settings: createMockSettings(),
@@ -104,9 +104,42 @@ describe('MoneyField', () => {
       <MoneyField inputProps={{ value: '', onChange: vi.fn() }} />,
       { store }
     )
-    expect(screen.getByRole('button', { name: '1,000' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '10,000' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '100,000' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '1 000' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '10 000' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '100 000' })).toBeInTheDocument()
+  })
+
+  it('updates preset button labels based on current input value', () => {
+    const store = createStore({
+      settings: {
+        settings: createMockSettings(),
+        status: 'success',
+      },
+    })
+    renderWithProviders(
+      <MoneyField inputProps={{ value: '100', onChange: vi.fn() }} />,
+      { store }
+    )
+    expect(screen.getByRole('button', { name: '100 000' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '1 000 000' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '10 000 000' })).toBeInTheDocument()
+  })
+
+  it('calls onChange with multiplied amount when preset button is clicked', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    const store = createStore({
+      settings: {
+        settings: createMockSettings(),
+        status: 'success',
+      },
+    })
+    renderWithProviders(
+      <MoneyField inputProps={{ value: '25', onChange }} />,
+      { store }
+    )
+    await user.click(screen.getByRole('button', { name: '25 000' }))
+    expect(onChange).toHaveBeenCalledWith('25000')
   })
 
   it('displays error message when isError is true', () => {

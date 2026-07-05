@@ -79,6 +79,8 @@ import { Wallet02Icon } from './components/Wallet02Icon'
 import { WorkIcon } from './components/WorkIcon'
 import { Yen } from './components/Yen'
 import { YouTubeIcon } from './components/YouTubeIcon'
+import { TimoLogoIcon } from './components/TimoLogoIcon'
+import { PayoneerLogoIcon } from './components/PayoneerLogoIcon'
 
 export const ICON_REGISTRY = {
   Airplane01Icon,
@@ -156,6 +158,8 @@ export const ICON_REGISTRY = {
   YouTubeIcon,
   GroomingIcon,
   NailIcon,
+  TimoLogoIcon,
+  PayoneerLogoIcon,
 } as const satisfies Record<string, SvgIcon>
 
 export const DEFAULT_ICON = ICON_REGISTRY.Dollar01Icon
@@ -202,6 +206,8 @@ export const ICON_CATEGORIES: IconCategory[] = [
       'KucoinIcon',
       'MexcIcon',
       'BingxIcon',
+      'TimoLogoIcon',
+      'PayoneerLogoIcon',
     ],
   },
   {

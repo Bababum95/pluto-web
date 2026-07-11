@@ -56,7 +56,9 @@ export const MoneyField: FC<Props> = ({
   const ref = useRef<HTMLInputElement>(null)
   const defaultCurrency = useAppSelector(selectCurrency)
   const handleMultiply = (multiplier: number) => {
-    inputProps.onChange(getMultipliedAmount(inputProps.value, multiplier).toString())
+    inputProps.onChange(
+      getMultipliedAmount(inputProps.value, multiplier).toString()
+    )
     ref.current?.focus()
   }
 
@@ -88,9 +90,6 @@ export const MoneyField: FC<Props> = ({
         </div>
       </div>
       <div className="flex flex-wrap gap-1">
-        <span className="text-muted-foreground h-7 flex items-center mr-2">
-          <HugeiconsIcon icon={MultiplicationSignIcon} size={16} />
-        </span>
         {PRESET_MULTIPLIERS.map((multiplier) => (
           <Button
             variant="outline"

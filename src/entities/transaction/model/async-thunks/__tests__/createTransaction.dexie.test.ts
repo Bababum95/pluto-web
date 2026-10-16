@@ -28,7 +28,14 @@ vi.mock('@/entities/account', async (importOriginal) => {
 vi.mock('../../api')
 vi.mock('../../../local/operations')
 
+vi.mock('@/entities/exchange-rate/local/repository', () => ({
+  exchangeRateRepository: {
+    getAll: vi.fn(),
+  },
+}))
+
 import { accountsPatched } from '@/entities/account'
+import { exchangeRateRepository } from '@/entities/exchange-rate/local/repository'
 import { createTransaction } from '../createTransaction'
 import { transactionApi } from '../../api'
 import { transactionLocalApi } from '../../../local/operations'
@@ -40,7 +47,15 @@ vi.mock('@/shared/lib/local-storage/config', () => ({
   getLocalDataMode: (): 'dexie' | 'api-only' => 'dexie',
 }))
 
-function createDexieTestStore() {
+const usdRate = {
+  id: 'rate-usd',
+  code: 'USD',
+  value: 1,
+  createdAt: '2024-01-01T00:00:00.000Z',
+  updatedAt: '2024-01-01T00:00:00.000Z',
+}
+
+function createDexieTestStore(rates = [usdRate]) {
   return configureStore({
     reducer: {
       timeRange: timeRangeReducer,
@@ -56,15 +71,7 @@ function createDexieTestStore() {
       },
       transactionType: { transactionType: 'expense' as const },
       exchangeRate: {
-        rates: [
-          {
-            id: 'rate-usd',
-            code: 'USD',
-            value: 1,
-            createdAt: '2024-01-01T00:00:00.000Z',
-            updatedAt: '2024-01-01T00:00:00.000Z',
-          },
-        ],
+        rates,
         status: 'success' as const,
       },
       settings: {
@@ -130,5 +137,34 @@ describe('createTransaction (dexie mode)', () => {
       accounts: [updatedAccount],
       summary: mockAccountSummary,
     })
+  })
+
+  it('loads rates from IndexedDB when Redux exchange rates are empty', async () => {
+    const store = createDexieTestStore([])
+    dispatch = store.dispatch as AppDispatch
+
+    const localRates = [
+      {
+        ...usdRate,
+        id: 'rate-eur',
+        code: 'EUR',
+        value: 0.8,
+      },
+    ]
+    vi.mocked(exchangeRateRepository.getAll).mockResolvedValue(localRates)
+    vi.mocked(transactionLocalApi.create).mockResolvedValue({
+      transaction: createMockTransaction({ id: 'temp-txn-2' }),
+      accounts: [mockAccount],
+      summary: mockAccountSummary,
+    })
+
+    await dispatch(createTransaction(formData))
+
+    expect(exchangeRateRepository.getAll).toHaveBeenCalled()
+    expect(transactionLocalApi.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        rates: localRates,
+      })
+    )
   })
 })

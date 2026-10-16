@@ -15,6 +15,7 @@ import {
 } from '@/entities/category'
 import { accountRepository } from '@/entities/account/local'
 import { exchangeRateRepository } from '@/entities/exchange-rate/local'
+import { fetchExchangeRates } from '@/entities/exchange-rate'
 import { accountApi, accountsPatched } from '@/entities/account'
 import { store } from '@/app/store/store'
 import {
@@ -303,6 +304,9 @@ export function registerSyncEntities(): void {
     try {
       const apiRates = await rateControllerFindAll()
       await exchangeRateRepository.syncFromApi(apiRates)
+      // Keep Redux in sync — fetchExchangeRates only reads IndexedDB once at
+      // init and does not pick up this background refresh on its own.
+      store.dispatch(fetchExchangeRates.fulfilled(apiRates, 'sync', undefined))
     } catch (error) {
       console.error('ExchangeRate sync failed:', error)
       throw error

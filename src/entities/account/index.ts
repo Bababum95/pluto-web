@@ -27,4 +27,5 @@ export {
   getSignedTransactionAmountRaw,
   applyTransactionDeltaToAccount,
   calculateAccountsSummary,
+  resolveConvertedAccountBalance,
 } from './lib/transaction-balance'

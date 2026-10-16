@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 import { db } from '@/shared/lib/local-storage/db'
-import { mockAccount } from '@/testing/data/account'
+import { createMockAccount, mockAccount } from '@/testing/data/account'
 import { mockCategory } from '@/testing/data/category'
 import { mockSettings } from '@/testing/data/settings'
 import { mockTag } from '@/testing/data/tag'
@@ -101,6 +101,61 @@ describe('transactionLocalApi', () => {
 
       const saved = await transactionRepository.getById('temp-txn-1')
       expect(saved?.comment).toBe('Coffee')
+    })
+
+    it('keeps default-currency converted balance when FX rates are missing', async () => {
+      const eurAccount = createMockAccount({
+        balance: {
+          original: {
+            value: 100,
+            raw: 10000,
+            scale: 2,
+            currency: {
+              id: 'currency-eur',
+              code: 'EUR',
+              symbol: '€',
+              decimal_digits: 2,
+            },
+          },
+          converted: {
+            value: 125,
+            raw: 12500,
+            scale: 2,
+            currency: {
+              id: mockSettings.currency.id,
+              code: mockSettings.currency.code,
+              symbol: mockSettings.currency.symbol,
+              decimal_digits: mockSettings.currency.decimal_digits,
+            },
+          },
+        },
+      })
+      vi.mocked(accountRepository.getById).mockResolvedValue(eurAccount)
+      vi.mocked(accountRepository.save).mockImplementation(async (account) => {
+        vi.mocked(accountRepository.getAll).mockResolvedValue([account])
+      })
+
+      const result = await transactionLocalApi.create({
+        data: {
+          account: eurAccount.id,
+          category: mockCategory.id,
+          amount: 2000,
+          scale: 2,
+          date: '2024-01-15',
+          type: 'expense',
+        },
+        rates: [],
+        settingsCurrency: mockSettings.currency,
+        settings: mockSettings,
+      })
+
+      const updated = result.accounts[0]
+      expect(updated.balance.converted.currency.code).toBe(
+        mockSettings.currency.code
+      )
+      expect(updated.balance.converted.currency.code).not.toBe('EUR')
+      expect(updated.balance.converted.value).toBe(100)
+      expect(result.summary.total_raw).toBe(10000)
     })
 
     it('throws when account is missing', async () => {

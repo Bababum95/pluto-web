@@ -1,6 +1,7 @@
 {
   "name": "web-pluto",
   "private": true,
+  "packageManager": "pnpm@11.11.0",
   "version": "0.2.3",
   "type": "module",
   "scripts": {

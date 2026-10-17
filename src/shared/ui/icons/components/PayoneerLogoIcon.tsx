@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import type { SvgIconProps } from '../types'
 
-export const PayoneerLogoIcon: FC<SvgIconProps> = ({ className, size }) => {
+export const PayoneerLogoIcon: FC<SvgIconProps> = ({ className, size = 24 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -23,7 +23,7 @@ describe('ToggleGroup', () => {
   it('renders toggle group root', () => {
     renderGroup()
 
-    expect(screen.getByRole('group')).toBeInTheDocument()
+    expect(screen.getByRole('radiogroup')).toBeInTheDocument()
   })
 
   it('renders toggle group items', () => {
@@ -36,7 +36,7 @@ describe('ToggleGroup', () => {
   it('applies data-slot attributes', () => {
     renderGroup()
 
-    expect(screen.getByRole('group')).toHaveAttribute(
+    expect(screen.getByRole('radiogroup')).toHaveAttribute(
       'data-slot',
       'toggle-group'
     )

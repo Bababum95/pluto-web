@@ -7,6 +7,7 @@ import {
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
+import { normalizeMoneyRaw } from '@/shared/lib/money/utils/normalizeMoneyRaw'
 import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
 import type { Status } from '@/shared/lib/async-status'
 import type { RootState } from '@/app/store'
@@ -27,7 +28,10 @@ import {
 } from '../lib/transaction-balance'
 
 import { accountApi } from './api'
-import { resolveMoneyViewCurrencyForTempAccount } from './temp-account-currency'
+import {
+  resolveMoneyViewCurrencyForAccountUpdate,
+  resolveMoneyViewCurrencyForTempAccount,
+} from './temp-account-currency'
 import type {
   AccountDto,
   AccountSummaryDto,
@@ -174,7 +178,7 @@ export const updateAccount = createAsyncThunk(
 
       const balanceRaw =
         typeof data.balance === 'number' ? data.balance : undefined
-      const scale =
+      const formScale =
         typeof data.scale === 'number'
           ? data.scale
           : existing.balance.original.scale
@@ -183,20 +187,32 @@ export const updateAccount = createAsyncThunk(
 
       if (balanceRaw !== undefined || currencyId !== undefined) {
         const originalCurrency = currencyId
-          ? resolveMoneyViewCurrencyForTempAccount(
+          ? await resolveMoneyViewCurrencyForAccountUpdate(
               currencyId,
-              scale,
+              existing.balance.original.currency.decimal_digits,
               () => state
             )
           : existing.balance.original.currency
 
-        const originalRaw = balanceRaw ?? existing.balance.original.raw
+        // Form parseDecimal derives scale from typed decimals ("100" → scale 0).
+        // Persist against the currency's stable decimal_digits so later
+        // transaction raw deltas stay comparable.
+        const stableScale = originalCurrency.decimal_digits
+        const originalRaw =
+          balanceRaw !== undefined
+            ? normalizeMoneyRaw(balanceRaw, formScale, stableScale)
+            : normalizeMoneyRaw(
+                existing.balance.original.raw,
+                existing.balance.original.scale,
+                stableScale
+              )
+
         const original = {
           ...existing.balance.original,
           currency: originalCurrency,
-          scale,
+          scale: stableScale,
           raw: originalRaw,
-          value: toDecimal(originalRaw, scale),
+          value: toDecimal(originalRaw, stableScale),
         }
 
         const settingsCurrency = selectCurrency(state)

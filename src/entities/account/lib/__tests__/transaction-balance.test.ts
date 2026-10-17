@@ -9,6 +9,7 @@ import {
   applyTransactionDeltaToAccount,
   calculateAccountsSummary,
   getSignedTransactionAmountRaw,
+  resolveConvertedAccountBalance,
 } from '../transaction-balance'
 
 const ts = '2024-01-01T00:00:00.000Z'
@@ -136,6 +137,66 @@ describe('applyTransactionDeltaToAccount', () => {
     expect(updated.balance.converted.currency.code).toBe('USD')
     expect(updated.balance.converted.raw).toBe(10000)
     expect(updated.balance.converted.value).toBe(100)
+  })
+})
+
+describe('resolveConvertedAccountBalance', () => {
+  const previousAccount = createMockAccount({
+    balance: {
+      original: {
+        value: 100,
+        raw: 10000,
+        scale: 2,
+        currency: eur,
+      },
+      converted: {
+        value: 125,
+        raw: 12500,
+        scale: 2,
+        currency: usd,
+      },
+    },
+  })
+
+  it('uses previous original balance for implied rate when rates are missing', () => {
+    const newOriginal = {
+      value: 80,
+      raw: 8000,
+      scale: 2,
+      currency: eur,
+    }
+
+    const converted = resolveConvertedAccountBalance(
+      previousAccount,
+      newOriginal,
+      [],
+      usd
+    )
+
+    // implied rate 125/100 = 1.25 → 80 * 1.25 = 100 USD
+    expect(converted.currency.code).toBe('USD')
+    expect(converted.raw).toBe(10000)
+    expect(converted.value).toBe(100)
+  })
+
+  it('zeros converted balance while keeping default currency when balance is cleared', () => {
+    const newOriginal = {
+      value: 0,
+      raw: 0,
+      scale: 2,
+      currency: eur,
+    }
+
+    const converted = resolveConvertedAccountBalance(
+      previousAccount,
+      newOriginal,
+      [],
+      usd
+    )
+
+    expect(converted.currency.code).toBe('USD')
+    expect(converted.raw).toBe(0)
+    expect(converted.value).toBe(0)
   })
 })
 

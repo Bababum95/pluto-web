@@ -210,19 +210,12 @@ export const updateAccount = createAsyncThunk(
               }
             : existing.balance.converted.currency
 
-        const accountForConversion: AccountDto = {
-          ...existing,
-          ...updates,
-          balance: {
-            original,
-            converted: existing.balance.converted,
-          },
-        }
-
+        // Pass `existing` (previous original + converted) so implied-rate
+        // fallback can derive the FX ratio from the prior balances.
         updates.balance = {
           original,
           converted: resolveConvertedAccountBalance(
-            accountForConversion,
+            existing,
             original,
             selectExchangeRates(state),
             targetCurrency

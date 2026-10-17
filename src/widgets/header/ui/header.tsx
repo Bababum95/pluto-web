@@ -73,7 +73,6 @@ export function Header({
               </SheetTrigger>
               <SheetContent
                 side="left"
-                onOpenAutoFocus={(e) => e.preventDefault()}
                 aria-describedby={undefined}
                 closable={false}
               >

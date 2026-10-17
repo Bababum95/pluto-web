@@ -7,7 +7,7 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
-import packageJson from './package.json'
+import packageJson from './package.json' with { type: 'json' }
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -103,7 +103,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(import.meta.dirname, './src'),
     },
   },
 })

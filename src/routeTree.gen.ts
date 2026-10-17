@@ -9,34 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
-import { Route as AppSettingsRouteImport } from './routes/_app/settings'
-import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppExchangeRatesRouteImport } from './routes/_app/exchange-rates'
-import { Route as AppTransfersIndexRouteImport } from './routes/_app/transfers/index'
-import { Route as AppTransactionsIndexRouteImport } from './routes/_app/transactions/index'
-import { Route as AppCategoriesIndexRouteImport } from './routes/_app/categories/index'
+import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AppAccountsIndexRouteImport } from './routes/_app/accounts/index'
-import { Route as AppTransfersCreateRouteImport } from './routes/_app/transfers/create'
-import { Route as AppTransfersTransferIdRouteImport } from './routes/_app/transfers/$transferId'
-import { Route as AppTransactionsCreateRouteImport } from './routes/_app/transactions/create'
-import { Route as AppCategoriesCreateRouteImport } from './routes/_app/categories/create'
-import { Route as AppCategoriesCategoryIdRouteImport } from './routes/_app/categories/$categoryId'
-import { Route as AppAccountsCreateRouteImport } from './routes/_app/accounts/create'
 import { Route as AppAccountsAccountIdRouteImport } from './routes/_app/accounts/$accountId'
-import { Route as AppTransactionsShowTransactionIdRouteImport } from './routes/_app/transactions/show/$transactionId'
+import { Route as AppAccountsCreateRouteImport } from './routes/_app/accounts/create'
+import { Route as AppCategoriesIndexRouteImport } from './routes/_app/categories/index'
+import { Route as AppCategoriesCategoryIdRouteImport } from './routes/_app/categories/$categoryId'
+import { Route as AppCategoriesCreateRouteImport } from './routes/_app/categories/create'
+import { Route as AppTransactionsIndexRouteImport } from './routes/_app/transactions/index'
+import { Route as AppTransactionsCreateRouteImport } from './routes/_app/transactions/create'
+import { Route as AppTransfersIndexRouteImport } from './routes/_app/transfers/index'
+import { Route as AppTransfersTransferIdRouteImport } from './routes/_app/transfers/$transferId'
+import { Route as AppTransfersCreateRouteImport } from './routes/_app/transfers/create'
 import { Route as AppTransactionsEditTransactionIdRouteImport } from './routes/_app/transactions/edit/$transactionId'
+import { Route as AppTransactionsShowTransactionIdRouteImport } from './routes/_app/transactions/show/$transactionId'
 
-const AuthRoute = AuthRouteImport.update({
-  id: '/_auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -44,19 +44,9 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-const AuthRegisterRoute = AuthRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => AuthRoute,
-} as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AuthRoute,
-} as any)
-const AppSettingsRoute = AppSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+const AppExchangeRatesRoute = AppExchangeRatesRouteImport.update({
+  id: '/exchange-rates',
+  path: '/exchange-rates',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -64,59 +54,24 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
-const AppExchangeRatesRoute = AppExchangeRatesRouteImport.update({
-  id: '/exchange-rates',
-  path: '/exchange-rates',
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
-const AppTransfersIndexRoute = AppTransfersIndexRouteImport.update({
-  id: '/transfers/',
-  path: '/transfers/',
-  getParentRoute: () => AppRoute,
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
-const AppTransactionsIndexRoute = AppTransactionsIndexRouteImport.update({
-  id: '/transactions/',
-  path: '/transactions/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
-  id: '/categories/',
-  path: '/categories/',
-  getParentRoute: () => AppRoute,
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AppAccountsIndexRoute = AppAccountsIndexRouteImport.update({
   id: '/accounts/',
   path: '/accounts/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppTransfersCreateRoute = AppTransfersCreateRouteImport.update({
-  id: '/transfers/create',
-  path: '/transfers/create',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppTransfersTransferIdRoute = AppTransfersTransferIdRouteImport.update({
-  id: '/transfers/$transferId',
-  path: '/transfers/$transferId',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppTransactionsCreateRoute = AppTransactionsCreateRouteImport.update({
-  id: '/transactions/create',
-  path: '/transactions/create',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCategoriesCreateRoute = AppCategoriesCreateRouteImport.update({
-  id: '/categories/create',
-  path: '/categories/create',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCategoriesCategoryIdRoute = AppCategoriesCategoryIdRouteImport.update({
-  id: '/categories/$categoryId',
-  path: '/categories/$categoryId',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppAccountsCreateRoute = AppAccountsCreateRouteImport.update({
-  id: '/accounts/create',
-  path: '/accounts/create',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAccountsAccountIdRoute = AppAccountsAccountIdRouteImport.update({
@@ -124,26 +79,71 @@ const AppAccountsAccountIdRoute = AppAccountsAccountIdRouteImport.update({
   path: '/accounts/$accountId',
   getParentRoute: () => AppRoute,
 } as any)
-const AppTransactionsShowTransactionIdRoute =
-  AppTransactionsShowTransactionIdRouteImport.update({
-    id: '/transactions/show/$transactionId',
-    path: '/transactions/show/$transactionId',
-    getParentRoute: () => AppRoute,
-  } as any)
+const AppAccountsCreateRoute = AppAccountsCreateRouteImport.update({
+  id: '/accounts/create',
+  path: '/accounts/create',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesCategoryIdRoute = AppCategoriesCategoryIdRouteImport.update({
+  id: '/categories/$categoryId',
+  path: '/categories/$categoryId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCategoriesCreateRoute = AppCategoriesCreateRouteImport.update({
+  id: '/categories/create',
+  path: '/categories/create',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransactionsIndexRoute = AppTransactionsIndexRouteImport.update({
+  id: '/transactions/',
+  path: '/transactions/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransactionsCreateRoute = AppTransactionsCreateRouteImport.update({
+  id: '/transactions/create',
+  path: '/transactions/create',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransfersIndexRoute = AppTransfersIndexRouteImport.update({
+  id: '/transfers/',
+  path: '/transfers/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransfersTransferIdRoute = AppTransfersTransferIdRouteImport.update({
+  id: '/transfers/$transferId',
+  path: '/transfers/$transferId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransfersCreateRoute = AppTransfersCreateRouteImport.update({
+  id: '/transfers/create',
+  path: '/transfers/create',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppTransactionsEditTransactionIdRoute =
   AppTransactionsEditTransactionIdRouteImport.update({
     id: '/transactions/edit/$transactionId',
     path: '/transactions/edit/$transactionId',
     getParentRoute: () => AppRoute,
   } as any)
+const AppTransactionsShowTransactionIdRoute =
+  AppTransactionsShowTransactionIdRouteImport.update({
+    id: '/transactions/show/$transactionId',
+    path: '/transactions/show/$transactionId',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof AppIndexRoute
   '/exchange-rates': typeof AppExchangeRatesRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
-  '/': typeof AppIndexRoute
   '/accounts/$accountId': typeof AppAccountsAccountIdRoute
   '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
@@ -151,20 +151,20 @@ export interface FileRoutesByFullPath {
   '/transactions/create': typeof AppTransactionsCreateRoute
   '/transfers/$transferId': typeof AppTransfersTransferIdRoute
   '/transfers/create': typeof AppTransfersCreateRoute
-  '/accounts': typeof AppAccountsIndexRoute
-  '/categories': typeof AppCategoriesIndexRoute
-  '/transactions': typeof AppTransactionsIndexRoute
-  '/transfers': typeof AppTransfersIndexRoute
+  '/accounts/': typeof AppAccountsIndexRoute
+  '/categories/': typeof AppCategoriesIndexRoute
+  '/transactions/': typeof AppTransactionsIndexRoute
+  '/transfers/': typeof AppTransfersIndexRoute
   '/transactions/edit/$transactionId': typeof AppTransactionsEditTransactionIdRoute
   '/transactions/show/$transactionId': typeof AppTransactionsShowTransactionIdRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof AppIndexRoute
   '/exchange-rates': typeof AppExchangeRatesRoute
   '/profile': typeof AppProfileRoute
   '/settings': typeof AppSettingsRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
-  '/': typeof AppIndexRoute
   '/accounts/$accountId': typeof AppAccountsAccountIdRoute
   '/accounts/create': typeof AppAccountsCreateRoute
   '/categories/$categoryId': typeof AppCategoriesCategoryIdRoute
@@ -206,12 +206,12 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/exchange-rates'
     | '/profile'
     | '/settings'
     | '/login'
     | '/register'
-    | '/'
     | '/accounts/$accountId'
     | '/accounts/create'
     | '/categories/$categoryId'
@@ -219,20 +219,20 @@ export interface FileRouteTypes {
     | '/transactions/create'
     | '/transfers/$transferId'
     | '/transfers/create'
-    | '/accounts'
-    | '/categories'
-    | '/transactions'
-    | '/transfers'
+    | '/accounts/'
+    | '/categories/'
+    | '/transactions/'
+    | '/transfers/'
     | '/transactions/edit/$transactionId'
     | '/transactions/show/$transactionId'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/exchange-rates'
     | '/profile'
     | '/settings'
     | '/login'
     | '/register'
-    | '/'
     | '/accounts/$accountId'
     | '/accounts/create'
     | '/categories/$categoryId'
@@ -278,18 +278,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_app': {
       id: '/_app'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/': {
@@ -299,25 +299,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_auth/register': {
-      id: '/_auth/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof AuthRegisterRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/_app/settings': {
-      id: '/_app/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AppSettingsRouteImport
+    '/_app/exchange-rates': {
+      id: '/_app/exchange-rates'
+      path: '/exchange-rates'
+      fullPath: '/exchange-rates'
+      preLoaderRoute: typeof AppExchangeRatesRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/profile': {
@@ -327,81 +313,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/exchange-rates': {
-      id: '/_app/exchange-rates'
-      path: '/exchange-rates'
-      fullPath: '/exchange-rates'
-      preLoaderRoute: typeof AppExchangeRatesRouteImport
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/transfers/': {
-      id: '/_app/transfers/'
-      path: '/transfers'
-      fullPath: '/transfers'
-      preLoaderRoute: typeof AppTransfersIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/_app/transactions/': {
-      id: '/_app/transactions/'
-      path: '/transactions'
-      fullPath: '/transactions'
-      preLoaderRoute: typeof AppTransactionsIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/categories/': {
-      id: '/_app/categories/'
-      path: '/categories'
-      fullPath: '/categories'
-      preLoaderRoute: typeof AppCategoriesIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/_app/accounts/': {
       id: '/_app/accounts/'
       path: '/accounts'
-      fullPath: '/accounts'
+      fullPath: '/accounts/'
       preLoaderRoute: typeof AppAccountsIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/transfers/create': {
-      id: '/_app/transfers/create'
-      path: '/transfers/create'
-      fullPath: '/transfers/create'
-      preLoaderRoute: typeof AppTransfersCreateRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/transfers/$transferId': {
-      id: '/_app/transfers/$transferId'
-      path: '/transfers/$transferId'
-      fullPath: '/transfers/$transferId'
-      preLoaderRoute: typeof AppTransfersTransferIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/transactions/create': {
-      id: '/_app/transactions/create'
-      path: '/transactions/create'
-      fullPath: '/transactions/create'
-      preLoaderRoute: typeof AppTransactionsCreateRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/categories/create': {
-      id: '/_app/categories/create'
-      path: '/categories/create'
-      fullPath: '/categories/create'
-      preLoaderRoute: typeof AppCategoriesCreateRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/categories/$categoryId': {
-      id: '/_app/categories/$categoryId'
-      path: '/categories/$categoryId'
-      fullPath: '/categories/$categoryId'
-      preLoaderRoute: typeof AppCategoriesCategoryIdRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/accounts/create': {
-      id: '/_app/accounts/create'
-      path: '/accounts/create'
-      fullPath: '/accounts/create'
-      preLoaderRoute: typeof AppAccountsCreateRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/accounts/$accountId': {
@@ -411,11 +348,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAccountsAccountIdRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/transactions/show/$transactionId': {
-      id: '/_app/transactions/show/$transactionId'
-      path: '/transactions/show/$transactionId'
-      fullPath: '/transactions/show/$transactionId'
-      preLoaderRoute: typeof AppTransactionsShowTransactionIdRouteImport
+    '/_app/accounts/create': {
+      id: '/_app/accounts/create'
+      path: '/accounts/create'
+      fullPath: '/accounts/create'
+      preLoaderRoute: typeof AppAccountsCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/categories/': {
+      id: '/_app/categories/'
+      path: '/categories'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof AppCategoriesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/categories/$categoryId': {
+      id: '/_app/categories/$categoryId'
+      path: '/categories/$categoryId'
+      fullPath: '/categories/$categoryId'
+      preLoaderRoute: typeof AppCategoriesCategoryIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/categories/create': {
+      id: '/_app/categories/create'
+      path: '/categories/create'
+      fullPath: '/categories/create'
+      preLoaderRoute: typeof AppCategoriesCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/transactions/': {
+      id: '/_app/transactions/'
+      path: '/transactions'
+      fullPath: '/transactions/'
+      preLoaderRoute: typeof AppTransactionsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/transactions/create': {
+      id: '/_app/transactions/create'
+      path: '/transactions/create'
+      fullPath: '/transactions/create'
+      preLoaderRoute: typeof AppTransactionsCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/transfers/': {
+      id: '/_app/transfers/'
+      path: '/transfers'
+      fullPath: '/transfers/'
+      preLoaderRoute: typeof AppTransfersIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/transfers/$transferId': {
+      id: '/_app/transfers/$transferId'
+      path: '/transfers/$transferId'
+      fullPath: '/transfers/$transferId'
+      preLoaderRoute: typeof AppTransfersTransferIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/transfers/create': {
+      id: '/_app/transfers/create'
+      path: '/transfers/create'
+      fullPath: '/transfers/create'
+      preLoaderRoute: typeof AppTransfersCreateRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/transactions/edit/$transactionId': {
@@ -423,6 +416,13 @@ declare module '@tanstack/react-router' {
       path: '/transactions/edit/$transactionId'
       fullPath: '/transactions/edit/$transactionId'
       preLoaderRoute: typeof AppTransactionsEditTransactionIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/transactions/show/$transactionId': {
+      id: '/_app/transactions/show/$transactionId'
+      path: '/transactions/show/$transactionId'
+      fullPath: '/transactions/show/$transactionId'
+      preLoaderRoute: typeof AppTransactionsShowTransactionIdRouteImport
       parentRoute: typeof AppRoute
     }
   }

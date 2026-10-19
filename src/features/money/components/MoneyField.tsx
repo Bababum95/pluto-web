@@ -1,6 +1,7 @@
 import { MultiplicationSignIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { type FC, useRef } from 'react'
+import { Decimal } from 'decimal.js'
 
 import { selectCurrency } from '@/entities/settings'
 import { useAppSelector } from '@/app/store/hooks'
@@ -27,22 +28,22 @@ type Props = Omit<InputProps, 'onChange'> & {
 
 const PRESET_MULTIPLIERS = [1000, 10000, 100000]
 
-function getBaseAmount(value: string): number {
+function getBaseAmount(value: string): Decimal {
   const parsed = parseFloat(value)
 
   if (Number.isNaN(parsed) || parsed === 0) {
-    return 1
+    return new Decimal(1)
   }
 
-  return parsed
+  return new Decimal(value)
 }
 
-function getMultipliedAmount(value: string, multiplier: number): number {
-  return getBaseAmount(value) * multiplier
+function getMultipliedAmount(value: string, multiplier: number): string {
+  return getBaseAmount(value).mul(multiplier).toFixed()
 }
 
 function formatPresetAmount(value: string, multiplier: number): string {
-  return formatThousands(getMultipliedAmount(value, multiplier).toString())
+  return formatThousands(getMultipliedAmount(value, multiplier))
 }
 
 export const MoneyField: FC<Props> = ({
@@ -56,9 +57,7 @@ export const MoneyField: FC<Props> = ({
   const ref = useRef<HTMLInputElement>(null)
   const defaultCurrency = useAppSelector(selectCurrency)
   const handleMultiply = (multiplier: number) => {
-    inputProps.onChange(
-      getMultipliedAmount(inputProps.value, multiplier).toString()
-    )
+    inputProps.onChange(getMultipliedAmount(inputProps.value, multiplier))
     ref.current?.focus()
   }
 
@@ -89,20 +88,22 @@ export const MoneyField: FC<Props> = ({
           </p>
         </div>
       </div>
-      <div className="flex flex-wrap gap-1">
-        {PRESET_MULTIPLIERS.map((multiplier) => (
-          <Button
-            variant="outline"
-            size="xs"
-            className="px-3 h-7 rounded-lg"
-            key={multiplier}
-            onClick={() => handleMultiply(multiplier)}
-            type="button"
-          >
-            {formatPresetAmount(inputProps.value, multiplier)}
-          </Button>
-        ))}
-      </div>
+      {!inputProps.value.includes('.') && (
+        <div className="flex flex-wrap gap-1">
+          {PRESET_MULTIPLIERS.map((multiplier) => (
+            <Button
+              variant="outline"
+              size="xs"
+              className="px-3 h-7 rounded-lg"
+              key={multiplier}
+              onClick={() => handleMultiply(multiplier)}
+              type="button"
+            >
+              {formatPresetAmount(inputProps.value, multiplier)}
+            </Button>
+          ))}
+        </div>
+      )}
       {isError && <FieldError>{errorMessage}</FieldError>}
     </Field>
   )

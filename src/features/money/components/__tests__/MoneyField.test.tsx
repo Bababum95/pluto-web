@@ -121,8 +121,12 @@ describe('MoneyField', () => {
       { store }
     )
     expect(screen.getByRole('button', { name: '100 000' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '1 000 000' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '10 000 000' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: '1 000 000' })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: '10 000 000' })
+    ).toBeInTheDocument()
   })
 
   it('calls onChange with multiplied amount when preset button is clicked', async () => {
@@ -134,13 +138,54 @@ describe('MoneyField', () => {
         status: 'success',
       },
     })
-    renderWithProviders(
-      <MoneyField inputProps={{ value: '25', onChange }} />,
-      { store }
-    )
+    renderWithProviders(<MoneyField inputProps={{ value: '25', onChange }} />, {
+      store,
+    })
     await user.click(screen.getByRole('button', { name: '25 000' }))
     expect(onChange).toHaveBeenCalledWith('25000')
   })
+
+  it.each([['0', '100 000', '100000']])(
+    'selects an exact preset amount for %s',
+    async (value, label, expected) => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      const store = createStore({
+        settings: {
+          settings: createMockSettings(),
+          status: 'success',
+        },
+      })
+      renderWithProviders(<MoneyField inputProps={{ value, onChange }} />, {
+        store,
+      })
+
+      await user.click(screen.getByRole('button', { name: label }))
+      expect(onChange).toHaveBeenCalledWith(expected)
+      expect(screen.getByRole('textbox')).toHaveFocus()
+    }
+  )
+
+  it.each(['2.3', '2.', '.', '0.0000001'])(
+    'hides preset buttons for decimal input %s',
+    (value) => {
+      const store = createStore({
+        settings: {
+          settings: createMockSettings(),
+          status: 'success',
+        },
+      })
+      renderWithProviders(
+        <MoneyField inputProps={{ value, onChange: vi.fn() }} />,
+        { store }
+      )
+
+      expect(screen.getByRole('textbox')).toHaveValue(value)
+      expect(
+        screen.queryByRole('button', { name: /[0-9]/ })
+      ).not.toBeInTheDocument()
+    }
+  )
 
   it('displays error message when isError is true', () => {
     const store = createStore({

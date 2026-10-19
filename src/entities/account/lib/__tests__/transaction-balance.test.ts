@@ -9,6 +9,7 @@ import {
   applyTransactionDeltaToAccount,
   calculateAccountsSummary,
   getSignedTransactionAmountRaw,
+  resolveConvertedAccountBalance,
 } from '../transaction-balance'
 
 const ts = '2024-01-01T00:00:00.000Z'
@@ -20,8 +21,16 @@ const usd: MoneyViewCurrencyDto = {
   decimal_digits: 2,
 }
 
+const eur: MoneyViewCurrencyDto = {
+  id: 'currency-eur',
+  code: 'EUR',
+  symbol: '€',
+  decimal_digits: 2,
+}
+
 const rates: RateDto[] = [
   { id: 'rate-usd', code: 'USD', value: 1, createdAt: ts, updatedAt: ts },
+  { id: 'rate-eur', code: 'EUR', value: 0.8, createdAt: ts, updatedAt: ts },
 ]
 
 describe('getSignedTransactionAmountRaw', () => {
@@ -64,6 +73,130 @@ describe('applyTransactionDeltaToAccount', () => {
     expect(updated.balance.original.value).toBe(950)
     expect(updated.balance.converted.raw).toBe(95000)
     expect(updated.balance.converted.value).toBe(950)
+  })
+
+  it('converts foreign-currency balance into the default currency when rates exist', () => {
+    const account = createMockAccount({
+      balance: {
+        original: {
+          value: 100,
+          raw: 10000,
+          scale: 2,
+          currency: eur,
+        },
+        converted: {
+          value: 125,
+          raw: 12500,
+          scale: 2,
+          currency: usd,
+        },
+      },
+    })
+
+    const updated = applyTransactionDeltaToAccount(
+      account,
+      getSignedTransactionAmountRaw('expense', 800),
+      rates,
+      usd
+    )
+
+    // 92 EUR / 0.8 = 115 USD
+    expect(updated.balance.original.raw).toBe(9200)
+    expect(updated.balance.converted.currency.code).toBe('USD')
+    expect(updated.balance.converted.raw).toBe(11500)
+    expect(updated.balance.converted.value).toBe(115)
+  })
+
+  it('preserves default-currency converted balance when rates are missing', () => {
+    const account = createMockAccount({
+      balance: {
+        original: {
+          value: 100,
+          raw: 10000,
+          scale: 2,
+          currency: eur,
+        },
+        converted: {
+          value: 125,
+          raw: 12500,
+          scale: 2,
+          currency: usd,
+        },
+      },
+    })
+
+    const updated = applyTransactionDeltaToAccount(
+      account,
+      getSignedTransactionAmountRaw('expense', 2000),
+      [],
+      usd
+    )
+
+    // 80 EUR with implied rate 1.25 → 100 USD
+    expect(updated.balance.original.raw).toBe(8000)
+    expect(updated.balance.converted.currency.code).toBe('USD')
+    expect(updated.balance.converted.raw).toBe(10000)
+    expect(updated.balance.converted.value).toBe(100)
+  })
+})
+
+describe('resolveConvertedAccountBalance', () => {
+  const previousAccount = createMockAccount({
+    balance: {
+      original: {
+        value: 100,
+        raw: 10000,
+        scale: 2,
+        currency: eur,
+      },
+      converted: {
+        value: 125,
+        raw: 12500,
+        scale: 2,
+        currency: usd,
+      },
+    },
+  })
+
+  it('uses previous original balance for implied rate when rates are missing', () => {
+    const newOriginal = {
+      value: 80,
+      raw: 8000,
+      scale: 2,
+      currency: eur,
+    }
+
+    const converted = resolveConvertedAccountBalance(
+      previousAccount,
+      newOriginal,
+      [],
+      usd
+    )
+
+    // implied rate 125/100 = 1.25 → 80 * 1.25 = 100 USD
+    expect(converted.currency.code).toBe('USD')
+    expect(converted.raw).toBe(10000)
+    expect(converted.value).toBe(100)
+  })
+
+  it('zeros converted balance while keeping default currency when balance is cleared', () => {
+    const newOriginal = {
+      value: 0,
+      raw: 0,
+      scale: 2,
+      currency: eur,
+    }
+
+    const converted = resolveConvertedAccountBalance(
+      previousAccount,
+      newOriginal,
+      [],
+      usd
+    )
+
+    expect(converted.currency.code).toBe('USD')
+    expect(converted.raw).toBe(0)
+    expect(converted.value).toBe(0)
   })
 })
 
@@ -116,5 +249,29 @@ describe('calculateAccountsSummary', () => {
     expect(summary.total_raw).toBe(10000)
     expect(summary.total).toBe(100)
     expect(summary.currency).toEqual(mockCurrency)
+  })
+
+  it('falls back to stored converted balances when rates are missing', () => {
+    const account = createMockAccount({
+      balance: {
+        original: {
+          value: 80,
+          raw: 8000,
+          scale: 2,
+          currency: eur,
+        },
+        converted: {
+          value: 100,
+          raw: 10000,
+          scale: 2,
+          currency: usd,
+        },
+      },
+    })
+
+    const summary = calculateAccountsSummary([account], [], usd, mockCurrency)
+
+    expect(summary.total_raw).toBe(10000)
+    expect(summary.total).toBe(100)
   })
 })

@@ -7,8 +7,12 @@ import {
 import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { generateTempEntityId } from '@/shared/lib/local-storage/temp-id'
 import { syncCoordinator } from '@/shared/lib/local-storage/sync-coordinator'
+import { normalizeMoneyRaw } from '@/shared/lib/money/utils/normalizeMoneyRaw'
+import { toDecimal } from '@/shared/lib/money/utils/toDecimal'
 import type { Status } from '@/shared/lib/async-status'
 import type { RootState } from '@/app/store'
+import { selectExchangeRates } from '@/entities/exchange-rate'
+import { selectCurrency, selectSettings } from '@/entities/settings'
 
 import { accountRepository } from '../local'
 import {
@@ -18,9 +22,16 @@ import {
   enqueueReorderAccounts,
   enqueueToggleExcluded,
 } from '../local/outbox-helpers'
+import {
+  calculateAccountsSummary,
+  resolveConvertedAccountBalance,
+} from '../lib/transaction-balance'
 
 import { accountApi } from './api'
-import { resolveMoneyViewCurrencyForTempAccount } from './temp-account-currency'
+import {
+  resolveMoneyViewCurrencyForAccountUpdate,
+  resolveMoneyViewCurrencyForTempAccount,
+} from './temp-account-currency'
 import type {
   AccountDto,
   AccountSummaryDto,
@@ -143,27 +154,128 @@ export const createAccount = createAsyncThunk(
 
 export const updateAccount = createAsyncThunk(
   'account/updateAccount',
-  async ({ id, data }: { id: string; data: UpdateAccountDto }) => {
+  async (
+    { id, data }: { id: string; data: UpdateAccountDto },
+    { getState }
+  ) => {
     if (LOCAL_DATA_MODE === 'dexie') {
       // For local updates, we need to map UpdateAccountDto fields to AccountDto fields
       // UpdateAccountDto has balance as number, but AccountDto has balance as AccountBalanceViewDto
       const existing = await accountRepository.getById(id)
       if (!existing) throw new Error('Account not found')
 
+      const state = getState() as RootState
+
       // Only update fields that are present in UpdateAccountDto and compatible with AccountDto
       const updates: Partial<AccountDto> = {}
-      if (data.name !== undefined) updates.name = data.name
-      if (data.color !== undefined) updates.color = data.color
-      if (data.icon !== undefined) updates.icon = data.icon
-      if (data.description !== undefined) updates.description = data.description
-      if (data.order !== undefined) updates.order = data.order
-      if (data.excluded !== undefined) updates.excluded = data.excluded
+      if (data.name !== undefined) updates.name = data.name as string
+      if (data.color !== undefined) updates.color = data.color as string
+      if (data.icon !== undefined) updates.icon = data.icon as string
+      if (data.description !== undefined)
+        updates.description = data.description as string
+      if (data.order !== undefined) updates.order = data.order as number
+      if (data.excluded !== undefined) updates.excluded = data.excluded as boolean
+
+      const balanceRaw =
+        typeof data.balance === 'number' ? data.balance : undefined
+      const formScale =
+        typeof data.scale === 'number'
+          ? data.scale
+          : existing.balance.original.scale
+      const currencyId =
+        typeof data.currency === 'string' ? data.currency : undefined
+
+      if (balanceRaw !== undefined || currencyId !== undefined) {
+        const originalCurrency = currencyId
+          ? await resolveMoneyViewCurrencyForAccountUpdate(
+              currencyId,
+              existing.balance.original.currency.decimal_digits,
+              () => state
+            )
+          : existing.balance.original.currency
+
+        // Form parseDecimal derives scale from typed decimals ("100" → scale 0).
+        // Persist against the currency's stable decimal_digits so later
+        // transaction raw deltas stay comparable.
+        const stableScale = originalCurrency.decimal_digits
+        const originalRaw =
+          balanceRaw !== undefined
+            ? normalizeMoneyRaw(balanceRaw, formScale, stableScale)
+            : normalizeMoneyRaw(
+                existing.balance.original.raw,
+                existing.balance.original.scale,
+                stableScale
+              )
+
+        const original = {
+          ...existing.balance.original,
+          currency: originalCurrency,
+          scale: stableScale,
+          raw: originalRaw,
+          value: toDecimal(originalRaw, stableScale),
+        }
+
+        const settingsCurrency = selectCurrency(state)
+        const targetCurrency =
+          'id' in settingsCurrency && settingsCurrency.id
+            ? {
+                id: settingsCurrency.id,
+                code: settingsCurrency.code,
+                symbol: settingsCurrency.symbol,
+                decimal_digits: settingsCurrency.decimal_digits,
+              }
+            : existing.balance.converted.currency
+
+        // Pass `existing` (previous original + converted) so implied-rate
+        // fallback can derive the FX ratio from the prior balances.
+        updates.balance = {
+          original,
+          converted: resolveConvertedAccountBalance(
+            existing,
+            original,
+            selectExchangeRates(state),
+            targetCurrency
+          ),
+        }
+      }
 
       await accountRepository.update(id, updates)
       await enqueueUpdateAccount(id, data)
 
       const updated = await accountRepository.getById(id)
-      return { account: updated!, summary: null }
+      const allAccounts = await accountRepository.getAll()
+      const settings = selectSettings(state)
+      const settingsCurrency = selectCurrency(state)
+      const targetCurrency =
+        'id' in settingsCurrency && settingsCurrency.id
+          ? {
+              id: settingsCurrency.id,
+              code: settingsCurrency.code,
+              symbol: settingsCurrency.symbol,
+              decimal_digits: settingsCurrency.decimal_digits,
+            }
+          : updated!.balance.converted.currency
+      const summaryCurrency = settings?.currency ?? {
+        id: targetCurrency.id,
+        code: targetCurrency.code,
+        symbol: targetCurrency.symbol,
+        name: targetCurrency.code,
+        symbol_native: targetCurrency.symbol,
+        decimal_digits: targetCurrency.decimal_digits,
+        rounding: 0,
+        name_plural: targetCurrency.code,
+        type: 'fiat' as const,
+      }
+
+      return {
+        account: updated!,
+        summary: calculateAccountsSummary(
+          allAccounts,
+          selectExchangeRates(state),
+          targetCurrency,
+          summaryCurrency
+        ),
+      }
     }
 
     return accountApi.update(id, data)

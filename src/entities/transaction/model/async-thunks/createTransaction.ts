@@ -5,7 +5,11 @@ import { LOCAL_DATA_MODE } from '@/shared/lib/local-storage/config'
 import { isDateWithinBounds } from '@/shared/lib/date/isDateWithinBounds'
 import { parseDecimal } from '@/shared/lib/money/utils/parseDecimal'
 import { accountsPatched } from '@/entities/account'
-import { selectExchangeRates } from '@/entities/exchange-rate'
+import {
+  exchangeRateRepository,
+  selectExchangeRates,
+  type RateDto,
+} from '@/entities/exchange-rate'
 import { selectCurrency, selectSettings } from '@/entities/settings'
 import type { AppDispatch, RootState } from '@/app/store'
 
@@ -18,6 +22,19 @@ import type {
 
 type CreateTransactionResult = TransactionMutationResponseDto & {
   insert: boolean
+}
+
+async function resolveRatesForLocalCreate(
+  rootState: RootState
+): Promise<RateDto[]> {
+  const fromStore = selectExchangeRates(rootState)
+  if (fromStore.length > 0) {
+    return fromStore
+  }
+
+  // IndexedDB may already have rates from a background sync that has not
+  // reached Redux yet (fetchExchangeRates returns local data immediately).
+  return exchangeRateRepository.getAll()
 }
 
 export const createTransaction = createAsyncThunk<
@@ -50,7 +67,7 @@ export const createTransaction = createAsyncThunk<
       LOCAL_DATA_MODE === 'dexie'
         ? await transactionLocalApi.create({
             data: body,
-            rates: selectExchangeRates(rootState),
+            rates: await resolveRatesForLocalCreate(rootState),
             settingsCurrency: selectCurrency(rootState),
             settings: selectSettings(rootState),
           })

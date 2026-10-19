@@ -68,6 +68,13 @@ const mocks = vi.hoisted(() => {
     removeTransaction: fn(),
     addTransfer: fn(),
     removeTransfer: fn(),
+    fetchExchangeRates: Object.assign(vi.fn(), {
+      fulfilled: vi.fn((value: unknown, requestId: string, arg: unknown) => ({
+        type: 'exchangeRate/fetchAll/fulfilled',
+        payload: value,
+        meta: { requestId, arg },
+      })),
+    }),
   }
 })
 
@@ -137,6 +144,11 @@ vi.mock('@/entities/account/local', () => ({
 }))
 
 vi.mock('@/entities/exchange-rate/local', () => ({
+  exchangeRateRepository: mocks.exchangeRateRepo,
+}))
+
+vi.mock('@/entities/exchange-rate', () => ({
+  fetchExchangeRates: mocks.fetchExchangeRates,
   exchangeRateRepository: mocks.exchangeRateRepo,
 }))
 
@@ -274,13 +286,24 @@ describe('remaining sync handlers', () => {
     errSpy.mockRestore()
   })
 
-  it('exchangeRate sync hands the controller payload to the repository', async () => {
+  it('exchangeRate sync hands the controller payload to the repository and Redux', async () => {
     const rates = [{ from: 'USD', to: 'EUR' }]
     mocks.rateControllerFindAll.mockResolvedValue(rates)
 
     await syncCoordinator.getEntityHandler('exchangeRate')!()
 
     expect(mocks.exchangeRateRepo.syncFromApi).toHaveBeenCalledWith(rates)
+    expect(mocks.fetchExchangeRates.fulfilled).toHaveBeenCalledWith(
+      rates,
+      'sync',
+      undefined
+    )
+    expect(mocks.dispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'exchangeRate/fetchAll/fulfilled',
+        payload: rates,
+      })
+    )
   })
 
   it('exchangeRate sync wraps and rethrows controller errors', async () => {
